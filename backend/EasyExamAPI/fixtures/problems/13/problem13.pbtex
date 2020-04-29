@@ -5,18 +5,18 @@ Simplified version (one question removed) of adjacencyListVSMatric01 (G&T R-6.7)
 Assignment 2, Year 2002, Winter Term, School of Computer Science at the University of Waterloo.
 \end{usage}
 \begin{authorship}
-Simplified version (one question removed) of adjacencyListVSMatric01 (G\&T R-6.7)  
+Simplified version (one question removed) of adjacencyListVSMatric01 (G\&T R-6.7)
 \end{authorship}
 
 Would you use the adjacency list structure or the adjacency matrix
-structure in each of the following cases?  
+structure in each of the following cases?
 %
 Justify your choice.
 
 
 \begin{enumerate}
 
-\item The graph has $10,000$ vertices and $20,000$ edges, and it is 
+\item The graph has $10,000$ vertices and $20,000$ edges, and it is
 important to use as little space as possible.
 \begin{solution}
 The adjacency list structure would take much less space than the
@@ -34,7 +34,7 @@ possible, no matter how much space you use.
 \begin{solution}
 For the operation {\tt areAdjacent}, the adjacency matrix can be used
 in constant time, where the adjancecy list needs linear time on
-average. 
+average.
 %
 So the adjacency matrix is the optimal choice for this condition.
 \end{solution}
@@ -43,5 +43,3 @@ $3$ marks
 \end{markingScheme}
 
 \end{enumerate}
-
-

@@ -4,7 +4,7 @@ Assignment 2, Year 2004, Fall Term, School of Computer Science at the University
 
 When using the {\tt long} primitive datatype in Java, care must be taken
 to ensure that the result of an arithmetic operation such as $+$ or $\ast$
-lies in the range 
+lies in the range
 %$$[-2^{63}\ldots 2^{63}-1
 $$-9223372036854775808\ldots 9223372036854775807.$$
 If we have a modulus $p$
@@ -18,7 +18,7 @@ addition, multiplication and negation modulo $p$
 can be performed in Java, using variables of type {\tt long},
 as \verb[(a + b) % p[, \verb[(a * b) % p[ and \verb[p - a[ respectively.
 
-\medskip  
+\medskip
 
 Consider the following method for computing the power of integers
 modulo $p$.
@@ -29,7 +29,7 @@ public static long power(long x, long k, long p) {
 //       the return value will be in the range [0..p-1]
 {
    long a = 1;
-   for (long i = 1; i <= k; i++) 
+   for (long i = 1; i <= k; i++)
       a = (a * x) % p;
    return a;
 }
@@ -48,7 +48,7 @@ operators \verb[+, -, *, /[.
 
 
 \begin{hint}
-%Note that $c^{1041} = c^{1024}c^{16}c$. 
+%Note that $c^{1041} = c^{1024}c^{16}c$.
 How can you compute $c^{16}$ using only four instead of fifteen
 multiplications?  How do the binary expansions of $k$ and $k/2$ compare?
 \end{hint}
@@ -65,7 +65,7 @@ multiplications?  How do the binary expansions of $k$ and $k/2$ compare?
    return a;
 \end{verbatim}
 
-   
+
  A polylogarithmically bounded solution (i.e., $(\lg k)^c$
  for some constant $c$) would also be considered for part marks.
 

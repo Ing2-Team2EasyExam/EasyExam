@@ -14,9 +14,9 @@ class BreadcrumbHeader extends React.Component {
     const index = routes[routes.length-1]
     var currentSite = locale.breadcrumbTitle[index] !== undefined ? " - " + locale.breadcrumbTitle[index] : ""
     theTitleMan.innerHTML = "EasyExam"+ currentSite
-    
+
     return <span style={{ ...styles.breadcrumb, ...styles.rowCenter }}>
-      {routes.map((route, index) => 
+      {routes.map((route, index) =>
         locale.breadcrumbTitle[route] !== undefined? <div key={index.toString()}>
         <span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
         <span>{route ? locale.breadcrumbTitle[route] : 'Home'}</span>

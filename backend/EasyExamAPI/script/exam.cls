@@ -1,6 +1,6 @@
 %*                   Document class for Exams.
 % Specially commented for Outline under Emacs
-% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t) 
+% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t)
 
 
 %* Class Definition  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,9 +36,9 @@
 }
 
 %** Command \maketitle{}
-% To present the same header for all exams, define 
+% To present the same header for all exams, define
 % your typical header here.
-% This way if you reuse your assignments in later years, 
+% This way if you reuse your assignments in later years,
 % you only need to change the year here.
 \providecommand{\problemTitle}{Part}
 \providecommand{\examName}{ Examen }
@@ -123,4 +123,3 @@
 \else
 \renewenvironment{displayProblem}{}{}
 \fi
-

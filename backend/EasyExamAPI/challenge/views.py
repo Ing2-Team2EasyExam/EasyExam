@@ -21,12 +21,16 @@ class AllChallengesView(APIView):
         p = self.get_problem()
         for c in Criterion.objects.all():
             challenge = Challenge.objects.get_or_create(problem=p, criterion=c)[0]
-            cc = CurrentChallenge.objects.create(user=self.request.user, challenge=challenge)
+            cc = CurrentChallenge.objects.create(
+                user=self.request.user, challenge=challenge
+            )
             challenges.append(cc)
         return challenges
 
     def get(self, request):
-        challenges = CurrentChallenge.objects.filter(user=self.request.user).order_by('pk')
+        challenges = CurrentChallenge.objects.filter(user=self.request.user).order_by(
+            "pk"
+        )
         if len(challenges) == 0:
             challenges = self.generate_challenges()
         problem = challenges[0].challenge.problem
@@ -34,34 +38,54 @@ class AllChallengesView(APIView):
         for c in challenges:
             criteria.append(c.challenge.criterion)
         return Response(
-            AllChallengesSerializer({'problem': problem, 'criteria': criteria}, context={'request': request}).data)
+            AllChallengesSerializer(
+                {"problem": problem, "criteria": criteria}, context={"request": request}
+            ).data
+        )
 
 
 class AllChallengesVotes(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        challenges = CurrentChallenge.objects.filter(user=self.request.user).order_by('pk')
-        answers = request.data['answers']
+        challenges = CurrentChallenge.objects.filter(user=self.request.user).order_by(
+            "pk"
+        )
+        answers = request.data["answers"]
 
         if len(challenges) == 0:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'detail': 'No current challenges available.'})
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"detail": "No current challenges available."},
+            )
 
         if len(answers) != len(challenges):
-            return Response(status=status.HTTP_400_BAD_REQUEST, data={'detail': 'Wrong number of votes'})
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"detail": "Wrong number of votes"},
+            )
 
         votes = []
         for i in range(len(challenges)):
-            if answers[i] == 'V' or answers[i] == 'I':
+            if answers[i] == "V" or answers[i] == "I":
                 votes.append(
-                    Vote.objects.create(user=self.request.user, answer=answers[i], challenge=challenges[i].challenge))
+                    Vote.objects.create(
+                        user=self.request.user,
+                        answer=answers[i],
+                        challenge=challenges[i].challenge,
+                    )
+                )
 
-        data = AllVotesSerializer({'votes': votes}).data
+        data = AllVotesSerializer({"votes": votes}).data
 
         for c in challenges:
             c.delete()
 
-        description = 'Gained {credits} credits for completing a challenge.'.format(credits=data['credits'])
-        Transaction.objects.create(user=self.request.user, change=data['credits'], description=description)
+        description = "Gained {credits} credits for completing a challenge.".format(
+            credits=data["credits"]
+        )
+        Transaction.objects.create(
+            user=self.request.user, change=data["credits"], description=description
+        )
 
         return Response(data)

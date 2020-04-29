@@ -37,7 +37,7 @@ The backend runs with NGINX and UWSGI
 
 You can run the current configuration with
 $ uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
-Or 
+Or
 $ HOME/easyexam/venv/bin/uwsgi --ini $HOME/easyexam-uwsgi/easyexam-uwsgi.ini
 
 To build the frontend bundle

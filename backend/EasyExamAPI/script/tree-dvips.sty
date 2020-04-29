@@ -18,7 +18,7 @@
 % This ensures that the header file for postscript is inserted.  Note
 % that extracting pages with dvips will keep this header file but that
 % extracting with dviselect will not unless the absolute first page is
-% included. 
+% included.
 \special{header=tree-dvips91.pro}
 
 
@@ -37,7 +37,7 @@
 @endspec}}
 
 % \@int ensures that the numbers are passed down to the printer
-% correctly. 
+% correctly.
 {\catcode`p=12 \catcode`t=12 \gdef\wnum#1pt{#1}}
 \def\@int#1{\expandafter\wnum#1}
 
@@ -48,7 +48,7 @@
 % treelinewidth is the width of the lines
 % dashlength is the length of the dashes
 
-\newdimen\nodemargin % 
+\newdimen\nodemargin %
 \nodemargin=2pt
 
 \newdimen\treelinewidth
@@ -65,7 +65,7 @@
 % |    | arrowlength
 % | | arrowinset
 
-% arrowwidth 
+% arrowwidth
 
 \newdimen\arrowwidth
 \arrowwidth 3pt
@@ -80,7 +80,7 @@
 
 \def\thinline{\treelinewidth=.3pt}
 
-% \makedash{dimen}  makes dashes of dimen length if dimen = 0pt then 
+% \makedash{dimen}  makes dashes of dimen length if dimen = 0pt then
 % solid line
 \def\makedash#1{\dashlength=#1}
 
@@ -96,7 +96,7 @@
               \setbox1=\hbox{#2}\pscmd{/#1 \@int{\the\wd1} \space pt
                                            \@int{\the\ht1} \space pt
                                            \@int{\the\dp1} \space pt
-                                       node}\box1\relax}           
+                                       node}\box1\relax}
 
 
 % nodepoint is a specialized node with 0pt width, height, and depth
@@ -113,14 +113,14 @@ rmoveto 0 0 0 node}}}
 
 
 
-\newtoks\pos@t   \pos@t={top}    
-\newtoks\pos@b   \pos@b={bottom} 
-\newtoks\pos@l   \pos@l={left}   
-\newtoks\pos@r   \pos@r={right}  
-\newtoks\pos@tl   \pos@tl={topleft}    
-\newtoks\pos@tr   \pos@tr={topright}   
-\newtoks\pos@bl   \pos@bl={bottomleft} 
-\newtoks\pos@br   \pos@br={bottomright}  
+\newtoks\pos@t   \pos@t={top}
+\newtoks\pos@b   \pos@b={bottom}
+\newtoks\pos@l   \pos@l={left}
+\newtoks\pos@r   \pos@r={right}
+\newtoks\pos@tl   \pos@tl={topleft}
+\newtoks\pos@tr   \pos@tr={topright}
+\newtoks\pos@bl   \pos@bl={bottomleft}
+\newtoks\pos@br   \pos@br={bottomright}
 
 
 % COMMANDS FOR CONNECTING NODES
@@ -141,7 +141,7 @@ rmoveto 0 0 0 node}}}
 
 % \delink[fromloc]{fromnode}[toloc]{tonode}{length}
 % places a bar of length perpendicular to and halfway along the line
-% connecting the two locations. 
+% connecting the two locations.
 \def\delink{\@ifnextchar [{\@delink}{\@delink[b]}}
 \def\@delink[#1]#2{\@ifnextchar [{\@@delink[#1]{#2}}{\@@delink[#1]{#2}[t]}}
 
@@ -222,7 +222,7 @@ rmoveto 0 0 0 node}}}
  \ifnum\@arrow=1 arrownodecurve \else
  \ifnum\@arrow=2 arrow2nodecurve \else
  /blong \@int{\the\@tempdimc} \space pt def
- delinkcurve 
+ delinkcurve
  \fi\fi\fi}}
 
 
@@ -267,5 +267,3 @@ rmoveto 0 0 0 node}}}
 \pscmd{\@int{\the\@tempdima}\space pt %
 /#2  getnode nodetop /#3 getnode nodetop arrowbarnodeconnect}
 \fi}
-
-

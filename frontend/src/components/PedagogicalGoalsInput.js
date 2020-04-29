@@ -78,7 +78,7 @@ class PedagogicalGoalsInput extends React.Component {
                     />)}
                 </div>)}
             </div>
-            {this.props.allowInput != undefined ? 
+            {this.props.allowInput != undefined ?
             <div>
               <label>Comida <input type="text"></input></label>
             </div> : null}

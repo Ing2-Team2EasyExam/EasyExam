@@ -7,9 +7,9 @@ from exam.admin import ProblemAdmin, ExamAdmin
 from exam.models import Problem, Topic, Exam
 from user.models import User, Transaction
 
-UserAdmin.list_display = ('username', 'email', 'credits',)
-UserAdmin.list_filter += ('credits',)
-UserAdmin.fieldsets += (('credits', {'fields': ('credits',)}),)
+UserAdmin.list_display = ("username", "email", "credits")
+UserAdmin.list_filter += ("credits",)
+UserAdmin.fieldsets += (("credits", {"fields": ("credits",)}),)
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Exam, ExamAdmin)

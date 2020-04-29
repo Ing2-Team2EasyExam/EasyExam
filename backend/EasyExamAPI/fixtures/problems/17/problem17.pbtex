@@ -9,7 +9,7 @@ Assignment 2, Year 2005, Winter Term, School of Computer Science at the Universi
 
 A min-max heap is a data structure that supports both deleteMin and
 deleteMax in $O(\log n)$ time per operation (though you won't show that
-in this question).  
+in this question).
 %
 The structure is a binary tree, with the same shape property as a
 normal heap, but with the following ordering property, where ``value''
@@ -33,9 +33,9 @@ $$\rm{value}(p(x)) < \rm{value}(x)$$
 
 \begin{solution}
 \begin{center}
-\Tree [ 
-.6 
-[.81 
+\Tree [
+.6
+[.81
   [.14
     [.71
       32
@@ -50,17 +50,17 @@ $$\rm{value}(p(x)) < \rm{value}(x)$$
     20
   ]
 ]
-[.87 
+[.87
   [.12
     52
     78
   ]
-  [.28 
+  [.28
     31
     42
-  ]   
-] 
-] 
+  ]
+]
+]
 \end{center}
 \end{solution}
 \begin{spaceForAnswer}\pagebreak\end{spaceForAnswer}
@@ -101,7 +101,7 @@ into a min-max heap.  Include a brief justification of the running time.
   Add the element to the first leaf available, as in a normal heap.
 
   Then, going up the path to the root, check if each node respects the
-  min max heap property relative to its depth: 
+  min max heap property relative to its depth:
   \begin{center}
     if $x$ has value $a$, $p(x)$ has value $b$ and $p(p(x))$ has value
     $c$, \\

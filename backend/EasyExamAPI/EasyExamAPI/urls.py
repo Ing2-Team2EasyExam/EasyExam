@@ -20,9 +20,9 @@ from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('docs/', include_docs_urls(title='Easy Exam API')),
+    path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+    path("docs/", include_docs_urls(title="Easy Exam API")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

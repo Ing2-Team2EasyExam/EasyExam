@@ -12,13 +12,13 @@ You have seen the Move-To-Front (MTF) and Transpose heuristics in
 class, but there is another possible heuristic: Move-To-Middle (MTM).
 %
 The MTM heuristic is like the MTF heuristic, except that once
-an element is found at position $p$, it is moved halfway to the front, 
+an element is found at position $p$, it is moved halfway to the front,
 to the ``middle'' position $\lfloor p/2\rfloor$.
 
 \begin{enumerate}
 
 \item For each of MTF, Transpose, MTM, show the array after searching for
-the following keys in the given order: $3; 1; 6; 6.$ 
+the following keys in the given order: $3; 1; 6; 6.$
 %
 For each heuristic, compute the total number of (key) comparisons
 required to execute all of these searches.
@@ -134,22 +134,22 @@ Total comparisons&
 \end{solution}
 
 \item Given the following distribution of search queries on the keys
-of the dictionary, what is the expected number of comparisons needed to 
+of the dictionary, what is the expected number of comparisons needed to
 search in an optimal static ordering of the list?
 %
 $$
-\Pr[0]{=}.01;\ 
-\Pr[1]{=}.3;\ 
-\Pr[2]{=}.09;\ 
-\Pr[3]{=}.15;\ 
-\Pr[4]{=}.2;\ 
-\Pr[5]{=}.15;\ 
+\Pr[0]{=}.01;\
+\Pr[1]{=}.3;\
+\Pr[2]{=}.09;\
+\Pr[3]{=}.15;\
+\Pr[4]{=}.2;\
+\Pr[5]{=}.15;\
 \Pr[6]{=}.1
 $$
 Give the optimal static ordering, the general formula to compute the
 expected number of comparisons, and the details of your calculations.
 
-\begin{spaceForAnswer}  
+\begin{spaceForAnswer}
 
 \vfil
 
@@ -168,8 +168,8 @@ p_i & .3 & .2 &.15&.15&.1 &.09&.01\\  \hline
 \end{array}
 $$
 
-Hence the average complexity is 
-$$ 
+Hence the average complexity is
+$$
 \begin{array}{llllllll}
 &   1 * .3
 & + 2 * .2
@@ -188,7 +188,7 @@ $$
 & + .54
 & + .07
 \\
-= 
+=
 & 2.86
 \end{array}
 $$
@@ -200,4 +200,3 @@ $1$ point for the correct computation,
 for a total of $5$ points.
 \end{markingScheme}
 \end{enumerate}
-

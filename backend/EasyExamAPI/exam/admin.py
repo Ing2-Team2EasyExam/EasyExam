@@ -2,7 +2,7 @@ from django.contrib import admin
 
 
 class ProblemAdmin(admin.ModelAdmin):
-    exclude = ('pbtex_file',)
+    exclude = ("pbtex_file",)
 
     def has_add_permission(self, request):
         return False

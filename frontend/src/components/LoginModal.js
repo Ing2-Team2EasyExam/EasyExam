@@ -68,7 +68,7 @@ class LoginModal extends React.Component {
       <Modal.Body>
         <div style={styles.centerContent}>
           {username == null ? <Form onSubmit={this.onSubmit} values={formValues} disabled={isLoggingIn} onChangeField={this.onChangeField}>
-          {this.state.logginError != null ? 
+          {this.state.logginError != null ?
           <div className="alert alert-warning">
             {this.state.logginError}
           </div> : null}

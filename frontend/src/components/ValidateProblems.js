@@ -98,7 +98,7 @@ class ValidateProblems extends React.Component {
     }
 
     return <div style={styles.centerContent}>
-      {this.state.success !== null ? <div className="alert alert-success" style={{display: 'flex', flexDirection: 'row'}}>{messageOfSuccess}</div> : null}    
+      {this.state.success !== null ? <div className="alert alert-success" style={{display: 'flex', flexDirection: 'row'}}>{messageOfSuccess}</div> : null}
       {challenge === 'loading' ?
         <LoadingAnimation text={locale.loadingChallenge}/>
         : challenge == null || challenge === 'error' ?
