@@ -1,0 +1,317 @@
+% PROBLEM STYLE -- Released 5 Dec 2004
+%    for LaTeX-2e
+% Copyright -- 2004 Jeremy Barbay
+% E-mail jyby@fr.st
+% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t) 
+
+%* Package Definition  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%** LaTeX version needed:
+\NeedsTeXFormat{LaTeX2e}
+%** Package provided:
+\ProvidesPackage{problem}
+\typeout{Document Style problem: command to include problems from the database}
+
+%* Package dependancies:  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%** Version for {solution}  and many other environments
+\RequirePackage{versions}
+\RequirePackage{url} % To point out the email of the authors of the solutions.
+%** For figures:
+\RequirePackage{epsf}
+\RequirePackage{epsfig}
+\RequirePackage{graphicx}
+%** Fonts:
+\RequirePackage{amssymb}
+%** For Defining the command \problem:
+\RequirePackage{theorem}
+%** To include source directly
+\RequirePackage{verbatim}   % to include a file with \verbatiminput{}
+%** To print the solutions and annotation in colors
+\RequirePackage[usenames]{xcolor}
+%** Other (some problem use it)
+\RequirePackage{alltt}       % Seems to be for algorithms
+\RequirePackage{tree-dvips}   % To draw arrows, using ``\node{Na}{Aschtung}\anodeconnect[bl]{Na}[tr]{Na}''
+\RequirePackage{qtree} \qtreecenterfalse  % To draw trees, using ``\Tree [ .1 2 3 ]''.
+\RequirePackage{pstricks,pst-node,pst-tree} % Another tool to draw trees, using ``\pstree{\Tr{Root}}{\Tr{Leaf1}\Tr{Leaf2}}''
+\RequirePackage{algorithmic}
+
+
+%* Commands and Environments:  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%** Problem Environment
+\theoremstyle{break}
+\theorembodyfont{\rmfamily}
+\providecommand{\problemTitle}{Problem}
+\newtheorem{problem}{\problemTitle}
+
+%** Command \import{}{}
+\def\import{\begingroup
+\protected@edef\@tempa{\endgroup
+\noexpand\@import{\@ifundefined{input@path}{}{\input@path}}%
+{\@ifundefined{Ginput@path}{}{\Ginput@path}}}%
+\@tempa}
+\def\@import#1#2#3#4{%
+\def\input@path{{#3}#1}\def\Ginput@path{{#3}#2}%
+\input{#4}%
+\def\input@path{#1}\ifx\input@path\@empty \let\input@path\@undefined \fi
+\def\Ginput@path{#2}\ifx\Ginput@path\@empty \let\Ginput@path\@undefined \fi
+}
+%** Command \problem{}{}{}
+% To include properly a problem from a file:
+% The first parameter corresponds to the relative location of the file,
+% the second parameter corresponds to the name of the file,
+% the third parameter corresponds to a comment, 
+% such as the number of marks attributed to this exercise,
+% written in the same header of the exercise.
+\providecommand{\RelativeLocationOfTheDatabaseOfProblems}{./}
+\newcommand{\inputProblem}[3]{ %
+\begin{problem} %
+    \begin{displayProblem}
+        \medskip %
+        \if@filename
+        \begin{displayFilename}
+            #1#2
+        \end{displayFilename}
+        \fi
+        \graphicspath{{\RelativeLocationOfTheDatabaseOfProblems#1}}
+        \import{\RelativeLocationOfTheDatabaseOfProblems#1}{#2} %
+        \if@pageBreak
+        \pagebreak
+        \fi
+        \addcontentsline{toc}{subsubsection}{#1#2}
+    \end{displayProblem}
+\end{problem} %
+}
+
+%** Environments:
+% add an ``\includeversion{...}'' in the class file
+% or in the document itself to include other informations.
+%*** Pure version environments
+\excludeversion{INUTILE}
+\excludeversion{solution}
+\excludeversion{textOnly}
+\excludeversion{authorship}
+\excludeversion{usage}
+\excludeversion{markingScheme}
+\excludeversion{suggestedMarkingScheme}
+\excludeversion{codeExample}
+\excludeversion{miscellany}
+\excludeversion{spaceForAnswer}
+\includeversion{title}
+\includeversion{hint}
+%*** Aliases
+\let\sol=\solution
+\let\endsol=\endsolution
+
+%** Commands
+\providecommand{\spaceToFill}[1]{\underline{\hspace{#1}}}
+% Example of usage: \spaceToFill{3cm}.
+
+%
+%*** Colors
+\definecolor{colorSolution}{named}{green}
+\definecolor{colorOptional}{named}{blue}
+%
+%*** displayProblem
+\newenvironment{displayProblem}%
+{}%
+{}
+%*** displaySolution
+\newenvironment{displaySolution}%
+{\color{colorSolution}\par\noindent\slshape\textbf{Solution: }}%
+{\normalcolor\par\smallskip}
+%*** displayExistSolution
+\newcommand{\displayExistSolution}{{\color{colorOptional} \tt (solution available)}}
+%*** displayMarkingScheme
+\newenvironment{displayMarkingScheme}%
+{\color{colorOptional} \par\noindent\slshape\textbf{Marking Scheme: }}%
+{\normalcolor\par\smallskip}
+%*** displaySuggestedMarkingScheme
+\newenvironment{displaySuggestedMarkingScheme}%
+{\color{colorOptional}\par\noindent\slshape\textbf{Suggested Marking Scheme: }}%
+{\normalcolor\par\smallskip}
+%*** displayCodeExample
+\newenvironment{displayCodeExample}%
+{\par\noindent\slshape\textbf{Example of code: }}%
+{\par\smallskip}
+%*** displayMiscellany
+\newenvironment{displayMiscellany}%
+{\par\noindent\slshape\textbf{Miscellany: }}%
+{\par\smallskip}
+%*** displayAuthorship
+\newenvironment{displayAuthorship}%
+{\color{colorOptional}\par\noindent\slshape\textbf{Authorship: }}%
+{\normalcolor\par\smallskip}
+%*** displayUsage
+\newenvironment{displayUsage}%
+{\color{colorOptional}\par\noindent\slshape\textbf{Usage: }\begin{small}}%
+{\normalcolor\par\smallskip                 \end{small}}
+%*** displayUsage
+\newenvironment{displaySpaceForAnswer}%
+{}%
+{}
+%*** displayTextOnly
+\newenvironment{displayTextOnly}%
+{}%
+{}
+%*** displayHint
+\newenvironment{displayHint}%
+{\par\noindent\slshape\textbf{Hint: }\begin{small}}%
+{\par\smallskip                 \end{small}}
+%*** displayTitle
+\newenvironment{displayTitle}%
+{\begin{center}}%
+{\end{center}}
+\renewenvironment{title}{\begin{displayTitle}}{\end{displayTitle}}
+%*** displayFilename
+% Filename is a bit different in this that it is not typed in the problem files.
+\newenvironment{displayFilename}%
+{\color{colorOptional}\par\noindent\begin{small}\slshape\textbf{File: }\end{small}\tt}%
+{\normalcolor\par\smallskip}
+
+%* OPTIONS of the package:  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%** Database location
+% I would like the location of the root of the database to be given in option.
+%\DeclareOption{database}{}
+%% \ProcessOptions
+%
+%** Binary options:
+%
+%*** solution:
+% Differentiate the assignment from its solution.
+% with the solution option, both the text and the solutions are printed, while 
+% wihout it only the text of the problems is written.
+\DeclareOption{solution}{\@solutiontrue}
+\newif\if@solution
+\@solutionfalse
+%*** existSolution:
+% Does not show the solution, but signals that it is available.
+\DeclareOption{existSolution}{\@existSolutiontrue}
+\newif\if@existSolution
+\@existSolutionfalse
+%
+%*** markingScheme:
+\DeclareOption{markingScheme}{\@markingSchemetrue}
+\newif\if@markingScheme
+\@markingSchemefalse
+%
+%*** suggestedMarkingScheme:
+\DeclareOption{suggestedMarkingScheme}{\@suggestedMarkingSchemetrue}
+\newif\if@suggestedMarkingScheme
+\@suggestedMarkingSchemefalse
+%
+%*** codeExample:
+% Give an example of latex code for the solution.
+\DeclareOption{codeExample}{\@codeExampletrue}
+\newif\if@codeExample
+\@codeExamplefalse
+%
+%*** miscellany:
+% Give an example of latex code for the solution.
+\DeclareOption{miscellany}{\@miscellanytrue}
+\newif\if@miscellany
+\@miscellanyfalse
+%
+%*** authorship
+% Print the names of the different authors of the exercise and of its solution.
+\DeclareOption{authorship}{\@authorshiptrue}
+\newif\if@authorship
+\@authorshipfalse
+%
+%*** usage:
+% Print the various time and location where each exercises has been given, 
+% as an assignment or as an exam. 
+\DeclareOption{usage}{\@usagetrue}
+\newif\if@usage
+\@usagefalse
+%
+%*** spaceForAnswer:
+% Leave some space for the answer, so that the student can answer on the sheet. 
+% as for instance in an exam. 
+\DeclareOption{spaceForAnswer}{\@spaceForAnswertrue}
+\newif\if@spaceForAnswer
+\@spaceForAnswerfalse
+%
+%*** pageBreak
+% include a newpage for each problem, to make it easier to separate them on marking
+\DeclareOption{pageBreak}{\@pageBreaktrue}
+\newif\if@pageBreak
+\@pageBreakfalse
+%
+%*** hint:
+% Print the various time and location where each exercises has been given, 
+% as an assignment or as an exam. 
+\DeclareOption{hint}{\@hinttrue}
+\newif\if@hint
+\@hinttrue
+%
+%*** Filename
+% Print the filename of each exercise,
+% so that it can be directly referenced without need to access the code.
+\DeclareOption{filename}{\@filenametrue}
+\newif\if@filename
+\@filenamefalse
+%
+%* Processing of the options:
+\ProcessOptions
+%
+%** Options generally passed along from the class
+% to each option correspond a display environment, so that
+% different class can redefine the environment displayed.
+%*** Solution
+\if@solution
+\renewenvironment{solution}{\begin{displaySolution}}{\end{displaySolution}}
+% \RequirePackage{verbatim}
+%  \renewenvironment{textOnly}{\comment}{\endcomment}
+\else
+\renewenvironment{textOnly}{\begin{displayTextOnly}}{\end{displayTextOnly}}
+% \RequirePackage{verbatim}
+%  \renewenvironment{solution}{\comment}{\endcomment}
+\fi
+%
+%*** ExistSolution
+\if@existSolution
+\RequirePackage{verbatim}
+\renewenvironment{solution}{\displayExistSolution\comment}{\endcomment}
+\let\sol=\solution
+\let\endsol=\endsolution
+\fi
+%
+%*** MarkingScheme
+\if@markingScheme
+\renewenvironment{markingScheme}{\begin{displayMarkingScheme}}{\end{displayMarkingScheme}}
+\fi
+%
+%*** suggestedMarkingScheme
+\if@suggestedMarkingScheme
+\renewenvironment{suggestedMarkingScheme}{\begin{displaySuggestedMarkingScheme}}{\end{displaySuggestedMarkingScheme}}
+\fi
+%
+%*** codeExample:
+\if@codeExample
+\renewenvironment{codeExample}{\begin{displayCodeExample}}{\end{displayCodeExample}}
+\fi
+%
+%*** miscellany:
+\if@miscellany
+\renewenvironment{miscellany}{\begin{displayMiscellany}}{\end{displayMiscellany}}
+\fi
+%
+%*** Authorship
+\if@authorship
+\renewenvironment{authorship}{\begin{displayAuthorship}}{\end{displayAuthorship}}%
+\fi
+%
+%*** Usage
+\if@usage
+\renewenvironment{usage}{\begin{displayUsage}}{\end{displayUsage}}
+\fi
+%
+%*** SpaceForAnswer
+\if@spaceForAnswer
+\renewenvironment{spaceForAnswer}{\begin{displaySpaceForAnswer}}{\end{displaySpaceForAnswer}}
+\fi
+%
+%*** Hint
+\if@hint
+\renewenvironment{hint}{\begin{displayHint}}{\end{displayHint}}
+\fi

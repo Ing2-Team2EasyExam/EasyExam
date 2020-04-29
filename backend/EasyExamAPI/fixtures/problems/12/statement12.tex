@@ -1,0 +1,68 @@
+\begin{usage}
+Assignment 2, Year 2002, Winter Term, School of Computer Science at the University of Waterloo (simplified version).\\
+Assignment 2, Year 2005, Winter Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+\begin{authorship}
+(G\&T R-6.7)  
+\end{authorship}
+
+Would you use the adjacency list structure or the adjacency matrix
+structure in each of the following cases?  
+%
+Justify your choice, or your lack of choice if the choice of the
+data-structure does not matter too much.
+
+
+\begin{enumerate}
+
+\item The graph has $10,000$ vertices and $20,000$ edges, and it is 
+important to use as little space as possible.
+\begin{solution}
+The adjacency list structure would take much less space than the
+adjacency matrix for this ratio of edges to vertices, since the space
+required is linear is the number of edges and vertices, where the
+matrix is quadratic in the number of vertices. So the adjacency list
+is the optimal choice under these conditions.
+\end{solution}
+\begin{markingScheme}
+$2$ marks.
+\end{markingScheme}
+
+
+\item The graph has $10,000$ vertices and $20,000,000$ edges, and it is
+important to use as little space as possible.
+\begin{solution}
+For this ratio of edges to vertices, the space required for each of
+the two structures is roughly the same. 
+%
+The adjacency list will be slightly less, but the operations in
+general will take much more time to perform than the adjacecy
+matrix. 
+%
+Therefore, if we are only considering space, the adjacency list is the
+best choice.
+%
+But, if we are also considering runtime as a less but still important
+feature, then the extra space that the Matrix would take can be
+sacrificed for the much quicker operations that can be performed.
+\end{solution}
+\begin{markingScheme}
+$2$ marks
+\end{markingScheme}
+
+\item You need to answer the query {\tt areAdjacent} as fast as
+possible, no matter how much space you use.
+\begin{solution}
+For the operation {\tt areAdjacent}, the adjacency matrix can be used
+in constant time, where the adjacency list needs linear time on
+average. 
+%
+So the adjacency matrix is the optimal choice for this condition.
+\end{solution}
+\begin{markingScheme}
+$2$ marks
+\end{markingScheme}
+
+\end{enumerate}
+
+

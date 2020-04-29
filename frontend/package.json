@@ -1,0 +1,38 @@
+{
+  "name": "mockup-easyexam",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "immutable": "4.0.0-rc.12",
+    "immutable-js": "0.3.1-6",
+    "js-joda": "1.9.2",
+    "lodash": "4.17.11",
+    "react": "^16.5.2",
+    "react-activity": "1.2.2",
+    "react-bootstrap": "0.32.4",
+    "react-dom": "^16.5.2",
+    "react-google-recaptcha": "1.0.4",
+    "react-icons": "3.2.2",
+    "react-latex": "1.2.0",
+    "react-router-dom": "4.3.1",
+    "react-rte": "0.16.1",
+    "react-scripts": "2.0.5",
+    "react-web-vector-icons": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8000/",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

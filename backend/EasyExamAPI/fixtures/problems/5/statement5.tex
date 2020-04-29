@@ -1,0 +1,110 @@
+\begin{usage}
+\begin{itemize}
+\item Assignment 1, Year 2005, Winter Term, School of Computer Science
+  at the University of Waterloo.
+\item Assignment 1, Year 2006, Winter Term, School of Computer Science
+  at the University of Waterloo: Average: 5.59 marks out of 10
+\end{itemize}
+\end{usage}
+\begin{authorship}
+Text: unknown; solution: Anna Lubiw
+\end{authorship}
+
+Analyze the running time (in terms of $n$) for each of the following
+code fragments using $\Theta$-notation.  Briefly justify the runtime,
+and simplify as much as possible.
+\begin{enumerate}
+
+\item 
+\begin{verbatim}
+sum := 0
+for i from 1 to n*n*n do
+   for j from 1 to i*i*i do
+      sum := sum + 1;
+\end{verbatim}
+
+\begin{solution}
+$$\sum_{i=1}^{n^3} \sum_{j=1}^{i^3} 1 
+= \sum_{i=1}^{n^3} i^3 
+\approx { (n^3)^{3+1} \over 3+1 }
+\in \Theta(n^{12})$$
+\end{solution}
+
+\item 
+\begin{verbatim}
+sum := 0
+for i from 1 to 2*(lg n) do   // assume n is a power of 2 
+   for j from 1 to 4^i do     // 4^i means 4 to the power of i
+      sum := sum + 1
+\end{verbatim}
+
+\begin{solution}
+$$\sum_{i=1}^{2\lg n} \sum_{j=1}^{4^i} 1 
+= \sum_{i=1}^{2\lg n} 4^i 
+= {  4(4^{2\lg n} - 1)  \over  4-1 }
+= {  4(2^{4\lg n} - 1)  \over 3}
+= {  4(2^{\lg n^4}) - 4 \over 3}
+= {  4n^4 - 4 \over 3}
+\in \Theta(n^4)$$
+
+Note that $\sum_{i=1}^{N} a^i = {a^{N+1} - 1 \over a-1} - 1 = { a(a^N -1) \over a-1}$
+
+Note also that 
+$4^{2\lg n} 
+= (2^2)^{2\lg n}
+= 2^{2*2\lg n} 
+= 2^{4\lg n} 
+= 2^{\lg( n^4 ) }
+= n^4$.
+
+\end{solution}
+
+\item
+\begin{verbatim}
+sum := 0
+for i from 1 to n*n do
+   for j from 1 to i do
+      sum := sum + 1
+\end{verbatim}
+
+\begin{solution}
+$$\sum_{i=1}^{n^2} \sum_{j=1}^i 1 = \sum_{i=1}^{n^2} i = {n^2(n^2 + 1) \over 2} \in
+\Theta(n^4)$$
+\end{solution}
+
+\item
+\begin{verbatim}
+for i from 1 to n*n do
+   sum := n
+   while (sum>0) do
+      sum := sum - 1
+\end{verbatim}
+
+
+\begin{solution}
+$$\sum_{i=1}^{n^2} \sum_{s=n}^1 1 = \sum_{i=1}^{n^2} n = n^3 \in \Theta(n^3)$$
+\end{solution}
+
+
+\end{enumerate}
+
+\begin{markingScheme}
+  For each question, half of the marks for the justification, half for
+  the result.
+
+  Count more point for the second question (for instance $4$ marks for
+  it and $2$ for the others).
+\end{markingScheme}
+
+
+\begin{codeExample}
+  To type your answers in \LaTeX, you might use the \verb+enumerate+
+  environment (the solution shown here is bogus):
+\begin{verbatim}
+\begin{enumerate}
+\item The complexity of the algorithm is $\sum_{i=0}^{n^{99}} 2^n$.
+This is asymptotically of the order of $O(n^{99} \times 2^n).
+\item (...)
+\end{enumerate}
+\end{verbatim}
+\end{codeExample}

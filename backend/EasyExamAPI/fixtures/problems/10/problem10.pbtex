@@ -1,0 +1,334 @@
+\begin{authorship}
+Jérémy Barbay
+\end{authorship}
+\begin{authorship}J{\'e}r{\'e}my Barbay\end{authorship}
+\begin{usage}
+Appeared in a simplified form in 
+Assignment 2, CS240, Winter term 2005, University of Waterloo, Canada
+Assignment 3, CS240, Winter 2006 (School of CS, U of W). Average mark: 9.21/15
+\end{usage}
+
+A {\em ternary tree} is a tree such that each node has at most $3$ children.
+A {\em proper} ternary tree is a tree such that each internal node has exactly $3$ children.
+%
+Given a ternary tree $T$, we define
+  $i$ as its number of internal nodes,
+  $e$ as its number of external nodes, and
+  $h$ as its height.
+%
+For each of the following properties, prove or disprove it for both ternary
+trees and proper ternary trees. Note that a property might be true for one type of tree but false for another.
+
+\begin{INUTILE}
+ \begin{markingScheme}
+  $10$ points for each of the two first questions, and $5$ points for
+  the third.
+\end{markingScheme}
+\end{INUTILE}
+
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item $h\leq i \leq {3^h-1\over 2}$ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+{\bf This property is true on general ternary trees}, we prove it by
+induction on $h$. Note that this implies also that {\bf the property
+is true on proper ternary trees}
+
+\begin{itemize}
+
+\item {\bf The induction is based on the variable} $h$, the height of
+the tree.
+
+\item {\bf The induction hypothesis is} $H(h)=$ ``For any proper
+ternary tree of height at most $h$ and with $i$ internal nodes,
+%
+$h\leq i \leq {3^h-1\over2}$''.
+
+\item {\bf The base case of the hypothesis is} $H(0)=$''For any proper
+ternary tree of height $0$ and with $i$ internal nodes,
+$0\leq{i}\leq {3^0-1\over2}=0$''.
+%
+As a ternary tree of height zero can have only one external node and
+no internal nodes ($i=0$), $H(0)$ {\bf is verified}.
+
+\item For any value of $h\in\{1,\ldots,\infty\}$, {\bf suppose that
+$H(h-1)$ is true.}  The inductive step goes as follow:
+%
+For any ternary tree $T$ of height $h\geq1$, consider the children of
+the root of $T$: there are at least one, and at most three, and each
+is of height at most $h-1$: $H(h-1)$ apply to them.
+%
+One one hand, $T$ has at least one sub-tree and its number of internal
+nodes is at least the number of internal nodes (by induction
+hypothesis at least $h-1$) of the tallest of its subtrees plus one:
+$i\geq h-1+1=h$.
+%
+On the other hand, the number of internal nodes in each subtree is at
+most ${3^{h-1}-1\over 2}$, and $T$ has at most $3$ subtrees, hence its
+number of internal nodes is at most 
+$1+3*{3^{h-1}-1\over 2}
+= {3^h-3+2\over2} 
+= {3^h-1\over2}$.
+%
+Hence the final inequality $h\leq i \leq {3^{h}-1\over 2}$, {\bf which
+proves that $H(h)$ is verified}.
+
+\item {\bf The conclusion} is that for $h\in\{0,\ldots,\infty\}$, any
+ternary tree of height $h$ has between $h$ and ${3^h-1}\over2$ internal nodes.
+
+\end{itemize}
+
+\begin{INUTILE}
+  \begin{markingScheme}
+    \begin{itemize}
+    \item $1$ mark for the remark that they don't need to prove it for
+      proper ternary trees (or for the long induction proof proving
+      it);
+    \item $2$ mark if among the five points of the induction none is
+      missing, even if the induction is wrong;
+    \item $7$ marks in general for the induction proof.
+    \end{itemize}
+  \end{markingScheme}
+\end{INUTILE}
+\end{solution}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item $e=2i+1$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{solution}
+{\bf This property is false on general ternary trees}.
+%
+We disprove it by a counter example:
+%
+The following (binary) tree has at most three children per node hence
+it is a {\em ternary} tree.
+%
+Moreover, it has one internal node ($i=1$), and
+two external nodes ($e=2$), but $2i+1=3 \neq 2=i$.
+\begin{center}
+\Tree [ .1 2 3 ]
+\end{center}
+
+\medskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+On the other hand, {\bf the property is true on proper ternary trees}.
+%
+We prove it by induction on the number $i$ of internal nodes: 
+\begin{itemize}
+
+\item {\bf The induction is based on the variable} $i$, the number of
+internal nodes.
+
+\item {\bf The induction hypothesis is} $H(i)=$ ``each proper ternary
+tree of $i$ internal nodes is such that $e=2i+1$''.
+
+\item {\bf The base case of the hypothesis is} $H(0)=$''each proper
+ternary tree of $0$ internal nodes is such that $e=2*0+1=1$''. As a
+tree with no internal node can have only one external node ($e=1$),
+{\bf $H(0)$ is verified}.
+
+\item For any value of $i\in\{1,\ldots,\infty\}$, {\bf suppose that
+$H(i-1)$ is true.}  The inductive step goes as follow:
+
+For any proper ternary tree $T$ of $i$ internal nodes, note $e$ its
+number of external nodes..
+%
+Obtain the proper ternary tree $T'$ by picking any (internal) node of
+height $1$ in $T$, and replace it and its three children (all external
+nodes) by a single external node.
+%
+$T'$ has $i'=i-1$ internal nodes, and two less external nodes than
+$T$, as we removed three external nodes and added one: $T'$ has
+$e'=e-2$ external nodes.
+
+By the induction hypothesis $H(i-1)$, the number of external nodes of
+$T'$ is $e'=2i'+1$, hence the number of external nodes of $T$ is
+$e=e'+2=(2i'+1)+2=(2(i-1)+1)+2=2i+1$, {\bf which proves that $H(i)$ is
+verified}.
+
+\item {\bf The conclusion} is that for $i\in\{0,\ldots,\infty\}$, any
+proper ternary tree of $i$ internal nodes has $e=2i+1$ external nodes.
+
+\end{itemize}
+
+\end{solution}
+
+\begin{INUTILE}
+  \begin{markingScheme}
+    \begin{itemize}
+    \item $1$ mark for the couter-example;
+    \item $2$ mark if among the five points of the induction none is
+      missing, even if the induction is wrong;
+    \item $7$ marks in general for the induction proof.
+    \end{itemize}
+  \end{markingScheme}
+\end{INUTILE}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item $2h+1\leq e \leq 3^h$ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+The right inequality is true for any general ternary tree, but the
+left equality is {\bf false} on general ternary trees.
+%
+We disprove it by a counter example:
+%
+The following (unary) tree is of height $h=2$, but has only one
+external node ($e=1$), which contradicts the left inequality.
+\begin{center}
+\Tree [ .1 [ .2  3 ] ]
+\end{center}
+%
+As the left inequality is not true, {\bf the double inequation is
+false for general ternary trees}.  Note that we don't need to prove
+that the right inequality is correct for any general tree, but if we
+would the proof would be very similar to the proof of the whole
+inequation for proper ternary trees.
+
+\medskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+On the other hand, {\bf both inequalities are true for any proper
+ternary tree} $T$.
+%
+We prove can prove it either by implication, applying the equality
+$e=2i+1$ to the double inequation $2h+1\leq e \leq 3^h$, or the long
+way by induction on $h$:
+
+\begin{itemize}
+
+\item {\bf The induction is based on the variable} $h$, the height of the tree.
+
+\item {\bf The induction hypothesis is} $H(h)=$ ``For any proper
+ternary tree of height at most $h$ and with $e$ external nodes,
+%
+$2h+1\leq e \leq 3^h$''.
+
+\item {\bf The base case of the hypothesis is} $H(0)=$''For any proper
+ternary tree of height $0$ and with $e$ external nodes,
+$1\leq{e}\leq3^0=1$''.
+%
+As a proper ternary tree of height zero can have only one external
+node ($e=1$), $H(0)$ {\bf is verified}.
+
+\item For any value of $h\in\{1,\ldots,\infty\}$, {\bf suppose that
+$H(h-1)$ is true.}  The inductive step goes as follow:
+%
+For any proper ternary tree $T$ of height $h\geq1$, consider the three
+sub-trees $T_1,T_2$ and $T_3$ of heights $h_1,h_2,h_3$ and respective
+number of external nodes $e_1,e_2,e_3$, which roots are the children
+of the root of $T$: the number of external nodes of $T$ is
+$e=e_1+e_2+e_3$, and the height of $T$ is $h=1+\max\{h_1,h_2,h_3\}$.
+%
+By the induction hypothesis $H(h-1)$, 
+\begin{eqnarray*}
+2h_1+1\leq e_1 \leq 3^{h_1};\\
+2h_2+1\leq e_2 \leq 3^{h_2};\\
+2h_3+1\leq e_3 \leq 3^{h_3}.
+\end{eqnarray*}
+
+On one hand 
+$$e 
+=     e_1+e_2+e_3 
+\leq  3^{h_1}+3^{h_2}+3^{h_3} 
+\leq  3*3^{\max\{h_1,h_2,h_3\}}
+=     3^{h}.$$
+
+On the other hand 
+$$e 
+=     e_1+e_2+e_3 
+\geq (2h_1+1) + (2h_2+1) + (2h_3+1) 
+\geq 2(\max\{h_1+h_2+h_3\}+1) +1
+= 2h+1.$$
+%
+Hence the final inequality $2h+1\leq e \leq 3^{h}$, {\bf which proves
+that $H(h)$ is verified}.
+
+\item {\bf The conclusion} is that for $h\in\{0,\ldots,\infty\}$, any
+proper ternary tree of height $h$ has between $2h+1$ and $3^h$ external nodes.
+
+
+\end{itemize}
+
+\begin{INUTILE}
+  \begin{markingScheme}
+    \begin{itemize}
+    \item $2$ marks for the counter example,
+    \item $3$ marks for the implication, or only $2$ points if the
+      student did an induction and the induction if it is done totally
+      correctly.
+    \end{itemize}
+  \end{markingScheme}
+\end{INUTILE}
+\end{solution}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{enumerate}
+
+
+\begin{hint}
+  Note that an inequality of the form $a \le b \le c$ is considered to
+  be two inequalities and thus each must be evaluated separately.
+  %
+  Each of the results can either be disproved by a counter-example or
+  proved by induction. You may also prove a property by implication
+  from other results asked in the problem.
+  % 
+  No points will be given for circular reasoning: If you are asked to
+  prove $A$ or $B$, remember that proving $(A\Rightarrow B)$ and
+  $(B\Rightarrow A)$ proves $(A\Leftrightarrow B)$, but it does not
+  prove $A$ nor does it prove $B$.
+  % 
+  Note that when proving something by induction, it is a good idea to
+  explicitly state the variable on which you base your induction, the
+  induction hypothesis (as a function of this variable), the base case
+  of your hypothesis, the inductive step, and the conclusion.
+\end{hint}
+
+
+\begin{codeExample}
+  One way to structure your induction proof in \LaTeX\ is using the
+  \verb+description+ environment, which is similar to the
+  \verb+itemize+ environment but label each item in bold.
+
+ \pagebreak[3]
+  For instance, the following code:
+\begin{verbatim}
+\begin{description}
+\item[Induction variable:] $n$ the number of nodes in the tree
+\item[Induction hypothesis:] $H(n)=$ ``Any tree on less than $n$
+  nodes has height at most $n+1$''.
+\item[Base case:] $H(2)$ corresponds to the case where (...)
+\item[Inductive step:] Supposed that $H(n)$ is true for some
+  $n$.  We now show that $H(n+1)$ is true: (...)
+\item[Conclusion:] By induction, $H(n)$ is true for all values
+  of $n$ larger or equal to $2$.
+\end{description}
+\end{verbatim}
+would give the following:
+\begin{center}
+  \fbox{\begin{minipage}[t]{.75\textwidth}
+      \begin{description}
+      \item[Induction variable:] $n$ the number of nodes in the tree
+      \item[Induction hypothesis:] $H(n)=$ ``Any tree on less than $n$
+        nodes has height at most $n+1$''.
+      \item[Base case:] $H(2)$ corresponds to the case where (...)
+      \item[Inductive step:] Supposed that $H(n)$ is true for some
+        $n$.  We now show that $H(n+1)$ is true: (...)
+      \item[Conclusion:] By induction, $H(n)$ is true for all values
+        of $n$ larger or equal to $2$.
+      \end{description}
+    \end{minipage}}
+  \end{center}
+\end{codeExample}

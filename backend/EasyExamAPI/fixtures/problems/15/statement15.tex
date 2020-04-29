@@ -1,0 +1,30 @@
+\begin{authorship}
+Goodrich \& Tamassia, problem C-2.31 
+\end{authorship}
+\begin{usage}
+\end{usage}
+
+Show how to find the largest $k$ elements of a set of $n$
+integers in $O(n+k\log n)$ time.
+
+\begin{solution}
+The idea is to use a PriorityQueue and to extract the maximum element $k$
+times.  With the right implementation of PriorityQueue, this takes the
+desired time.
+
+Namely, use a MaxHeap to implement the priority queue.  We have seen in
+class that given $n$ elements, we can build a MaxHeap in $O(n)$ time.
+Then we have a valid heap for which we can extract the maximum in
+$O(\log n)$ time.  We need to extract the maximum $k$ times in order to
+get the $k$ largest elements, so finding the $k$ largest elements takes
+$O(k\log n)$ time.  (In fact, a little less, since the number of elements
+in the heap decreases, but $O(k\log n)$ is surely an upper bound.)
+The total time for the algorithm therefore is $O(n+k\log n)$.
+\end{solution}
+
+\begin{markingScheme}
+5 marks for ``building heap at once''.
+5 marks for saying that this takes only O(n).
+5 marks for saying ``extract max k times''.
+5 marks for saying that this takes O(k log n).
+\end{markingScheme}

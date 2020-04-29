@@ -1,0 +1,90 @@
+\begin{authorship}
+T. Biedl
+\end{authorship}
+\begin{authorship}
+T. Biedl
+\end{authorship}
+\begin{usage}
+Fall 2005, Assignment 7
+\end{usage}
+
+We say that a graph $G=(V,E)$ has a {\em multiple edge} if there
+exist two distinct vertices $v,w$ in $G$ and at least two edges
+in $G$ that have $v$ and $w$ as their endpoints.
+
+Assume that $G$ is stored with adjacency lists.  Show how to test
+whether $G$ contains a multiple edge in $O(m+n)$ time.
+
+\begin{hint}
+We have $n$ vertices, and you may assume that the vertices are 
+already numbered as $1,\dots,n$.  How quickly can you hence
+eliminate duplicates from a list of vertices?
+\end{hint}
+
+\begin{solution}
+The idea is to store all edges in a list and apply radix sort to
+the list.  Then a multiple edge will show up twice in the list, which,
+since it is sorted, we can test by scanning the list.  We can find all
+edges to put in the list by scanning the adjacency list of each vertex,
+but to avoid putting edges in repeatedly, we will only add it to the
+list of edges if the first endpoints has a smaller number than the second.
+Here is the
+pseudo-code.
+
+\begin{verbatim}
+Assume the vertices are numbered 1...n
+Initialize an empty list L
+For each vertex i {
+    Let Adj(i) be the adjacency list of vertex i
+    For each j in Adj(i)
+        if i < j
+            add (i,j) to L
+}
+Sort L in lexicographic order using radix sort
+Let (i,j) be the first element in L
+while not at the end of L  {
+    Let (k,l) be the next element in L
+    if i==k and j==l, then {i,j} is a multiple edge, stop
+    (i,j) <- (k,l)
+}
+\end{verbatim}
+
+For the correctness, note that we have a multiple edge if and only
+if for some vertex $i$, we have some index $j>i$ that appears
+twice in the adjacency list of $i$.  So $(i,j)$ will appear twice in
+$L$. After sorting $L$ in lexicographic order, therefore $(i,j)$ appears
+twice at consecutive positions in $L$, and our algorithm will find it.
+On the other hand, if $(i,j)$ appears twice in $L$, then $j$ must have
+been twice in the adjacency list of $i$, so this was a multiple edge. 
+
+For the time complexity, we spend $O(n)$ time to access all vertices,
+and $O(deg(i))$ time for each vertex $i$ in the for-loop, so this is $O(m+n)$
+total.  There are $m$ elements in $L$, and each of them is a pair $(i,j)$
+with $1\leq i,j\leq n$.  So sorting $L$ by one digit takes $O(m+n)$ time,
+and there are two digits, so sorting $L$ takes $O(m+n)$ time.  Finally,
+scanning through $L$ takes $O(m)$ time, so the total runtime is $O(m+n)$.
+\end{solution}
+
+\begin{markingScheme}
+15 marks for the algorithm, 5 marks for why it works (doesn't have to be
+as precise as what I write), 5 marks for analysing the time complexity.
+Note that one {\em could} put all edges twice into the edge-list and it
+would still work (as long as they're careful to keep the order of endpoints
+intact.)
+
+For slower algorithms, reduce as follows:
+\begin{itemize}
+\item 20 marks (10+5+5) if they apply CountSort or similar on each Adjacency 
+	list.
+	(This is not correct, since it actually takes $O(\deg(v)+n)$ per vertex, 
+	but I'd expect this to be done quite frequently.)
+\item 15 marks (5+5+5) for anything that tries to use CountSort in a clever way 
+	to avoid regular sorting/elimination of duplicates.  
+\item 10 marks (5+3+2) for any solution in $O(n+m\log m)$ time 
+	(e.g., compute all edges, then sort and eliminate.)
+\item 5 marks (3+1+1) for anything that works in $o(m^2+n)$ time and 
+	doesn't fall in the above categories.
+\end{itemize}
+\end{markingScheme}
+
+

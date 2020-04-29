@@ -1,0 +1,99 @@
+\begin{authorship}
+Jérémy Barbay
+\end{authorship}
+\begin{usage}
+Assignment 2, Year 2004, Fall Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+
+When using the {\tt long} primitive datatype in Java, care must be taken
+to ensure that the result of an arithmetic operation such as $+$ or $\ast$
+lies in the range 
+%$$[-2^{63}\ldots 2^{63}-1
+$$-9223372036854775808\ldots 9223372036854775807.$$
+If we have a modulus $p$
+that satisfies $2\leq p \leq 3037000500$, and we represent integers modulo
+$p$ in the range $0\ldots p-1$, then we can perform arithmetic modulo
+$p$ using the {\tt long} datatype.  The upper limit for $p$ is carefully
+chosen so that $(p-1)^2 \leq 9223372036854775807$.  If $a$, $b$
+and $p$ satisfy the conditions $0 \leq a <
+p$, $0 \leq b < p$ and $2 \leq p \leq 3037000500$, then
+addition, multiplication and negation modulo $p$
+can be performed in Java, using variables of type {\tt long},
+as \verb[(a + b) % p[, \verb[(a * b) % p[ and \verb[p - a[ respectively.
+
+\medskip  
+
+Consider the following method for computing the power of integers
+modulo $p$.
+\begin{verbatim}
+public static long power(long x, long k, long p) {
+// pre: 0 <= x < p,  k > 0,  2 <= p <= 3037000500
+// post: returns x^k modulo p
+//       the return value will be in the range [0..p-1]
+{
+   long a = 1;
+   for (long i = 1; i <= k; i++) 
+      a = (a * x) % p;
+   return a;
+}
+\end{verbatim}
+The method is correct, but has a running time proportional to $\Theta(k)$.
+
+\medskip
+
+Your task is to provide an alternative implementation of method
+{\tt power}.  Your method should have running time proportional to
+$\Theta(\log k)$.
+%
+Like the naive implementation given above, you may only use control
+statements like {\tt if} and {\tt while}, together with the Java
+operators \verb[+, -, *, /[.
+
+
+\begin{hint}
+%Note that $c^{1041} = c^{1024}c^{16}c$. 
+How can you compute $c^{16}$ using only four instead of fifteen
+multiplications?  How do the binary expansions of $k$ and $k/2$ compare?
+\end{hint}
+
+\begin{solution}
+   The body of {\tt power} can be replaced with:
+\begin{verbatim}
+   long a = 1;
+   while (k != 0) {
+      if (2*(k/2) != k) a = (a*x) % p;
+      x = (x*x) % p;
+      k = k/2;
+   }
+   return a;
+\end{verbatim}
+
+   
+ A polylogarithmically bounded solution (i.e., $(\lg k)^c$
+ for some constant $c$) would also be considered for part marks.
+
+ For example, here's a $\Theta( (\lg k)^2 )$ solution:
+
+\begin{verbatim}
+    long tracker = 1;
+    long storage = x;
+    if (k==0) {return 0;}
+
+    while ( tracker * 2 <= k && tracker * 2 > 0 )
+    { tracker = tracker * 2;
+      storage = (storage*storage) %p;
+    }
+    storage = storage * power(x,k-tracker,p);
+    return storage % p;
+\end{verbatim}
+
+\end{solution}
+
+\begin{markingScheme}
+  4 marks for a $\Theta(\lg k)$ solution
+
+  3 marks for a polylogarithmically bounded solution (i.e., $(\lg k)^c$
+ for some constant $c$)
+
+  2 and 1 marks by discretion (e.g., correct verbal description?)
+\end{markingScheme}

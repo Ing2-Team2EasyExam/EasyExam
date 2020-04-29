@@ -1,0 +1,121 @@
+\begin{authorship} Anna Lubiw, from Weiss's book
+\end{authorship}
+\begin{usage}
+Assignment 2, Year 2005, Winter Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+
+A min-max heap is a data structure that supports both deleteMin and
+deleteMax in $O(\log n)$ time per operation (though you won't show that
+in this question).  
+%
+The structure is a binary tree, with the same shape property as a
+normal heap, but with the following ordering property, where ``value''
+indicates the value stored at a node, and $p(x)$ indicates the parent
+of node $x$: for any node $x$ at depth $2, 4, 6, \ldots$ $$
+\rm{value}(p(p(x))) < \rm{value}(x) < \rm{value}(p(x))$$
+%
+and for any node $x$ at depth $3, 5, \ldots$
+%
+$$ \rm{value}(p(x)) < \rm{value}(x) < \rm{value}(p(p(x)))$$
+%
+and for nodes $x$ at depth 1 (i.e. the children of the root)
+%
+$$\rm{value}(p(x)) < \rm{value}(x)$$
+%
+
+\begin{enumerate}
+\item Draw the tree corresponding to the following min-max heap:
+6, 81, 87, 14, 17, 12, 28, 71, 25, 80, 20, 52, 78, 31, 42, 32, 59, 16.
+(This is the correct ordering for a min-max heap.)
+
+\begin{solution}
+\begin{center}
+\Tree [ 
+.6 
+[.81 
+  [.14
+    [.71
+      32
+      59
+    ]
+    [.25
+      16
+    ]
+  ]
+  [.17
+    80
+    20
+  ]
+]
+[.87 
+  [.12
+    52
+    78
+  ]
+  [.28 
+    31
+    42
+  ]   
+] 
+] 
+\end{center}
+\end{solution}
+\begin{spaceForAnswer}\pagebreak\end{spaceForAnswer}
+
+\item Describe how to find and remove the minimum element in a min-max
+  heap.  Analyze the complexity of your methods.  (You do not need to
+  prove correctness.)
+
+\begin{solution}
+  \begin{authorship}Jeremy Barbay\end{authorship}
+  The minimum element is at the root. To remove it, exchange it with
+  the last element, as in a normal heap.
+%
+  Then, going down the tree, check if each node respects the min max
+  heap property relative to its depth, its two children and its four
+  grand-children.
+%
+  When it does not, reorder the three nodes of the path so that they
+  respect the condition and check the property downward.
+
+  As the tree is of height $\lg n$ and as each reoredering requires a
+  finite number of operations, the whole deletion requires at most
+  $O(\lg n)$ operations.
+\end{solution}
+
+
+
+\begin{spaceForAnswer}\vfill\end{spaceForAnswer}
+
+\item Give an $O(\log n)$ time algorithm to insert a new element
+into a min-max heap.  Include a brief justification of the running time.
+(You do not need to prove correctness.)
+
+\begin{spaceForAnswer}\vfill\end{spaceForAnswer}
+
+\begin{solution}
+  \begin{authorship}Jeremy Barbay\end{authorship}
+  Add the element to the first leaf available, as in a normal heap.
+
+  Then, going up the path to the root, check if each node respects the
+  min max heap property relative to its depth: 
+  \begin{center}
+    if $x$ has value $a$, $p(x)$ has value $b$ and $p(p(x))$ has value
+    $c$, \\
+    then $a\in[\min(b,c),\max(b,c)]$.
+  \end{center}
+  When it does not, reorder the three nodes of the path so that they
+  respect the condition and check the property upward.
+
+  As the tree is of height $\lg n$ and as each reoredering requires a
+  finite number of operations, the whole insertion requires at most
+  $O(\lg n)$ operations.
+\end{solution}
+
+\end{enumerate}
+
+\begin{spaceForAnswer}\pagebreak\end{spaceForAnswer}
+
+\begin{markingScheme}
+1 + 3 + 6
+\end{markingScheme}

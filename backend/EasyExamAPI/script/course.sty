@@ -1,0 +1,38 @@
+% * Tags for the \entete command.
+\renewcommand{\institution}{\texttt{Institution Name}}
+\renewcommand{\courseCode}{\texttt{Course Code}}
+\renewcommand{\courseName}{\texttt{Course Name}}
+\renewcommand{\courseInstructors}{\texttt{Name of the Instructor}}
+
+%* Display options
+\definecolor{colorSolution}{named}{red}
+\definecolor{colorOptional}{named}{blue}
+
+% *** display of solutions
+\renewenvironment{displaySolution}%
+{\color{colorSolution}\begin{center}
+                          --------------------begin solution------------------------
+\end{center}}%
+{\begin{center}
+     ---------------------end solution--------------------------
+\end{center}\normalcolor}%
+%*** display of hints
+\renewenvironment{displayHint}%
+{\noindent{\em Hint:}}%
+{}
+%*** display of Miscellany
+\renewenvironment{displayMiscellany}%
+{\medskip \noindent{\em Miscellany:}}%
+{}
+%*** display of codeExample
+\renewenvironment{displayCodeExample}%
+{\noindent{\em Example:}}%
+{}
+%
+%*** display of textOnly
+\renewenvironment{displayTextOnly}%
+{}%
+{}
+%
+
+

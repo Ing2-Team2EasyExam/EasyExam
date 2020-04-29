@@ -1,0 +1,54 @@
+\begin{usage}
+Very similar version (without the $\omega$) used on
+Assignment 1, Year 2004, Fall Term, School of Computer Science at the University of Waterloo.
+Midterm, Year 2005, Winter Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+%Relative asymptotic growths
+\begin{authorship}
+CLRS 3-2.
+\end{authorship}
+Fill in the table below to indicate
+for each pair of expressions (A,B) 
+whether A is $O$, $o$, $\omega$, $\Omega$, or $\Theta$ of B.
+Use ``Y'' for ``Yes'' and ``N'' for ``No''.
+%
+You do not need to justify your answers.
+%
+Assume that $k \geq 1$, $\epsilon > 0$, and $c > 1$ are
+constants. 
+%
+\begin{spaceForAnswer}
+\renewcommand{\arraystretch}{2}
+\begin{textOnly}
+$$
+\begin{array}{|c|c|c|c|c|c|}\hline
+  A          &	B               &   \ \ \ O\ \ \    &   \ \ \ o\ \ \    & \ \ \ \Omega\ \ \ &   \ \ \ \omega\ \ \    &\ \ \ \Theta\ \ \  \\ \hline
+ \log^{k}n     &n^{\varepsilon }    	&    	&  	&  	&  	&  	\\ \hline
+ n^{k}       &	c^{n}              	&   	&  	&  	&  	&  	\\ \hline
+ \sqrt{n}    &	n ^{\sin n}        	&   	&  	&  	&  	&  	\\ \hline
+ 2^{n}       &	2^{n/2}            	&   	&   	&  	&  	&  	\\ \hline
+ n^{\log c}   &	c^{\log n}          	&   	&  	&  	&  	&  	\\ \hline
+ \log(n!)      &	\log (n^{n})        	&   	&  	&  	&  	\\ \hline
+\end{array}
+$$
+\end{textOnly}
+\end{spaceForAnswer}
+
+\begin{solution}
+\begin{authorship}J\'er\'emy Barbay\end{authorship}
+$$
+\begin{array}{|c|c|c|c|c|c|c|}\hline
+  A          &	B               &   O   &   o   & \Omega&\omega &\theta \\	\hline
+ \log^{k}n     &n^{\varepsilon }  &   Y	&   Y 	&  N	&  N	&  N	\\	\hline 
+ n^{k}       &	c^{n}           &   Y	&   Y	&  N	&  N	&  N	\\	\hline 
+ \sqrt{n}    &	n ^{\sin n}     &   N	&   N	&  N	&  N	&  N	\\	\hline 
+ 2^{n}       &	2^{n/2}         &   N 	&   N	&  Y 	&  Y	&  N	\\	\hline 
+ n^{\log c}   &	c^{\log n}       &   Y	&   N	&  Y	&  N	&  Y	\\	\hline 
+ \log(n!)      &	\log (n^{n})     &   Y	&   N	&  Y	&  N	&  Y	\\	\hline 
+\end{array}
+$$
+\end{solution}
+\begin{markingScheme}
+3 marks for each line.  Deduct 1 for each wrong answer (to a max of
+3 deductions per line).
+\end{markingScheme}

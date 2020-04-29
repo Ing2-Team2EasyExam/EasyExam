@@ -1,0 +1,153 @@
+\begin{usage}
+Assignment 2, Year 2004, Fall Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+ Starting with an empty heap, show the max-heap (represented as a tree)
+resulting from the insertion of 28, 37, 55, 31, 22, 40, 7.  Show the heap
+after each insertion.  Then, perform three {\tt extractMax} operations,
+and show the heap after each operation.
+Note: Use the ``Insert'' and ``ExtractMax'' operations described on
+pages 6--9 and 6--10 of the course notes.
+
+\begin{solution}
+
+\setlength{\unitlength}{3947sp}%
+%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(7358,5035)(166,-4586)
+\thinlines
+\put(3667,-3470){\line(-4,-3){238.400}}
+\put(4023,-3409){\line( 5,-4){298.902}}
+\put(3130,-4005){\line(-2,-3){119.231}}
+\put(3368,-4005){\line( 2,-3){119.538}}
+\put(2773,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(3191,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(3547,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(3787,-3350){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(4382,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}7}}}
+\put(6288,-3290){\circle{430}}
+\put(5693,-3826){\circle{430}}
+\put(6884,-3826){\circle{430}}
+\put(5274,-4363){\circle{430}}
+\put(6110,-3470){\line(-4,-3){239.040}}
+\put(3607,-4363){\circle{430}}
+\put(1581,-3409){\line( 5,-4){298.293}}
+\put(686,-4005){\line(-2,-3){118.923}}
+\put(926,-4005){\line( 2,-3){118.923}}
+\put(1864,-3996){\line(-2,-3){118.923}}
+\put(330,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(747,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(1104,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(1343,-3350){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}40}}}
+\put(1939,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(1641,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}7}}}
+\put(3844,-3290){\circle{430}}
+\put(3249,-3826){\circle{430}}
+\put(4441,-3826){\circle{430}}
+\put(2831,-4363){\circle{430}}
+\put(6466,-3409){\line( 5,-4){298.902}}
+\put(3590,-399){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(4187,138){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}55}}}
+\put(4782,-399){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(6606,179){\circle{430}}
+\put(6010,-357){\circle{430}}
+\put(7202,-357){\circle{430}}
+\put(5592,-894){\circle{430}}
+\put(6427, -1){\line(-4,-3){238.400}}
+\put(6784, 60){\line( 5,-4){298.902}}
+\put(5891,-536){\line(-2,-3){119.231}}
+\put(6547,119){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}55}}}
+\put(7142,-418){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(5534,-953){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(5950,-418){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(4424, 79){\line( 5,-4){299.390}}
+\put(5573,-4005){\line(-2,-3){119.538}}
+\put(6228,-3350){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(5632,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(5216,-4422){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(6824,-3886){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}7}}}
+\put(1778,-339){\circle{430}}
+\put(1717,-399){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(2372,198){\circle{430}}
+\put(2195, 18){\line(-4,-3){238.880}}
+\put(2313,138){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(4246,198){\circle{430}}
+\put(3650,-339){\circle{430}}
+\put(4842,-339){\circle{430}}
+\put(4068, 18){\line(-4,-3){238.880}}
+\put(1224,-3470){\line(-4,-3){238.400}}
+\put(1104,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(6348,-1324){\circle{430}}
+\put(5752,-1860){\circle{430}}
+\put(6943,-1860){\circle{430}}
+\put(5335,-2396){\circle{430}}
+\put(6110,-2396){\circle{430}}
+\put(6610,-2396){\circle{430}}
+\put(7301,-2396){\circle{430}}
+\put(6168,-1502){\line(-4,-3){237.760}}
+\put(6527,-1444){\line( 5,-4){296.219}}
+\put(5632,-2040){\line(-2,-3){118}}
+\put(5870,-2040){\line( 2,-3){118.615}}
+\put(6810,-2029){\line(-2,-3){119.385}}
+\put(7049,-2049){\line( 2,-3){119.077}}
+\put(747,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(686,226){\circle{430}}
+\put(629,166){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(1403,-1324){\circle{430}}
+\put(807,-1860){\circle{430}}
+\put(1999,-1860){\circle{430}}
+\put(389,-2396){\circle{430}}
+\put(1164,-2396){\circle{430}}
+\put(1224,-1502){\line(-4,-3){238.400}}
+\put(1581,-1444){\line( 5,-4){296.829}}
+\put(686,-2040){\line(-2,-3){118}}
+\put(926,-2040){\line( 2,-3){118}}
+\put(1343,-1383){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}55}}}
+\put(1939,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(330,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(6288,-1383){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}55}}}
+\put(3368,-2040){\line( 2,-3){118.615}}
+\put(4309,-2029){\line(-2,-3){119.692}}
+\put(3787,-1383){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}55}}}
+\put(2773,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(3191,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(3547,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(4084,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(4382,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}40}}}
+\put(1403,-3290){\circle{430}}
+\put(807,-3826){\circle{430}}
+\put(1999,-3826){\circle{430}}
+\put(389,-4363){\circle{430}}
+\put(1164,-4363){\circle{430}}
+\put(1664,-4363){\circle{430}}
+\put(3130,-2040){\line(-2,-3){118.308}}
+\put(5274,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}28}}}
+\put(5693,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}31}}}
+\put(6049,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}22}}}
+\put(6586,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}37}}}
+\put(6884,-1920){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}40}}}
+\put(7241,-2457){\makebox(0,0)[lb]{\smash{\SetFigFont{9}{10.8}{\rmdefault}{\mddefault}{\updefault}7}}}
+\put(3844,-1324){\circle{430}}
+\put(3249,-1860){\circle{430}}
+\put(4441,-1860){\circle{430}}
+\put(2831,-2396){\circle{430}}
+\put(3607,-2396){\circle{430}}
+\put(4106,-2396){\circle{430}}
+\put(3667,-1502){\line(-4,-3){238.400}}
+\put(4023,-1444){\line( 5,-4){297.439}}
+\end{picture}
+\end{solution}
+
+\begin{markingScheme}
+Start with 4 marks
+
+Subtract one mark per mistake (e.g., improper sifting, incorrect extractMax, etc.)
+   However, keep in mind that one early mistake (e.g., an insertion performed 
+   with an incorrect key) will affect the entire rest of the question so only subtract
+   a mark for the initial mistake.
+\end{markingScheme}

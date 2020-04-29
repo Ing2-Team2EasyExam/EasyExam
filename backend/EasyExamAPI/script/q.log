@@ -1,0 +1,38 @@
+This is TeX, Version 3.14159265 (TeX Live 2016/Debian) (INITEX)  11 DEC 2018 15:51
+**q
+(/usr/share/texlive/texmf-dist/tex/latex/tools/q.tex
+! Interruption.
+l.2 
+    %% This is file `q.tex',
+? q
+OK, entering \batchmode...
+! Missing { inserted.
+<to be read again> 
+                   {
+l.38  \message{
+               File ignored}
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+)
+Runaway text?
+{File ignored} \batchmode 
+! File ended while scanning text of \message.
+<inserted text> 
+                }
+<*> q
+     
+I suspect you have forgotten a `}', causing me
+to read past where you wanted me to stop.
+I'll try to recover; but if the error is serious,
+you'd better type `E' or `X' now and fix your file.
+
+ {File ignored} \batchmode 
+! Emergency stop.
+<*> q
+     
+*** (job aborted, no legal \end found)
+
+No pages of output.

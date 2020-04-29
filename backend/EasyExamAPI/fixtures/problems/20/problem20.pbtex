@@ -1,0 +1,132 @@
+\begin{authorship}
+Unknown
+\end{authorship}
+\begin{authorship}Unknown\end{authorship}
+\begin{usage}
+Assignment 2, Year 2004, Fall Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+ 
+%Assume the scenario on page 7-12 of the course notes.
+\begin{enumerate}
+
+\item Let $C_{\mbox{\scriptsize WORST}}$ be the expected number of
+comparisons for a successful search given the worst possible ordering
+of the keys.
+%
+Express $C_{\mbox{\scriptsize
+WORST}}$ in terms of $n$ and $C_{\mbox{\scriptsize OPT}}$.
+
+\item The (not so useful) Move-to-Back heuristic is the same as the
+Move-to-Front heuristic but the most recently retrieved item is
+swapped with the last item in the dictionary.
+%
+What is the expected cost of performing a successful search under the
+Move-to-Back heuristic for the following probability distribution:
+$p_i = 4/(3n)$ for $i=1\ldots n/2$ and $p_i = 2/(3n)$ for
+$i=n/2+1\ldots n$.  
+%
+Assume $n$ is even and give an exact answer in terms of $n$.  
+%
+\begin{hint}
+The correct solution has the form $c_1+c_2n$ for rational numbers
+$c_1$ and $c_2$.
+\end{hint}
+
+\end{enumerate}
+
+\begin{solution}
+\begin{enumerate}
+
+  \item Consider that $C_{\hbox{\scriptsize OPT}}$ = $\sum_{j=1}^{n} j  P_j$.
+%
+  Similarly, $C_{\hbox{\scriptsize WORST}}$ = $\sum_{j=1}^{n} (n - j + 1)P_j$ 
+  which simplifies to $n+1-C_{\hbox{\scriptsize OPT}}$.
+
+
+  \item Two solutions are possible. Both are worth full marks:
+     \begin{enumerate}
+	\item The first solution uses the provided hint. We substitute and evaluate 
+	the expected cost for two values of $n$ and then solve the system of equations.
+
+	The probability that $k_i$ is before $k_j$ is $p_j/(p_i+p_j)$.
+	Thus, the expected number
+	of keys before $k_j$ is $\sum_{i,i\neq j} p_j/(p_i+p_j)$. 
+
+	Calculating for $n=2$, 
+	 %
+	 %
+	 \begin{eqnarray*}
+	 C_{\hbox{\scriptsize MTB}} &= & 
+	  \sum_j p_j(1+ \sum_{i,i\neq j} \frac{p_j}{p_i+p_j})\\
+	  & = & 1 + \sum_j p_j^2 \sum_{i,i\neq j} \frac{1}{p_i+p_j}\\
+	  & = & 1 + \left (\frac{2}{3}\right )^2 \left (\frac{1}{1/3 + 
+                     2/3}\right ) 
+   		  + \left (\frac{1}{3}\right )^2 \left (\frac{1}{2/3 + 1/3}
+                    \right )   \\
+	  & = & \frac{14}{9} 
+	 \end{eqnarray*}
+
+	Similarly, for $n=4$ we get
+	 %
+	 %
+	 \begin{eqnarray*}
+	 C_{\hbox{\scriptsize MTB}} &= & 
+	  \sum_j p_j\left (1+ \sum_{i,i\neq j} \frac{p_j}{p_i+p_j}\right)\\
+	  & = & 1 + \sum_j p_j^2 \sum_{i,i\neq j} \frac{1}{p_i+p_j}\\
+	  & = & 1 + 2\left (\frac{1}{3}\right )^2 \left (\frac{1}{1/3 + 1/3} + \frac{2}{1/6 + 1/3}\right) \\ 
+          & + &	2\left (\frac{1}{6}\right )^2 \left(\frac{2}{1/3 + 1/6} + \frac{1}{1/6 + 1/6}\right)   \\
+	  & = & \frac{47}{18} 
+	 \end{eqnarray*}
+
+	 Which gives us the linear system $c_1 + c_2(4) = 47/18$ and
+ $c_1 + c_2(2) = 14/9$		
+	 which we can solve to get the following equation for expected cost: 
+	  $C_{\hbox{\scriptsize MTB}} = 1/2 + 19n/36$.
+
+	\item The second solution (for the more intrepid) finds the solution more directly
+	by solving the sums.
+
+	 Let $x=4/(3n)$ and $y=2/(3n)$. Then
+	 %
+	 %
+	 \begin{eqnarray*}
+	 C_{\hbox{\scriptsize MTB}} &= & 
+	  \sum_j p_j(1+ \sum_{i,i\neq j} \frac{p_j}{p_i+p_j})\\
+	  & = & 1 + \sum_j p_j^2 \sum_{i,i\neq j} \frac{1}{p_i+p_j}\\
+	  & = & 1 + \sum_{j=1}^{n/2}x^2 \sum_{i,i\neq j} \frac{1}{p_i+x} + \sum_{j=\frac{n}{2} + 1}^{n}y^2 \sum_{i,i\neq j} \frac{1}{p_i+y} \\
+	  & = & 1 + x^2 \sum_{j}^{n/2} \left ( \left (\frac{n}{2} - 1\right)
+    \left (\frac{1}{x+x}\right) + \left(\frac{n}{2}\right )
+   \left (\frac{1}{y+x}\right ) \right ) \\   
+	  & + &   + y^2 \sum_{n/2 + 1}^{n}  \left ( \left (\frac{n}{2} - 1
+       \right ) \left (\frac{1}{y+y}\right ) + \left (\frac{n}{2}\right )
+    \left (\frac{1}{x+y} \right ) \right ) \\
+	  & = & 1 + \left (\frac{n}{2} \right )
+	 \left (
+	 \left (\frac{n}{2} \right)
+	 \left (\frac{x^2+y^2}{x+y}\right ) +
+	 \left (\frac{n}{2} -1\right ) \left (x^2\left( \frac{1}{x+x} \right ) 
+	 + y^2\left(\frac{1}{y+y}\right) \right )
+	 \right ) \\
+	  & = & \frac{1}{2} + \frac{19n}{36}
+	 \end{eqnarray*}
+     \end{enumerate}
+  \end{enumerate}
+\end{solution}
+
+\begin{INUTILE}
+  \begin{markingScheme}
+    \begin{enumerate}
+
+    \item A correct answer is worth 2 marks. Justification is nice,
+      but not required due to the wording of the question.  Assign 1
+      mark for solutions that have simple arithmetic/summation errors
+      but have the correct idea.
+
+    \item 3 marks for a complete solution using either approach 2
+      marks for a fairly complete solution with minor errors
+      (arithmetic/summation) or inadequate justification 1 marks for
+      an incomplete solution that has some of the correct ideas
+
+    \end{enumerate}
+\end{markingScheme}
+\end{INUTILE}

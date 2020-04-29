@@ -1,0 +1,206 @@
+\begin{authorship}
+J'er'emy Barbay, inspired by Unknown
+\end{authorship}
+\begin{authorship}J\'er\'emy Barbay, inspired by Unknown\end{authorship}
+\begin{usage}
+A similar one was used in Assignment 2, Year 2002, Fall Term, School of Computer Science at the University of Waterloo.
+Midterm, Year 2005, Winter Term, School of Computer Science at the University of Waterloo.
+\end{usage}
+ Consider a dictionary implemented as a linear array.
+%
+Let $A[0..6]$ be the dictionary, with elements $A[i]=i$ for $0 \leq i
+\leq 6$.
+%
+You have seen the Move-To-Front (MTF) and Transpose heuristics in
+class, but there is another possible heuristic: Move-To-Middle (MTM).
+%
+The MTM heuristic is like the MTF heuristic, except that once
+an element is found at position $p$, it is moved halfway to the front, 
+to the ``middle'' position $\lfloor p/2\rfloor$.
+
+\begin{enumerate}
+
+\item For each of MTF, Transpose, MTM, show the array after searching for
+the following keys in the given order: $3; 1; 6; 6.$ 
+%
+For each heuristic, compute the total number of (key) comparisons
+required to execute all of these searches.
+
+\begin{spaceForAnswer}
+\begin{tabular}{|c|p{3.2cm}|p{3.2cm}|p{3.2cm}|}
+\hline
+Search & MTF & Transpose & MTM\\
+\hline
+\hline
+Start&
+\multicolumn{3}{|c|}{\tt [0,1,2,3,4,5,6]}\\
+\hline
+\hline
+3
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+\\
+&
+c= \hspace{.5cm} &
+c= \hspace{.5cm} &
+c= \hspace{.5cm} \\
+\hline
+1
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+\\
+&
+c= \hspace{.5cm} &
+c= \hspace{.5cm} &
+c= \hspace{.5cm} \\
+\hline
+6
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+\\
+&
+c= \hspace{.5cm} &
+c= \hspace{.5cm} &
+c= \hspace{.5cm} \\
+\hline
+6
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+&$\begin{array}{|c|c|c|c|c|c|c|}\hline\ &\ &\ &\ &\ &\ &\ \\ \hline\end{array}$
+\\
+&
+c= \hspace{.5cm} &
+c= \hspace{.5cm} &
+c= \hspace{.5cm} \\
+\hline
+\hline
+Total comparisons&
+  &  &  \\
+\hline
+\end{tabular}
+\end{spaceForAnswer}
+\begin{solution}
+\begin{tabular}{|c|l|l|l|}
+\hline
+Search & MTF & Transpose & MTM\\
+\hline
+\hline
+Start&
+\multicolumn{3}{|c|}{\tt [0,1,2,3,4,5,6]}\\
+\hline
+\hline
+3&
+{\tt [3,0,1,2,4,5,6]}&
+{\tt [0,1,3,2,4,5,6]}&
+{\tt [0,3,1,2,4,5,6]}\\
+&
+c=4&
+c=4&
+c=4\\
+\hline
+1&
+{\tt [1,3,0,2,4,5,6]}&
+{\tt [1,0,3,2,4,5,6]}&
+{\tt [0,1,3,2,4,5,6]}\\
+&
+c=3&
+c=2&
+c=3\\
+\hline
+6&
+{\tt [6,1,3,0,2,4,5]}&
+{\tt [1,0,3,2,4,6,5]}&
+{\tt [0,1,3,6,2,4,5]}\\
+&
+c=7&
+c=7&
+c=7\\
+\hline
+6&
+{\tt [6,1,3,0,2,4,5]}&
+{\tt [1,0,3,2,6,4,5]}&
+{\tt [0,6,1,3,2,4,5]}\\
+&
+c=1&
+c=5&
+c=4\\
+\hline
+\hline
+Total comparisons&
+15&19&18\\
+\hline
+\end{tabular}
+
+\end{solution}
+
+\item Given the following distribution of search queries on the keys
+of the dictionary, what is the expected number of comparisons needed to 
+search in an optimal static ordering of the list?
+%
+$$
+\Pr[0]{=}.01;\ 
+\Pr[1]{=}.3;\ 
+\Pr[2]{=}.09;\ 
+\Pr[3]{=}.15;\ 
+\Pr[4]{=}.2;\ 
+\Pr[5]{=}.15;\ 
+\Pr[6]{=}.1
+$$
+Give the optimal static ordering, the general formula to compute the
+expected number of comparisons, and the details of your calculations.
+
+\begin{spaceForAnswer}  
+
+\vfil
+
+\end{spaceForAnswer}
+%
+\begin{solution}
+One optimal static ordering is $1,4,5,3,6,2,0$ (the other one is $1,4,3,5,6,2,0$).
+
+With the following notation, where $p_i$ corresponds to the $i$th
+probability in decreasing order starting from $p_1$, the average
+complexity of a search in this list is then $\sum_{i=1}^{7} i p_i$:
+$$
+\begin{array}{|c|c|c|c|c|c|c|c|} \hline
+i   & 1  & 2  & 3 & 4 & 5 & 6 & 7 \\ \hline
+p_i & .3 & .2 &.15&.15&.1 &.09&.01\\  \hline
+\end{array}
+$$
+
+Hence the average complexity is 
+$$ 
+\begin{array}{llllllll}
+&   1 * .3
+& + 2 * .2
+& + 3 * .15
+& + 4 * .15
+& + 5 * .1
+& + 6 * .09
+& + 7 * .01
+\\
+=
+&   .3
+& + .4
+& + .45
+& + .6
+& + .5
+& + .54
+& + .07
+\\
+= 
+& 2.86
+\end{array}
+$$
+\end{solution}
+\begin{markingScheme}
+$2$ points for the optimal ordering,
+$2$ points for the formula,
+$1$ point for the correct computation,
+for a total of $5$ points.
+\end{markingScheme}
+\end{enumerate}
+

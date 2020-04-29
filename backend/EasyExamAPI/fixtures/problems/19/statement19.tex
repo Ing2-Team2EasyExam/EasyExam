@@ -1,0 +1,108 @@
+\begin{authorship}J\'er\'emy Barbay\end{authorship}
+\begin{usage}
+Final Exam CS240, Winter 2005, Univ of Waterloo, Canada
+\end{usage}
+
+This question is about binary search trees.
+
+\begin{enumerate}
+
+\item Suppose that a binary search tree has keys $1, \ldots, n$, and
+  that the probability of searching for key $i$ is
+  $p_i=1/2^i+1/(n2^n)\,\forall i\in\{1,\ldots,n\}$.  
+  % 
+  Assume that we only perform successful searches.
+  % 
+  What is the best static binary search tree for $n=3$?
+  % 
+  Justify your answer.
+  
+  \begin{spaceForAnswer}
+    \vfill \pagebreak
+  \end{spaceForAnswer}
+  
+\begin{solution}
+The best tree is . 
+\begin{minipage}{.23\textwidth}\Tree [ .1 - [ .2 - [ .3 - - ] ] ] \end{minipage}
+
+There are only five binary search tree possible on $3$ elements:\\
+\begin{minipage}{.15\textwidth}\Tree [ .1 - [ .2 - [ .3 - - ] ] ] \end{minipage}
+\begin{minipage}{.15\textwidth}\Tree [ .1 - [ .2 [ .3 - - ] - ] ] \end{minipage}
+\begin{minipage}{.15\textwidth}\Tree [ .2 [ .1 - - ] [ .3 - - ] ] \end{minipage}
+\begin{minipage}{.15\textwidth}\Tree [ .3 [ .1 - [ .2 - - ] ] - ] \end{minipage}
+\begin{minipage}{.15\textwidth}\Tree [ .3 [ .2 [ .1 - - ] - ] - ] \end{minipage}
+
+\end{solution}
+
+\item For the same distribution, and for general $n$, what is the best
+  static binary search tree?  You do not need to prove this part of your answer.
+  % 
+  As $n$ grows to infinity, what is the expected number of comparisons
+  for this tree?
+  % 
+  Justify the answer to this question.
+  \begin{hint}
+    $\sum_{i=1}^{\infty} i/2^i =2$.
+  \end{hint}
+
+%
+\begin{spaceForAnswer}\vfill\end{spaceForAnswer}
+\begin{solution}
+\begin{center}
+\Tree [ .1 - [ .$\cdots$ - [ .$n{-}1$ - [ .$n$ - - ] ] ] ]
+\end{center}
+%
+On average, it would correspond to $1/2^{n}+\sum_{i=1}^{n} i/2^i$
+comparisons.
+
+This is asymptotically equivalent to $\sum_{i=1}^{\infty} i/2^i$ when
+$n$ grows to infinity, which is equal to $2$: the static tree permits
+to perform less than $2$ comparisons on average on this distribution.
+\end{solution}
+
+\item The adaptive stategies used to implement dictionaries via
+  unordered lists can be applied to binary search trees.
+  % 
+  In this context the Transpose heuristic becomes: find the key $k$
+  using the usual search algorithm for a binary search tree.  If $k$ is
+  in the root do nothing; otherwise if $k$ is in node $x$ and the parent
+  of $x$ is $y$, then rotate the sub-tree (using a single rotation) so
+  that $x$ becomes the parent of $y$.
+  
+  Show that in the worst case the Transpose heuristic can cost $n$
+  comparisons per search.  
+  % 
+  Describe an initial tree on $\{1,\ldots,n\}$ and an infinite
+  sequence of queries such that each one requires $n$ comparisons.
+  % Consider the performance of this strategy on the worst initial
+  % tree, with the worst sequence of queries. Show that it can perform up
+  % to $n$ comparisons per query.
+
+\begin{spaceForAnswer}\vfill\end{spaceForAnswer}
+
+\begin{solution}
+If started with the tree
+\begin{center}
+\Tree [ .n [ .$\cdots$  [ .2 [ .1 - - ] - ] - ] - ],
+\end{center}
+{\tt Transpose$(x)$} performs $n$ comparisons (and $1$ rotation) per
+query when it receives the queries $1,2,1,2,\ldots$.
+
+Note that {\tt Transpose$(x)$} performs $2$ comparisons (and $1$
+rotation) per query when it receives the queries
+$n,n{-}1,\ldots,2,1,2,\ldots,n{-}1,n$.
+%
+On a sequence of independent queries following the distribution
+$(p_i)_{i\in\{1,\ldots,n\}}$ defined above, {\tt Transpose$(x)$} would
+converge to the optimal static tree and would keep the tree relatively
+close to this form.
+\end{solution}
+
+
+\end{enumerate}
+
+\begin{INUTILE}
+  \begin{markingScheme}
+    $4$ marks for each of the $3$ questions.
+  \end{markingScheme}
+\end{INUTILE}

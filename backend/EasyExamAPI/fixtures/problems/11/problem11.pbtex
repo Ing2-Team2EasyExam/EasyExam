@@ -1,0 +1,167 @@
+\begin{authorship}
+Jérémy Barbay
+\end{authorship}
+\begin{authorship}J{\'e}r{\'e}my Barbay, a simplified version of ternaryTreeProperties01\end{authorship}
+\begin{usage}Assignment 2, CS240, Winter term 2005, University of Waterloo, Canada\end{usage}
+
+A {\em ternary tree}, which we sometimes call a {\em general ternary tree},
+is a tree such that each node has at most $3$ children.
+A {\em proper} ternary tree is such that each internal node has exactly $3$ children.
+%
+Given a ternary tree $T$, let
+  $i$ be the number of internal nodes,
+  $e$ be the number of external nodes, and
+  $h$ be the height.
+
+
+\begin{markingScheme}
+$6$ marks for the first question,
+and $2$ marks for each of the other questions.
+\end{markingScheme}
+
+
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item Prove by induction that for any ternary tree, 
+%
+$$h\leq i \leq {3^h-1\over 2}.$$ 
+%
+Note that this implies that the property is also true for proper
+ternary trees.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+
+We prove this property by induction on $h$.
+\begin{itemize}
+
+\item {\bf The induction is based on the variable} $h$, the height of
+the tree.
+
+\item {\bf The induction hypothesis is} $H(h)=$ ``For any
+ternary tree of height at most $h$ and with $i$ internal nodes,
+%
+$h\leq i \leq {3^h-1\over2}$''.
+
+\item {\bf The base case of the hypothesis is} $H(0)=$''For any
+ternary tree of height $0$ and with $i$ internal nodes,
+$0\leq{i}\leq {3^0-1\over2}=0$''.
+%
+As a ternary tree of height zero can have only one external node and
+no internal nodes ($i=0$), $H(0)$ {\bf is verified}.
+
+\item For any value of $h\in\{1,\ldots,\infty\}$, {\bf suppose that
+$H(h-1)$ is true.}  The inductive step goes as follow:
+%
+For any ternary tree $T$ of height $h\geq1$, consider the children of
+the root of $T$: there are at least one, and at most three, and each
+is of height at most $h-1$: $H(h-1)$ apply to them.
+%
+One one hand, $T$ has at least one sub-tree and its number of internal
+nodes is at least the number of internal nodes (by induction
+hypothesis at least $h-1$) of the tallest of its subtrees plus one:
+$i\geq h-1+1=h$.
+%
+On the other hand, the number of internal nodes in each subtree is at
+most ${3^{h-1}-1\over 2}$, and $T$ has at most $3$ subtrees, hence its
+number of internal nodes is at most 
+$1+3*{3^{h-1}-1\over 2}
+= {3^h-3+2\over2} 
+= {3^h-1\over2}$.
+%
+Hence the final inequality $h\leq i \leq {3^{h}-1\over 2}$, {\bf which
+proves that $H(h)$ is verified}.
+
+\item {\bf The conclusion} is that for $h\in\{0,\ldots,\infty\}$, any
+ternary tree of height $h$ has between $h$ and ${3^h-1}\over2$ internal nodes.
+
+\end{itemize}
+
+\begin{markingScheme}
+\begin{itemize}
+\item $2$ mark if among the five points of the induction none is
+missing, even if the induction is wrong (see the hint at the end of
+the problem);
+\item $4$ marks in general for the induction proof
+\end{itemize}
+Don't deduct marks if they omit the conclusion.
+\end{markingScheme}
+
+\end{solution}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item Any proper ternary tree is such that $e=2i+1$.  
+(You are not asked to prove this.)  Is it true for
+general ternary trees? Prove it by an induction or an implication, or
+disprove it by giving a counter-example.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+{\bf This property is false on general ternary trees}.
+%
+We disprove it by a counter example:
+%
+The following (binary) tree has at most three children per node hence
+it is a {\em ternary} tree.
+%
+Moreover, it has one internal node ($i=1$), and
+two external nodes ($e=2$), but $2i+1=3 \neq 2=i$.
+\begin{center}
+\Tree [ .1 2 3 ]
+\end{center}
+\end{solution}
+
+\begin{markingScheme}
+\begin{itemize}
+\item $2$ marks if the counter-example is correct.
+\end{itemize}
+\end{markingScheme}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item Prove by an induction or an implication, or disprove by giving a
+counter-example, that any proper ternary tree is such that 
+%
+$$2h+1\leq e \leq 3^h.$$
+
+Note that although the right inequality is true for any general ternary
+tree (something you are not asked to prove), the left inequality 
+is {\bf false} on general ternary trees: 
+a tree with two nodes, a root and one child of the root, has $h=1$ and $e=1$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{solution}
+Both inequalities are true for any proper ternary tree $T$.
+%
+We prove it by implication, applying the equality $e=2i+1$ to the
+double inequation $h\leq i \leq {3^h-1\over 2}$ to get 
+$2h+1\leq e \leq 3^h$.
+
+\begin{markingScheme}
+\begin{itemize}
+\item $2$ marks for the implication, or if the student did the
+an induction instead of an implication.
+\end{itemize}
+\end{markingScheme}
+
+\end{solution}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{enumerate}
+
+
+\begin{hint}
+When proving an induction, it is better to mention explicitly
+the variable on which you base your induction;
+the induction hypothesis (in function of this variable);
+the base case of your hypothesis;
+the inductive step;
+the conclusion.
+\end{hint}
+
+

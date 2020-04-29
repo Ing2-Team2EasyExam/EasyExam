@@ -1,0 +1,48 @@
+venv/
+.idea/
+*.py[cod]
+__pychache__/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# JetBrains affairs
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+
+## Django affairs
+
+/backend/EasyExamAPI/api/migrations/*
+!/backend/EasyExamAPI/api/migrations/__init__.py
+/backend/EasyExamAPI/user/migrations/*
+!/backend/EasyExamAPI/user/migrations/__init__.py
+/backend/EasyExamAPI/exam/migrations/*
+!/backend/EasyExamAPI/exam/migrations/__init__.py
+/backend/EasyExamAPI/challenge/migrations/*
+!/backend/EasyExamAPI/challenge/migrations/__init__.py
+*.sqlite3
+
+# backend
+backend/media/
+backend/EasyExamAPI/script/exam*_*.*
+backend/EasyExamAPI/script/problem*_*.*
+backend/EasyExamAPI/previews/*-*

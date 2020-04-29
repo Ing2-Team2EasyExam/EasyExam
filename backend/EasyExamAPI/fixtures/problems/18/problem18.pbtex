@@ -1,0 +1,300 @@
+\begin{authorship}
+Cormen, Leiserson, Rivest & Stein, Problem 6-3, with modifications by T. Biedl
+\end{authorship}
+\begin{authorship}
+Cormen, Leiserson, Rivest \& Stein, Problem 6-3, with modifications by T. Biedl
+\end{authorship}
+\begin{usage}
+\begin{itemize}
+\item Fall 2005, School of Computer Science at the University of Waterloo, Assignment 2 CS240.
+\item Spring 2006, University of Waterloo, SCS, Assignment 2 CS240
+\begin{description}
+\item[maxpoints] 12.00
+\item[max] 12.00
+\item[median] 6.25
+\item[average] 6.02
+\end{description}
+
+
+\end{itemize}
+\end{usage}
+A {\em 2-way-ordered-matrix} (or 2WOM) is an 
+$m\times n$-matrix of integers (with $m\geq 1$
+and $n\geq 1$) for which the entries of each row are sorted in decreasing
+order from left to right, and the entries in each column are sorted in
+decreasing order from top to bottom.  In order to be able to store less
+than $mn$ integers, we allow that some of the entries in the matrix are
+$-\infty$.  However, these $-\infty$ elements must also adhere to the ordering
+of rows and columns, i.e., they must be at the end of a row and at the
+bottom of a column.  
+
+\begin{codeExample}
+  An example of a 2WOM is given below.
+$$\left( \begin{array}{cccc}
+    15 & 12 & 10 & 9 \\
+    14 & 11 & 8 & 7 \\
+    13 & 6 & 2 & 1 \\
+    5 & 3 & -\infty & -\infty \\
+    4 & -\infty & -\infty & -\infty \\
+  \end{array}
+\right) $$
+\end{codeExample}
+\begin{enumerate}
+\item
+Show how to use a 2WOM to implement the ADT PriorityQueue. For each
+algorithm you provide, justify its correctness. You should achieve the
+following running times for the methods:
+\begin{itemize}
+%\item[(i)] You should find the maximum element in $O(1)$ time.
+\item[(i)] You should extract the maximum element in $O(m+n)$ time for
+    an $m\times n$ 2WOM. 
+\item[(ii)] You should insert a new element in $O(m+n)$ time for a
+    an $m\times n$ 2WOM that contains at least
+    one entry that is $-\infty$. \\ 
+    (You don't need to consider the case when the 2WOM is full.)
+\end{itemize}
+
+%\begin{markingScheme}
+%20 marks: 5 for the correct algorithm for (i), 5 for correct
+%algorithm for (ii).  Both algorithms should have an explanation
+%with them, but give up to 10 marks for the better of the two.
+%Their correctness needn't be as detailed as mine, but they should
+%make some attempt of explaining why they indeed get a 2WOM.
+%\end{markingScheme}
+
+
+\begin{solution}
+The data structure we designed in this question is called
+\emph{Young tableaux}. The structure itself is much older
+than computers. It was introduced in 1900 and since
+then it played an important role in theory of symmetric
+groups.
+
+\begin{itemize}
+\item[(i)] 
+    The maximum element is stored at location (1,1) in the matrix,
+    so we can find it in $O(1)$ time.  However, if we simply took it out
+    we'd leave a hole in the matrix.
+    So we replace the maximum
+    with $-\infty$. This will violate the 2WOM property, thus we need
+    to design an algorithm that restores the 2WOM property. 
+
+    The algorithm will work in a similar way as Heapify for heaps.
+    It will compare the element that violates the 2WOM property with
+    its neighbors to the right and down and swap this element with
+    the larger of the two. This process is repeated until the 2WOM
+    property is restored. This procedure can be summarized as follows
+    (we run Fix2WOMProperty(1,1) after inserting the element $-\infty$
+    at position $(1,1)$):
+
+    \begin{verbatim}
+    Fix2WOMProperty(i,j):
+      // pre: M satisfies the 2WOM property except for location (i,j)
+      //      the element at x = M(i,j) can be replaced by x'>=x such that
+      //      the resulting matrix would satisfy the 2WOM property
+      // post: M satisfies the 2WOM property
+
+      x = M(i,j)
+      y = M(i+1,j) (-infty if i==n)
+      z = M(i,j+1) (-infty if j==m)
+    
+      while (x < max{y,z}) {
+        // inv: x = M(i,j), y = M(i+1,j), z = M(i,j+1)
+        //      x violates the 2WOM property
+        //      x could be replaced by x'>=x such that the
+        //      resulting matrix M would satisfy the 2WOM property
+
+        if (z < y) {
+            M(i,j) = y, M(i+1,j) = x
+            i = i+1
+        else {
+            M(i,j) = z, M(i,j+1) = x
+            j = j+1
+        }
+
+        y = M(i+1,j) (-infty if i==n)
+        z = M(i,j+1) (-infty if j==m)
+
+        // inv: x = M(i,j), y = M(i+1,j), z = M(i,j+1)
+        //      x could be replaced by x'>x such that
+        //      resulting matrix M would satisfy 2WOM property
+      }
+    \end{verbatim}
+
+    We need to argue that this procedure indeed creates a 2WOM.  We
+    will do that by considering the invariant outlined in the pseudocode.
+    The pre-condition of the code is satisfied upon entering the function
+    (M(1,1) could be replaced by $\infty$ which would satisfy the 2WOM
+    condition).  The precondition clearly guarantees that the
+    invariant is satisfied upon entering the first iteration.
+
+    We need to show that even after the iteration is finished, the
+    invariant is still satisfied.  Let $u=M(i-1,j)$ and $v=M(i,j-1)$
+    (or $\infty$, if we are on the left or on the top boundary of the
+    matrix).  Let $x'\geq x$ be the element that we could replace $x$
+    with (in $M$ when calling the routine) and get a 2WOM.  In
+    picture:
+
+    $$\left( \begin{array}{ccc}
+      ? & u & ? \\
+      v & x' & z \\
+      ? & y & ? \\
+    \end{array}
+    \right)
+    $$
+
+    We hence have $u\geq x' \geq y$ and $v\geq x'\geq z$ and know $x'\geq x$.
+    We distinguish cases:
+    \begin{itemize}
+    \item Assume $y\geq z$.  We exchange $y$ and $x$, so now $y$ is
+      in position $(i,j)$. Since $v\geq x' \geq y \geq z$, now row $i$ is sorted in decreasing order.
+      Also, $u\geq x' \geq y > x$, so column $j$ is sorted in decreasing order,
+      except that $x$ need not be larger than the neighbour underneath it.  
+      However, if we replaced value $x$ by value $y$ then column $j$ would be
+      in decreasing order, so the invariant at the end of the iteration is satisfied.
+
+    \item Assume $z\geq y$.  We then exchange $z$ and $x$, so now $z$
+      is in position $(i,j)$.  Similarly as above now column $j$ is sorted in
+      decreasing order, and row $i$ would be in decreasing order if we replaced
+      value $x$ by value $z$. So the invariant at the end of the iteration is
+      satisfied.
+    \end{itemize}
+
+    At the end of the iteration, if $x$ violates the 2WOM property, then 
+    we continue onto the next iteration and the invariant at the beginning of the
+    iteration is automatically satisfied. If $x$ does not violate the 2WOM property,
+    then we constructed a valid 2WOM.
+
+    Note that each iteration of the Fix2WOMProperty increases either $i$ or $j$,
+    so in total there can be at most $O(n+m)$ iterations, which take $O(n+m)$
+    time total.
+
+\item[(ii)]  We first need to find a place where a $-\infty$ is stored.
+    Since we know that one exists, there must be one at location $(m,n)$,
+    so we temporarily put the new element there.  
+
+    Now we fix up the 2WOM property, similar as during sift-up for heaps.
+    However, we have to be careful now: for heaps we had only one parent
+    (so no question as to who to exchange with if the new element is bigger),
+    whereas now we must contemplate both the neighbour above and to the left,
+    and exchange with the one that is smaller.
+
+    The code to do this is actually almost identical to the one for part (ii),
+    but we go up and left instead of down and right.  Thus, we call
+    Fix2WOMPropertyReverse($m,n$) defined as follows:
+
+    \begin{verbatim}
+    Fix2WOMPropertyReverse(i,j):
+      // pre: M satisfies the 2WOM property except for location $(i,j)$
+      //      element at x = M(i,j) can be replaced by x'<=x such that
+      //      resulting matrix would satisfy 2WOM property
+      // post: M satisfies the 2WOM property
+
+      x = M(i,j)
+      y = M(i-1,j) (-infty if i==1)
+      z = M(i,j-1) (-infty if j==1)
+    
+      while (x > min{y,z}) {
+        // inv: x = M(i,j), y = M(i-1,j), z = M(i,j-1)
+        //      x violates the 2WOM property
+        //      x could be replaced by x'<=x such that
+        //      resulting matrix M would satisfy 2WOM property
+
+        if (z > y) {
+            M(i,j) = y, M(i-1,j) = x
+            i = i-1
+        else {
+            M(i,j) = z, M(i,j-1) = x
+            j = j-1
+        }
+
+        y = M(i-1,j) (-infty if i==1)
+        z = M(i,j-1) (-infty if j==1)
+
+        // inv: x = M(i,j), y = M(i-1,j), z = M(i,j-1)
+        //      x could be replaced by x'<=x such that
+        //      resulting matrix M would satisfy 2WOM property
+      }
+    \end{verbatim}
+
+    The correctness and time complexity of this procedure is argued 
+    exactly as in part (ii).
+\end{itemize}
+\end{solution}
+
+
+
+\item Recall PriorityQueue sorting, which consists of inserting
+$N$ elements into a PriorityQueue, and then extracting the maximum
+$N$ times.  If you use the above implementation
+of PriorityQueue, what asymptotic
+running time can be achieved for $N$ elements?
+Your answer should depend only on $N$, so in particular you should
+specify how to choose the dimensions of the 2WOM.
+
+\begin{solution}
+I would choose $n=m=\lceil \sqrt{N} \rceil$; then the 2WOM is guaranteed
+to have enough space for all numbers.  Now insert and extractMax each
+take $O(n+m)=O(\sqrt{N})$ time, so the total time is
+$O(N\sqrt{N}) = O(N^{3/2})$.
+\end{solution}
+
+%\begin{markingScheme}
+%2 marks for actually saying how to choose $n$ and $m$, 3 marks for 
+%analysing the run-time.
+%\end{markingScheme}
+
+\item
+Implementing a PriorityQueue with a 2WOM has the advantage that some
+other operations can be executed fairly efficiently.  In particular,
+show how to find the minimum element that is not $-\infty$
+    in an $m\times n$ 2WOM in $O(m+n)$ time.
+
+\begin{solution}
+The minimum element surely must have $-\infty$ (or no element at all) both
+below it and to its right.  To find it, we have to search all such elements
+and return the minimum among them.  
+
+To find these elements, start at location $(1,1)$ and go down to the last 
+element that is not
+$-\infty$.  Then go to the right to the last element that is not
+$-\infty$.  This is the current minimum, and we took $O(m+n)$ time to
+get to it.  Any value to the right or below the current minimum is $-\infty$, 
+so to find other candidates, go to the row
+above it and then to the right to the last element that is not $-\infty$.
+The larger between this value and the current minimum becomes the new
+current minimum.  Repeat this process, i.e., go up one row and then to the
+right until the last element that is not $-\infty$, then compare with
+the current minimum.  Repeat until we are in the first row or the last
+column.  Since we never go down or left (after the initial
+movement), we do at most $O(m+n)$ steps to find all elements that could be
+a minimum, and hence spend $O(m+n)$ time.
+\end{solution}
+
+%\begin{markingScheme}
+%10 marks total.  5 marks for the algorithm, 5 marks for explanation.
+%(The explanation given above is at about the level of formality I would
+%expect.)
+%\end{markingScheme}
+
+
+\end{enumerate}
+
+
+\begin{suggestedMarkingScheme}
+\begin{authorship}
+Zhuliang Chen
+\end{authorship}
+For a total of 12 marks:
+\begin{itemize}
+  \item[(a)] 6 marks. 2 marks for the correct algorithm for (i), 2 marks for
+       the correct algorithm for (ii). Both algorithms should have
+       an explanation with them, but give up to 2 marks for the better
+       of two.
+  \item[(b)] 2 marks, 1 mark for actually saying how to choose n and m, 1
+       mark for analyzing the running time.
+  \item[(c)] 4 marks, 2 marks for the algorithm, 2 marks for explanation.
+\end{itemize}
+\textbf{ Students should not be penalized for only providing the
+detailed algorithm, instead of detailed pseudocode.}
+\end{suggestedMarkingScheme}
