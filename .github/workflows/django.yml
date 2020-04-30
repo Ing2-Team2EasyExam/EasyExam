@@ -29,4 +29,4 @@ jobs:
         pre-commit run --all-files
     - name: Run Tests
       run: |
-        python manage.py test
+        cd backend/ && python manage.py test
