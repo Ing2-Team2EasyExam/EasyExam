@@ -23,25 +23,41 @@ help:
 	@echo "db-update: Runs makemigration and migrate at once"
 	@echo "reset: Make a clean of the project database"
 	@echo "reset-full: Make a full clean on the database and redis"
+
+
 ubuntu-node:
 	sudo apt install nodejs
 	sudo apt install npm
 	sudo apt install yarn
+
+
 brew-node:
 	brew install node
 	brew install yarn
+
+
 create-environment:
 	@python3 -m venv venv
+
+
 makemigration:
 	@${django} makemigrations
+
+
 migrate:
 	@${django} migrate
+
+
 backend-run:
 	@echo "Setting up backend server"
 	@${django} runserver
+
+
 jupyter:
 	@echo "Running jupyter with django"
 	@${django} shell_plus --notebook
+
+
 backend-db-delete:
 	@echo "Flushing Django..."
 	@${django} flush
@@ -50,18 +66,29 @@ backend-db-delete:
 	@find . -path "backend/*/migrations/*.pyc" -delete
 	@echo "Removing local database..."
 	@rm backend/EasyExamAPI/db.sqlite3
+
+
 backend-install:
 	@python3 -m pip install --upgrade pip
 	@python3 -m pip install wheel
 	@python3 -m pip install -r requirements.txt
+
+
 backend-test:
 	@${django} test
+
+
 frontend-run:
 	@cd frontend/ && yarn start
+
+
 frontend-install:
 	@cd frontend/ && yarn install
+
+
 frontend-test:
 	@cd frontend/ && yarn test
+
 
 install-redis:
 	@wget http://download.redis.io/redis-stable.tar.gz
@@ -69,12 +96,36 @@ install-redis:
 	@rm redis-stable.tar.gz
 	@mv redis-stable venv/
 	@cd venv/redis-stable && make install
+
+
 redis-run:
 	redis-server
+
+
 redis-reset:
 	redis-cli FLUSHALL
+
+
 install: backend-install frontend-install
+
+
 db-update: makemigration migrate
+
+
 test: backend-test frontend-test
+
+
 reset: backend-db-delete backend-install makemigration migrate
+
+
 reset-full: reset redis-reset
+
+
+#deploy commands on the make file for future use
+
+build-django:
+	@uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
+
+
+build-react:
+	@cd frontend/ && yarn && yarn build

@@ -23,14 +23,7 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
-## In case of migration errors
-If the migrations don't work reset the database
-```bash
-$ python manage.py flush`
-$ find . -path "*/migrations/*.py" -not -name "__init__.py" -delete`
-$ find . -path "*/migrations/*.pyc" -delete`
-$ rm db.sqlite3`
-```
+
 
 ### Running the servers locally
 There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file is made for running this commands automaticly, here is a resume of the important ones:
@@ -60,6 +53,13 @@ You can use jupyter on the backend if you want, to run it do:
 make jupyter
 ```
 And select django shell plus as interpreter
+
+## In case of migration errors
+If the migrations don't work reset the database
+```bash
+$ make reset
+```
+
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
