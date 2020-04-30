@@ -35,6 +35,15 @@ $ rm db.sqlite3`
 ### Running the servers locally
 There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file will be made for all of this.
 
+### Using jupyter
+You can use jupyter on the backend if you want, to run it do on the backend folder:
+```bash
+python manage.py shell_plus --notebook
+```
+Or in the main directory
+```bash
+python backend/manage.py shell_plus --notebook
+```
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
