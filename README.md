@@ -66,5 +66,5 @@ Then copy it to the repositorium/www Folder
 
 ## Some learning
 - [celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/#celery-tasks)
-- [redis]()
+- [redis](https://realpython.com/caching-in-django-with-redis/)
 - [redis_and_celery](https://stackabuse.com/asynchronous-tasks-in-django-with-redis-and-celery/)
