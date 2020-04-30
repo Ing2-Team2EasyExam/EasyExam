@@ -7,7 +7,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 Python 3.6
-Install (pre-commit)[https://pre-commit.com/#install]
+
+Install [pre-commit](https://pre-commit.com/#install)
 
 ### Installing
 
