@@ -1,6 +1,6 @@
 name: Continuos Integration
 
-on: [push, pull_request]
+on: [pull_request]
 
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
         python backend/EasyExamAPI/manage.py makemigrations
     - name: Migrate
       run:
-        python backend/EasyExamAPI/manage.py migrate
+        python backend/manage.py migrate
     - name: Run Tests
       run: |
-        python backend/EasyExamAPI/manage.py test
+        python backend/manage.py test
