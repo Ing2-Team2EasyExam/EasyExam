@@ -35,15 +35,15 @@ $ rm db.sqlite3`
 ### Running the servers locally
 There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file is made for running this commands automaticly, here is a resume of the important ones:
 
-|Instruction| What happens  |
+|Instruction| What it does  |
 |-----------|---------------|
 |create-environment| Creates a local virtual environment to run the backend |
 | install | Install all frontend and backend dependencies |
 | install-redis | Install redis on local machine with wget |
-| backend-run | Runs local django server on local machine port `8000`|
-| redis-run | Runs redis on local machine port `6369` |
-| db-update | Runs makemigrations and migrate of django on backend |
 | frontend-run | Runs local react server on local machine port `3000` |
+| backend-run | Runs local django server on local machine port `8000`|
+| redis-run | Runs redis on local machine port `6379` |
+| db-update | Runs makemigrations and migrate of django on backend |
 | backend-test| Runs all unittest on the backend |
 | frontend-test| Runs all unittest on the frontend |
 | test | Runs all backend and frontend test |
