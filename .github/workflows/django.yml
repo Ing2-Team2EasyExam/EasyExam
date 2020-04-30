@@ -29,7 +29,7 @@ jobs:
         pre-commit run --all-files
     - name: Make migrations
       run:
-        python backend/EasyExamAPI/manage.py makemigrations
+        python backend/manage.py makemigrations
     - name: Migrate
       run:
         python backend/manage.py migrate
