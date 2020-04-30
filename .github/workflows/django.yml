@@ -1,4 +1,4 @@
-name: Django CI
+name: Continuos Integration
 
 on: [push, pull_request]
 
