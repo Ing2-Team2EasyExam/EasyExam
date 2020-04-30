@@ -5,7 +5,7 @@ from rest_framework_jwt.views import (
     verify_jwt_token,
 )
 
-from user.views import UserDetail, UserCreate, ChangePassword, TransactionList
+from apps.user.views import UserDetail, UserCreate, ChangePassword, TransactionList
 
 urlpatterns = [
     path("users/", UserCreate.as_view(), name="user-create"),

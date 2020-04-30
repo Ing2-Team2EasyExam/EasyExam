@@ -19,10 +19,10 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.exceptions import ValidationError
 from sendfile import sendfile
 
-from api.models import get_random_object
-from exam.models import Topic, Exam, Problem
-from exam.permissions import IsUploader, IsAuthenticatedAndIsOwnerOrIsNone
-from exam.serializers import (
+from apps.api.models import get_random_object
+from apps.exam.models import Topic, Exam, Problem
+from apps.exam.permissions import IsUploader, IsAuthenticatedAndIsOwnerOrIsNone
+from apps.exam.serializers import (
     TopicSerializer,
     ExamListSerializer,
     ExamDetailSerializer,
@@ -31,9 +31,9 @@ from exam.serializers import (
     ProblemCreateSerializer,
     ExamCreateSerializer,
 )
-from user.models import Transaction
+from apps.user.models import Transaction
 
-from exam.generate_exam.gen import CompilationErrorException
+from apps.exam.generate_exam.gen import CompilationErrorException
 from django.conf import settings
 
 

@@ -7,8 +7,8 @@ from rest_framework.generics import (
 )
 from rest_framework.permissions import IsAuthenticated
 
-from user.models import Transaction
-from user.serializers import (
+from apps.user.models import Transaction
+from apps.user.serializers import (
     UserSerializer,
     UserCreateSerializer,
     ChangePasswordSerializer,

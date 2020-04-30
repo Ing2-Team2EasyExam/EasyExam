@@ -33,7 +33,17 @@ $ rm db.sqlite3`
 ```
 
 ### Running the servers locally
-There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines
+There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file will be made for all of this.
+
+### Using jupyter
+You can use jupyter on the backend if you want, to run it do on the backend folder:
+```bash
+python manage.py shell_plus --notebook
+```
+Or in the main directory
+```bash
+python backend/manage.py shell_plus --notebook
+```
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
@@ -62,3 +72,9 @@ $ yarn
 $ yarn build
 ```
 Then copy it to the repositorium/www Folder
+
+## Some learning
+- [celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/#celery-tasks)
+- [redis](https://realpython.com/caching-in-django-with-redis/)
+- [redis_and_celery](https://stackabuse.com/asynchronous-tasks-in-django-with-redis-and-celery/)
+- [django_jupyter](https://medium.com/ayuth/how-to-use-django-in-jupyter-notebook-561ea2401852)

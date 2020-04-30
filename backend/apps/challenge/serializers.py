@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from challenge.models import Vote, Criterion
-from exam.serializers import ProblemDetailSerializer
+from apps.challenge.models import Vote, Criterion
+from apps.exam.serializers import ProblemDetailSerializer
 
 
 class CriterionSerializer(serializers.ModelSerializer):

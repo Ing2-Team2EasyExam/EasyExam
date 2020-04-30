@@ -6,8 +6,13 @@ from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile, File
 from django.db import models
 
-from exam.generate_exam.gen import problem_pbtex, exam_tex, generate_pdfs, problem_tex
-from exam.storage import OverwriteStorage
+from apps.exam.generate_exam.gen import (
+    problem_pbtex,
+    exam_tex,
+    generate_pdfs,
+    problem_tex,
+)
+from apps.exam.storage import OverwriteStorage
 
 User = get_user_model()
 

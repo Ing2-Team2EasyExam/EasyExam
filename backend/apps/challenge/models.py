@@ -4,8 +4,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from exam.models import Problem
-from user.models import Transaction
+from apps.exam.models import Problem
+from apps.user.models import Transaction
 
 User = get_user_model()
 

@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
-from challenge.models import Criterion, Challenge
-from exam.admin import ProblemAdmin, ExamAdmin
-from exam.models import Problem, Topic, Exam
-from user.models import User, Transaction
+from apps.challenge.models import Criterion, Challenge
+from apps.exam.admin import ProblemAdmin, ExamAdmin
+from apps.exam.models import Problem, Topic, Exam
+from apps.user.models import User, Transaction
 
 UserAdmin.list_display = ("username", "email", "credits")
 UserAdmin.list_filter += ("credits",)

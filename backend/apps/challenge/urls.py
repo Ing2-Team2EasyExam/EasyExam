@@ -1,6 +1,6 @@
 from django.urls import path
 
-from challenge.views import AllChallengesView, AllChallengesVotes
+from apps.challenge.views import AllChallengesView, AllChallengesVotes
 
 urlpatterns = [
     path(
