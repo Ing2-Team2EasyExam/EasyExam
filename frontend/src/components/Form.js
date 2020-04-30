@@ -124,11 +124,11 @@ let Field = class extends React.Component {
     return <div style={styles.field}>
       <div style={styles.fieldLabel({ color: labelColor })}>
         {
-          this.props.tooltip !== undefined ? 
+          this.props.tooltip !== undefined ?
           <span>{label}
             <OverlayTrigger placement="right" overlay={<Tooltip>{this.props.tooltip}</Tooltip>}>
               <Badge pullRight={false} style={{marginLeft: '6px'}}>?</Badge>
-            </OverlayTrigger> 
+            </OverlayTrigger>
             </span>
             :
             <span>{label}</span>

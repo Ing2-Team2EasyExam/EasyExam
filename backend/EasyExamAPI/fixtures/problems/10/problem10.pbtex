@@ -3,7 +3,7 @@ Jérémy Barbay
 \end{authorship}
 \begin{authorship}J{\'e}r{\'e}my Barbay\end{authorship}
 \begin{usage}
-Appeared in a simplified form in 
+Appeared in a simplified form in
 Assignment 2, CS240, Winter term 2005, University of Waterloo, Canada
 Assignment 3, CS240, Winter 2006 (School of CS, U of W). Average mark: 9.21/15
 \end{usage}
@@ -29,7 +29,7 @@ trees and proper ternary trees. Note that a property might be true for one type 
 \begin{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item $h\leq i \leq {3^h-1\over 2}$ 
+\item $h\leq i \leq {3^h-1\over 2}$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
@@ -68,9 +68,9 @@ $i\geq h-1+1=h$.
 %
 On the other hand, the number of internal nodes in each subtree is at
 most ${3^{h-1}-1\over 2}$, and $T$ has at most $3$ subtrees, hence its
-number of internal nodes is at most 
+number of internal nodes is at most
 $1+3*{3^{h-1}-1\over 2}
-= {3^h-3+2\over2} 
+= {3^h-3+2\over2}
 = {3^h-1\over2}$.
 %
 Hence the final inequality $h\leq i \leq {3^{h}-1\over 2}$, {\bf which
@@ -119,7 +119,7 @@ two external nodes ($e=2$), but $2i+1=3 \neq 2=i$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 On the other hand, {\bf the property is true on proper ternary trees}.
 %
-We prove it by induction on the number $i$ of internal nodes: 
+We prove it by induction on the number $i$ of internal nodes:
 \begin{itemize}
 
 \item {\bf The induction is based on the variable} $i$, the number of
@@ -170,7 +170,7 @@ proper ternary tree of $i$ internal nodes has $e=2i+1$ external nodes.
   \end{markingScheme}
 \end{INUTILE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item $2h+1\leq e \leq 3^h$ 
+\item $2h+1\leq e \leq 3^h$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
@@ -226,24 +226,24 @@ number of external nodes $e_1,e_2,e_3$, which roots are the children
 of the root of $T$: the number of external nodes of $T$ is
 $e=e_1+e_2+e_3$, and the height of $T$ is $h=1+\max\{h_1,h_2,h_3\}$.
 %
-By the induction hypothesis $H(h-1)$, 
+By the induction hypothesis $H(h-1)$,
 \begin{eqnarray*}
 2h_1+1\leq e_1 \leq 3^{h_1};\\
 2h_2+1\leq e_2 \leq 3^{h_2};\\
 2h_3+1\leq e_3 \leq 3^{h_3}.
 \end{eqnarray*}
 
-On one hand 
-$$e 
-=     e_1+e_2+e_3 
-\leq  3^{h_1}+3^{h_2}+3^{h_3} 
+On one hand
+$$e
+=     e_1+e_2+e_3
+\leq  3^{h_1}+3^{h_2}+3^{h_3}
 \leq  3*3^{\max\{h_1,h_2,h_3\}}
 =     3^{h}.$$
 
-On the other hand 
-$$e 
-=     e_1+e_2+e_3 
-\geq (2h_1+1) + (2h_2+1) + (2h_3+1) 
+On the other hand
+$$e
+=     e_1+e_2+e_3
+\geq (2h_1+1) + (2h_2+1) + (2h_3+1)
 \geq 2(\max\{h_1+h_2+h_3\}+1) +1
 = 2h+1.$$
 %
@@ -284,12 +284,12 @@ proper ternary tree of height $h$ has between $2h+1$ and $3^h$ external nodes.
   Each of the results can either be disproved by a counter-example or
   proved by induction. You may also prove a property by implication
   from other results asked in the problem.
-  % 
+  %
   No points will be given for circular reasoning: If you are asked to
   prove $A$ or $B$, remember that proving $(A\Rightarrow B)$ and
   $(B\Rightarrow A)$ proves $(A\Leftrightarrow B)$, but it does not
   prove $A$ nor does it prove $B$.
-  % 
+  %
   Note that when proving something by induction, it is a good idea to
   explicitly state the variable on which you base your induction, the
   induction hypothesis (as a function of this variable), the base case

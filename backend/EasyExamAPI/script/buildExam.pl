@@ -41,7 +41,7 @@ while ($line = <FILE>)
       {
 	  print FILE_ST "\\documentclass\[spaceForAnswer,markingScheme\]\{$1\}\n";
 	  print FILE_SOL "\\documentclass\[solution,markingScheme,authorship,suggestedMarkingScheme\]\{$1\}\n";
-      } 
+      }
       else
       {
 	  print FILE_ST $line;

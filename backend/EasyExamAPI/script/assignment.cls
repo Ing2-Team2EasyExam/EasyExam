@@ -3,10 +3,10 @@
 % who himself was inspired by a file from Ralf Treinen.
 %
 % Developped for the course CS421 at UBC by Jeremy Barbay
-% Adapted for the course CS240 at UW by Jeremy Barbay 
+% Adapted for the course CS240 at UW by Jeremy Barbay
 %
 % Specially commented for Outline under Emacs
-% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t) 
+% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t)
 
 
 %* Class Definition  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,9 +49,9 @@
 
 %* Settings and Macros:  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %** Command \maketitle{}{}
-% To present the same header for all assignments, define 
+% To present the same header for all assignments, define
 % your typical header here.
-% This way if you reuse your assignments in later years, 
+% This way if you reuse your assignments in later years,
 % you only need to change the year here.
 \newcommand{\institution}{\hfill}
 \newcommand{\courseCode}{ }
@@ -155,5 +155,3 @@
 {}%
 {}}
 %
-
-

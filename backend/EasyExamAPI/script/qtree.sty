@@ -9,7 +9,7 @@
 % Front end and extensions by Alexis Dimitriadis (alexis@ling.upenn.edu).
 %
 % Please direct questions/comments to alexis@ling.upenn.edu.
-% 
+%
 
 % Most recent revisions:
 
@@ -23,9 +23,9 @@
 %               everything. Updated documentation.
 
 % 2005/05/22 -- Added customization hooks and `balanced' branch command,
-%               fixed final whitespace in \leaf. Many small tweaks. 
+%               fixed final whitespace in \leaf. Many small tweaks.
 
-% 2005/05/13 -- Reorganized mode selection options, merged variant file 
+% 2005/05/13 -- Reorganized mode selection options, merged variant file
 %               forks.
 
 % 2005/04/07 -- Removed errant spaces, and arranged for trees to be truly
@@ -36,7 +36,7 @@
 % 2004/07/05 -- Added a way to manipulate the height of single-child nodes.
 
 % 2002/11/05 -- Fixed display bug in first branch of 5-branching nodes.
-%               Reported by Paliath Narendran [dran@cs.albany.edu]. 
+%               Reported by Paliath Narendran [dran@cs.albany.edu].
 
 % 2002/04/17 -- Added provision for ``zero branching'' (empty non-terminals),
 %               as suggested by Ronald Greenberg [rig@cs.luc.edu].
@@ -45,7 +45,7 @@
 %               controllable by a package option; massively revised
 %               documentation.
 
-% 2000/10/24 -- Fixed bug in last revision that broke parsing of \qroof. 
+% 2000/10/24 -- Fixed bug in last revision that broke parsing of \qroof.
 
 % 2000/9/28  -- Fixed handling of empty labels so that tree lines stay
 %               connected.
@@ -53,19 +53,19 @@
 %               output so that it does not impact on centering.
 
 \typeout{Package: \qTreeDate v.\qTreeVersion Qtree: tree-drawing for
-  linguistics} 
+  linguistics}
 
 % Attempt to preserve LaTeX 2.19 compatibility by not evaluating package
 % option commands unless they are defined. Probably pointless...
-%  
+%
 \ifx\ProvidesPackage\undefined  \else
   \ProvidesPackage {qtree} [\qTreeDate v.\qTreeVersion Qtree: tree-drawing for
-  linguistics] 
+  linguistics]
 
   \newif\ifqtreecenter \qtreecentertrue
   \DeclareOption{nocenter}{\qtreecenterfalse}
   \DeclareOption{center}{\qtreecentertrue}
-  
+
   % Control automatic loading of graphics extensions
   \newif\ifq@autoload \q@autoloadtrue
   \DeclareOption{noload}{\q@autoloadfalse}
@@ -79,24 +79,24 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 
   \DeclareOption{noeepic}{
     \typeout{WARNING: Option [(no)eepic] is obsolete. \q@usage}}
-  
+
   \ProcessOptions
 
   % Autoload graphics extensions, unless [noload] was given.
   \ifq@autoload
     % Some linguistics styles like to redefine ^, which causes problems
-    % to pict2e.sty. We protect it by temporarily forcing the default 
+    % to pict2e.sty. We protect it by temporarily forcing the default
     % catcode for ^.
     \edef\svcatcode@up@{\the\catcode`\^}
     \catcode`\^=7
-    	 % DON'T COMMENT THIS OUT! If you don't want pict2e,  	
-    	 % just call qtree like this: \usepackage[noload]{qtree} 
+    	 % DON'T COMMENT THIS OUT! If you don't want pict2e,
+    	 % just call qtree like this: \usepackage[noload]{qtree}
        \RequirePackage{pict2e}
     % restore the catcode of ^ to whatever value it had
     \catcode`\^=\svcatcode@up@ \relax
     \let\sv@up@catcode=\relax
   \fi
-  
+
 \fi  % end of package options code
 
 
@@ -224,14 +224,14 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 
 % A ``leaf'' may actually be a roof; if so, we pad it normally but suppress
 % the hook; leaf and label hooks are applied separately to the parts of the
-% roof. 
+% roof.
 \def\qshow@leaf#1{\ifx\@qseenode\qroof \qshow@text{\relax}{#1}\else
   \qshow@text{\qleafhook}{#1}\fi}
 
 
 \let\qtreeinithook=\relax  % global formatting/definitions hook
 \let\qtreefinalhook=\relax % called just after the tree is output
-\let\qleafhook=\relax     % hook for leaf text 
+\let\qleafhook=\relax     % hook for leaf text
 \let\qlabelhook=\relax    % hook for non-terminal labels
 \let\qbranch@hook=\relax  % Called after completing a branch (undocumented)
 
@@ -263,7 +263,7 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 
 
 % Put a frame around the just-completed node.
-% 
+%
 \def\qframesubtree{\setbox\treeboxone \hbox{\framebox{\box\treeboxone}}}
 
 %
@@ -453,7 +453,7 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 \begin{flushleft}%
 \showparentbox
 {\setlength{\unitlength}{\qtreeunaryht}%
-\hspace*{\treeoffset}\qdraw@branches{1}}\\  
+\hspace*{\treeoffset}\qdraw@branches{1}}\\
 \vspace{-\baselineskip}%
 \hspace*{\daughteroffset}%
 \raisebox{-\ht\treeboxone}{\usebox{\treeboxone}}%
@@ -780,7 +780,7 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Very messy stack macros, to make up for lack of nested environments in
-% qobitree. 
+% qobitree.
 %
 % \Spush\Stack{X}   Push X on stack \Stack.
 % \Spop\Stack       Pop top element off \Stack, leave in the input stream.
@@ -810,7 +810,7 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 \def\Spop#1{#1\let#1=\@@StpV}
 
 % Pop the top element of stack #1, expand it, and define #2 to it.
-% 
+%
 \def\SpopD#1#2{\expandafter\qta#1\let#1=\@@StpV\edef#2{\the\qta}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -824,21 +824,21 @@ both pdf and PostScript is now provided by the package pict2e.sty.
   \@ifundefined{qtreebugfixhook}{}\qtreebugfixhook % retained for compatibility
   \automath \qtreeprimes@internal
   \qtreeinithook
-  \ifqtreecenter\hskip 0pt plus 1fil\else\leavevmode\fi 
+  \ifqtreecenter\hskip 0pt plus 1fil\else\leavevmode\fi
   \nbranches=0\relax \q@recurse }
 
 \def\endTree{\qobitree \qtreefinalhook \egroup}
 
 \def\q@recurse[{\@ifnextchar.{\qq@recurse}{\qq@recurse. }}
 \def\qq@recurse.#1 {\SpushU\qnstack{#1}%
-  \Spush\qbstack{\number\nbranches}\nbranches=0\relax \q@lookfornodes } 
+  \Spush\qbstack{\number\nbranches}\nbranches=0\relax \q@lookfornodes }
 
 % \doanode should more properly be called \doaleaf.
 % \@qseenode is the first token of our argument: handle specially if a roof.
 % The space in \leaf is for terminating the argument of \qroof
-\def\doanode#1 {\advance\nbranches by1 
+\def\doanode#1 {\advance\nbranches by1
     \ifx\@qseenode\qroof \leaf{#1 }%
-    \else \leaf{#1}\fi \q@lookfornodes} 
+    \else \leaf{#1}\fi \q@lookfornodes}
 
 \def\q@lookfornodes{\@ifnextchar]{\closeoff}{%
   \@ifnextchar[{\advance\nbranches by1\relax \q@recurse}{%
@@ -853,11 +853,11 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 \def\@closeoff.#1 {%
   \def\rarg{#1}%
   \SpopD\qnstack\larg
-  \ifx\larg\@empty \let\larg=\rarg 
+  \ifx\larg\@empty \let\larg=\rarg
   \else \ifx\rarg\@empty \let\rarg=\larg \fi\fi
-  \ifx\larg\rarg \else 
+  \ifx\larg\rarg \else
     \errmessage{MISMATCHED LABELS, [.\larg\ ... ].\rarg}%
-  \fi 
+  \fi
   \@@closeoff\larg }
 
 \def\@@closeoff#1{\branch{\number\nbranches}{#1}%
@@ -956,8 +956,8 @@ both pdf and PostScript is now provided by the package pict2e.sty.
 % suitable value
 % Because we must use integer arithmetic, we divide \unitlength into
 % 2\qroofx units for calculations
-     
-\def\qdraw@roof{{%  
+
+\def\qdraw@roof{{%
   \def\wwd{\count1}%
   \wwd=\qroofx\relax
   \multiply\wwd by 2
@@ -1007,4 +1007,3 @@ both pdf and PostScript is now provided by the package pict2e.sty.
   \fi}
 
 % END OF PICTURE driver definitions
-

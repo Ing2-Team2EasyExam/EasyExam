@@ -9,20 +9,20 @@ This question is about binary search trees.
 
 \item Suppose that a binary search tree has keys $1, \ldots, n$, and
   that the probability of searching for key $i$ is
-  $p_i=1/2^i+1/(n2^n)\,\forall i\in\{1,\ldots,n\}$.  
-  % 
+  $p_i=1/2^i+1/(n2^n)\,\forall i\in\{1,\ldots,n\}$.
+  %
   Assume that we only perform successful searches.
-  % 
+  %
   What is the best static binary search tree for $n=3$?
-  % 
+  %
   Justify your answer.
-  
+
   \begin{spaceForAnswer}
     \vfill \pagebreak
   \end{spaceForAnswer}
-  
+
 \begin{solution}
-The best tree is . 
+The best tree is .
 \begin{minipage}{.23\textwidth}\Tree [ .1 - [ .2 - [ .3 - - ] ] ] \end{minipage}
 
 There are only five binary search tree possible on $3$ elements:\\
@@ -36,10 +36,10 @@ There are only five binary search tree possible on $3$ elements:\\
 
 \item For the same distribution, and for general $n$, what is the best
   static binary search tree?  You do not need to prove this part of your answer.
-  % 
+  %
   As $n$ grows to infinity, what is the expected number of comparisons
   for this tree?
-  % 
+  %
   Justify the answer to this question.
   \begin{hint}
     $\sum_{i=1}^{\infty} i/2^i =2$.
@@ -62,16 +62,16 @@ to perform less than $2$ comparisons on average on this distribution.
 
 \item The adaptive stategies used to implement dictionaries via
   unordered lists can be applied to binary search trees.
-  % 
+  %
   In this context the Transpose heuristic becomes: find the key $k$
   using the usual search algorithm for a binary search tree.  If $k$ is
   in the root do nothing; otherwise if $k$ is in node $x$ and the parent
   of $x$ is $y$, then rotate the sub-tree (using a single rotation) so
   that $x$ becomes the parent of $y$.
-  
+
   Show that in the worst case the Transpose heuristic can cost $n$
-  comparisons per search.  
-  % 
+  comparisons per search.
+  %
   Describe an initial tree on $\{1,\ldots,n\}$ and an infinite
   sequence of queries such that each one requires $n$ comparisons.
   % Consider the performance of this strategy on the worst initial

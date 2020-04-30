@@ -10,14 +10,14 @@ Midterm, Year 2005, Winter Term, School of Computer Science at the University of
 CLRS 3-2.
 \end{authorship}
 Fill in the table below to indicate
-for each pair of expressions (A,B) 
+for each pair of expressions (A,B)
 whether A is $O$, $o$, $\Omega$, or $\Theta$ of B.
 Use ``Y'' for ``Yes'' and ``N'' for ``No''.
 %
 You do not need to justify your answers.
 %
 Assume that $k \geq 1$, $\epsilon > 0$, and $c > 1$ are
-constants. 
+constants.
 %
 \begin{spaceForAnswer}
 \renewcommand{\arraystretch}{2}
@@ -39,11 +39,11 @@ $$
 $$
 \begin{array}{|c|c|c|c|c|c|c|}\hline
   A          &	B               &   O   &   o   & \Omega&\theta \\	\hline
- \log^{k}n     &n^{\varepsilon }  &   Y	&   Y 	&  N	&  N	\\	\hline 
- n^{k}       &	c^{n}           &   Y	&   Y	&  N	&  N	\\	\hline 
- \sqrt{n}    &	n ^{\sin n}     &   N	&   N	&  N	&  N	\\	\hline 
- 2^{n}       &	2^{n/2}         &   N 	&   N	&  Y 	&  N	\\	\hline 
- n^{\log c}   &	c^{\log n}       &   Y	&   N	&  Y	&  Y	\\	\hline 
+ \log^{k}n     &n^{\varepsilon }  &   Y	&   Y 	&  N	&  N	\\	\hline
+ n^{k}       &	c^{n}           &   Y	&   Y	&  N	&  N	\\	\hline
+ \sqrt{n}    &	n ^{\sin n}     &   N	&   N	&  N	&  N	\\	\hline
+ 2^{n}       &	2^{n/2}         &   N 	&   N	&  Y 	&  N	\\	\hline
+ n^{\log c}   &	c^{\log n}       &   Y	&   N	&  Y	&  Y	\\	\hline
 \end{array}
 $$
 \end{solution}
@@ -51,4 +51,3 @@ $$
 3 marks for each line.  Deduct 1 for each wrong answer (to a max of
 3 deductions per line).
 \end{markingScheme}
-

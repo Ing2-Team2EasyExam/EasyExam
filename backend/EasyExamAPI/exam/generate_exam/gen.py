@@ -12,11 +12,11 @@ def problem_pbtex(problem):
     :param problem: A problem instance of the Problem model
     :return: String
     """
-    pbtex = ''
+    pbtex = ""
 
-    pbtex += '\\begin{authorship}\n'
+    pbtex += "\\begin{authorship}\n"
     pbtex += problem.author
-    pbtex += '\n\\end{authorship}\n'
+    pbtex += "\n\\end{authorship}\n"
 
     pbtex += problem.content
 
@@ -35,7 +35,9 @@ def get_input_problem(problem, marking):
     relpath = os.path.relpath(path, settings.SCRIPT_DIR)
     rel = os.path.join(os.path.dirname(relpath))
     filename = os.path.basename(relpath)
-    return '\\inputProblem{{{rel}/}}{{{filename}}}{{{marking}}}\n'.format(rel=rel, filename=filename, marking=marking)
+    return "\\inputProblem{{{rel}/}}{{{filename}}}{{{marking}}}\n".format(
+        rel=rel, filename=filename, marking=marking
+    )
 
 
 def exam_tex(exam):
@@ -46,40 +48,45 @@ def exam_tex(exam):
     """
 
     def add_command(command, value):
-        return '\\renewcommand{{\\{command}}}{{\\texttt{{{value}}}}}\n'.format(command=command, value=value)
+        return "\\renewcommand{{\\{command}}}{{\\texttt{{{value}}}}}\n".format(
+            command=command, value=value
+        )
 
-    tex = ''
+    tex = ""
 
-    tex += '\\documentclass[]{exam}\n'
-    tex += '\\usepackage{course}\n\n'
+    tex += "\\documentclass[]{exam}\n"
+    tex += "\\usepackage{course}\n\n"
 
-    if exam.language == 'E':
-        tex += '\\includeversion{english}\n'
-        tex += '\\excludeversion{spanish}\n'
+    if exam.language == "E":
+        tex += "\\includeversion{english}\n"
+        tex += "\\excludeversion{spanish}\n"
 
     else:
-        tex += '\\includeversion{spanish}\n'
-        tex += '\\excludeversion{english}\n'
+        tex += "\\includeversion{spanish}\n"
+        tex += "\\excludeversion{english}\n"
 
-    tex += '\\begin{document}\n'
+    tex += "\\begin{document}\n"
 
-    tex += add_command('examName', exam.name)
-    tex += add_command('examDate', exam.date)
-    tex += add_command('examStartTime', exam.start_time)
-    tex += add_command('examEndTime', exam.end_time)
-    tex += add_command('institution', exam.university)
-    tex += add_command('courseName', exam.course)
-    tex += add_command('examLength',
-                       datetime.combine(date.min, exam.end_time) - datetime.combine(date.min, exam.start_time))
-    tex += add_command('courseInstructors', exam.teacher)
-    tex += add_command('courseCode', exam.course_code)
+    tex += add_command("examName", exam.name)
+    tex += add_command("examDate", exam.date)
+    tex += add_command("examStartTime", exam.start_time)
+    tex += add_command("examEndTime", exam.end_time)
+    tex += add_command("institution", exam.university)
+    tex += add_command("courseName", exam.course)
+    tex += add_command(
+        "examLength",
+        datetime.combine(date.min, exam.end_time)
+        - datetime.combine(date.min, exam.start_time),
+    )
+    tex += add_command("courseInstructors", exam.teacher)
+    tex += add_command("courseCode", exam.course_code)
 
-    tex += '\\maketitle\n'
+    tex += "\\maketitle\n"
 
     for problem in exam.problems.all():
-        tex += get_input_problem(problem, '2 pts')
+        tex += get_input_problem(problem, "2 pts")
 
-    tex += '\\end{document}\n'
+    tex += "\\end{document}\n"
 
     return tex
 
@@ -90,13 +97,13 @@ def problem_tex(problem):
     :param problem: Problem instance
     :return: String
     """
-    tex = ''
+    tex = ""
 
-    tex += '\\documentclass[]{problem}\n'
-    tex += '\\usepackage{course}\n\n'
-    tex += '\\begin{document}\n'
-    tex += get_input_problem(problem, '')
-    tex += '\\end{document}\n'
+    tex += "\\documentclass[]{problem}\n"
+    tex += "\\usepackage{course}\n\n"
+    tex += "\\begin{document}\n"
+    tex += get_input_problem(problem, "")
+    tex += "\\end{document}\n"
 
     return tex
 
@@ -118,13 +125,20 @@ def generate_pdfs(instance):
     """
     filename = os.path.basename(instance.tex_file.name)
     filename = os.path.splitext(filename)[0]
-    with open(os.devnull, 'w') as nul:
+    with open(os.devnull, "w") as nul:
         result = subprocess.run(
-                [os.path.join(settings.SCRIPT_DIR, 'buildExam.pl'),
-                 os.path.join(settings.MEDIA_ROOT, instance.tex_file.name)],
-                cwd=settings.SCRIPT_DIR, stdout=PIPE, stderr=nul)
+            [
+                os.path.join(settings.SCRIPT_DIR, "buildExam.pl"),
+                os.path.join(settings.MEDIA_ROOT, instance.tex_file.name),
+            ],
+            cwd=settings.SCRIPT_DIR,
+            stdout=PIPE,
+            stderr=nul,
+        )
         if result.returncode != 0:
-            latex_logs = result.stdout.decode('utf-8')
+            latex_logs = result.stdout.decode("utf-8")
             raise CompilationErrorException(latex_logs)
-    return os.path.join(settings.SCRIPT_DIR, filename + '_normal.pdf'), os.path.join(settings.SCRIPT_DIR,
-                                                                                     filename + '_solution.pdf')
+    return (
+        os.path.join(settings.SCRIPT_DIR, filename + "_normal.pdf"),
+        os.path.join(settings.SCRIPT_DIR, filename + "_solution.pdf"),
+    )

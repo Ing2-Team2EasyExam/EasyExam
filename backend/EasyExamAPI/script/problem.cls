@@ -45,4 +45,3 @@
 \else
 \renewenvironment{displayProblem}{}{}
 \fi
-

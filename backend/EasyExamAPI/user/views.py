@@ -1,9 +1,19 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    UpdateAPIView,
+    RetrieveAPIView,
+    ListAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 
 from user.models import Transaction
-from user.serializers import UserSerializer, UserCreateSerializer, ChangePasswordSerializer, TransactionSerializer
+from user.serializers import (
+    UserSerializer,
+    UserCreateSerializer,
+    ChangePasswordSerializer,
+    TransactionSerializer,
+)
 
 User = get_user_model()
 
@@ -12,6 +22,7 @@ class UserDetail(RetrieveAPIView):
     """
     Returns the detail of the User authenticated.
     """
+
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -23,6 +34,7 @@ class UserCreate(CreateAPIView):
     """
     Creates a new non-active User instance.
     """
+
     serializer_class = UserCreateSerializer
 
 
@@ -30,6 +42,7 @@ class ChangePassword(UpdateAPIView):
     """
     Change the password of the user.
     """
+
     serializer_class = ChangePasswordSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -41,6 +54,7 @@ class TransactionList(ListAPIView):
     """
     Returns a list of all Transactions of the user.
     """
+
     serializer_class = TransactionSerializer
     permission_classes = (IsAuthenticated,)
 

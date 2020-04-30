@@ -2,7 +2,7 @@
 %    for LaTeX-2e
 % Copyright -- 2004 Jeremy Barbay
 % E-mail jyby@fr.st
-% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t) 
+% (latex-mode) (setq outline-regexp "^%[*]+") (outline-minor-mode t)
 
 %* Package Definition  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %** LaTeX version needed:
@@ -58,7 +58,7 @@
 % To include properly a problem from a file:
 % The first parameter corresponds to the relative location of the file,
 % the second parameter corresponds to the name of the file,
-% the third parameter corresponds to a comment, 
+% the third parameter corresponds to a comment,
 % such as the number of marks attributed to this exercise,
 % written in the same header of the exercise.
 \providecommand{\RelativeLocationOfTheDatabaseOfProblems}{./}
@@ -178,7 +178,7 @@
 %
 %*** solution:
 % Differentiate the assignment from its solution.
-% with the solution option, both the text and the solutions are printed, while 
+% with the solution option, both the text and the solutions are printed, while
 % wihout it only the text of the problems is written.
 \DeclareOption{solution}{\@solutiontrue}
 \newif\if@solution
@@ -218,15 +218,15 @@
 \@authorshipfalse
 %
 %*** usage:
-% Print the various time and location where each exercises has been given, 
-% as an assignment or as an exam. 
+% Print the various time and location where each exercises has been given,
+% as an assignment or as an exam.
 \DeclareOption{usage}{\@usagetrue}
 \newif\if@usage
 \@usagefalse
 %
 %*** spaceForAnswer:
-% Leave some space for the answer, so that the student can answer on the sheet. 
-% as for instance in an exam. 
+% Leave some space for the answer, so that the student can answer on the sheet.
+% as for instance in an exam.
 \DeclareOption{spaceForAnswer}{\@spaceForAnswertrue}
 \newif\if@spaceForAnswer
 \@spaceForAnswerfalse
@@ -238,8 +238,8 @@
 \@pageBreakfalse
 %
 %*** hint:
-% Print the various time and location where each exercises has been given, 
-% as an assignment or as an exam. 
+% Print the various time and location where each exercises has been given,
+% as an assignment or as an exam.
 \DeclareOption{hint}{\@hinttrue}
 \newif\if@hint
 \@hinttrue

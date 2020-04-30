@@ -15,7 +15,7 @@ code fragments using $\Theta$-notation.  Briefly justify the runtime,
 and simplify as much as possible.
 \begin{enumerate}
 
-\item 
+\item
 \begin{verbatim}
 sum := 0
 for i from 1 to n*n*n do
@@ -24,23 +24,23 @@ for i from 1 to n*n*n do
 \end{verbatim}
 
 \begin{solution}
-$$\sum_{i=1}^{n^3} \sum_{j=1}^{i^3} 1 
-= \sum_{i=1}^{n^3} i^3 
+$$\sum_{i=1}^{n^3} \sum_{j=1}^{i^3} 1
+= \sum_{i=1}^{n^3} i^3
 \approx { (n^3)^{3+1} \over 3+1 }
 \in \Theta(n^{12})$$
 \end{solution}
 
-\item 
+\item
 \begin{verbatim}
 sum := 0
-for i from 1 to 2*(lg n) do   // assume n is a power of 2 
+for i from 1 to 2*(lg n) do   // assume n is a power of 2
    for j from 1 to 4^i do     // 4^i means 4 to the power of i
       sum := sum + 1
 \end{verbatim}
 
 \begin{solution}
-$$\sum_{i=1}^{2\lg n} \sum_{j=1}^{4^i} 1 
-= \sum_{i=1}^{2\lg n} 4^i 
+$$\sum_{i=1}^{2\lg n} \sum_{j=1}^{4^i} 1
+= \sum_{i=1}^{2\lg n} 4^i
 = {  4(4^{2\lg n} - 1)  \over  4-1 }
 = {  4(2^{4\lg n} - 1)  \over 3}
 = {  4(2^{\lg n^4}) - 4 \over 3}
@@ -49,11 +49,11 @@ $$\sum_{i=1}^{2\lg n} \sum_{j=1}^{4^i} 1
 
 Note that $\sum_{i=1}^{N} a^i = {a^{N+1} - 1 \over a-1} - 1 = { a(a^N -1) \over a-1}$
 
-Note also that 
-$4^{2\lg n} 
+Note also that
+$4^{2\lg n}
 = (2^2)^{2\lg n}
-= 2^{2*2\lg n} 
-= 2^{4\lg n} 
+= 2^{2*2\lg n}
+= 2^{4\lg n}
 = 2^{\lg( n^4 ) }
 = n^4$.
 

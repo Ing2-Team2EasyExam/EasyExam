@@ -18,41 +18,41 @@ class Criterion(models.Model):
     value = models.IntegerField(default=settings.CRITERION_VALUE)
 
     class Meta:
-        verbose_name_plural = 'Criteria'
+        verbose_name_plural = "Criteria"
 
     def __str__(self):
         return self.name
 
 
 class Challenge(models.Model):
-    STATE_CHOICES = (('V', 'Valid'), ('I', 'Invalid'), ('N', 'Neutral'))
+    STATE_CHOICES = (("V", "Valid"), ("I", "Invalid"), ("N", "Neutral"))
 
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     criterion = models.ForeignKey(Criterion, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
-    state = models.CharField(choices=STATE_CHOICES, default='N', max_length=1)
+    state = models.CharField(choices=STATE_CHOICES, default="N", max_length=1)
     vote_count = models.IntegerField(default=0)
 
     class Meta:
-        unique_together = ('problem', 'criterion',)
+        unique_together = ("problem", "criterion")
 
     def save(self, *args, **kwargs):
         self.state = self.recalculate_state()
-        if self.state == 'V' and self.problem.validated == False:
+        if self.state == "V" and self.problem.validated == False:
             self.validate_problem()
         return super(Challenge, self).save(*args, **kwargs)
 
     def recalculate_state(self):
-        if self.state == 'V':
-            return 'V'
-        state = ''
+        if self.state == "V":
+            return "V"
+        state = ""
         if self.vote_count < self.criterion.quorum:
-            state = 'N'
+            state = "N"
         else:
             if self.score / self.vote_count >= self.criterion.tolerance:
-                state = 'V'
+                state = "V"
             else:
-                state = 'I'
+                state = "I"
         return state
 
     def validate_problem(self):
@@ -60,20 +60,25 @@ class Challenge(models.Model):
         self.problem.validated = True
         self.problem.save()
 
-        description = 'Gained {credits} for having an uploaded problem validated.'.format(
-            credits=self.criterion.value * 3)
-        Transaction.objects.create(user=self.problem.uploader, change=self.criterion.value * 3, description=description)
+        description = "Gained {credits} for having an uploaded problem validated.".format(
+            credits=self.criterion.value * 3
+        )
+        Transaction.objects.create(
+            user=self.problem.uploader,
+            change=self.criterion.value * 3,
+            description=description,
+        )
 
         for t in self.problem.topics.all():
             t.hidden = False
             t.save()
 
     def __str__(self):
-        return str(self.problem) + ' - ' + str(self.criterion)
+        return str(self.problem) + " - " + str(self.criterion)
 
 
 class Vote(models.Model):
-    ANSWER_CHOICES = (('V', 'Valid'), ('I', 'Invalid'))
+    ANSWER_CHOICES = (("V", "Valid"), ("I", "Invalid"))
 
     answer = models.CharField(choices=ANSWER_CHOICES, max_length=1)
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, editable=False)
@@ -81,7 +86,7 @@ class Vote(models.Model):
 
     def save(self, *args, **kwargs):
         super(Vote, self).save(*args, **kwargs)
-        self.challenge.score += 1 if self.answer == 'V' else 0
+        self.challenge.score += 1 if self.answer == "V" else 0
         self.challenge.vote_count += 1
         self.challenge.save()
         self.challenge.criterion.save()
@@ -101,4 +106,4 @@ class CurrentChallenge(models.Model):
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('user', 'challenge',)
+        unique_together = ("user", "challenge")
