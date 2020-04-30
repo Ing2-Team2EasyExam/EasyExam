@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_docs",
     "corsheaders",
+    "django_extensions",
     # First Party
     "apps.api",
     "apps.user",
