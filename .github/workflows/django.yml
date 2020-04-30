@@ -10,7 +10,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7]
+        python-version: 3.7
 
     steps:
     - uses: actions/checkout@v2
@@ -27,6 +27,9 @@ jobs:
         python -m pip install pre-commit
         pre-commit install
         pre-commit run --all-files
+    - name: Make migrations
+        python backend/EasyExamAPI/manage.py makemigrations
+        python backend/EasyExamAPI/manage.py migrate
     - name: Run Tests
       run: |
-        cd backend/ && python manage.py test
+        python backend/EasyExamAPI/manage.py test
