@@ -30,6 +30,8 @@ jobs:
     - name: Make migrations
       run:
         python backend/EasyExamAPI/manage.py makemigrations
+    - name: Migrate
+      run:
         python backend/EasyExamAPI/manage.py migrate
     - name: Run Tests
       run: |
