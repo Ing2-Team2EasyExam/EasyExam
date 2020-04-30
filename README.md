@@ -33,7 +33,8 @@ $ rm db.sqlite3`
 ```
 
 ### Running the servers locally
-There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines
+There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file will be made for all of this.
+
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
@@ -62,3 +63,8 @@ $ yarn
 $ yarn build
 ```
 Then copy it to the repositorium/www Folder
+
+## Some learning
+- [celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/#celery-tasks)
+- [redis]()
+- [redis_and_celery](https://stackabuse.com/asynchronous-tasks-in-django-with-redis-and-celery/)
