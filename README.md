@@ -55,14 +55,11 @@ For all commands descriptions type `make` on the command line for help
 
 
 ### Using jupyter
-You can use jupyter on the backend if you want, to run it do on the backend folder:
+You can use jupyter on the backend if you want, to run it do:
 ```bash
-python manage.py shell_plus --notebook
+make jupyter
 ```
-Or in the main directory
-```bash
-python backend/manage.py shell_plus --notebook
-```
+And select django shell plus as interpreter
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
