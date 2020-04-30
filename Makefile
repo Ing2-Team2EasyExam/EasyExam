@@ -3,10 +3,11 @@ django := python3 backend/manage.py
 
 help:
 	@echo "create-environment: Create virtual environment with name venv"
-	@echo "ubuntu-node: download node on ubuntu, if not using it check the web"
+	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
+	@echo "brew-node: download nodejs and yarn on macOS, if not using mac check the web"
 	@echo "makemigration: Make database migration on Django"
 	@echo "migrate: Execute the migrations on Django"
-	@echo "backend-up: Run Django local server"
+	@echo "backend-run: Run Django local server"
 	@echo "jupyter: Run jupyter with django shell integrated"
 	@echo "backend-db-delete: Delete Django local database, deleting all the local data"
 	@echo "backend-install: Run the installation of the requirements file on the environment"
@@ -14,10 +15,14 @@ help:
 	@echo "frontend-run: Put the front end server up on local machine on port 3000"
 	@echo "frontend-install: Install the dependencies of the frontend"
 	@echo "frontend-test: Runs all the test on the frontend"
+	@echo "redis-install: Install redis on your computer, need to have wget command"
+	@echo "redis-run: Run the redis server on your computer"
+	@echo "redis-reset: Drop the data on the redis database"
 	@echo "install: Install both project dependencies"
 	@echo "test: Test both projects unittest"
 	@echo "db-update: Runs makemigration and migrate at once"
-	@echo "reset: Make a full clean of the project data"
+	@echo "reset: Make a clean of the project database"
+	@echo "reset-full: Make a full clean on the database and redis"
 ubuntu-node:
 	sudo apt install nodejs
 	sudo apt install npm
