@@ -2,9 +2,9 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.reverse import reverse
 
-from exam.models import Topic, Exam, Problem, Image
+from apps.exam.models import Topic, Exam, Problem, Image
 
-from exam.generate_exam.gen import CompilationErrorException
+from apps.exam.generate_exam.gen import CompilationErrorException
 
 
 def get_problem_topics(problem):

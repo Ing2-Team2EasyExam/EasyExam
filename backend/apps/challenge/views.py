@@ -3,11 +3,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.models import get_random_object
-from challenge.models import CurrentChallenge, Criterion, Challenge, Vote
-from challenge.serializers import AllChallengesSerializer, AllVotesSerializer
-from exam.models import Problem
-from user.models import Transaction
+from apps.api.models import get_random_object
+from apps.challenge.models import CurrentChallenge, Criterion, Challenge, Vote
+from apps.challenge.serializers import AllChallengesSerializer, AllVotesSerializer
+from apps.exam.models import Problem
+from apps.user.models import Transaction
 
 
 class AllChallengesView(APIView):

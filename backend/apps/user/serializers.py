@@ -3,7 +3,7 @@ from django.contrib.auth.hashers import check_password
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from user.models import Transaction
+from apps.user.models import Transaction
 
 User = get_user_model()
 
