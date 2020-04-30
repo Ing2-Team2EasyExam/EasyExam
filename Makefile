@@ -14,6 +14,7 @@ help:
 	@echo "backend-test: Run all test of the backend"
 	@echo "install: Install both project dependencies"
 	@echo "test: Test both projects unittest"
+	@echo "db-update: Runs makemigration and migrate at once"
 	@echo "reset: Make a full clean of the project data"
 
 ubuntu-node:
@@ -57,5 +58,6 @@ frontend-test:
 	@npm test
 	@cd ../
 install: backend-install frontend-install
+db-update: makemigration migrate
 test: backend-test frontend-test
 reset: backend-db-delete backend-install makemigration migrate
