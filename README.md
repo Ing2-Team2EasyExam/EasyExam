@@ -46,12 +46,6 @@ make jupyter
 ```
 And select django shell plus as interpreter
 
-## In case of migration errors
-If the migrations don't work reset the database
-```bash
-$ make reset
-```
-
 #### Installing and running the system
 
 First of all, this guide is for unix like system like linux with ubuntu. So plis, if your are using windows install WSL (Linux subsystem for Windows) and with ubuntu distro on it. Then search the folder of this project and run the commands as told on this tutorial.
