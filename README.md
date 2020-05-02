@@ -72,6 +72,8 @@ Now, we have our makefile that does everything for us.
 The first thing to install is `nodejs` to run the react server on the local machine. In order to do this we have the command on the makefile:
 ```bash
 $ make ubuntu-node
+# if your are using macOS with homebrew use:
+# make brew-node
 ```
 Fill up the credentials for your sudo user and then this will install `nodejs` on your computer.
 
