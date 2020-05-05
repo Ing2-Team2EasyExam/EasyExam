@@ -9,24 +9,16 @@ To develop on this project on your local machine (i.e your computer) you need to
 - Python 3.7
 - [pre-commit](https://pre-commit.com/#install)
 
-### Installing
+Then follow this guideline to use it.
 
-The following steps will help you get a development env running
+## Running the servers locally
+Here it is a makefile that does almost everything for you. To use it on your local machine (With a running Unix base system like linux with ubuntu distro) just type:
 ```bash
-$ git clone git@bitbucket.org:is2dcc/easyexam.git
-$ cd easyexam
-$ python3 -m venv ./venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt
-$ cd easyexam
-$ python manage.py migrate
-$ python manage.py runserver
+make <name_of_the_command>
 ```
 
+The most important ones are described on the following table:
 
-
-### Running the servers locally
-There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file is made for running this commands automaticly, here is a resume of the important ones:
 
 |Instruction| What it does  |
 |-----------|---------------|
@@ -54,13 +46,109 @@ make jupyter
 ```
 And select django shell plus as interpreter
 
-## In case of migration errors
-If the migrations don't work reset the database
+#### Installing and running the system
+
+First of all, this guide is for unix like system like linux with ubuntu. So plis, if your are using windows install WSL (Linux subsystem for Windows) and with ubuntu distro on it. Then search the folder of this project and run the commands as told on this tutorial.
+
+First of all download the repo on the local machine with https (or ssh if you have a ssh key configurated on your github)
+
 ```bash
-$ make reset
+$ git clone https://github.com/Ing2-Team2EasyExam/EasyExam.git
 ```
 
+Fill the credentials with your own ones. Then install pre commit on this repo:
+```bash
+$ pre-commit install
+```
+This make the commits on the files have a good structure. If a check doesn't pass, pre-commit will change the files so add them and make the commit again.
 
+Now, we have our makefile that does everything for us.
+The first thing to install is `nodejs` to run the react server on the local machine. In order to do this we have the command on the makefile:
+```bash
+$ make ubuntu-node
+# if your are using macOS with homebrew use:
+# make brew-node
+```
+Fill up the credentials for your sudo user and then this will install `nodejs` on your computer.
+
+The second thing is to install the dependencies, so first of all make a python virtualenvironment with:
+```bash
+$ make create-environment
+```
+
+This will make a virtual environment folder of name `venv`, make sure to **never** commit this folder, the name of the `venv` is on the gitignore, if you change it's name pls add it to the gitignore.
+
+Now that we have our environment created let's start it, the makefile don't support this operation so we have to manually start it on our terminal:
+```bash
+$ source venv/bin/activate
+```
+
+That should start a virtual environment when all the dependencies will be stored. Having a virtual environment is a good practice on every python project that you have, not just this one or the ones that runs django.
+
+Now let's install the dependencies with:
+```bash
+make install
+```
+This will install all backend and frontend dependencies that are described on the `requirements.txt` and `lock.yarn` files. So if you want to add a dependendencie just add it's name on one of that file (if it's backend, `requirements.txt` if it's frontend `lock.yarn`).
+
+The third thing to do is installing redis on your local machine for some task that need to run on your computer (sending emails, cache memory,  etc...). Run
+```bash
+make install-redis
+```
+This will install redis on the `venv` folder and in your local machine.
+
+Now let's make the migrations on the backend. The backend runs a `sqlite3` locally but in production this is a `postgresql`. This is because we don't want a postgresql server in every machine, so a `sqlite3` is more well lite.  In order to do this, run:
+```bash
+make db-update
+```
+
+Now let's run some things. First let's run the frontend server. This is done by:
+```bash
+make frontend-run
+```
+
+Now to run the backend, we need two extra terminals all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
+
+First, run the redis server with the command:
+```bash
+make redis-run
+```
+On the other terminal, let's start django:
+```bash
+make backend-run
+```
+
+And there we go. You have running the easyexam for the first time on your local computer!
+
+#### Running test
+To run unittest on your local machine, there is a make command:
+```bash
+make test
+```
+This will run all the test (frontend and backend). If you want to run just the frontend ones use:
+```bash
+make frontend-test
+```
+or if you just want the backends:
+```bash
+make backend-test
+```
+
+#### Reseting local database
+**WARNING** This will reset your local database, so every data that you have introduce on it will dissapear. Run just if any problem is encountered.
+
+To reset your local database and make a new one with new migrations do:
+```bash
+make reset
+```
+If you want to also reset redis with the backend:
+```bash
+make reset-full
+```
+Or if you just want to reset redis:
+```bash
+make redis-reset
+```
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
 
