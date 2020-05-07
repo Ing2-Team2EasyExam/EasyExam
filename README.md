@@ -33,17 +33,33 @@ $ rm db.sqlite3`
 ```
 
 ### Running the servers locally
-There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file will be made for all of this.
+There is a guide to run each frontend and backend server locally, follow that guides to run it on your local machines. A make file is made for running this commands automaticly, here is a resume of the important ones:
+
+|Instruction| What it does  |
+|-----------|---------------|
+|create-environment| Creates a local virtual environment to run the backend |
+| install | Install all frontend and backend dependencies |
+| install-redis | Install redis on local machine with wget |
+| frontend-run | Runs local react server on local machine port `3000` |
+| backend-run | Runs local django server on local machine port `8000`|
+| redis-run | Runs redis on local machine port `6379` |
+| db-update | Runs makemigrations and migrate of django on backend |
+| backend-test| Runs all unittest on the backend |
+| frontend-test| Runs all unittest on the frontend |
+| test | Runs all backend and frontend test |
+| reset | Delete previous database and create a new one with no data on it|
+| reset-full | Reset all db's and starts new ones |
+
+For all commands descriptions type `make` on the command line for help
+
+
 
 ### Using jupyter
-You can use jupyter on the backend if you want, to run it do on the backend folder:
+You can use jupyter on the backend if you want, to run it do:
 ```bash
-python manage.py shell_plus --notebook
+make jupyter
 ```
-Or in the main directory
-```bash
-python backend/manage.py shell_plus --notebook
-```
+And select django shell plus as interpreter
 
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
