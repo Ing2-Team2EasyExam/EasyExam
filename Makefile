@@ -30,6 +30,11 @@ ubuntu-node:
 	sudo apt install npm
 	sudo apt install yarn
 
+fedora-node:
+	sudo dnf install nodejs
+	sudo dnf install npm
+	sudo dnf install yarnpkg
+
 
 brew-node:
 	brew install node
