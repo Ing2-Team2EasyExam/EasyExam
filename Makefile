@@ -30,6 +30,11 @@ ubuntu-node:
 	sudo apt install npm
 	sudo apt install yarn
 
+fedora-node:
+	sudo dnf install nodejs
+	sudo dnf install npm
+	sudo dnf install yarnpkg
+
 
 brew-node:
 	brew install node
@@ -59,13 +64,13 @@ jupyter:
 
 
 backend-db-delete:
-	@echo "Flushing Django..."
-	@${django} flush
-	@echo "Removing migrations..."
-	@find . -path "backend/*/migrations/*.py" -not -name "__init__.py" -delete
-	@find . -path "backend/*/migrations/*.pyc" -delete
 	@echo "Removing local database..."
 	@rm backend/EasyExamAPI/db.sqlite3
+	@echo "Removing migrations..."
+	@find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+	@find . -path "*/migrations/*.pyc" -delete
+	@echo "Flushing Django..."
+	@${django} flush
 
 
 backend-install:
