@@ -8,7 +8,7 @@ _Borrar esta seccion cuando este todo checkeado_
 ## Proposito
 _Describe el problema o bien la feature que tratas de resolver con este PR, si resuelve un issue por favor linkealo_
 
-## Acercamiento
+## Resolución
 _Como los cambios hechos resuelven el problema?_
 
 ## Donde empezar?
