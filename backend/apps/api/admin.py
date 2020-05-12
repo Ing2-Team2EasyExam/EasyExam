@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+"""
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
@@ -16,9 +18,10 @@ admin.site.register(Exam, ExamAdmin)
 admin.site.register(Problem, ProblemAdmin)
 # admin.site.register(Image)
 admin.site.register(Topic)
-admin.site.register(Criterion)
-admin.site.register(Challenge)
+# admin.site.register(Criterion)
+# admin.site.register(Challenge)
 # admin.site.register(Vote)
 # admin.site.register(CurrentChallenge)
-admin.site.register(Transaction)
-admin.site.unregister(Group)
+# admin.site.register(Transaction)
+# admin.site.unregister(Group)
+"""  # Comment this for now

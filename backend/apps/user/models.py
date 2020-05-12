@@ -12,6 +12,9 @@ class Transaction(models.Model):
     change = models.IntegerField()
     description = models.CharField(max_length=200)
 
+    class Meta:
+        abstract = True
+
     def save(self, *args, **kwargs):
         super(Transaction, self).save(*args, **kwargs)
         self.user.credits += self.change
