@@ -81,7 +81,7 @@ backend-install:
 
 
 backend-test:
-	@${django} test
+	@${django} test ${backend}
 
 
 frontend-run:
