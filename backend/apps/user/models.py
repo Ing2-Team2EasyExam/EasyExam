@@ -4,7 +4,6 @@ from django.db import models
 
 class User(AbstractUser):
     email = models.EmailField(blank=False)
-    credits = models.IntegerField(default=0)
 
 
 class Transaction(models.Model):
@@ -17,5 +16,5 @@ class Transaction(models.Model):
 
     def save(self, *args, **kwargs):
         super(Transaction, self).save(*args, **kwargs)
-        self.user.credits += self.change
+        # self.user.credits += self.change
         self.user.save()
