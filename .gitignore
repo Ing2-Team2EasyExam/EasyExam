@@ -41,14 +41,14 @@ yarn-error.log*
 
 ## Django affairs
 
-/backend/api/migrations/*
-!/backend/api/migrations/__init__.py
-/backend/user/migrations/*
-!/backend/user/migrations/__init__.py
-/backend/exam/migrations/*
-!/backend/exam/migrations/__init__.py
-/backend/challenge/migrations/*
-!/backend/challenge/migrations/__init__.py
+/backend/apps/api/migrations/*
+!/backend/apps/api/migrations/__init__.py
+/backend/apps/user/migrations/*
+!/backend/apps/user/migrations/__init__.py
+/backend/apps/exam/migrations/*
+!/backend/apps/exam/migrations/__init__.py
+/backend/apps/challenge/migrations/*
+!/backend/apps/challenge/migrations/__init__.py
 *.sqlite3
 
 # backend
