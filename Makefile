@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := help
 django := python3 backend/manage.py
-
+frontend:= frontend/
+backend:= backend/
 help:
 	@echo "create-environment: Create virtual environment with name venv"
 	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
@@ -67,8 +68,8 @@ backend-db-delete:
 	@echo "Removing local database..."
 	@rm backend/EasyExamAPI/db.sqlite3
 	@echo "Removing migrations..."
-	@find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-	@find . -path "*/migrations/*.pyc" -delete
+	@find ${backend} -path "*/migrations/*.py" -not -name "__init__.py" -delete
+	@find ${backend} -path "*/migrations/*.pyc" -delete
 	@echo "Flushing Django..."
 	@${django} flush
 
@@ -84,15 +85,15 @@ backend-test:
 
 
 frontend-run:
-	@cd frontend/ && yarn start
+	@cd ${frontend} && yarn start
 
 
 frontend-install:
-	@cd frontend/ && yarn install
+	@cd ${frontend} && yarn install
 
 
 frontend-test:
-	@cd frontend/ && yarn test
+	@cd ${frontend} && yarn test
 
 
 install-redis:
