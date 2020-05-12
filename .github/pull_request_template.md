@@ -1,20 +1,18 @@
-_Check first that_
-- [ ] Does this have less than 800 lines of code added or deleted
-- [ ] Can split it into multiple PR
-- [ ] Does it have tests?
-- [ ] Did you ran the test locally and nothing broke?
-_Delete if you have all the checks_
+_Primero checkea que:_
+- [ ] Este PR no tiene más de 800 lineas de codigo
+- [ ] Puedes separar el PR en muchos pero más pequeños
+- [ ] Esta con tests?
+- [ ] Corriste los test en tu local y nada se rompió?
+_Borrar esta seccion cuando este todo checkeado_
 
-## Purpose
-_Describe the problem or feature in addition to a link to the issues._
+## Proposito
+_Describe el problema o bien la feature que tratas de resolver con este PR, si resuelve un issue por favor linkealo_
 
-## Approach
-_How does this change address the problem?_
+## Acercamiento
+_Como los cambios hechos resuelven el problema?_
 
-## Where to start?
-_Tell reviewers on which file start_
+## Donde empezar?
+_Dile al que revisa tu codigo en donde debe empezar su revisión_
 
-## Learning
-_Describe the research stage_
-
-_Links to blog posts, patterns, libraries or addons used to solve this problem_
+## Aprendizaje (Opcional)
+_Links a documentación, librerias, etc... que usaste para resolver el problema y tu reviewer deberia saber para corregir_
