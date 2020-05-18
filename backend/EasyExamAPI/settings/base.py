@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "apps.api",
     "apps.user",
     "apps.exam",
-    "apps.challenge",
 ]
 
 MIDDLEWARE = [
