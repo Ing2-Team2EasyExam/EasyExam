@@ -1,9 +1,16 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from datetime import datetime
 
 
 class User(AbstractUser):
     email = models.EmailField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def fullname(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class Transaction(models.Model):
