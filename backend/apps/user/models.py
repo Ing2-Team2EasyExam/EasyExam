@@ -12,6 +12,10 @@ class User(AbstractUser):
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
 
+    @property
+    def is_admin(self):
+        return self.is_superuser
+
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
