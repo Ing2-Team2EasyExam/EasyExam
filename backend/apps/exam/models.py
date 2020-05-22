@@ -55,13 +55,13 @@ class Problem(models.Model):
     author = models.CharField(max_length=100)
     uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     content = models.TextField(max_length=50000)
+    created_at = models.DateTimeField(auto_now_add=True)
     tex_file = models.FileField(upload_to=problem_tex_path, storage=OverwriteStorage())
     pbtex_file = models.FileField(
         upload_to=problem_pbtex_path, storage=OverwriteStorage()
     )
     pdf = models.FileField(upload_to=problem_pdf_path, storage=OverwriteStorage())
     topics = models.ManyToManyField(to=Topic)
-
     # cost = models.IntegerField(default=settings.PROBLEM_COST) #Legacy field
     # boolean indicating that the problem is valid in at least one criterion
     # validated = models.BooleanField(default=False) # Legacy field
