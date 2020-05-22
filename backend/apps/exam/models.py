@@ -81,9 +81,8 @@ class Problem(models.Model):
     def generate_pdf(self):
         self.tex_file.save("", ContentFile(problem_tex(self)), save=False)
         normal_path, solution_path = generate_pdfs(self)
-        file = open(solution_path, "rb")
-        self.pdf.save("", File(file), save=False)
-        file.close()
+        with open(solution_path, "rb") as file:
+            self.pdf.save("", File(file), save=False)
         os.remove(normal_path)
         os.remove(solution_path)
         self.save()
