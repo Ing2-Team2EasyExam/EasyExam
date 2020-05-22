@@ -1,34 +1,23 @@
-def exam_path(instance, filename):
-    return "exams/{pk}/{filename}".format(pk=instance.pk, filename=filename)
+def get_problem_topics(problem):
+    """
+    Returns a set with the problem's topics names
+    :param problem: An instance of the model Problem
+    :return: A set of strings with the problem's topics
+    """
+    topics = set()
+    for topic in problem.topics.all():
+        topics.add(topic.name)
+    return topics
 
 
-def exam_normal_path(instance, filename):
-    return exam_path(instance, "normal{pk}.pdf".format(pk=instance.pk))
-
-
-def exam_solution_path(instance, filename):
-    return exam_path(instance, "solution{pk}.pdf".format(pk=instance.pk))
-
-
-def exam_tex_path(instance, filename):
-    return exam_path(instance, "exam{pk}.tex".format(pk=instance.pk))
-
-
-def problem_path(instance, filename):
-    return "problems/{pk}/{filename}".format(pk=instance.pk, filename=filename)
-
-
-def problem_pbtex_path(instance, filename):
-    return problem_path(instance, "problem{pk}.pbtex".format(pk=instance.pk))
-
-
-def problem_pdf_path(instance, filename):
-    return problem_path(instance, "problem{pk}.pdf".format(pk=instance.pk))
-
-
-def problem_tex_path(instance, filename):
-    return problem_path(instance, "problem{pk}.tex".format(pk=instance.pk))
-
-
-def image_path(instance, filename):
-    return problem_path(instance.problem, "/{filename}".format(filename=filename))
+def get_exam_topics(exam):
+    """
+    Returns a set with the exam's topics, corresponds to the union of the problems topics of the exam
+    :param exam: An instance of the model Exam
+    :return: A set of strings with te exam's topics
+    """
+    topics = set()
+    for problem in exam.problems.all():
+        for topic in get_problem_topics(problem):
+            topics.add(topic)
+    return topics

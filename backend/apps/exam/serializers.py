@@ -5,31 +5,7 @@ from rest_framework.reverse import reverse
 from apps.exam.models import Topic, Exam, Problem, Image
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
-
-
-def get_problem_topics(problem):
-    """
-    Returns a set with the problem's topics names
-    :param problem: An instance of the model Problem
-    :return: A set of strings with the problem's topics
-    """
-    topics = set()
-    for topic in problem.topics.all():
-        topics.add(topic.name)
-    return topics
-
-
-def get_exam_topics(exam):
-    """
-    Returns a set with the exam's topics, corresponds to the union of the problems topics of the exam
-    :param exam: An instance of the model Exam
-    :return: A set of strings with te exam's topics
-    """
-    topics = set()
-    for problem in exam.problems.all():
-        for topic in get_problem_topics(problem):
-            topics.add(topic)
-    return topics
+from apps.exam.services import get_problem_topics, get_exam_topics
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -49,14 +25,10 @@ class ProblemListSerializer(serializers.ModelSerializer):
     """
 
     topics = TopicSerializer(many=True)
-    cost = serializers.SerializerMethodField()
-
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
 
     class Meta:
         model = Problem
-        fields = ("uuid", "name", "cost", "topics")
+        fields = ("uuid", "name", "author", "created_at", "topics")
 
 
 class ProblemDetailSerializer(serializers.ModelSerializer):
@@ -66,17 +38,13 @@ class ProblemDetailSerializer(serializers.ModelSerializer):
 
     topics = TopicSerializer(many=True)
     pdf = serializers.SerializerMethodField()
-    cost = serializers.SerializerMethodField()
 
     def get_pdf(self, instance):
         return reverse("problem-pdf", kwargs={"uuid": instance.uuid})
 
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
-
     class Meta:
         model = Problem
-        fields = ("uuid", "name", "author", "topics", "cost", "pdf")
+        fields = ("uuid", "name", "author", "topics", "pdf")
 
 
 class ProblemCreateSerializer(serializers.ModelSerializer):
@@ -93,10 +61,6 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         child=serializers.ImageField(), write_only=True, required=False
     )
     topics = TopicSerializer(many=True, source="topics.all", read_only=True)
-    cost = serializers.SerializerMethodField()
-
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
 
     class Meta:
         model = Problem
@@ -108,7 +72,6 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
             "topics",
             "topics_data",
             "figures",
-            "cost",
         )
         extra_kwargs = {"uuid": {"read_only": True}}
 
@@ -125,8 +88,8 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         :param validated_data: problem data
         :return: Created problem
         """
-        topics_data = validated_data.pop("topics_data", None)
-        figures = validated_data.pop("figures", None)
+        topics_data = validated_data.get("topics_data", None)
+        figures = validated_data.get("figures", None)
         problem = Problem(**validated_data, uploader=self.context["request"].user)
         problem.save()
         topics = []
@@ -138,17 +101,8 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
             for f in figures:
                 Image.objects.create(image=f, problem=problem, name=f.name)
         problem.save()
-        try:
-            problem.generate_pdf()
-            return problem
-        except CompilationErrorException as err:
-            problem.delete()
-            raise ValidationError(err.latex_logs)
-        except Exception:
-            problem.delete()
-            raise ValidationError(
-                "There was an internal error in the compilation of the latex file"
-            )
+        problem.generate_pdf()
+        return problem
 
 
 class ExamListSerializer(serializers.ModelSerializer):

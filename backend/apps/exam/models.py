@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile, File
 from django.db import models
-from apps.exam.services import (
+from apps.exam.path_services import (
     exam_path,
     exam_normal_path,
     exam_solution_path,
