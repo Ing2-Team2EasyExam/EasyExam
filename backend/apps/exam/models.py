@@ -45,7 +45,7 @@ class Problem(models.Model):
         uploader {ForeignKey} -- Key to the author user instance of the problem
         content {TextField} -- Text content of the problem
         tex_file {FileField} -- Tex file for rendering the problem
-        pbtex_file {FileField} -- Problem tex file for putting in into the exam
+        pbtex_file {FileField} -- Problem tex file for putting in into the exam tex file
         pdf {FileField} -- Pdf file for rendering the problem
         topics {ManyToManyField} -- Topics for saying what the problem is about
     """

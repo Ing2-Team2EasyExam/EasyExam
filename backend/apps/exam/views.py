@@ -43,7 +43,7 @@ class TopicList(ListAPIView):
     """
 
     serializer_class = TopicSerializer
-    queryset = Topic.objects.filter(hidden=False)
+    queryset = Topic.objects.all()
 
 
 class ExamList(ListAPIView):
