@@ -4,12 +4,7 @@ from datetime import datetime, date
 from subprocess import PIPE
 
 from django.conf import settings
-
-
-class CompilationErrorException(Exception):
-    def __init__(self, latex_logs):
-        super().__init__()
-        self.latex_logs = latex_logs
+from .exceptions import CompilationErrorException
 
 
 def problem_pbtex(problem) -> str:

@@ -33,7 +33,7 @@ from apps.exam.serializers import (
 )
 from apps.user.models import Transaction
 
-from apps.exam.generate_exam.gen import CompilationErrorException
+from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
 
 
