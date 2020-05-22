@@ -30,7 +30,7 @@ User = get_user_model()
 class Topic(models.Model):
     name = models.CharField(primary_key=True, max_length=100)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 
@@ -66,7 +66,7 @@ class Problem(models.Model):
     # boolean indicating that the problem is valid in at least one criterion
     # validated = models.BooleanField(default=False) # Legacy field
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> "Problem":
         if self.pk is None:
             self.pbtex_file = None
             super().save(*args, **kwargs)
@@ -74,10 +74,10 @@ class Problem(models.Model):
             self.pbtex_file.save("", ContentFile(problem_pbtex(self)), save=False)
         super().save(*args, **kwargs)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
-    def generate_pdf(self):
+    def generate_pdf(self) -> None:
         self.tex_file.save("", ContentFile(problem_tex(self)), save=False)
         normal_path, solution_path = generate_pdfs(self)
         with open(solution_path, "rb") as file:

@@ -7,7 +7,7 @@ from django.conf import settings
 from .exceptions import CompilationErrorException
 
 
-def problem_pbtex(problem) -> str:
+def problem_pbtex(problem: "Problem") -> str:
     """
     Returns the pbtex content for the given problem.
     :param problem: A problem instance of the Problem model
@@ -22,7 +22,9 @@ def problem_pbtex(problem) -> str:
     return "".join(pbtex_iterable)
 
 
-def problem_tex(problem):
+def problem_tex(
+    problem: "Problem"
+) -> str:  # Dont use actual class because of circular imports
     """
     Returns the content of the tex file for the given problem, used to generate the problem pdf.
     :param problem: Problem instance
