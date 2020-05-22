@@ -87,6 +87,18 @@ class Problem(models.Model):
         self.save()
 
 
+class Image(models.Model):
+    name = models.CharField(max_length=100)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=image_path, storage=OverwriteStorage())
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        unique_together = ("name", "problem")
+
+
 class Exam(models.Model):
     # TODO add style choices logic
     # TODO add language choices
@@ -140,15 +152,3 @@ class Exam(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Image(models.Model):
-    name = models.CharField(max_length=100)
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=image_path, storage=OverwriteStorage())
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        unique_together = ("name", "problem")
