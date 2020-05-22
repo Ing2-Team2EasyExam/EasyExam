@@ -28,8 +28,7 @@ User = get_user_model()
 
 
 class Topic(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    hidden = models.BooleanField(default=True)
+    name = models.CharField(primary_key=True, max_length=100)
 
     def __str__(self):
         return self.name
