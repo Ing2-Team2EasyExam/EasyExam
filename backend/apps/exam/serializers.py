@@ -4,7 +4,7 @@ from rest_framework.reverse import reverse
 
 from apps.exam.models import Topic, Exam, Problem, Image
 
-from apps.exam.generate_exam.gen import CompilationErrorException
+from apps.exam.generate_exam.exceptions import CompilationErrorException
 
 
 def get_problem_topics(problem):

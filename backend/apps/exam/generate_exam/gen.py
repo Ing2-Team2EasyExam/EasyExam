@@ -4,23 +4,40 @@ from datetime import datetime, date
 from subprocess import PIPE
 
 from django.conf import settings
+from .exceptions import CompilationErrorException
 
 
-def problem_pbtex(problem):
+def problem_pbtex(problem: "Problem") -> str:
     """
     Returns the pbtex content for the given problem.
     :param problem: A problem instance of the Problem model
+    :return: str
+    """
+    pbtex_iterable = (
+        "\\begin{authorship}\n",
+        problem.author,
+        "\n\\end{authorship}\n",
+        problem.content,
+    )
+    return "".join(pbtex_iterable)
+
+
+def problem_tex(
+    problem: "Problem"
+) -> str:  # Dont use actual class because of circular imports
+    """
+    Returns the content of the tex file for the given problem, used to generate the problem pdf.
+    :param problem: Problem instance
     :return: String
     """
-    pbtex = ""
-
-    pbtex += "\\begin{authorship}\n"
-    pbtex += problem.author
-    pbtex += "\n\\end{authorship}\n"
-
-    pbtex += problem.content
-
-    return pbtex
+    tex_iterable = (
+        "\\documentclass[]{problem}\n",
+        "\\usepackage{course}\n\n",
+        "\\begin{document}\n",
+        get_input_problem(problem, ""),
+        "\\end{document}\n",
+    )
+    return "".join(tex_iterable)
 
 
 def get_input_problem(problem, marking):
@@ -89,29 +106,6 @@ def exam_tex(exam):
     tex += "\\end{document}\n"
 
     return tex
-
-
-def problem_tex(problem):
-    """
-    Returns the content of the tex file for the given problem, used to generate the problem pdf.
-    :param problem: Problem instance
-    :return: String
-    """
-    tex = ""
-
-    tex += "\\documentclass[]{problem}\n"
-    tex += "\\usepackage{course}\n\n"
-    tex += "\\begin{document}\n"
-    tex += get_input_problem(problem, "")
-    tex += "\\end{document}\n"
-
-    return tex
-
-
-class CompilationErrorException(Exception):
-    def __init__(self, latex_logs):
-        super().__init__()
-        self.latex_logs = latex_logs
 
 
 def generate_pdfs(instance):
