@@ -60,21 +60,17 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
     figures = serializers.ListField(
         child=serializers.ImageField(), write_only=True, required=False
     )
-    topics = TopicSerializer(many=True, source="topics.all", read_only=True)
 
     class Meta:
         model = Problem
         fields = (
-            "uuid",
             "name",
             "author",
             "statemet_content",
             "solution_content",
-            "topics",
             "topics_data",
             "figures",
         )
-        extra_kwargs = {"uuid": {"read_only": True}}
 
     def validate_topics_data(self, obj):
         if len(obj) == 0:
@@ -91,16 +87,19 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         """
         topics_data = validated_data.get("topics_data", None)
         figures = validated_data.get("figures", None)
-        problem = Problem(**validated_data, uploader=self.context["request"].user)
-        problem.save()
+        problem = Problem.objects.create(
+            **validated_data, uploader=self.context["request"].user
+        )
         topics = []
-        for t in topics_data:
-            topic, _ = Topic.objects.get_or_create(name=t)
+        for topic_name in topics_data:
+            topic, _ = Topic.objects.get_or_create(name=topic_name)
             topics.append(topic.pk)
         problem.topics.set(topics)
         if figures is not None:
-            for f in figures:
-                Image.objects.create(image=f, problem=problem, name=f.name)
+            for figure_data in figures:
+                Image.objects.create(
+                    image=figure_data, problem=problem, name=figure_data.name
+                )
         problem.save()
         problem.generate_pdf()
         return problem

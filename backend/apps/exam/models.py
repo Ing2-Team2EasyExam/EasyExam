@@ -51,19 +51,26 @@ class Problem(models.Model):
         topics {ManyToManyField} -- Topics for saying what the problem is about
     """
 
+    # Primary Key
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+
+    # Non file fields
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     statement_content = models.TextField(max_length=50000)
     solution_content = models.TextField(max_length=50000, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    topics = models.ManyToManyField(to=Topic)
+
+    # File fields
     tex_file = models.FileField(upload_to=problem_tex_path, storage=OverwriteStorage())
     pbtex_file = models.FileField(
         upload_to=problem_pbtex_path, storage=OverwriteStorage()
     )
     pdf = models.FileField(upload_to=problem_pdf_path, storage=OverwriteStorage())
-    topics = models.ManyToManyField(to=Topic)
+
+    # Non using legacy fields
     # cost = models.IntegerField(default=settings.PROBLEM_COST) #Legacy field
     # boolean indicating that the problem is valid in at least one criterion
     # validated = models.BooleanField(default=False) # Legacy field
