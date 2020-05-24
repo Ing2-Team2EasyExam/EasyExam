@@ -43,6 +43,7 @@ class TopicListView(ListAPIView):
     """
 
     serializer_class = TopicSerializer
+    permission_classes = (IsAuthenticated,)
     queryset = Topic.objects.all()
 
 

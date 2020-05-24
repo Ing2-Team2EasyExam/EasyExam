@@ -19,7 +19,7 @@ from apps.exam.views import (
 
 urlpatterns = [
     # Topic paths
-    path("topics/list/", TopicListView.as_view(), name="category-list"),
+    path("topics/list/", TopicListView.as_view(), name="topics-list"),
     # Exam paths
     path("exams/", ExamCreate.as_view(), name="exam-create"),
     path("exams/owned/", ExamList.as_view(), name="exam-list"),
