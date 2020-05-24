@@ -32,3 +32,22 @@ class TestTopicSerializer(TestCase):
         updated_topic.refresh_from_db()
         self.assertEqual(str(updated_topic), "I am updated name")
         self.assertEqual(updated_topic.pk, self.topic.pk)
+
+
+class TestProblemListSerializer(TestCase):
+    def setUp(self):
+        self.problem = mixer.blend("exam.Problem")
+        self.problem_data = {
+            "name": self.problem.name,
+            "author": self.problem.author,
+            "created_at": self.problem.created_at,
+            "topics": self.problem.topics.all(),
+        }
+
+    def test_empty_serializer(self):
+        empty_problem = ProblemListSerializer()
+        self.assertEqual(empty_problem.data, {"name": "", "author": "", "topics": []})
+
+    def test_problem_serializer_constructor(self):
+        problem_serializer = ProblemListSerializer(instance=self.problem)
+        self.assertEqual()
