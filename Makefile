@@ -119,7 +119,7 @@ db-update: makemigration migrate
 test: backend-test frontend-test
 
 
-reset: backend-db-delete backend-install makemigration migrate
+reset: backend-db-delete db-update
 
 
 reset-full: reset redis-reset
