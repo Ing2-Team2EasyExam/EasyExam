@@ -15,7 +15,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ("name",)
+        fields = ("pk", "name")
 
 
 class ProblemListSerializer(serializers.ModelSerializer):
