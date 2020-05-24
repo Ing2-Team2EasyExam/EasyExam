@@ -44,7 +44,7 @@ class ProblemPDFSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Problem
-        fields = "pdf"
+        fields = ("pdf",)
 
 
 class ProblemCreateSerializer(serializers.ModelSerializer):
