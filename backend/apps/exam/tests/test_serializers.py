@@ -6,7 +6,7 @@ from apps.exam.serializers import TopicSerializer, ProblemListSerializer
 class TestTopicSerializer(TestCase):
     def setUp(self):
         self.topic = mixer.blend("exam.Topic")
-        self.topic_data = {"pk": self.topic.pk, "name": self.topic.name}
+        self.topic_data = {"name": self.topic.name}
 
     def test_empty_serializer(self):
         empty_topic = TopicSerializer()
@@ -25,7 +25,7 @@ class TestTopicSerializer(TestCase):
         self.assertEqual(str(new_topic), "Hey I am a new topic")
 
     def test_update_topic(self):
-        update_data = {"pk": self.topic.pk, "name": "I am updated name"}
+        update_data = {"name": "I am updated name"}
         update_serializer = TopicSerializer(instance=self.topic, data=update_data)
         self.assertTrue(update_serializer.is_valid())
         updated_topic = update_serializer.save()

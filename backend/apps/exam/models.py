@@ -28,7 +28,7 @@ User = get_user_model()
 
 
 class Topic(models.Model):
-    name = models.CharField(unique=True, max_length=100)
+    name = models.CharField(primary_key=True, max_length=100)
 
     def __str__(self) -> str:
         return self.name
