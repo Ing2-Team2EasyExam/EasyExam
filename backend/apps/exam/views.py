@@ -37,7 +37,7 @@ from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
 
 
-class TopicList(ListAPIView):
+class TopicListView(ListAPIView):
     """
     Returns a list of all non hidden Topics.
     """
@@ -46,7 +46,17 @@ class TopicList(ListAPIView):
     queryset = Topic.objects.all()
 
 
-class ProblemList(ListAPIView):
+class ProblemListView(ListAPIView):
+    """
+    List all the problems on the system
+    """
+
+    serializer_class = ProblemSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Problem.objects.all()
+
+
+class UserProblemListView(ListAPIView):
     """
     Returns a list of problems uploaded by the user.
     """
@@ -58,7 +68,7 @@ class ProblemList(ListAPIView):
         return Problem.objects.filter(uploader=self.request.user)
 
 
-class ProblemCreate(CreateAPIView):
+class ProblemCreateView(CreateAPIView):
     """
     Creates a new Problem instance.
     """
