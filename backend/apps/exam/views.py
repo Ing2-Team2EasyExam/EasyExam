@@ -46,6 +46,28 @@ class TopicList(ListAPIView):
     queryset = Topic.objects.all()
 
 
+class ProblemList(ListAPIView):
+    """
+    Returns a list of problems uploaded by the user.
+    """
+
+    serializer_class = ProblemSerializer
+    permission_classes = (IsAuthenticated, IsUploader)
+
+    def get_queryset(self):
+        return Problem.objects.filter(uploader=self.request.user)
+
+
+class ProblemCreate(CreateAPIView):
+    """
+    Creates a new Problem instance.
+    """
+
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = ProblemCreateSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class ExamList(ListAPIView):
     """
     Returns a list of all Exams owned by the user.
@@ -105,39 +127,6 @@ class ExamPay(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ProblemList(ListAPIView):
-    """
-    Returns a list of problems uploaded by the user.
-    """
-
-    serializer_class = ProblemListSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
-
-    def get_queryset(self):
-        return Problem.objects.filter(uploader=self.request.user)
-
-
-class ProblemDetail(RetrieveAPIView):
-    """
-    Returns the detail of a problem, only the uploader has access.
-    """
-
-    serializer_class = ProblemPDFSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
-    lookup_field = "uuid"
-    queryset = Problem.objects.all()
-
-
-class ProblemCreate(CreateAPIView):
-    """
-    Creates a new Problem instance.
-    """
-
-    parser_classes = (MultiPartParser, FormParser)
-    serializer_class = ProblemCreateSerializer
-    permission_classes = (IsAuthenticated,)
-
-
 class ExamCreate(CreateAPIView):
     """
     Creates a new Exam instance.
@@ -184,7 +173,7 @@ class ProblemRandom(APIView):
             )
         if problem is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProblemListSerializer(problem, context={"request": request})
+        serializer = ProblemSerializer(problem, context={"request": request})
         return Response(serializer.data)
 
 
