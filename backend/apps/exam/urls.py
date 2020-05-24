@@ -6,7 +6,6 @@ from apps.exam.views import (
     ExamDetail,
     ExamPay,
     ProblemList,
-    ProblemDetail,
     ProblemCreate,
     ExamCreate,
     ExamPDF,
@@ -32,7 +31,6 @@ urlpatterns = [
     path("problems/", ProblemCreate.as_view(), name="problem-create"),
     path("problems/uploaded/", ProblemList.as_view(), name="problem-list"),
     path("problems/random/", ProblemRandom.as_view(), name="problem-random"),
-    path("problems/<uuid:uuid>/", ProblemDetail.as_view(), name="problem-detail"),
     path("problems/<uuid:uuid>/pdf/", ProblemPDF.as_view(), name="problem-pdf"),
     path("preview-latex/", PreviewLatex.as_view(), name="preview-latex"),
     path(
