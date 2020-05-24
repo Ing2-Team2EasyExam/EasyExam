@@ -18,7 +18,7 @@ class TopicSerializer(serializers.ModelSerializer):
         fields = ("name",)
 
 
-class ProblemListSerializer(serializers.ModelSerializer):
+class ProblemSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for reading a simplified view of a problem best used when
     serializing a list of problems.
@@ -31,7 +31,7 @@ class ProblemListSerializer(serializers.ModelSerializer):
         fields = ("name", "author", "created_at", "topics")
 
 
-class ProblemDetailSerializer(serializers.ModelSerializer):
+class ProblemPDFSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for reading a detailed view of a problem.
     """
@@ -44,7 +44,7 @@ class ProblemDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Problem
-        fields = ("uuid", "name", "author", "topics", "pdf")
+        fields = "pdf"
 
 
 class ProblemCreateSerializer(serializers.ModelSerializer):
@@ -66,7 +66,7 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "author",
-            "statemet_content",
+            "statement_content",
             "solution_content",
             "topics_data",
             "figures",
@@ -88,7 +88,11 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         topics_data = validated_data.get("topics_data", None)
         figures = validated_data.get("figures", None)
         problem = Problem.objects.create(
-            **validated_data, uploader=self.context["request"].user
+            name=validated_data["name"],
+            author=validated_data["author"],
+            statement_content=validated_data["statement_content"],
+            solution_content=validated_data["solution_content"],
+            uploader=self.context["request"].user,
         )
         topics = []
         for topic_name in topics_data:
