@@ -70,8 +70,6 @@ backend-db-delete:
 	@echo "Removing migrations..."
 	@find ${backend} -path "*/migrations/*.py" -not -name "__init__.py" -delete
 	@find ${backend} -path "*/migrations/*.pyc" -delete
-	@echo "Flushing Django..."
-	@${django} flush
 
 
 backend-install:
