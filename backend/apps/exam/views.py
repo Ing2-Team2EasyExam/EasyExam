@@ -26,8 +26,8 @@ from apps.exam.serializers import (
     TopicSerializer,
     ExamListSerializer,
     ExamDetailSerializer,
-    ProblemListSerializer,
-    ProblemDetailSerializer,
+    ProblemSerializer,
+    ProblemPDFSerializer,
     ProblemCreateSerializer,
     ExamCreateSerializer,
 )
@@ -122,7 +122,7 @@ class ProblemDetail(RetrieveAPIView):
     Returns the detail of a problem, only the uploader has access.
     """
 
-    serializer_class = ProblemDetailSerializer
+    serializer_class = ProblemPDFSerializer
     permission_classes = (IsAuthenticated, IsUploader)
     lookup_field = "uuid"
     queryset = Problem.objects.all()

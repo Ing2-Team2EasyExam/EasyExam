@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.challenge.models import Vote, Criterion
-from apps.exam.serializers import ProblemDetailSerializer
+from apps.exam.serializers import ProblemPDFSerializer
 
 
 class CriterionSerializer(serializers.ModelSerializer):
@@ -27,7 +27,7 @@ class AllChallengesSerializer(serializers.Serializer):
     """
 
     criteria = CriterionSerializer(many=True)
-    problem = ProblemDetailSerializer()
+    problem = ProblemPDFSerializer()
 
 
 class VoteSerializer(serializers.ModelSerializer):

@@ -3,7 +3,7 @@ from mixer.backend.django import mixer
 from apps.exam.models import Topic
 from apps.exam.serializers import (
     TopicSerializer,
-    ProblemListSerializer,
+    ProblemSerializer,
     ProblemCreateSerializer,
 )
 from django.conf import settings
@@ -41,7 +41,7 @@ class TestTopicSerializer(TestCase):
         self.assertEqual(updated_topic.pk, self.topic.pk)
 
 
-class TestProblemListSerializer(TestCase):
+class TestProblemSerializer(TestCase):
     def setUp(self):
         self.problem = mixer.blend("exam.Problem")
         self.problem_data = {
@@ -52,12 +52,12 @@ class TestProblemListSerializer(TestCase):
         }
 
     def test_empty_serializer(self):
-        empty_problem = ProblemListSerializer()
+        empty_problem = ProblemSerializer()
         self.assertEqual(empty_problem.data, {"name": "", "author": "", "topics": []})
 
     @skip("Failing created_at comparison because of format")
     def test_problem_serializer_constructor(self):
-        problem_serializer = ProblemListSerializer(instance=self.problem)
+        problem_serializer = ProblemSerializer(instance=self.problem)
         self.assertEqual(problem_serializer.data, self.problem_data)
 
 
