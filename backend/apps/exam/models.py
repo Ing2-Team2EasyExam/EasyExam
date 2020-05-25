@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile, File
 from django.db import models
-from apps.exam.services import (
+from apps.exam.path_services import (
     exam_path,
     exam_normal_path,
     exam_solution_path,
@@ -43,28 +43,41 @@ class Problem(models.Model):
         name {CharField} -- The name of the problem
         author {Charfield} -- The name of the author of the problem
         uploader {ForeignKey} -- Key to the author user instance of the problem
-        content {TextField} -- Text content of the problem
+        statement_content {TextField} -- Text of the problem statement
+        solution_content {TextField} -- Text of the problem solution
         tex_file {FileField} -- Tex file for rendering the problem
         pbtex_file {FileField} -- Problem tex file for putting in into the exam tex file
         pdf {FileField} -- Pdf file for rendering the problem
         topics {ManyToManyField} -- Topics for saying what the problem is about
     """
 
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    # Primary Key
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # Non file fields
     name = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
     uploader = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    content = models.TextField(max_length=50000)
+    statement_content = models.TextField(max_length=50000)
+    solution_content = models.TextField(max_length=50000, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    topics = models.ManyToManyField(to=Topic)
+
+    # File fields
     tex_file = models.FileField(upload_to=problem_tex_path, storage=OverwriteStorage())
     pbtex_file = models.FileField(
         upload_to=problem_pbtex_path, storage=OverwriteStorage()
     )
     pdf = models.FileField(upload_to=problem_pdf_path, storage=OverwriteStorage())
-    topics = models.ManyToManyField(to=Topic)
+
+    # Non using legacy fields
     # cost = models.IntegerField(default=settings.PROBLEM_COST) #Legacy field
     # boolean indicating that the problem is valid in at least one criterion
     # validated = models.BooleanField(default=False) # Legacy field
+
+    @property
+    def content(self):
+        return "".join((self.statement_content, self.solution_content))
 
     def save(self, *args, **kwargs) -> "Problem":
         if self.pk is None:

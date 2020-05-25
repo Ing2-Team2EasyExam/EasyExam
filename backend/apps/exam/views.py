@@ -26,8 +26,8 @@ from apps.exam.serializers import (
     TopicSerializer,
     ExamListSerializer,
     ExamDetailSerializer,
-    ProblemListSerializer,
-    ProblemDetailSerializer,
+    ProblemSerializer,
+    ProblemPDFSerializer,
     ProblemCreateSerializer,
     ExamCreateSerializer,
 )
@@ -37,13 +37,46 @@ from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
 
 
-class TopicList(ListAPIView):
+class TopicListView(ListAPIView):
     """
     Returns a list of all non hidden Topics.
     """
 
     serializer_class = TopicSerializer
+    permission_classes = (IsAuthenticated,)
     queryset = Topic.objects.all()
+
+
+class ProblemListView(ListAPIView):
+    """
+    List all the problems on the system
+    """
+
+    serializer_class = ProblemSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Problem.objects.all()
+
+
+class UserProblemListView(ListAPIView):
+    """
+    Returns a list of problems uploaded by the user.
+    """
+
+    serializer_class = ProblemSerializer
+    permission_classes = (IsAuthenticated, IsUploader)
+
+    def get_queryset(self):
+        return Problem.objects.filter(uploader=self.request.user)
+
+
+class ProblemCreateView(CreateAPIView):
+    """
+    Creates a new Problem instance.
+    """
+
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = ProblemCreateSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ExamList(ListAPIView):
@@ -105,39 +138,6 @@ class ExamPay(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ProblemList(ListAPIView):
-    """
-    Returns a list of problems uploaded by the user.
-    """
-
-    serializer_class = ProblemListSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
-
-    def get_queryset(self):
-        return Problem.objects.filter(uploader=self.request.user)
-
-
-class ProblemDetail(RetrieveAPIView):
-    """
-    Returns the detail of a problem, only the uploader has access.
-    """
-
-    serializer_class = ProblemDetailSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
-    lookup_field = "uuid"
-    queryset = Problem.objects.all()
-
-
-class ProblemCreate(CreateAPIView):
-    """
-    Creates a new Problem instance.
-    """
-
-    parser_classes = (MultiPartParser, FormParser)
-    serializer_class = ProblemCreateSerializer
-    permission_classes = (IsAuthenticated,)
-
-
 class ExamCreate(CreateAPIView):
     """
     Creates a new Exam instance.
@@ -184,7 +184,7 @@ class ProblemRandom(APIView):
             )
         if problem is None:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProblemListSerializer(problem, context={"request": request})
+        serializer = ProblemSerializer(problem, context={"request": request})
         return Response(serializer.data)
 
 

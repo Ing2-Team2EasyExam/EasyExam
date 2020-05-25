@@ -3,14 +3,6 @@ from mixer.backend.django import mixer
 from unittest import mock, skip
 
 
-class TestTopic(TestCase):
-    def setUp(self):
-        self.topic = mixer.blend("exam.Topic", name="My topico favorito")
-
-    def test_topic_str(self):
-        self.assertEqual(str(self.topic), "My topico favorito")
-
-
 class TestProblem(TestCase):
     def setUp(self):
         self.problem = mixer.blend("exam.Problem", name="Problema bonito")

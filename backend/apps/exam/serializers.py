@@ -5,31 +5,7 @@ from rest_framework.reverse import reverse
 from apps.exam.models import Topic, Exam, Problem, Image
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
-
-
-def get_problem_topics(problem):
-    """
-    Returns a set with the problem's topics names
-    :param problem: An instance of the model Problem
-    :return: A set of strings with the problem's topics
-    """
-    topics = set()
-    for topic in problem.topics.all():
-        topics.add(topic.name)
-    return topics
-
-
-def get_exam_topics(exam):
-    """
-    Returns a set with the exam's topics, corresponds to the union of the problems topics of the exam
-    :param exam: An instance of the model Exam
-    :return: A set of strings with te exam's topics
-    """
-    topics = set()
-    for problem in exam.problems.all():
-        for topic in get_problem_topics(problem):
-            topics.add(topic)
-    return topics
+from apps.exam.services import get_problem_topics, get_exam_topics
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -39,44 +15,36 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ("pk", "name")
+        fields = ("name",)
 
 
-class ProblemListSerializer(serializers.ModelSerializer):
+class ProblemSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for reading a simplified view of a problem best used when
     serializing a list of problems.
     """
 
     topics = TopicSerializer(many=True)
-    cost = serializers.SerializerMethodField()
-
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
 
     class Meta:
         model = Problem
-        fields = ("uuid", "name", "cost", "topics")
+        fields = ("name", "author", "created_at", "topics")
 
 
-class ProblemDetailSerializer(serializers.ModelSerializer):
+class ProblemPDFSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for reading a detailed view of a problem.
     """
 
     topics = TopicSerializer(many=True)
     pdf = serializers.SerializerMethodField()
-    cost = serializers.SerializerMethodField()
 
     def get_pdf(self, instance):
         return reverse("problem-pdf", kwargs={"uuid": instance.uuid})
 
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
-
     class Meta:
         model = Problem
-        fields = ("uuid", "name", "author", "topics", "cost", "pdf")
+        fields = ("pdf",)
 
 
 class ProblemCreateSerializer(serializers.ModelSerializer):
@@ -92,25 +60,17 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
     figures = serializers.ListField(
         child=serializers.ImageField(), write_only=True, required=False
     )
-    topics = TopicSerializer(many=True, source="topics.all", read_only=True)
-    cost = serializers.SerializerMethodField()
-
-    def get_cost(self, instance):
-        return instance.calculate_cost(self.context["request"].user)
 
     class Meta:
         model = Problem
         fields = (
-            "uuid",
             "name",
             "author",
-            "content",
-            "topics",
+            "statement_content",
+            "solution_content",
             "topics_data",
             "figures",
-            "cost",
         )
-        extra_kwargs = {"uuid": {"read_only": True}}
 
     def validate_topics_data(self, obj):
         if len(obj) == 0:
@@ -125,30 +85,28 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         :param validated_data: problem data
         :return: Created problem
         """
-        topics_data = validated_data.pop("topics_data", None)
-        figures = validated_data.pop("figures", None)
-        problem = Problem(**validated_data, uploader=self.context["request"].user)
-        problem.save()
+        topics_data = validated_data.get("topics_data", None)
+        figures = validated_data.get("figures", None)
+        problem = Problem.objects.create(
+            name=validated_data["name"],
+            author=validated_data["author"],
+            statement_content=validated_data["statement_content"],
+            solution_content=validated_data["solution_content"],
+            uploader=self.context["request"].user,
+        )
         topics = []
-        for t in topics_data:
-            topic, _ = Topic.objects.get_or_create(name=t)
+        for topic_name in topics_data:
+            topic, _ = Topic.objects.get_or_create(name=topic_name)
             topics.append(topic.pk)
         problem.topics.set(topics)
         if figures is not None:
-            for f in figures:
-                Image.objects.create(image=f, problem=problem, name=f.name)
+            for figure_data in figures:
+                Image.objects.create(
+                    image=figure_data, problem=problem, name=figure_data.name
+                )
         problem.save()
-        try:
-            problem.generate_pdf()
-            return problem
-        except CompilationErrorException as err:
-            problem.delete()
-            raise ValidationError(err.latex_logs)
-        except Exception:
-            problem.delete()
-            raise ValidationError(
-                "There was an internal error in the compilation of the latex file"
-            )
+        problem.generate_pdf()
+        return problem
 
 
 class ExamListSerializer(serializers.ModelSerializer):
