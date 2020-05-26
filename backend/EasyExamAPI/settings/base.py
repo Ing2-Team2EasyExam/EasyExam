@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Media Root Path
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", "media"))
 MEDIA_URL = "/media/"
-
+USER_IMAGE_PATH = "users/images/"
 # Project Settings
 
 SCRIPT_DIR = os.path.join(BASE_DIR, "script")
