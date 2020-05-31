@@ -101,15 +101,24 @@ class Problem(models.Model):
 
 
 class Image(models.Model):
+    """
+    Stores the problem images files within a name
+
+    Params:
+        name {CharField} -- The name of the image
+        problem {ForeignKey} -- The problems on which the image belongs to
+        image {ImageField} -- The file of the image
+    """
+
     name = models.CharField(max_length=100)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     image = models.ImageField(upload_to=image_path, storage=OverwriteStorage())
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         unique_together = ("name", "problem")
+
+    def __str__(self):
+        return self.name
 
 
 class Exam(models.Model):
