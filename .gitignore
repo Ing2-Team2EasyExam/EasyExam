@@ -1,8 +1,18 @@
+# code editors stuff
 venv/
 .idea/
 *.py[cod]
 __pychache__/
 
+# backend local settings
+backend/EasyExamAPI/settings/local.py
+# local tools
+requirements-local.txt
+# redis stuff
+*/redis-stable
+*.rdb
+# Jupyter notebooks
+*.ipynb
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -31,21 +41,21 @@ yarn-error.log*
 
 ## Django affairs
 
-/backend/EasyExamAPI/api/migrations/*
-!/backend/EasyExamAPI/api/migrations/__init__.py
-/backend/EasyExamAPI/user/migrations/*
-!/backend/EasyExamAPI/user/migrations/__init__.py
-/backend/EasyExamAPI/exam/migrations/*
-!/backend/EasyExamAPI/exam/migrations/__init__.py
-/backend/EasyExamAPI/challenge/migrations/*
-!/backend/EasyExamAPI/challenge/migrations/__init__.py
+/backend/apps/api/migrations/*
+!/backend/apps/api/migrations/__init__.py
+/backend/apps/user/migrations/*
+!/backend/apps/user/migrations/__init__.py
+/backend/apps/exam/migrations/*
+!/backend/apps/exam/migrations/__init__.py
+/backend/apps/challenge/migrations/*
+!/backend/apps/challenge/migrations/__init__.py
 *.sqlite3
 
 # backend
 backend/media/
-backend/EasyExamAPI/script/exam*_*.*
-backend/EasyExamAPI/script/problem*_*.*
-backend/EasyExamAPI/previews/*-*
+backend/script/exam*_*.*
+backend/script/problem*_*.*
+backend/previews/*-*
 
 # Created by https://www.gitignore.io/api/react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode

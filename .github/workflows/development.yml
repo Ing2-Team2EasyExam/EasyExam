@@ -1,6 +1,10 @@
-name: Continuos Integration
+name: Development checks
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - development
+      - master
 
 
 jobs:

@@ -1,13 +1,18 @@
-## Purpose
-_Describe the problem or feature in addition to a link to the issues._
+_Primero checkea que:_
+- [ ] Este PR no tiene más de 800 lineas de codigo
+- [ ] Puedes separar el PR en muchos pero más pequeños
+- [ ] Esta con tests?
+- [ ] Corriste los test en tu local y nada se rompió?
+_Borrar esta seccion cuando este todo checkeado_
 
-## Approach
-_How does this change address the problem?_
+## Proposito
+_Describe el problema o bien la feature que tratas de resolver con este PR, si resuelve un issue por favor linkealo_
 
-## Where to start?
-_Tell reviewers on which file start_
+## Resolución
+_Como los cambios hechos resuelven el problema?_
 
-## Learning
-_Describe the research stage_
+## Donde empezar?
+_Dile al que revisa tu codigo en donde debe empezar su revisión_
 
-_Links to blog posts, patterns, libraries or addons used to solve this problem_
+## Aprendizaje (Opcional)
+_Links a documentación, librerias, etc... que usaste para resolver el problema y tu reviewer deberia saber para corregir_
