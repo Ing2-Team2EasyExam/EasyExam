@@ -85,8 +85,8 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         :param validated_data: problem data
         :return: Created problem
         """
-        topics_data = validated_data.get("topics_data", None)
-        figures = validated_data.get("figures", None)
+        topics_data = validated_data.get("topics_data", [])
+        figures = validated_data.get("figures", [])
         problem = Problem.objects.create(
             name=validated_data["name"],
             author=validated_data["author"],

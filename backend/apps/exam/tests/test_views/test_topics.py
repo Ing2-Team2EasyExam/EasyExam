@@ -23,3 +23,8 @@ class TestTopicViews(TestCase):
             response_data.append(serialized_topic.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(list(response.data), response_data)
+
+    def test_non_authenticated_user(self):
+        request = self.factory.get(self.url)
+        response = TopicListView.as_view()(request)
+        self.assertEqual(response.status_code, 401)
