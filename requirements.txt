@@ -11,6 +11,7 @@ django-rest-framework-docs==0.1.7
 django-sendfile==0.3.11
 djangorestframework==3.9.1
 djangorestframework-jwt==1.11.0
+drf-pdf==0.2.0
 drf-writable-nested==0.5.1
 drf-yasg==1.11.0
 idna==2.7

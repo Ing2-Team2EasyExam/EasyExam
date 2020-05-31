@@ -20,17 +20,6 @@ from apps.exam.views import (
 urlpatterns = [
     # Topic paths
     path("topics/list/", TopicListView.as_view(), name="topics-list"),
-    # Exam paths
-    path("exams/", ExamCreate.as_view(), name="exam-create"),
-    path("exams/owned/", ExamList.as_view(), name="exam-list"),
-    path("exams/<uuid:uuid>/", ExamDetail.as_view(), name="exam-detail"),
-    path("exams/<uuid:uuid>/pay/", ExamPay.as_view(), name="exam-pay"),
-    path("exams/<uuid:uuid>/pdf/", ExamPDF.as_view(), name="exam-pdf"),
-    path(
-        "exams/<uuid:uuid>/pdf-solution/",
-        ExamPDFSolution.as_view(),
-        name="exam-pdf-solution",
-    ),
     # Problems paths
     path("problems/create/", ProblemCreateView.as_view(), name="problem-create"),
     path(
@@ -46,5 +35,16 @@ urlpatterns = [
         "preview-latex/<uuid:uuid>/pdf/",
         PreviewLatexPDF.as_view(),
         name="preview-latex-pdf",
+    ),
+    # Exam paths
+    path("exams/", ExamCreate.as_view(), name="exam-create"),
+    path("exams/owned/", ExamList.as_view(), name="exam-list"),
+    path("exams/<uuid:uuid>/", ExamDetail.as_view(), name="exam-detail"),
+    path("exams/<uuid:uuid>/pay/", ExamPay.as_view(), name="exam-pay"),
+    path("exams/<uuid:uuid>/pdf/", ExamPDF.as_view(), name="exam-pdf"),
+    path(
+        "exams/<uuid:uuid>/pdf-solution/",
+        ExamPDFSolution.as_view(),
+        name="exam-pdf-solution",
     ),
 ]

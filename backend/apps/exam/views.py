@@ -36,7 +36,7 @@ from apps.user.models import Transaction
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
 
-
+# Topic Views
 class TopicListView(ListAPIView):
     """
     Returns a list of all non hidden Topics.
@@ -47,6 +47,7 @@ class TopicListView(ListAPIView):
     queryset = Topic.objects.all()
 
 
+# Problem views
 class ProblemListView(ListAPIView):
     """
     List all the problems on the system
@@ -79,6 +80,34 @@ class ProblemCreateView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
+class ProblemPDF(APIView):
+    def get(self, request, uuid):
+        problem = get_object_or_404(Problem, uuid=uuid)
+        return sendfile(request, problem.pdf.path)
+
+
+class ProblemRandom(APIView):
+    def post(self, request):
+        problem = None
+        topics = request.data.get("topics", [])
+        exclude = request.data.get("exclude", [])
+        if len(topics) != 0:
+            problem = get_random_object(
+                Problem.objects.filter(topics__in=topics, validated=True).exclude(
+                    uuid__in=exclude
+                )
+            )
+        else:
+            problem = get_random_object(
+                Problem.objects.filter(validated=True).exclude(uuid__in=exclude)
+            )
+        if problem is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ProblemSerializer(problem, context={"request": request})
+        return Response(serializer.data)
+
+
+# Exam Views
 class ExamList(ListAPIView):
     """
     Returns a list of all Exams owned by the user.
@@ -159,33 +188,6 @@ class ExamPDFSolution(APIView):
     def get(self, request, uuid):
         exam = get_object_or_404(Exam, uuid=uuid, is_paid=True)
         return sendfile(request, exam.pdf_solution.path)
-
-
-class ProblemPDF(APIView):
-    def get(self, request, uuid):
-        problem = get_object_or_404(Problem, uuid=uuid)
-        return sendfile(request, problem.pdf.path)
-
-
-class ProblemRandom(APIView):
-    def post(self, request):
-        problem = None
-        topics = request.data.get("topics", [])
-        exclude = request.data.get("exclude", [])
-        if len(topics) != 0:
-            problem = get_random_object(
-                Problem.objects.filter(topics__in=topics, validated=True).exclude(
-                    uuid__in=exclude
-                )
-            )
-        else:
-            problem = get_random_object(
-                Problem.objects.filter(validated=True).exclude(uuid__in=exclude)
-            )
-        if problem is None:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProblemSerializer(problem, context={"request": request})
-        return Response(serializer.data)
 
 
 class PreviewLatex(APIView):
