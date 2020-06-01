@@ -1,7 +1,5 @@
 .DEFAULT_GOAL := help
-django := python3 backend/manage.py
-frontend:= frontend/
-backend:= backend/
+django := python3 manage.py
 help:
 	@echo "create-environment: Create virtual environment with name venv"
 	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
