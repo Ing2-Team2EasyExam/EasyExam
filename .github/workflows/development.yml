@@ -33,10 +33,10 @@ jobs:
         pre-commit run --all-files
     - name: Make migrations
       run:
-        python backend/manage.py makemigrations
+        python manage.py makemigrations
     - name: Migrate
       run:
-        python backend/manage.py migrate
+        python manage.py migrate
     - name: Run Tests
       run: |
-        python backend/manage.py test backend/
+        python manage.py test

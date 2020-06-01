@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
-django := python3 backend/manage.py
-frontend:= frontend/
-backend:= backend/
+django := python3 manage.py
+frontend := frontend/
+backend := apps/
 help:
 	@echo "create-environment: Create virtual environment with name venv"
 	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
@@ -66,7 +66,7 @@ jupyter:
 
 backend-db-delete:
 	@echo "Removing local database..."
-	@rm backend/EasyExamAPI/db.sqlite3
+	@rm EasyExamAPI/db.sqlite3
 	@echo "Removing migrations..."
 	@find ${backend} -path "*/migrations/*.py" -not -name "__init__.py" -delete
 	@find ${backend} -path "*/migrations/*.pyc" -delete

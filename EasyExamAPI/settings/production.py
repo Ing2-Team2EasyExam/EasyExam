@@ -11,7 +11,8 @@ DATABASES = {
         "PORT": "",  # TODO: Complete with the data on production
     }
 }
-
+# rest framework stuff
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ("rest_framework.renderers.JSONRenderer",)
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = ""  # TODO: Complete with the host
 EMAIL_PORT = 587
