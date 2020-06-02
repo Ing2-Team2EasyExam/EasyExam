@@ -57,6 +57,10 @@ backend/script/exam*_*.*
 backend/script/problem*_*.*
 backend/previews/*-*
 
+# frontend, webpack stuff
+frontend/static/frontend/main.js
+
+
 # Created by https://www.gitignore.io/api/react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode
 
