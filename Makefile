@@ -85,11 +85,6 @@ backend-test:
 frontend-configurate:
 	@cd ${frontend} && npm run dev
 
-
-frontend-install:
-	@cd ${frontend} && yarn install
-
-
 install-redis:
 	@wget http://download.redis.io/redis-stable.tar.gz
 	@tar xvzf redis-stable.tar.gz
@@ -106,14 +101,15 @@ redis-reset:
 	redis-cli FLUSHALL
 
 
-install: backend-install frontend-install
+install: backend-install
 
-up: frontend-configurate backend-run
+
 
 db-update: makemigration migrate
 
+up: frontend-configurate backend-run
 
-test: backend-test frontend-test
+test: backend-test
 
 
 reset: backend-db-delete db-update
@@ -126,7 +122,3 @@ reset-full: reset redis-reset
 
 build-django:
 	@uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
-
-
-build-react:
-	@cd frontend/ && yarn && yarn build
