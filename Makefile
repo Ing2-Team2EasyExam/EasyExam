@@ -77,6 +77,8 @@ backend-install:
 	@python3 -m pip install wheel
 	@python3 -m pip install -r requirements.txt
 
+frontend-install:
+	@cd frontend/ && npm install
 
 backend-test:
 	@${django} test ${backend}
@@ -101,13 +103,11 @@ redis-reset:
 	redis-cli FLUSHALL
 
 
-install: backend-install
-
-
+install: backend-install frontend-install
 
 db-update: makemigration migrate
 
-up: frontend-configurate backend-run
+run: frontend-configurate backend-run
 
 test: backend-test
 
