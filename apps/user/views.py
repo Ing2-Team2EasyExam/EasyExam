@@ -44,7 +44,8 @@ class LogoutView(APIView):
 
     def delete(self, *args, **kwargs):
         user = self.request.user
-        user.auth_token.delete()
+        token = Token.objects.get(user=user)
+        token.delete()
         return Response(status=status.HTTP_200_OK)
 
 

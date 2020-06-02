@@ -52,6 +52,7 @@ class TestLogoutView(TestCase):
 
     def test_authenticated_user_logout(self):
         request = self.factory.delete(self.url)
+        Token.objects.create(user=self.user)
         force_authenticate(request, self.user)
         response = views.LogoutView.as_view()(request)
         self.assertEqual(response.status_code, 200)
