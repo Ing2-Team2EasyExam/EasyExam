@@ -81,7 +81,7 @@ frontend-install:
 	@cd frontend/ && npm install
 
 backend-test:
-	@${django} test ${backend}
+	@${django} test ${backend} -v 2
 
 
 frontend-configurate:
