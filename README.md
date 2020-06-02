@@ -89,7 +89,7 @@ Now let's install the dependencies with:
 ```bash
 make install
 ```
-This will install all backend and frontend dependencies that are described on the `requirements.txt` and `lock.yarn` files. So if you want to add a dependendencie just add it's name on one of that file (if it's backend, `requirements.txt` if it's frontend `lock.yarn`).
+This will install all backend and frontend dependencies that are described on the `requirements.txt` and `package.json` files. So if you want to add a dependendencie just add it's name on one of that file (if it's backend, `requirements.txt` if it's frontend `package.json`).
 
 The third thing to do is installing redis on your local machine for some task that need to run on your computer (sending emails, cache memory,  etc...). Run
 ```bash
@@ -97,25 +97,20 @@ make install-redis
 ```
 This will install redis on the `venv` folder and in your local machine.
 
-Now let's make the migrations on the backend. The backend runs a `sqlite3` locally but in production this is a `postgresql`. This is because we don't want a postgresql server in every machine, so a `sqlite3` is more well lite.  In order to do this, run:
+Now let's make the migrations on the backend. The backend runs a `sqlite3` locally but in production this is a `postgresql`. This is because we don't want a postgresql server in every machine, so a `sqlite3` is, well... more lite (?).  In order to do this, run:
 ```bash
 make db-update
 ```
 
-Now let's run some things. First let's run the frontend server. This is done by:
-```bash
-make frontend-run
-```
-
-Now to run the backend, we need two extra terminals all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
+Now let's run the project, we need an extra terminal all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
 
 First, run the redis server with the command:
 ```bash
 make redis-run
 ```
-On the other terminal, let's start django:
+On the other terminal, let's start django and react:
 ```bash
-make backend-run
+make run
 ```
 
 And there we go. You have running the easyexam for the first time on your local computer!
@@ -124,14 +119,6 @@ And there we go. You have running the easyexam for the first time on your local 
 To run unittest on your local machine, there is a make command:
 ```bash
 make test
-```
-This will run all the test (frontend and backend). If you want to run just the frontend ones use:
-```bash
-make frontend-test
-```
-or if you just want the backends:
-```bash
-make backend-test
 ```
 
 #### Reseting local database

@@ -13,13 +13,13 @@ help:
 	@echo "backend-db-delete: Delete Django local database, deleting all the local data"
 	@echo "backend-install: Run the installation of the requirements file on the environment"
 	@echo "backend-test: Run all test of the backend"
-	@echo "frontend-run: Put the front end server up on local machine on port 3000"
 	@echo "frontend-install: Install the dependencies of the frontend"
-	@echo "frontend-test: Runs all the test on the frontend"
+	@echo "frontend-configurate: Create configurations to start react on django"
 	@echo "redis-install: Install redis on your computer, need to have wget command"
 	@echo "redis-run: Run the redis server on your computer"
 	@echo "redis-reset: Drop the data on the redis database"
 	@echo "install: Install both project dependencies"
+	@echo "run: Run backend with the latest frontend configuration"
 	@echo "test: Test both projects unittest"
 	@echo "db-update: Runs makemigration and migrate at once"
 	@echo "reset: Make a clean of the project database"
@@ -77,22 +77,15 @@ backend-install:
 	@python3 -m pip install wheel
 	@python3 -m pip install -r requirements.txt
 
+frontend-install:
+	@cd frontend/ && npm install
 
 backend-test:
 	@${django} test ${backend}
 
 
-frontend-run:
-	@cd ${frontend} && yarn start
-
-
-frontend-install:
-	@cd ${frontend} && yarn install
-
-
-frontend-test:
-	@cd ${frontend} && yarn test
-
+frontend-configurate:
+	@cd ${frontend} && npm run dev
 
 install-redis:
 	@wget http://download.redis.io/redis-stable.tar.gz
@@ -112,11 +105,11 @@ redis-reset:
 
 install: backend-install frontend-install
 
-
 db-update: makemigration migrate
 
+run: frontend-configurate backend-run
 
-test: backend-test frontend-test
+test: backend-test
 
 
 reset: backend-db-delete db-update
@@ -129,7 +122,3 @@ reset-full: reset redis-reset
 
 build-django:
 	@uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
-
-
-build-react:
-	@cd frontend/ && yarn && yarn build
