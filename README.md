@@ -25,13 +25,10 @@ The most important ones are described on the following table:
 |create-environment| Creates a local virtual environment to run the backend |
 | install | Install all frontend and backend dependencies |
 | install-redis | Install redis on local machine with wget |
-| frontend-run | Runs local react server on local machine port `3000` |
-| backend-run | Runs local django server on local machine port `8000`|
+| run | Runs local django server on local machine port `8000`|
 | redis-run | Runs redis on local machine port `6379` |
 | db-update | Runs makemigrations and migrate of django on backend |
-| backend-test| Runs all unittest on the backend |
-| frontend-test| Runs all unittest on the frontend |
-| test | Runs all backend and frontend test |
+| test | Runs all test of the project|
 | reset | Delete previous database and create a new one with no data on it|
 | reset-full | Reset all db's and starts new ones |
 
