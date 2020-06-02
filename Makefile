@@ -82,16 +82,12 @@ backend-test:
 	@${django} test ${backend}
 
 
-frontend-run:
-	@cd ${frontend} && yarn start
+frontend-configurate:
+	@cd ${frontend} && npm run dev
 
 
 frontend-install:
 	@cd ${frontend} && yarn install
-
-
-frontend-test:
-	@cd ${frontend} && yarn test
 
 
 install-redis:
@@ -112,6 +108,7 @@ redis-reset:
 
 install: backend-install frontend-install
 
+up: frontend-configurate backend-run
 
 db-update: makemigration migrate
 
