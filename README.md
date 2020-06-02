@@ -112,6 +112,22 @@ make run
 
 And there we go. You have running the easyexam for the first time on your local computer!
 
+#### Local settings
+If you want to change some settings but doesn't need to have it on the development environment, on the `EasyExamAPI.settings` module you can add a file `local.py` which is by default ignored for git. This has to import all the settings of the development one in order to work, so your file should always begin with:
+```py
+# local.py in the settings module
+from .development import *
+```
+
+ For example a common thing to do is change the renderer to a browsable API, then your file:
+```py
+from .development import *
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
+    "rest_framework.renderers.BrowsableAPIRenderer,
+)
+```
+If any settings change that you want to perform doesn't have to be for everyone, put that change (by overriding the variable or adding some things) on the `local.py` setting file.
+
 #### Running test
 To run unittest on your local machine, there is a make command:
 ```bash
