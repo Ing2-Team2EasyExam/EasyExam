@@ -21,8 +21,7 @@ from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/user/", include("apps.user.urls")),
-    path("api/", include("apps.exam.urls")),
+    path("api/", include("apps.api.urls")),
     path("", include("frontend.urls")),
     path("docs/", include_docs_urls(title="Easy Exam API")),
 ]
