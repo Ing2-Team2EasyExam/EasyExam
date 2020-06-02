@@ -5,14 +5,6 @@ from rest_framework_jwt.views import (
     verify_jwt_token,
 )
 
-from apps.user.views import UserDetail, UserCreate, ChangePassword, TransactionList
+from apps.user import views
 
-urlpatterns = [
-    path("users/", UserCreate.as_view(), name="user-create"),
-    path("users/me/", UserDetail.as_view(), name="user-detail"),
-    path("users/me/change-password/", ChangePassword.as_view(), name="change-password"),
-    path("jwt-token-auth/", obtain_jwt_token, name="jwt-token-auth"),
-    path("jwt-token-refresh/", refresh_jwt_token, name="jwt-token-refresh"),
-    path("jwt-token-verify", verify_jwt_token, name="jwt-token-verify"),
-    path("users/me/transactions/", TransactionList.as_view(), name="user-list"),
-]
+urlpatterns = [path("login/", views.LoginView.as_view(), name="login")]

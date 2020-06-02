@@ -8,6 +8,11 @@ from apps.user.models import Transaction
 User = get_user_model()
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True)
+
+
 class UserSerializer(ModelSerializer):
     """
     Serializer of the User model, used for reading the detail of a user.
