@@ -25,7 +25,7 @@ The most important ones are described on the following table:
 |create-environment| Creates a local virtual environment to run the backend |
 | install | Install all frontend and backend dependencies |
 | install-redis | Install redis on local machine with wget |
-| run | Runs local django server on local machine port `8000`|
+| run | Runs project on local machine port `8000`|
 | redis-run | Runs redis on local machine port `6379` |
 | db-update | Runs makemigrations and migrate of django on backend |
 | test | Runs all test of the project|
