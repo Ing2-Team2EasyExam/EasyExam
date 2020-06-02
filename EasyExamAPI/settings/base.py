@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third Party
     "rest_framework",
+    "rest_framework.authtoken",
     "rest_framework_docs",
     "corsheaders",
     "django_extensions",
@@ -139,9 +140,7 @@ AUTH_USER_MODEL = "user.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
-        #        'rest_framework.authentication.SessionAuthentication',
-        #        'rest_framework.authentication.BasicAuthentication',
+        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
