@@ -1,5 +1,6 @@
 from django.test import TestCase
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
+from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
 from apps.user import views
 from mixer.backend.django import mixer
@@ -36,3 +37,21 @@ class TestLoginView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("token", response.data)
         self.assertIsNotNone(response.data["token"])
+
+
+class TestLogoutView(TestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.url = reverse("logout")
+        self.user = mixer.blend("user.User")
+
+    def test_non_authenticated_request(self):
+        request = self.factory.delete(self.url)
+        response = views.LogoutView.as_view()(request)
+        self.assertEqual(response.status_code, 401)
+
+    def test_authenticated_user_logout(self):
+        request = self.factory.delete(self.url)
+        force_authenticate(request, self.user)
+        response = views.LogoutView.as_view()(request)
+        self.assertEqual(response.status_code, 200)

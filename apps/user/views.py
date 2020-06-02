@@ -39,6 +39,15 @@ class LoginView(APIView):
         return Response({"token": token.key}, status=status.HTTP_200_OK)
 
 
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, *args, **kwargs):
+        user = self.request.user
+        user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
+
+
 class UserDetail(RetrieveAPIView):
     """
     Returns the detail of the User authenticated.
