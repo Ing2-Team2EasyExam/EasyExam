@@ -5,7 +5,7 @@ venv/
 __pychache__/
 
 # backend local settings
-backend/EasyExamAPI/settings/local.py
+EasyExamAPI/settings/local.py
 # local tools
 requirements-local.txt
 # redis stuff
