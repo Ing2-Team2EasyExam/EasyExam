@@ -28,8 +28,13 @@ class App extends React.Component {
         .catch(error => alert(error))
         .then((data) => {
             localStorage.setItem("token", data["token"]);
-            let new_state = {email: this.state.email, password: this.state.password, isLoggedIn: true};
-            this.setState(new_state);
+            this.setState((state,props)=>{
+                return {
+                    email: state.email,
+                    password: state.password,
+                    isLoggedIn: true,
+                }
+            });
             alert("Logeado");
         });
     }
@@ -40,10 +45,15 @@ class App extends React.Component {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${localStorage.getItem("token")}`,
             }
-        }).then((response) => response.json()).then((data) => {
+        }).then((response) => {
             localStorage.removeItem("token");
-            let new_state = {email: this.state.email, password: this.state.password, isLoggedIn: false};
-            this.setState(new_state);
+            this.setState((state,props)=>{
+                return {
+                    email: state.email,
+                    password: state.password,
+                    isLoggedIn: false,
+                }
+            });
             alert("Deslogeado");
         });
 
