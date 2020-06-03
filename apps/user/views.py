@@ -1,12 +1,15 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import (
     CreateAPIView,
     UpdateAPIView,
     RetrieveAPIView,
     ListAPIView,
 )
-from rest_framework.permissions import IsAuthenticated
-
 from apps.user.models import Transaction
 from apps.user.serializers import (
     UserSerializer,
@@ -14,8 +17,51 @@ from apps.user.serializers import (
     ChangePasswordSerializer,
     TransactionSerializer,
 )
+from apps.user.services import generate_access_token, revoke_access_token
 
 User = get_user_model()
+
+
+class LoginView(APIView):
+    def post(self, *args, **kwargs):
+        """
+        Action on which the user perform a log in into the system, given out it's
+        authentication token to them.
+
+        API Params:
+            email -- The email on which the user wants to log in
+            password -- The password of the use
+        Returns:
+            token -- The token key on which the user need to set on the headers for
+                    being authenticated
+        """
+        email = self.request.data.get("email")
+        password = self.request.data.get("password")
+        if email is None or password is None:
+            return Response(
+                {"error": "Please provide both username and password"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user = authenticate(username=email, password=password)
+        if not user:
+            return Response(
+                {"error": "Invalid Credentials"}, status=status.HTTP_404_NOT_FOUND
+            )
+        token = generate_access_token(user)
+        return Response({"token": token.key}, status=status.HTTP_200_OK)
+
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, *args, **kwargs):
+        """
+        Action on which the user logs out of the system, deleting the authentication token
+        from the database
+        """
+        user = self.request.user
+        revoke_access_token(user)
+        return Response(status=status.HTTP_200_OK)
 
 
 class UserDetail(RetrieveAPIView):
