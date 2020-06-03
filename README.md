@@ -99,7 +99,14 @@ Now let's make the migrations on the backend. The backend runs a `sqlite3` local
 make db-update
 ```
 
-Now let's run the project, we need an extra terminal all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
+Now let's run the project, first we need to compress webpack on our project (Do this every time you delete your venv and/or your node_modules folder). To do this run the following commands:
+```bash
+cd frontend/
+npm run dev
+cd ../
+```
+
+To start the server we need an extra terminal all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
 
 First, run the redis server with the command:
 ```bash
