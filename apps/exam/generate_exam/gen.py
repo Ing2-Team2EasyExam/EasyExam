@@ -57,6 +57,12 @@ def get_input_problem(problem, marking):
     )
 
 
+def add_command(command: str, value: str) -> str:
+    return "\\renewcommand{{\\{command}}}{{\\texttt{{{value}}}}}\n".format(
+        command=command, value=value
+    )
+
+
 def exam_tex(exam):
     """
     Returns the content of the tex file for the given exam, used to generate the exam pdf.
@@ -64,48 +70,45 @@ def exam_tex(exam):
     :return: String
     """
 
-    def add_command(command, value):
-        return "\\renewcommand{{\\{command}}}{{\\texttt{{{value}}}}}\n".format(
-            command=command, value=value
-        )
+    tex = []
 
-    tex = ""
+    tex.append("\\documentclass[]{exam}\n")
+    tex.append("\\usepackage{course}\n\n")
 
-    tex += "\\documentclass[]{exam}\n"
-    tex += "\\usepackage{course}\n\n"
-
-    if exam.language == "E":
-        tex += "\\includeversion{english}\n"
-        tex += "\\excludeversion{spanish}\n"
+    if exam.language == "EN":
+        tex.append("\\includeversion{english}\n")
+        tex.append("\\excludeversion{spanish}\n")
 
     else:
-        tex += "\\includeversion{spanish}\n"
-        tex += "\\excludeversion{english}\n"
+        tex.append("\\includeversion{spanish}\n")
+        tex.append("\\excludeversion{english}\n")
 
-    tex += "\\begin{document}\n"
+    tex.append("\\begin{document}\n")
 
-    tex += add_command("examName", exam.name)
-    tex += add_command("examDate", exam.date)
-    tex += add_command("examStartTime", exam.start_time)
-    tex += add_command("examEndTime", exam.end_time)
-    tex += add_command("institution", exam.university)
-    tex += add_command("courseName", exam.course)
-    tex += add_command(
-        "examLength",
-        datetime.combine(date.min, exam.end_time)
-        - datetime.combine(date.min, exam.start_time),
+    tex.append(add_command("examName", exam.name))
+    tex.append(add_command("examDate", exam.date))
+    tex.append(add_command("examStartTime", exam.start_time))
+    tex.append(add_command("examEndTime", exam.end_time))
+    tex.append(add_command("institution", exam.university))
+    tex.append(add_command("courseName", exam.course))
+    tex.append(
+        add_command(
+            "examLength",
+            datetime.combine(date.min, exam.end_time)
+            - datetime.combine(date.min, exam.start_time),
+        )
     )
-    tex += add_command("courseInstructors", exam.teacher)
-    tex += add_command("courseCode", exam.course_code)
+    tex.append(add_command("courseInstructors", exam.teacher))
+    tex.append(add_command("courseCode", exam.course_code))
 
-    tex += "\\maketitle\n"
+    tex.append("\\maketitle\n")
 
     for problem in exam.problems.all():
-        tex += get_input_problem(problem, "2 pts")
+        tex.append(get_input_problem(problem, "2 pts"))
 
-    tex += "\\end{document}\n"
+    tex.append("\\end{document}\n")
 
-    return tex
+    return "".join(tex)
 
 
 def generate_pdfs(instance):
