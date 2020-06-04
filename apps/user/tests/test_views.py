@@ -29,9 +29,7 @@ class TestLoginView(TestCase):
         self.assertEqual(response.data, {"error": "Invalid Credentials"})
 
     def test_valid_login(self):
-        user = mixer.blend(
-            "user.User", username=self.email, email=self.email, is_active=True
-        )
+        user = mixer.blend("user.User", email=self.email, is_active=True)
         user.set_password(self.password)
         user.save()
         request = self.factory.post(self.url, data=self.data, format="json")

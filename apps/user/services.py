@@ -17,9 +17,7 @@ def revoke_access_token(user: User) -> None:
 def create_inactive_user_from_email(email: str) -> User:
     alphabet = string.ascii_letters + string.digits
     password = "".join(secrets.choice(alphabet) for i in range(15))
-    new_user = User.objects.create_user(
-        username=email, email=email, password=password, is_active=False
-    )
+    new_user = User.objects.create_user(email=email, password=password, is_active=False)
     return new_user
 
 

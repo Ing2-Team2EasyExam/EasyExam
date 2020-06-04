@@ -6,7 +6,7 @@ from apps.user import serializers
 class TestUserSerializers(TestCase):
     def setUp(self):
         self.email = "cosme@fulanito.com"
-        self.user = mixer.blend("user.User", email=self.email, username=self.email)
+        self.user = mixer.blend("user.User", email=self.email)
 
     def test_user_serializer(self):
         user_data = {

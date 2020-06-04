@@ -15,6 +15,5 @@ class TestUser(TestCase):
         )
 
     def test_user_properties(self):
-        self.assertEqual(self.user.fullname, "cosme fulanito")
-        self.assertEqual(self.user.date_joined, self.user.created_at)
+        self.assertEqual(self.user.full_name, "cosme fulanito")
         self.assertFalse(self.user.is_admin)
