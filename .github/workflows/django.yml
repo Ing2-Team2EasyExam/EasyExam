@@ -1,4 +1,4 @@
-name: Continuos Integration
+name: Backend Continuos Integration
 
 on: [pull_request]
 
