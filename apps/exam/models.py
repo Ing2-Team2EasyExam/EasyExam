@@ -196,6 +196,13 @@ class Exam(models.Model):
         """
         return self.due_date
 
+    @property
+    def course(self):
+        """
+        Legacy compatibility reasons
+        """
+        return self.course_name
+
     def __str__(self):
         return self.name
 
