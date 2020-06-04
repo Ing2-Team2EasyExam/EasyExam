@@ -1,6 +1,9 @@
 import React from "react";
-import {Navbar, Nav, } from 'react-bootstrap';
-class EasyExamNavbar extends React.Component {
+import LoggedInNavbar from "./LoggedInNavbar";
+import LoggedOutNavbar from "./LoggedOutNavbar";
+
+
+class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,31 +13,11 @@ class EasyExamNavbar extends React.Component {
 
   render() {
     if (this.state.isLoggedIn) {
-      return (
-        <Navbar bg="info" variant="dark" expand="lg">
-          <Navbar.Brand href="#examenes">EasyExam</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#examenes">Examenes</Nav.Link>
-              <Nav.Link href="#preguntas">Preguntas</Nav.Link>
-            </Nav>
-            <Nav>
-                <Nav.Link href="#perfil">
-                    Perfil
-                </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
-      );
+      return <LoggedInNavbar />;
     } else {
-      return (
-        <Navbar bg="info" variant="dark" expand="lg">
-          <Navbar.Brand href="#login">EasyExam</Navbar.Brand>
-        </Navbar>
-      );
+      return <LoggedOutNavbar />;
     }
   }
 }
 
-export default EasyExamNavbar;
+export default Navbar;
