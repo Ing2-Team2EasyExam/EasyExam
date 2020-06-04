@@ -4,7 +4,7 @@ class EasyExamNavbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: true,
+      isLoggedIn: this.props.isLoggedIn,
     };
   }
 
@@ -29,9 +29,9 @@ class EasyExamNavbar extends React.Component {
       );
     } else {
       return (
-        <nav>
-          <p> EasyExam</p>
-        </nav>
+        <Navbar bg="info" variant="dark" expand="lg">
+          <Navbar.Brand href="#login">EasyExam</Navbar.Brand>
+        </Navbar>
       );
     }
   }

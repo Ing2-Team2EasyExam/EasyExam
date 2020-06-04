@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import EasyExamNavbar from "./Navbar/Navbar";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom"; // Having routing in react application
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +65,16 @@ class App extends React.Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <EasyExamNavbar />
+=======
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/logged_in'> <EasyExamNavbar isLoggedIn={true} /> </Route>
+            <Route exact path='/'> <EasyExamNavbar isLoggedIn={false} /> </Route>
+          </Switch>
+        </BrowserRouter>
+>>>>>>> feat(routing): Create different navbars with different routes
         <button onClick={this.doLogin}>Login</button>
         <button onClick={this.doLogout}>Logout </button>
         <button onClick={this.doPrint}>Print token</button>
