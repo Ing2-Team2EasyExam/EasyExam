@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development ./src/index.js --output ./static/frontend/main.js",
     "build": "webpack --mode production ./src/index.js --output ./static/frontend/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
+    "jest": "^26.0.1",
     "react-bootstrap": "^1.0.1",
     "react-router-dom": "^5.2.0"
   }
