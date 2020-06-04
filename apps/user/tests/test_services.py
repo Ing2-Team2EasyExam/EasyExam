@@ -16,3 +16,10 @@ class TestServices(TestCase):
     def test_revoke_access_token(self):
         services.revoke_access_token(self.user)
         self.assertFalse(Token.objects.filter(user=self.user).exists())
+
+    def test_create_inactive_user_from_email(self):
+        email = "cosme@fulanito.com"
+        created_user = services.create_inactive_user_from_email(email)
+        self.assertFalse(created_user.is_active)
+        self.assertEqual(created_user.username, email)
+        self.assertEqual(created_user.email, email)

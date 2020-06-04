@@ -23,16 +23,18 @@ class TestLoginView(TestCase):
         )
 
     def test_request_non_existant_user(self):
-        request = self.factory.post(self.url, data=self.data)
+        request = self.factory.post(self.url, data=self.data, format="json")
         response = views.LoginView.as_view()(request)
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data, {"error": "Invalid Credentials"})
 
     def test_valid_login(self):
-        user = mixer.blend("user.User", username=self.email, email=self.email)
+        user = mixer.blend(
+            "user.User", username=self.email, email=self.email, is_active=True
+        )
         user.set_password(self.password)
         user.save()
-        request = self.factory.post(self.url, data=self.data)
+        request = self.factory.post(self.url, data=self.data, format="json")
         response = views.LoginView.as_view()(request)
         self.assertEqual(response.status_code, 200)
         self.assertIn("token", response.data)
