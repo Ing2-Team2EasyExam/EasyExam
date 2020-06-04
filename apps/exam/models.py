@@ -1,6 +1,6 @@
 import os
-import uuid as uuid
-
+import uuid
+from datetime import date, datetime
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile, File
@@ -23,6 +23,7 @@ from apps.exam.generate_exam.gen import (
     problem_tex,
 )
 from apps.exam.storage import OverwriteStorage
+from typing import Tuple
 
 User = get_user_model()
 
@@ -125,20 +126,31 @@ class Exam(models.Model):
     # TODO add style choices logic
     # TODO add language choices
     STYLE_CHOICES = (("C", "Compact"), ("O", "Other"))
-    LANGUAGE_CHOICES = (("E", "English"), ("S", "Spanish"))
+    LANGUAGE_CHOICES = (("EN", "English"), ("ES", "Spanish"))
 
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    # Primary key
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # General Information
+    name = models.CharField(max_length=100)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    teacher = models.CharField(max_length=100)
     university = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-    teacher = models.CharField(max_length=100)
+    course_code = models.CharField(max_length=50, blank=True, null=True)
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
-    course_code = models.CharField(max_length=50)
-    is_paid = models.BooleanField(default=False)
-    date = models.DateField()
+    language = models.CharField(max_length=1, choices=LANGUAGE_CHOICES, default="EN")
+
+    problems = models.ManyToManyField(to=Problem)
+
+    # A lot of times and dates
+    due_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # Files, a lot of files
     pdf_normal = models.FileField(
         upload_to=exam_normal_path, storage=OverwriteStorage()
     )
@@ -146,31 +158,34 @@ class Exam(models.Model):
         upload_to=exam_solution_path, storage=OverwriteStorage()
     )
     tex_file = models.FileField(upload_to=exam_tex_path, storage=OverwriteStorage())
-    language = models.CharField(max_length=1, choices=LANGUAGE_CHOICES, default="E")
-    problems = models.ManyToManyField(to=Problem)
+
+    @property
+    def duration(self) -> Tuple[int, int]:
+        time_delta = datetime.combine(date.min, self.end_time) - datetime.combine(
+            date.min, self.start_time
+        )
+        return time_delta.seconds // 3600, time_delta.seconds % 3600
+
+    @property
+    def date(self):
+        """
+        Legacy compatibility reasons
+        """
+        return self.due_date
+
+    def __str__(self):
+        return self.name
 
     def save(self, *args, **kwargs):
-        super(Exam, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         self.tex_file.save("", ContentFile(exam_tex(self)), save=False)
 
     def generate_pdf(self):
         normal_path, solution_path = generate_pdfs(self)
-        normal_file = open(normal_path, "rb")
-        self.pdf_normal.save("", File(normal_file), save=False)
-        normal_file.close()
-        solution_file = open(solution_path, "rb")
-        self.pdf_solution.save("", File(solution_file), save=False)
-        solution_file.close()
+        with open(normal_path, "rb") as normal_file:
+            self.pdf_normal.save("", File(normal_file), save=False)
+        with open(solution_path, "rb") as solution_file:
+            self.pdf_solution.save("", File(solution_file), save=False)
         os.remove(normal_path)
         os.remove(solution_path)
         self.save()
-
-    def calculate_cost(problems, user):
-        cost = 0
-        for problem in problems:
-            if problem.uploader != user:
-                cost += problem.cost
-        return cost
-
-    def __str__(self):
-        return self.name
