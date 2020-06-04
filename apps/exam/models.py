@@ -132,7 +132,7 @@ class Exam(models.Model):
         owner {ForeignKey} -- User creator of the exam
         teacher {CharField} -- Teacher of the course for this exam
         university {CharField} -- University on which this exam will take place
-        course {CharField} -- Name of the course on which the exam will take place
+        course_name {CharField} -- Name of the course on which the exam will take place
         style {CharField} -- Style used on the exam pdf
         language {CharField} -- Language used on the exam pdf
         problems {ManyToManyField} -- Problems which will be on the exam
@@ -159,7 +159,7 @@ class Exam(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     teacher = models.CharField(max_length=100)
     university = models.CharField(max_length=100)
-    course = models.CharField(max_length=100)
+    course_name = models.CharField(max_length=100)
     course_code = models.CharField(max_length=50, blank=True, null=True)
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="EN")
