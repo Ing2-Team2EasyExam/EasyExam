@@ -82,7 +82,8 @@ frontend-install:
 
 backend-test:
 	@${django} test ${backend} -v 2
-
+frontend-test:
+	@cd ${frontend} && npm run test
 
 frontend-configurate:
 	@cd ${frontend} && npm run dev
@@ -109,7 +110,7 @@ db-update: makemigration migrate
 
 run: frontend-configurate backend-run
 
-test: backend-test
+test: frontend-test backend-test
 
 
 reset: backend-db-delete db-update
