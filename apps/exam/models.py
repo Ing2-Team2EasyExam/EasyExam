@@ -123,6 +123,29 @@ class Image(models.Model):
 
 
 class Exam(models.Model):
+    """
+    Exam model of the application
+
+    Attributes:
+        uuid {UUIDField} -- Primary key of the model, is a unique identifier for the exam
+        name {CharField} -- Name of the exam given by the user
+        owner {ForeignKey} -- User creator of the exam
+        teacher {CharField} -- Teacher of the course for this exam
+        university {CharField} -- University on which this exam will take place
+        course {CharField} -- Name of the course on which the exam will take place
+        style {CharField} -- Style used on the exam pdf
+        language {CharField} -- Language used on the exam pdf
+        problems {ManyToManyField} -- Problems which will be on the exam
+        due_date {DateField} -- Date that the exam will take place
+        start_time {TimeField} -- Starting time of the exam
+        end_time {TimeField} -- End time of the exam
+        create_at {DateTimeField} -- Date and time on which the exam was created
+        updated_at {DateTimeField} -- Date and time of the last update of the exam
+        pdf_normal {FileField} -- Pdf of the exam without answers or marks
+        pdf_solution {FileField} -- PDF file of the exam with the solution on it
+        tex_file {FileField} -- Tex file on which the exam is written
+    """
+
     # TODO add style choices logic
     # TODO add language choices
     STYLE_CHOICES = (("C", "Compact"), ("O", "Other"))
@@ -139,7 +162,7 @@ class Exam(models.Model):
     course = models.CharField(max_length=100)
     course_code = models.CharField(max_length=50, blank=True, null=True)
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
-    language = models.CharField(max_length=1, choices=LANGUAGE_CHOICES, default="EN")
+    language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="EN")
 
     problems = models.ManyToManyField(to=Problem)
 
