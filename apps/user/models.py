@@ -10,7 +10,7 @@ from .managers import UserManager
 class User(AbstractBaseUser, PermissionsMixin):
 
     # Credentials
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, db_index=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=False)
