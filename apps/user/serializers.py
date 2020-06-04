@@ -13,10 +13,19 @@ class UserSerializer(ModelSerializer):
     Serializer of the User model, used for reading the detail of a user.
     """
 
+    is_active = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ("pk", "email")
-        extra_kwargs = {"email": {"read_only": True}, "pk": {"read_only": True}}
+        fields = ("pk", "email", "is_active")
+        extra_kwargs = {
+            "email": {"read_only": True},
+            "pk": {"read_only": True},
+            "is_active": {"read_only": True},
+        }
+
+    def get_is_active(self, instance):
+        return instance.is_active
 
 
 class UserCreateSerializer(ModelSerializer):

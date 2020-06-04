@@ -9,7 +9,11 @@ class TestUserSerializers(TestCase):
         self.user = mixer.blend("user.User", email=self.email, username=self.email)
 
     def test_user_serializer(self):
-        user_data = {"pk": self.user.pk, "email": self.user.email}
+        user_data = {
+            "pk": self.user.pk,
+            "email": self.user.email,
+            "is_active": self.user.is_active,
+        }
         serializer = serializers.UserSerializer(instance=self.user)
         self.assertEqual(serializer.data, user_data)
 
