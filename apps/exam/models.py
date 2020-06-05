@@ -182,6 +182,9 @@ class Exam(models.Model):
     )
     tex_file = models.FileField(upload_to=exam_tex_path, storage=OverwriteStorage())
 
+    class Meta:
+        unique_together = ("name", "owner")  # Owner cant have exams with the same name
+
     @property
     def duration(self) -> Tuple[int, int]:
         time_delta = datetime.combine(date.min, self.end_time) - datetime.combine(
