@@ -3,7 +3,7 @@ certifi==2018.10.15
 chardet==3.0.4
 coreapi==2.3.3
 coreschema==0.0.4
-Django==2.2.10
+Django==2.2.13
 django-cors-headers==2.4.0
 django-extensions==2.2.9
 django-redis==4.11.0
