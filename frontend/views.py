@@ -4,5 +4,5 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 
-class FrontendIndexView(TemplateView):
+class FrontEndRendererView(TemplateView):
     template_name = "frontend/index.html"
