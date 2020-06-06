@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-
+from apps.user.services import create_inactive_user_from_email
 from apps.user.models import Transaction
 
 User = get_user_model()
@@ -15,8 +15,12 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("pk", "username", "email", "credits")
-        extra_kwargs = {"credits": {"read_only": True}, "pk": {"read_only": True}}
+        fields = ("pk", "email", "is_active")
+        extra_kwargs = {
+            "email": {"read_only": True},
+            "pk": {"read_only": True},
+            "is_active": {"read_only": True},
+        }
 
 
 class UserCreateSerializer(ModelSerializer):
@@ -26,19 +30,15 @@ class UserCreateSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password", "credits", "pk")
-        extra_kwargs = {
-            "password": {"write_only": True},
-            "credits": {"read_only": True},
-            "pk": {"read_only": True},
-        }
+        fields = ("email", "first_name", "last_name")
 
     def create(self, validated_data):
-        password = validated_data.pop("password")
-        instance = self.Meta.model(**validated_data)
-        instance.set_password(password)
-        instance.is_active = False
-        instance.save()
+        email = validated_data["email"]
+        first_name = validated_data.get("first_name", "")
+        last_name = validated_data.get("last_name", "")
+        instance = create_inactive_user_from_email(
+            email=email, first_name=first_name, last_name=last_name
+        )
         return instance
 
 
