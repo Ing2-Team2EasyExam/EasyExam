@@ -1,8 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
+<<<<<<< HEAD
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
+=======
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom"; // Having routing in react application
+import Problema from "./Problem_list/problem_list";
+>>>>>>> feat(frontend): Create Problema Component
 
 class App extends React.Component {
   constructor(props) {
@@ -86,6 +91,7 @@ class App extends React.Component {
             <Route exact path="/home">
               <h1>Examenes</h1>
             </Route>
+            <Route exact path='/problems'><Problema name='Erick' created_at='30-04-2020' topics='Sorting' autor='Jeremy' /></Route>
           </Switch>
         </BrowserRouter>
         <button onClick={this.doLogout}>Logout </button>
