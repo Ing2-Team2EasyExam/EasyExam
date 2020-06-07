@@ -6,13 +6,10 @@ import LoggedOutNavbar from "./LoggedOutNavbar";
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isLoggedIn: this.props.isLoggedIn,
-    };
   }
 
   render() {
-    if (this.state.isLoggedIn) {
+    if (this.props.isLoggedIn) {
       return <LoggedInNavbar />;
     } else {
       return <LoggedOutNavbar />;
