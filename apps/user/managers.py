@@ -1,4 +1,4 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import BaseUserManager, Permission, Group
 
 
 class UserManager(BaseUserManager):
@@ -24,4 +24,13 @@ class UserManager(BaseUserManager):
 
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Creating a superuser must always have that field made")
-        return self._create_user(email, password, **extra_fields)
+        super_user = self._create_user(email, password, **extra_fields)
+
+        admin_group, created = Group.objects.get_or_create(name="admin")
+        if created:
+            permissions = Permission.objects.all()
+            for permission in permissions:
+                admin_group.permissions.add(permission)
+        super_user.groups.add(admin_group)
+
+        return super_user
