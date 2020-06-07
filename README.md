@@ -156,6 +156,21 @@ Or if you just want to reset redis:
 ```bash
 make redis-reset
 ```
+
+#### Adding pre recorded data
+On `fixtures` there are jsons with pre recorded data, to add them onto your database you can run:
+
+```bash
+make load-fixtures
+```
+
+This will add all pre recorded data, if a model change pls change the pre recorded data also.
+
+##### Reset and loading pre recorded data
+You can reset the database and load the pre recorded data with the command:
+```bash
+make reset-with-fixtures
+```
 ### Pull Request
 The common developing branch is `development`. On this branch all the newest changes are being made and the QA is being performed. All the QA must pass to an issue of a bug or a non existant feature.
 
