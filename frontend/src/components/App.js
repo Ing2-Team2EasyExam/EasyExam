@@ -65,10 +65,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Navbar isLoggedIn={this.state.isLoggedIn} />
         <BrowserRouter>
           <Switch>
-            <Route exact path='/logged_in'> <Navbar isLoggedIn={true} /> </Route>
-            <Route exact path='/'> <Navbar isLoggedIn={false} /> </Route>
+            <Route exact route="/"> <h1>EasyExam</h1> </Route>
           </Switch>
         </BrowserRouter>
         <button onClick={this.doLogin}>Login</button>
