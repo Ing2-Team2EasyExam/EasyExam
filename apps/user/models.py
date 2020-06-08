@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def is_admin(self):
-        return self.is_superuser
+        return self.is_superuser and self.groups.filter(name="admin").exists()
 
     @property
     def full_name(self):
