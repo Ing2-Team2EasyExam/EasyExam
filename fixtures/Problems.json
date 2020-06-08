@@ -5,13 +5,12 @@
       "name": "Long data type 01",
       "author": "Jérémy Barbay",
       "uploader": 2,
-      "statement": "problems/4/statement4.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/4/statement4.tex",
+      "solution_content": "",
       "pbtex_file": "problems/4/problem4.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T21:09:26Z",
       "topics": [
-        3
+        "Algorithmic Analysis"
       ]
     }
   },
@@ -22,13 +21,12 @@
       "name": "Loops 01",
       "author": "Text: unknown; solution: Anna Lubiw",
       "uploader": 2,
-      "statement": "problems/5/statement5.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/5/statement5.tex",
+      "solution_content": "",
       "pbtex_file": "problems/5/problem5.pbtex",
-      "cost": 50,
+      "created_at": "2020-08-07T21:09:26Z",
       "topics": [
-        3
+        "Algorithmic Analysis"
       ]
     }
   },
@@ -39,13 +37,12 @@
       "name": "Loops 02",
       "author": "Text: unknown; solution: Anna Lubiw",
       "uploader": 2,
-      "statement": "problems/6/statement6.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/6/statement6.tex",
+      "solution_content": "",
       "pbtex_file": "problems/6/problem6.pbtex",
-      "cost": 50,
+      "created_at": "2020-05-05T21:09:26Z",
       "topics": [
-        3
+        "Algorithmic Analysis"
       ]
     }
   },
@@ -56,13 +53,12 @@
       "name": "Relative asymptotic growths 01",
       "author": "CLRS 3-2.",
       "uploader": 2,
-      "statement": "problems/7/statement7.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/7/statement7.tex",
+      "solution_content": "",
+      "created_at": "2020-01-01T21:09:26Z",
       "pbtex_file": "problems/7/problem7.pbtex",
-      "cost": 50,
       "topics": [
-        3
+        "Algorithmic Analysis"
       ]
     }
   },
@@ -73,13 +69,12 @@
       "name": "Relative asymptotic growths 02",
       "author": "CLRS 3-2.",
       "uploader": 2,
-      "statement": "problems/8/statement8.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/8/statement8.tex",
+      "solution_content": "",
       "pbtex_file": "problems/8/problem8.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T21:09:26Z",
       "topics": [
-        3
+        "Algorithmic Analysis"
       ]
     }
   },
@@ -90,13 +85,12 @@
       "name": "nb trees02",
       "author": "Lewis & Denenberg, pg 126",
       "uploader": 2,
-      "statement": "problems/9/statement9.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/9/statement9.tex",
+      "solution_content": "",
       "pbtex_file": "problems/9/problem9.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T21:09:26Z",
       "topics": [
-        5
+        "Simple Trees"
       ]
     }
   },
@@ -107,13 +101,12 @@
       "name": "ternary tree properties 01",
       "author": "Jérémy Barbay",
       "uploader": 2,
-      "statement": "problems/10/statement10.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/10/statement10.tex",
+      "solution_content": "",
       "pbtex_file": "problems/10/problem10.pbtex",
-      "cost": 50,
+      "created_at": "2020-10-07T21:09:26Z",
       "topics": [
-        5
+        "Simple Trees"
       ]
     }
   },
@@ -124,13 +117,12 @@
       "name": "ternary tree properties 02",
       "author": "Jérémy Barbay",
       "uploader": 2,
-      "statement": "problems/11/statement11.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/11/statement11.tex",
+      "solution_content": "",
       "pbtex_file": "problems/11/problem11.pbtex",
-      "cost": 50,
+      "created_at": "2020-12-07T21:09:26Z",
       "topics": [
-        5
+        "Simple Trees"
       ]
     }
   },
@@ -141,13 +133,12 @@
       "name": "adjacency list VS matric 01",
       "author": "G&T R-6.7",
       "uploader": 2,
-      "statement": "problems/12/statement12.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/12/statement12.tex",
+      "solution_content": "",
       "pbtex_file": "problems/12/problem12.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-14T21:09:26Z",
       "topics": [
-        6
+        "Simple Trees"
       ]
     }
   },
@@ -158,13 +149,12 @@
       "name": "adjacency list VS matric 02",
       "author": "Simplified version (one question removed) of adjacencyListVSMatric01 (G&T R-6.7)",
       "uploader": 2,
-      "statement": "problems/13/statement13.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/13/statement13.tex",
+      "solution_content": "",
       "pbtex_file": "problems/13/problem13.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-15T21:09:26Z",
       "topics": [
-        6
+        "Simple Trees"
       ]
     }
   },
@@ -175,13 +165,12 @@
       "name": "multiple edge",
       "author": "T. Biedl",
       "uploader": 2,
-      "statement": "problems/14/statement14.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/14/statement14.tex",
+      "solution_content": "",
       "pbtex_file": "problems/14/problem14.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-03T21:09:26Z",
       "topics": [
-        6
+        "Simple Trees"
       ]
     }
   },
@@ -192,13 +181,12 @@
       "name": "GTR-2.31",
       "author": "Goodrich & Tamassia, problem C-2.31",
       "uploader": 2,
-      "statement": "problems/15/statement15.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/15/statement15.tex",
+      "solution_content": "",
       "pbtex_file": "problems/15/problem15.pbtex",
-      "cost": 50,
+      "created_at": "2020-09-09T21:09:26Z",
       "topics": [
-        7
+        "Priority Queues"
       ]
     }
   },
@@ -209,13 +197,12 @@
       "name": "Heap 01",
       "author": "Jérémy Barbay",
       "uploader": 2,
-      "statement": "problems/16/statement16.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/16/statement16.tex",
+      "solution_content": "",
       "pbtex_file": "problems/16/problem16.pbtex",
-      "cost": 50,
+      "created_at": "2020-04-20T21:09:26Z",
       "topics": [
-        7
+        "Priority Queues"
       ]
     }
   },
@@ -226,13 +213,12 @@
       "name": "min max heap",
       "author": "Anna Lubiw, from Weiss's book",
       "uploader": 2,
-      "statement": "problems/17/statement17.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/17/statement17.tex",
+      "solution_content": "",
       "pbtex_file": "problems/17/problem17.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T21:09:26Z",
       "topics": [
-        7
+        "Priority Queues"
       ]
     }
   },
@@ -243,13 +229,12 @@
       "name": "Yount Tableau",
       "author": "Cormen, Leiserson, Rivest & Stein, Problem 6-3, with modifications by T. Biedl",
       "uploader": 2,
-      "statement": "problems/18/statement18.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/18/statement18.tex",
+      "solution_content": "",
       "pbtex_file": "problems/18/problem18.pbtex",
-      "cost": 50,
+      "created_at": "2020-01-09T21:09:26Z",
       "topics": [
-        7
+        "Priority Queues"
       ]
     }
   },
@@ -260,13 +245,12 @@
       "name": "adaptive trees 02",
       "author": "Jérémy Barbay",
       "uploader": 2,
-      "statement": "problems/19/statement19.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/19/statement19.tex",
+      "solution_content": "",
       "pbtex_file": "problems/19/problem19.pbtex",
-      "cost": 50,
+      "created_at": "2020-10-7T21:09:26Z",
       "topics": [
-        8
+        "Unordered Dictionaries"
       ]
     }
   },
@@ -277,13 +261,12 @@
       "name": "Move to back 01",
       "author": "Unknown",
       "uploader": 2,
-      "statement": "problems/20/statement20.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/20/statement20.tex",
+      "solution_content": "",
       "pbtex_file": "problems/20/problem20.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T21:09:26Z",
       "topics": [
-        8
+        "Unordered Dictionaries"
       ]
     }
   },
@@ -294,13 +277,12 @@
       "name": "Move to middle 02",
       "author": "J'er'emy Barbay, inspired by Unknown",
       "uploader": 2,
-      "statement": "problems/21/statement21.tex",
-      "solution": "",
-      "marking_scheme": "",
+      "statement_content": "problems/21/statement21.tex",
+      "solution_content": "",
       "pbtex_file": "problems/21/problem21.pbtex",
-      "cost": 50,
+      "created_at": "2020-06-07T22:09:26Z",
       "topics": [
-        8
+        "Unordered Dictionaries"
       ]
     }
   }]

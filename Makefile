@@ -2,6 +2,12 @@
 django := python3 manage.py
 frontend := frontend/
 backend := apps/
+user_fixture := fixtures/Users.json
+topics_fixture := fixtures/Topics.json
+groups_fixture := fixtures/Group.json
+problem_fixture := fixtures/Problems.json
+
+
 help:
 	@echo "create-environment: Create virtual environment with name venv"
 	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
@@ -63,7 +69,15 @@ jupyter:
 	@echo "Running jupyter with django"
 	@${django} shell_plus --notebook
 
-
+load-fixtures:
+	@echo "Loading groups fixture"
+	@${django} loaddata ${groups_fixture}
+	@echo "Loading users fixture"
+	@${django} loaddata ${user_fixture}
+	@echo "Loading topics fixture"
+	@${django} loaddata ${topics_fixture}
+	@echo "Loading problem fixture"
+	@${django} loaddata ${problem_fixture}
 backend-db-delete:
 	@echo "Removing local database..."
 	@rm EasyExamAPI/db.sqlite3
@@ -118,7 +132,7 @@ reset: backend-db-delete db-update
 
 reset-full: reset redis-reset
 
-
+reset-with-fixtures: reset load-fixtures
 #deploy commands on the make file for future use
 
 build-django:
