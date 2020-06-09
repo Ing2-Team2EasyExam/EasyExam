@@ -64,7 +64,6 @@ class App extends React.Component {
         };
       });
       alert("Deslogeado");
-      console.log(this.state.email);
     });
   }
   doPrint() {
