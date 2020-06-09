@@ -34,7 +34,7 @@ class App extends React.Component {
       email: email,
       password: password,
     };
-    let response = fetch("api/users/login/", {
+    let response = fetch("/api/users/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ class App extends React.Component {
   }
 
   doLogout() {
-    let response = fetch("api/users/logout/", {
+    let response = fetch("/api/users/logout/", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
