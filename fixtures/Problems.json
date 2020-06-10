@@ -1,4 +1,5 @@
-[{
+[
+  {
     "model": "exam.problem",
     "pk": 4,
     "fields": {
@@ -9,9 +10,7 @@
       "solution_content": "",
       "pbtex_file": "problems/4/problem4.pbtex",
       "created_at": "2020-06-07T21:09:26Z",
-      "topics": [
-        "Algorithmic Analysis"
-      ]
+      "topics": ["Algorithmic Analysis"]
     }
   },
   {
@@ -25,9 +24,7 @@
       "solution_content": "",
       "pbtex_file": "problems/5/problem5.pbtex",
       "created_at": "2020-08-07T21:09:26Z",
-      "topics": [
-        "Algorithmic Analysis"
-      ]
+      "topics": ["Algorithmic Analysis"]
     }
   },
   {
@@ -41,9 +38,7 @@
       "solution_content": "",
       "pbtex_file": "problems/6/problem6.pbtex",
       "created_at": "2020-05-05T21:09:26Z",
-      "topics": [
-        "Algorithmic Analysis"
-      ]
+      "topics": ["Algorithmic Analysis"]
     }
   },
   {
@@ -57,9 +52,7 @@
       "solution_content": "",
       "created_at": "2020-01-01T21:09:26Z",
       "pbtex_file": "problems/7/problem7.pbtex",
-      "topics": [
-        "Algorithmic Analysis"
-      ]
+      "topics": ["Algorithmic Analysis"]
     }
   },
   {
@@ -73,9 +66,7 @@
       "solution_content": "",
       "pbtex_file": "problems/8/problem8.pbtex",
       "created_at": "2020-06-07T21:09:26Z",
-      "topics": [
-        "Algorithmic Analysis"
-      ]
+      "topics": ["Algorithmic Analysis"]
     }
   },
   {
@@ -89,9 +80,7 @@
       "solution_content": "",
       "pbtex_file": "problems/9/problem9.pbtex",
       "created_at": "2020-06-07T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -105,9 +94,7 @@
       "solution_content": "",
       "pbtex_file": "problems/10/problem10.pbtex",
       "created_at": "2020-10-07T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -121,9 +108,7 @@
       "solution_content": "",
       "pbtex_file": "problems/11/problem11.pbtex",
       "created_at": "2020-12-07T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -137,9 +122,7 @@
       "solution_content": "",
       "pbtex_file": "problems/12/problem12.pbtex",
       "created_at": "2020-06-14T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -153,9 +136,7 @@
       "solution_content": "",
       "pbtex_file": "problems/13/problem13.pbtex",
       "created_at": "2020-06-15T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -169,9 +150,7 @@
       "solution_content": "",
       "pbtex_file": "problems/14/problem14.pbtex",
       "created_at": "2020-06-03T21:09:26Z",
-      "topics": [
-        "Simple Trees"
-      ]
+      "topics": ["Simple Trees"]
     }
   },
   {
@@ -185,9 +164,7 @@
       "solution_content": "",
       "pbtex_file": "problems/15/problem15.pbtex",
       "created_at": "2020-09-09T21:09:26Z",
-      "topics": [
-        "Priority Queues"
-      ]
+      "topics": ["Priority Queues"]
     }
   },
   {
@@ -201,9 +178,7 @@
       "solution_content": "",
       "pbtex_file": "problems/16/problem16.pbtex",
       "created_at": "2020-04-20T21:09:26Z",
-      "topics": [
-        "Priority Queues"
-      ]
+      "topics": ["Priority Queues"]
     }
   },
   {
@@ -217,9 +192,7 @@
       "solution_content": "",
       "pbtex_file": "problems/17/problem17.pbtex",
       "created_at": "2020-06-07T21:09:26Z",
-      "topics": [
-        "Priority Queues"
-      ]
+      "topics": ["Priority Queues"]
     }
   },
   {
@@ -233,9 +206,7 @@
       "solution_content": "",
       "pbtex_file": "problems/18/problem18.pbtex",
       "created_at": "2020-01-09T21:09:26Z",
-      "topics": [
-        "Priority Queues"
-      ]
+      "topics": ["Priority Queues"]
     }
   },
   {
@@ -249,9 +220,7 @@
       "solution_content": "",
       "pbtex_file": "problems/19/problem19.pbtex",
       "created_at": "2020-10-7T21:09:26Z",
-      "topics": [
-        "Unordered Dictionaries"
-      ]
+      "topics": ["Unordered Dictionaries"]
     }
   },
   {
@@ -265,9 +234,7 @@
       "solution_content": "",
       "pbtex_file": "problems/20/problem20.pbtex",
       "created_at": "2020-06-07T21:09:26Z",
-      "topics": [
-        "Unordered Dictionaries"
-      ]
+      "topics": ["Unordered Dictionaries"]
     }
   },
   {
@@ -281,8 +248,7 @@
       "solution_content": "",
       "pbtex_file": "problems/21/problem21.pbtex",
       "created_at": "2020-06-07T22:09:26Z",
-      "topics": [
-        "Unordered Dictionaries"
-      ]
+      "topics": ["Unordered Dictionaries"]
     }
-  }]
+  }
+]

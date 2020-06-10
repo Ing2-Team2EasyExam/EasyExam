@@ -19,15 +19,15 @@
 
     "fields": { "name": "Ordered Dictionaries" }
   },
-  { "model": "exam.topic",  "fields": { "name": "AVLTrees" } },
-  { "model": "exam.topic",  "fields": { "name": "Skip Lists" } },
-  { "model": "exam.topic",  "fields": { "name": "2-4Trees" } },
+  { "model": "exam.topic", "fields": { "name": "AVLTrees" } },
+  { "model": "exam.topic", "fields": { "name": "Skip Lists" } },
+  { "model": "exam.topic", "fields": { "name": "2-4Trees" } },
   {
     "model": "exam.topic",
 
     "fields": { "name": "BTrees And External Searching" }
   },
-  { "model": "exam.topic",  "fields": { "name": "Hash Tables" } },
+  { "model": "exam.topic", "fields": { "name": "Hash Tables" } },
   {
     "model": "exam.topic",
 
@@ -43,14 +43,14 @@
 
     "fields": { "name": "Huffman Compression" }
   },
-  { "model": "exam.topic",  "fields": { "name": "Pattern Matching" } },
+  { "model": "exam.topic", "fields": { "name": "Pattern Matching" } },
   {
     "model": "exam.topic",
 
     "fields": { "name": "Advanced Pattern Matching" }
   },
-  { "model": "exam.topic",  "fields": { "name": "Advanced Sorting" } },
-  { "model": "exam.topic",  "fields": { "name": "Databases-SQL" } },
+  { "model": "exam.topic", "fields": { "name": "Advanced Sorting" } },
+  { "model": "exam.topic", "fields": { "name": "Databases-SQL" } },
   {
     "model": "exam.topic",
 
@@ -61,6 +61,6 @@
 
     "fields": { "name": "Memory Management" }
   },
-  { "model": "exam.topic",  "fields": { "name": "Heap Management" } },
-  { "model": "exam.topic",  "fields": { "name": "General Questions" } }
+  { "model": "exam.topic", "fields": { "name": "Heap Management" } },
+  { "model": "exam.topic", "fields": { "name": "General Questions" } }
 ]
