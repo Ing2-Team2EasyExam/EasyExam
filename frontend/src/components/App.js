@@ -68,7 +68,10 @@ class App extends React.Component {
         <Navbar isLoggedIn={this.state.isLoggedIn} />
         <BrowserRouter>
           <Switch>
-            <Route exact path="/"> <h1>EasyExam</h1> </Route>
+            <Route exact path="/">
+              {" "}
+              <h1>EasyExam</h1>{" "}
+            </Route>
           </Switch>
         </BrowserRouter>
         <button onClick={this.doLogin}>Login</button>

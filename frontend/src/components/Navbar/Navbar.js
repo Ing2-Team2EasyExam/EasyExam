@@ -2,7 +2,6 @@ import React from "react";
 import LoggedInNavbar from "./LoggedInNavbar";
 import LoggedOutNavbar from "./LoggedOutNavbar";
 
-
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
