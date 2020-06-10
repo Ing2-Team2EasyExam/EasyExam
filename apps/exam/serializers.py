@@ -117,7 +117,7 @@ class ExamListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exam
-        fields = ("uuid", "name", "date", "is_paid")
+        fields = ("uuid", "name", "updated_at")
 
 
 class ExamDetailSerializer(serializers.ModelSerializer):
