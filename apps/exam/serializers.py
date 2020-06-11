@@ -120,6 +120,17 @@ class ExamListSerializer(serializers.ModelSerializer):
         fields = ("uuid", "name", "updated_at")
 
 
+class ProblemNestedSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the edition of exams, to add the corresponding problems to it
+    """
+
+    class Meta:
+        model = Problem
+        fields = ("name", "author")
+        read_only_fields = ("name", "author")
+
+
 class ExamEditSerializer(serializers.ModelSerializer):
     """
     Serializer of the Exam model, used for creating an exam instance.
@@ -172,3 +183,11 @@ class ExamEditSerializer(serializers.ModelSerializer):
             )
 
         return exam
+
+
+class ExamDetailSerializer(object):
+    pass
+
+
+class ExamCreateSerializer(object):
+    pass
