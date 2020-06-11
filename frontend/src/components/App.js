@@ -10,9 +10,20 @@ class App extends React.Component {
       password: "1234",
       isLoggedIn: false,
     };
+    this.isLoggedIn = this.isLoggedIn.bind(this);
     this.doLogin = this.doLogin.bind(this);
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
+  }
+  componentDidMount(){
+    this.setState((state,props)=>{
+      return {
+        isLoggedIn: this.isLoggedIn()
+      }
+    });
+  }
+  isLoggedIn(){
+    return localStorage.getItem("token") !== null;
   }
   doLogin() {
     let data = {
@@ -32,9 +43,7 @@ class App extends React.Component {
         localStorage.setItem("token", data["token"]);
         this.setState((state, props) => {
           return {
-            email: state.email,
-            password: state.password,
-            isLoggedIn: true,
+            isLoggedIn: this.isLoggedIn(),
           };
         });
         alert("Logeado");
@@ -51,9 +60,7 @@ class App extends React.Component {
       localStorage.removeItem("token");
       this.setState((state, props) => {
         return {
-          email: state.email,
-          password: state.password,
-          isLoggedIn: false,
+          isLoggedIn: this.isLoggedIn(),
         };
       });
       alert("Deslogeado");
