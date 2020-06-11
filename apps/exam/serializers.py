@@ -120,81 +120,29 @@ class ExamListSerializer(serializers.ModelSerializer):
         fields = ("uuid", "name", "updated_at")
 
 
-class ExamDetailSerializer(serializers.ModelSerializer):
-    """
-    Serializer of the Exam model, used for reading a detailed view of an exam.
-    """
-
-    topics = serializers.SerializerMethodField()
-    cost = serializers.SerializerMethodField()
-    pdf_normal = serializers.SerializerMethodField()
-    pdf_solution = serializers.SerializerMethodField()
-
-    def get_topics(self, instance):
-        return get_exam_topics(instance)
-
-    def get_cost(self, instance):
-        return Exam.calculate_cost(
-            instance.problems.all(), self.context["request"].user
-        )
-
-    def get_pdf_normal(self, instance):
-        return reverse("exam-pdf", kwargs={"uuid": instance.uuid})
-
-    def get_pdf_solution(self, instance):
-        return reverse("exam-pdf-solution", kwargs={"uuid": instance.uuid})
-
-    class Meta:
-        model = Exam
-        fields = (
-            "uuid",
-            "name",
-            "university",
-            "teacher",
-            "course",
-            "course_code",
-            "is_paid",
-            "date",
-            "start_time",
-            "end_time",
-            "topics",
-            "pdf_normal",
-            "pdf_solution",
-            "problems",
-            "cost",
-        )
-
-
-class ExamCreateSerializer(serializers.ModelSerializer):
+class ExamEditSerializer(serializers.ModelSerializer):
     """
     Serializer of the Exam model, used for creating an exam instance.
     problems is a list of uuids corresponding to the uuids of the problems to use
     """
 
-    problems = serializers.SlugRelatedField(
-        many=True, slug_field="uuid", queryset=Problem.objects.all()
-    )
-    url = serializers.SerializerMethodField()
-
-    def get_url(self, instance):
-        return reverse("exam-detail", kwargs={"uuid": instance.uuid})
-
     class Meta:
         model = Exam
         fields = (
             "uuid",
             "name",
-            "university",
+            "owner",
             "teacher",
-            "course",
+            "university",
+            "course_name",
             "course_code",
-            "date",
+            "language",
+            "problems",
+            "due_date",
             "start_time",
             "end_time",
-            "problems",
-            "url",
         )
-        extra_kwargs = {"uuid": {"read_only": True}}
+        read_only_fields = ("uuid",)
 
     def create(self, validated_data):
         """
@@ -203,8 +151,8 @@ class ExamCreateSerializer(serializers.ModelSerializer):
         :param validated_data: exam data
         :return: Created exam
         """
-        problem_data = validated_data.pop("problems")
-        user = self.context["request"].user
+        problem_data = validated_data.get("problems")
+        creator = self.context["request"].user
         if not user.is_authenticated:
             user = None
         exam = Exam.objects.create(**validated_data, owner=user)
@@ -222,11 +170,5 @@ class ExamCreateSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 "There was an internal error in the compilation of the latex file"
             )
-
-        cost = Exam.calculate_cost(problem_data, self.context["request"].user)
-
-        if cost == 0:
-            exam.is_paid = True
-            exam.save()
 
         return exam
