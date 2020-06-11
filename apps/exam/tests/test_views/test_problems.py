@@ -71,6 +71,13 @@ class TestProblemCreateView(TestCase):
             "figures": [],
         }
 
+    def test_cant_create_problem_without_topics(self, pdf_mock):
+        self.problem_data["topics_data"] = []
+        request = self.factory.post(self.url, self.problem_data)
+        force_authenticate(request, self.user)
+        response = ProblemCreateView.as_view()(request)
+        self.assertEqual(response.status_code, 400)
+
     def test_create_problem_on_post(self, pdf_mock):
         request = self.factory.post(self.url, self.problem_data)
         force_authenticate(request, self.user)
