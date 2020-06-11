@@ -15,14 +15,14 @@ class App extends React.Component {
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
   }
-  componentDidMount(){
-    this.setState((state,props)=>{
+  componentDidMount() {
+    this.setState((state, props) => {
       return {
-        isLoggedIn: this.isLoggedIn()
-      }
+        isLoggedIn: this.isLoggedIn(),
+      };
     });
   }
-  isLoggedIn(){
+  isLoggedIn() {
     return localStorage.getItem("token") !== null;
   }
   doLogin() {
