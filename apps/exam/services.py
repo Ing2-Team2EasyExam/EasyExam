@@ -1,3 +1,7 @@
+from .models import Problem, Exam, Topic
+from typing import Set, Tuple, List
+
+
 def get_problem_topics(problem):
     """
     Returns a set with the problem's topics names
