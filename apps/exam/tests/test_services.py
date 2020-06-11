@@ -14,3 +14,8 @@ class TestTopicServices(TestCase):
         problem_topics = services.get_problem_topics(self.problem)
         for topic in self.topics:
             self.assertIn(str(topic), problem_topics)
+
+    def test_get_exam_topics(self):
+        exam_topics = services.get_exam_topics(self.exam)
+        for topic in self.topics:
+            self.assertIn(str(topic), exam_topics)
