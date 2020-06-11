@@ -13,3 +13,13 @@ class TestExamListSerializer(TestCase):
         self.assertEqual(str(self.exam.uuid), serializer.data["uuid"])
         self.assertEqual(self.exam.name, serializer.data["name"])
         self.assertIsNotNone(serializer.data["updated_at"])
+
+
+class TestProblemNestedSerializer(TestCase):
+    def setUp(self):
+        self.problem = mixer.blend("exam.Problem")
+        self.data = {"name": self.problem.name, "author": self.problem.author}
+
+    def test_valid_data(self):
+        serializer = serializers.ProblemNestedSerializer(data=self.data)
+        self.assertTrue(serializer.is_valid())
