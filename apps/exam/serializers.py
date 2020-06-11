@@ -137,6 +137,8 @@ class ExamEditSerializer(serializers.ModelSerializer):
     problems is a list of uuids corresponding to the uuids of the problems to use
     """
 
+    exam_problems = ProblemNestedSerializer(many=True)
+
     class Meta:
         model = Exam
         fields = (
@@ -148,7 +150,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
             "course_name",
             "course_code",
             "language",
-            "problems",
+            "exam_problems",
             "due_date",
             "start_time",
             "end_time",
