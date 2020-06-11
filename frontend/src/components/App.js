@@ -1,20 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom"; // Having routing in react application
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import LoginForm from "./Login/LoginForm"; // Having routing in react application
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "cosme@fulanito.com",
-      password: "1234",
-      isLoggedIn: false,
-    };
     this.isLoggedIn = this.isLoggedIn.bind(this);
     this.doLogin = this.doLogin.bind(this);
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
   }
+
   componentDidMount() {
     this.setState((state, props) => {
       return {
@@ -22,9 +20,11 @@ class App extends React.Component {
       };
     });
   }
+
   isLoggedIn() {
     return localStorage.getItem("token") !== null;
   }
+
   doLogin() {
     let data = {
       email: this.state.email,
@@ -49,6 +49,7 @@ class App extends React.Component {
         alert("Logeado");
       });
   }
+
   doLogout() {
     let response = fetch("api/users/logout/", {
       method: "DELETE",
@@ -69,6 +70,7 @@ class App extends React.Component {
   doPrint() {
     alert(localStorage.getItem("token"));
   }
+
   render() {
     return (
       <div>
@@ -76,8 +78,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              {" "}
-              <h1>EasyExam</h1>{" "}
+              <LoginForm />
             </Route>
           </Switch>
         </BrowserRouter>
