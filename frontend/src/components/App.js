@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
-import Problem_List from "./Problem_list/Problem_List";
+import ProblemList from "./Problem_list/ProblemList";
 
 class App extends React.Component {
   constructor(props) {
@@ -87,7 +87,7 @@ class App extends React.Component {
             <Route exact path="/home">
               <h1>Examenes</h1>
             </Route>
-            <Route exact path='/problems'><Problem_List></Problem_List></Route>
+            <Route exact path='/problems'><ProblemList></ProblemList></Route>
           </Switch>
         </BrowserRouter>
         <button onClick={this.doLogout}>Logout </button>
