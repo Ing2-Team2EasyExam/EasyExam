@@ -24,7 +24,6 @@ class LoginForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.doLogin(this.state.email, this.state.password);
-    alert("An email was submitted: " + this.state.email);
   }
 
   render() {

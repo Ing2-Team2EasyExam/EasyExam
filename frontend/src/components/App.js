@@ -11,6 +11,7 @@ class App extends React.Component {
       isLoggedIn: false,
     };
     this.isLoggedIn = this.isLoggedIn.bind(this);
+    this.doLogin = this.doLogin.bind(this);
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
   }
