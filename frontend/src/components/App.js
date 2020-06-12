@@ -7,8 +7,10 @@ import LoginForm from "./Login/LoginForm"; // Having routing in react applicatio
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isLoggedIn: false,
+    };
     this.isLoggedIn = this.isLoggedIn.bind(this);
-    this.doLogin = this.doLogin.bind(this);
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
   }
@@ -25,10 +27,10 @@ class App extends React.Component {
     return localStorage.getItem("token") !== null;
   }
 
-  doLogin() {
+  doLogin(email, password) {
     let data = {
-      email: this.state.email,
-      password: this.state.password,
+      email: email,
+      password: password,
     };
     let response = fetch("api/users/login/", {
       method: "POST",
@@ -78,11 +80,10 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              <LoginForm />
+              <LoginForm doLogin={this.doLogin} />
             </Route>
           </Switch>
         </BrowserRouter>
-        <button onClick={this.doLogin}>Login</button>
         <button onClick={this.doLogout}>Logout </button>
         <button onClick={this.doPrint}>Print token</button>
       </div>

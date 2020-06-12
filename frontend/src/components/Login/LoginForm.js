@@ -22,8 +22,9 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert("A name was submitted: " + this.state.value);
     event.preventDefault();
+    this.props.doLogin(this.state.email, this.state.password);
+    alert("An email was submitted: " + this.state.email);
   }
 
   render() {
@@ -33,7 +34,7 @@ class LoginForm extends React.Component {
           <Card className="text-center" style={{ width: "30%" }}>
             <Card.Body>
               <Card.Title>Iniciar Sesión</Card.Title>
-              <Form>
+              <Form onSubmit={this.handleSubmit}>
                 <Form.Group>
                   <Form.Control
                     name="email"
@@ -59,7 +60,7 @@ class LoginForm extends React.Component {
                 </Form.Group>
               </Form>
               <Card.Link href="#recuperar_contraseña">
-                ¿Olvidó su contraseña?
+                ¿Olvidaste tu contraseña?
               </Card.Link>
             </Card.Body>
           </Card>
