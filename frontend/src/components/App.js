@@ -6,6 +6,8 @@ import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
 import ExamList from "./ExamList/ExamList";
+import Questions from "./Question_Form/Questions"
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -95,6 +97,7 @@ class App extends React.Component {
             <Route exact path="/problems">
               <ProblemList></ProblemList>
             </Route>
+            <Route exact path='/questions'><Questions/></Route>
           </Switch>
         </BrowserRouter>
       </div>
