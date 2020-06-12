@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom"; // Having routing in react application
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import LoginForm from "./Login/LoginForm";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "cosme@fulanito.com",
-      password: "1234",
       isLoggedIn: false,
     };
     this.isLoggedIn = this.isLoggedIn.bind(this);
@@ -15,6 +15,7 @@ class App extends React.Component {
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
   }
+
   componentDidMount() {
     this.setState((state, props) => {
       return {
@@ -22,13 +23,15 @@ class App extends React.Component {
       };
     });
   }
+
   isLoggedIn() {
     return localStorage.getItem("token") !== null;
   }
-  doLogin() {
+
+  doLogin(email, password) {
     let data = {
-      email: this.state.email,
-      password: this.state.password,
+      email: email,
+      password: password,
     };
     let response = fetch("api/users/login/", {
       method: "POST",
@@ -46,9 +49,10 @@ class App extends React.Component {
             isLoggedIn: this.isLoggedIn(),
           };
         });
-        alert("Logeado");
+        window.location.href = "/home";
       });
   }
+
   doLogout() {
     let response = fetch("api/users/logout/", {
       method: "DELETE",
@@ -69,6 +73,7 @@ class App extends React.Component {
   doPrint() {
     alert(localStorage.getItem("token"));
   }
+
   render() {
     return (
       <div>
@@ -76,12 +81,13 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              {" "}
-              <h1>EasyExam</h1>{" "}
+              <LoginForm doLogin={this.doLogin} />
+            </Route>
+            <Route exact path="/home">
+              <h1>Examenes</h1>
             </Route>
           </Switch>
         </BrowserRouter>
-        <button onClick={this.doLogin}>Login</button>
         <button onClick={this.doLogout}>Logout </button>
         <button onClick={this.doPrint}>Print token</button>
       </div>
