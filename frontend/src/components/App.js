@@ -50,6 +50,7 @@ class App extends React.Component {
           };
         });
         alert("Logeado");
+        window.location.href = "/home";
       });
   }
 
@@ -82,6 +83,9 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/">
               <LoginForm doLogin={this.doLogin} />
+            </Route>
+            <Route exact path="/home">
+              <h1>Examenes</h1>
             </Route>
           </Switch>
         </BrowserRouter>
