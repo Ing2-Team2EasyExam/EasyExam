@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
-import LoginForm from "./Login/LoginForm"; // Having routing in react application
+import LoginForm from "./Login/LoginForm";
 
 class App extends React.Component {
   constructor(props) {
@@ -49,7 +49,6 @@ class App extends React.Component {
             isLoggedIn: this.isLoggedIn(),
           };
         });
-        alert("Logeado");
         window.location.href = "/home";
       });
   }
