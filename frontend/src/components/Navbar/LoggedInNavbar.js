@@ -10,7 +10,7 @@ class LoggedInNavbar extends React.Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="#examenes">Examenes</Nav.Link>
-            <Nav.Link href="#preguntas">Preguntas</Nav.Link>
+            <Nav.Link href="/problems">Preguntas</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="#perfil">Perfil</Nav.Link>
