@@ -3,7 +3,6 @@ from django.urls import path
 from apps.exam.views import (
     TopicListView,
     ExamListView,
-    ExamDetail,
     ExamPay,
     ProblemListView,
     UserProblemListView,
