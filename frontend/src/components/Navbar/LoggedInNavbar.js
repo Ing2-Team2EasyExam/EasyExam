@@ -5,11 +5,11 @@ class LoggedInNavbar extends React.Component {
   render() {
     return (
       <Navbar bg="info" variant="dark" expand="lg">
-        <Navbar.Brand href="#examenes">EasyExam</Navbar.Brand>
+        <Navbar.Brand href="/home">EasyExam</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#examenes">Examenes</Nav.Link>
+            <Nav.Link href="/home">Examenes</Nav.Link>
             <Nav.Link href="/problems">Preguntas</Nav.Link>
           </Nav>
           <Nav>
