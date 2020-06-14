@@ -47,4 +47,5 @@ class TestExamCreateView(TestCase):
 
 
 class TestExamUpdateView(TestCase):
-    pass
+    def setUp(self):
+        self.user = mixer.blend("user.User")

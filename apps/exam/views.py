@@ -140,6 +140,7 @@ class PreviewLatexPDF(APIView):
         return sendfile(request, pdf)
 
 
+############# Legacy endpoints that are not being used :)
 class PreviewLatex(APIView):
     def post(self, request):
         value = request.data.get("value", None)
@@ -166,9 +167,6 @@ class PreviewLatex(APIView):
                 raise ValidationError(latex_logs)
         url = "/api/preview-latex/" + uuid + "/pdf/"
         return JsonResponse({"url": url})
-
-
-############# Legacy endpoints that are not being used :)
 
 
 class ExamPay(APIView):
