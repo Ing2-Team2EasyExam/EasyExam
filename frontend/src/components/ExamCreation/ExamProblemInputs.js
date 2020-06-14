@@ -5,19 +5,32 @@ class SelectProblem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      problems: [
-        {
-          name: "Papelero a mis Papeles",
-          author: "Claudio Falcon",
-        },
-        {
-          name: "Fibonacci Strings",
-          author: "Jeremy Barbay",
-        },
-      ],
+      error: null,
+      problems: [],
     };
   }
-
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    fetch("/api/problems/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) =>
+          this.setState((state, props) => {
+            return { problems: result };
+          }),
+        (error) => {
+          this.setState((state, props) => {
+            return { error: error };
+          });
+        }
+      );
+  }
   render() {
     const { problems } = this.state;
     return (
@@ -84,7 +97,7 @@ class ExamProblemInputs extends React.Component {
     const { problems } = this.state;
     return (
       <>
-        <h3>Problemas</h3>
+        <h3 style={{ center: true }}>Problemas</h3>
         {problems.map((problem) => problem)}
         <Button variant="primary" type="button" onClick={this.addProblem}>
           {" "}
