@@ -1,5 +1,16 @@
+from django.shortcuts import get_object_or_404
 from .models import Problem, Exam, Topic
 from typing import Set, Tuple, List
+
+
+def get_problems_from_serializers(serialized_problems: List[dict]) -> List[Problem]:
+    problems = list()
+    for serialized_problem in serialized_problems:
+        problem = Problem.objects.get(
+            name=serialized_problem["name"], author=serialized_problem["author"]
+        )
+        problems.append(problem)
+    return problems
 
 
 def create_or_update_exam(**data) -> Exam:
