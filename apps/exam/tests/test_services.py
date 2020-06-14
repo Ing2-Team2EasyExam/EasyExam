@@ -19,3 +19,15 @@ class TestTopicServices(TestCase):
         exam_topics = services.get_exam_topics(self.exam)
         for topic in self.topics:
             self.assertIn(str(topic), exam_topics)
+
+
+class TestSerializerServices(TestCase):
+    def test_get_problems_for_serializers(self):
+        problems = mixer.cycle(5).blend("exam.Problem")
+        problem_data = [
+            {"name": problem.name, "author": problem.author} for problem in problems
+        ]
+        services_problems = services.get_problems_from_serializers(problem_data)
+        self.assertEqual(len(services_problems), 5)
+        for problem in problems:
+            self.assertIn(problem, services_problems)
