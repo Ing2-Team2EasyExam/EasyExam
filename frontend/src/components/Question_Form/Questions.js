@@ -7,17 +7,46 @@ class Questions extends React.Component{
         super(props);
     }
     render(){
-      const topics=<Form.Group>
-              <br />
-              <Form.Control as="Topicos">
-                <option>Topico1</option>
-                <option>Topico2</option>
-                <option>Topico3</option>
-              </Form.Control>
-              <br />
-            </Form.Group>;
+      /*const name=<Form>
+      <Form.Group controlID="Nombres">
+      <Form.Row>
+        <Form.Label column="lg" lg={2}>
+          Nombre Pregunta:
+        </Form.Label>
+        <Col>
+          <Form.Control size="lg" type="text" placeholder="Nombre Pregunta" />
+        </Col>
+      </Form.Row>
+      <br />
+      <Form.Row>
+        <Form.Label column lg={2}>
+          Autor/a:
+        </Form.Label>
+        <Col>
+          <Form.Control type="text" placeholder="Autor/a:" />
+        </Col>
+      </Form.Row>
+      <br />
+      </Form.Group>
+      </Form> */
+
+      const topics=
+      <Form>
+      <Form.Group controlId="exampleForm.SelectCustomSizeSm">
+        <Form.Label>Topicos</Form.Label>
+        <Form.Control as="select" size="sm" custom>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </Form.Control>
+      </Form.Group>
+      </Form>
+      
             return(
-            <Container style={{marginTop: '50px'}}>
+            <Container style={{marginTop: '100px'}}>
+              
             {topics}
         </Container>
               
