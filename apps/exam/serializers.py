@@ -135,6 +135,13 @@ class ProblemNestedSerializer(serializers.ModelSerializer):
         fields = ("name", "author")
         validators = []
 
+    # TODO: Write custom exception for this cases
+    def create(self, validated_data):
+        raise ValidationError("Can't write on this serializer")
+
+    def update(self, instance, validated_data):
+        raise ValidationError("Can't write on this serializer")
+
 
 class ExamEditSerializer(serializers.ModelSerializer):
     """
