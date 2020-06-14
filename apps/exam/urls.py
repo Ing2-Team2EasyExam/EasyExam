@@ -29,13 +29,6 @@ urlpatterns = [
         name="user-problem-list",
     ),
     path("problems/list/", ProblemListView.as_view(), name="problem-list"),
-    path("problems/<uuid:uuid>/pdf/", ProblemPDF.as_view(), name="problem-pdf"),
-    path("preview-latex/", PreviewLatex.as_view(), name="preview-latex"),
-    path(
-        "preview-latex/<uuid:uuid>/pdf/",
-        PreviewLatexPDF.as_view(),
-        name="preview-latex-pdf",
-    ),
     # Exam paths
     path("exams/create/", ExamCreateView.as_view(), name="exam-create"),
     path("exams/lists/", ExamListView.as_view(), name="exam-list"),
