@@ -85,6 +85,7 @@ class App extends React.Component {
         <Navbar isLoggedIn={this.state.isLoggedIn} doLogout={this.doLogout} />
         <BrowserRouter>
           <Switch>
+<<<<<<< HEAD
             <Route exact path="/">
               <LoginForm doLogin={this.doLogin} />
             </Route>
@@ -98,6 +99,10 @@ class App extends React.Component {
               <ProblemList></ProblemList>
             </Route>
             <Route exact path='/questions'><Questions/></Route>
+=======
+            <Route exact path="/"> <h1>EasyExam</h1> </Route>
+            <Route path="/preguntas" exact component={Questions} />
+>>>>>>> Cambio en urls
           </Switch>
         </BrowserRouter>
       </div>
