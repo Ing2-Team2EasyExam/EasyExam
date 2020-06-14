@@ -29,7 +29,7 @@ from apps.exam.serializers import (
     ProblemSerializer,
     ProblemPDFSerializer,
     ProblemCreateSerializer,
-    ExamCreateSerializer,
+    ExamEditSerializer,
 )
 from apps.user.models import Transaction
 
@@ -86,27 +86,6 @@ class ProblemPDF(APIView):
         return sendfile(request, problem.pdf.path)
 
 
-class ProblemRandom(APIView):
-    def post(self, request):
-        problem = None
-        topics = request.data.get("topics", [])
-        exclude = request.data.get("exclude", [])
-        if len(topics) != 0:
-            problem = get_random_object(
-                Problem.objects.filter(topics__in=topics, validated=True).exclude(
-                    uuid__in=exclude
-                )
-            )
-        else:
-            problem = get_random_object(
-                Problem.objects.filter(validated=True).exclude(uuid__in=exclude)
-            )
-        if problem is None:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProblemSerializer(problem, context={"request": request})
-        return Response(serializer.data)
-
-
 # Exam Views
 class ExamList(ListAPIView):
     """
@@ -120,62 +99,12 @@ class ExamList(ListAPIView):
         return Exam.objects.filter(owner=self.request.user)
 
 
-class ExamDetail(RetrieveAPIView):
-    """
-    Returns the detail of an Exam, only the owner has access.
-    """
-
-    serializer_class = ExamDetailSerializer
-    permission_classes = (IsAuthenticatedAndIsOwnerOrIsNone,)
-    lookup_field = "uuid"
-    queryset = Exam.objects.all()
-
-    def get_object(self):
-        """
-        If an authenticated user accesses an exam created by an anonymous user,
-        the exam becomes owned by the authenticated user.
-        :return: Exam instance
-        """
-        exam = super().get_object()
-        if self.request.user.is_authenticated and exam.owner is None:
-            exam.owner = self.request.user
-            if Exam.calculate_cost(exam.problems.all(), self.request.user) == 0:
-                exam.is_paid = True
-            exam.save()
-        return exam
-
-
-class ExamPay(APIView):
-    """
-    Pay to unlock the solutions of an Exam with the user's credits.
-    """
-
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request, uuid):
-        # TODO check case registrated user paying for a None owner exam
-        exam = get_object_or_404(Exam, uuid=uuid)
-        if exam.owner is None:
-            exam.owner = request.user
-            exam.save()
-        cost = Exam.calculate_cost(exam.problems.all(), self.request.user)
-        if request.user.credits < cost:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        Transaction.objects.create(user=request.user, change=-cost)
-        exam.is_paid = True
-        exam.save()
-        return Response(status=status.HTTP_200_OK)
-
-
 class ExamCreate(CreateAPIView):
     """
     Creates a new Exam instance.
     """
 
-    serializer_class = ExamCreateSerializer
-
-
-# TODO set dedicated nginx or Apache server for serving static files, check sendfile docs.
+    serializer_class = ExamEditSerializer
 
 
 class ExamPDF(APIView):
@@ -188,6 +117,13 @@ class ExamPDFSolution(APIView):
     def get(self, request, uuid):
         exam = get_object_or_404(Exam, uuid=uuid, is_paid=True)
         return sendfile(request, exam.pdf_solution.path)
+
+
+class PreviewLatexPDF(APIView):
+    def get(self, request, uuid):
+        uuid = str(uuid)
+        pdf = os.path.join(settings.BASE_DIR, "previews", uuid + ".pdf")
+        return sendfile(request, pdf)
 
 
 class PreviewLatex(APIView):
@@ -218,8 +154,72 @@ class PreviewLatex(APIView):
         return JsonResponse({"url": url})
 
 
-class PreviewLatexPDF(APIView):
-    def get(self, request, uuid):
-        uuid = str(uuid)
-        pdf = os.path.join(settings.BASE_DIR, "previews", uuid + ".pdf")
-        return sendfile(request, pdf)
+############# Legacy endpoints that are not being used :)
+
+
+class ExamPay(APIView):
+    """
+    Pay to unlock the solutions of an Exam with the user's credits.
+    """
+
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, uuid):
+        # TODO check case registrated user paying for a None owner exam
+        exam = get_object_or_404(Exam, uuid=uuid)
+        if exam.owner is None:
+            exam.owner = request.user
+            exam.save()
+        cost = Exam.calculate_cost(exam.problems.all(), self.request.user)
+        if request.user.credits < cost:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        Transaction.objects.create(user=request.user, change=-cost)
+        exam.is_paid = True
+        exam.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class ExamDetail(RetrieveAPIView):
+    """
+    Returns the detail of an Exam, only the owner has access.
+    """
+
+    serializer_class = ExamDetailSerializer
+    permission_classes = (IsAuthenticatedAndIsOwnerOrIsNone,)
+    lookup_field = "uuid"
+    queryset = Exam.objects.all()
+
+    def get_object(self):
+        """
+        If an authenticated user accesses an exam created by an anonymous user,
+        the exam becomes owned by the authenticated user.
+        :return: Exam instance
+        """
+        exam = super().get_object()
+        if self.request.user.is_authenticated and exam.owner is None:
+            exam.owner = self.request.user
+            if Exam.calculate_cost(exam.problems.all(), self.request.user) == 0:
+                exam.is_paid = True
+            exam.save()
+        return exam
+
+
+class ProblemRandom(APIView):
+    def post(self, request):
+        problem = None
+        topics = request.data.get("topics", [])
+        exclude = request.data.get("exclude", [])
+        if len(topics) != 0:
+            problem = get_random_object(
+                Problem.objects.filter(topics__in=topics, validated=True).exclude(
+                    uuid__in=exclude
+                )
+            )
+        else:
+            problem = get_random_object(
+                Problem.objects.filter(validated=True).exclude(uuid__in=exclude)
+            )
+        if problem is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = ProblemSerializer(problem, context={"request": request})
+        return Response(serializer.data)
