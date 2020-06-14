@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
+import Container from 'react-bootstrap/Container';
 
 class Questions extends React.Component{
     constructor(props){
@@ -15,7 +16,12 @@ class Questions extends React.Component{
               </Form.Control>
               <br />
             </Form.Group>;
-            return(topics)
+            return(
+            <Container style={{marginTop: '50px'}}>
+            {topics}
+        </Container>
+              
+            )
         
 
     }
