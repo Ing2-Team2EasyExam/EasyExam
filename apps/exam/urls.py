@@ -2,13 +2,14 @@ from django.urls import path
 
 from apps.exam.views import (
     TopicListView,
-    ExamList,
+    ExamListView,
     ExamDetail,
     ExamPay,
     ProblemListView,
     UserProblemListView,
     ProblemCreateView,
-    ExamCreate,
+    ExamCreateView,
+    ExamUpdateView,
     ExamPDF,
     ExamPDFSolution,
     ProblemRandom,
@@ -28,7 +29,6 @@ urlpatterns = [
         name="user-problem-list",
     ),
     path("problems/list/", ProblemListView.as_view(), name="problem-list"),
-    path("problems/random/", ProblemRandom.as_view(), name="problem-random"),
     path("problems/<uuid:uuid>/pdf/", ProblemPDF.as_view(), name="problem-pdf"),
     path("preview-latex/", PreviewLatex.as_view(), name="preview-latex"),
     path(
@@ -37,14 +37,7 @@ urlpatterns = [
         name="preview-latex-pdf",
     ),
     # Exam paths
-    path("exams/", ExamCreate.as_view(), name="exam-create"),
-    path("exams/owned/", ExamList.as_view(), name="exam-list"),
-    path("exams/<uuid:uuid>/", ExamDetail.as_view(), name="exam-detail"),
-    path("exams/<uuid:uuid>/pay/", ExamPay.as_view(), name="exam-pay"),
-    path("exams/<uuid:uuid>/pdf/", ExamPDF.as_view(), name="exam-pdf"),
-    path(
-        "exams/<uuid:uuid>/pdf-solution/",
-        ExamPDFSolution.as_view(),
-        name="exam-pdf-solution",
-    ),
+    path("exams/create/", ExamCreateView.as_view(), name="exam-create"),
+    path("exams/lists/", ExamListView.as_view(), name="exam-list"),
+    path("exams/<uuid:uuid>/update/", ExamUpdateView.as_view(), name="exam-update"),
 ]
