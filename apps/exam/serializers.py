@@ -161,6 +161,18 @@ class ExamEditSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("uuid",)
 
+    def update(self, validated_data):
+        serialized_problems = validated_data.pop("exam_problems")
+        try:
+            problems = get_problems_from_serializers(serialized_problems)
+            user = self.context["request"].user
+            exam, _ = create_or_update_exam(
+                **validated_data, owner=user, problems=problems
+            )
+            return exam
+        except Problem.DoesNotExist:
+            raise Http404()
+
     def create(self, validated_data):
         """
         On creation associates the problems to the exam. If there's an error on the latex compilation
@@ -172,7 +184,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
         try:
             problems = get_problems_from_serializers(serialized_problems)
             user = self.context["request"].user
-            exam = create_or_update_exam(
+            exam, _ = create_or_update_exam(
                 **validated_data, owner=user, problems=problems
             )
             return exam
