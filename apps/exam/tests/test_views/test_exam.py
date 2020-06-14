@@ -49,3 +49,39 @@ class TestExamCreateView(TestCase):
 class TestExamUpdateView(TestCase):
     def setUp(self):
         self.user = mixer.blend("user.User")
+        self.factory = APIRequestFactory()
+        self.problems = mixer.cycle(2).blend("exam.Problem", owner=self.user)
+        self.exam = mixer.blend("exam.Exam", problems=self.problems, owner=self.user)
+        self.url = reverse("exam-update", kwargs={"uuid": self.exam.uuid})
+        self.serialized_problems = [
+            {"name": problem.name, "author": problem.author}
+            for problem in self.problems
+        ]
+        self.data = {
+            "name": self.exam.name,
+            "teacher": self.exam.teacher,
+            "university": "U. de Chile",
+            "course_name": "Alg. y estructuras de datos",
+            "course_code": "CC3001",
+            "language": self.exam.language,
+            "due_date": self.exam.due_date,
+            "start_time": self.exam.start_time,
+            "end_time": self.exam.end_time,
+            "problems": self.serialized_problems,
+        }
+
+    def test_anonymous_user(self):
+        request = self.factory.put(self.url, self.data)
+        response = ExamUpdateView.as_view()(request)
+        self.assertEqual(response.status_code, 401)
+
+    @mock.patch("apps.exam.models.Exam.generate_pdf")
+    def test_update_exam(self, mock_generate_pdf):
+        request = self.factory.put(self.url, self.data, format="json")
+        force_authenticate(request, self.user)
+        response = ExamUpdateView.as_view()(request, *[], **{"uuid": self.exam.pk})
+        self.assertEqual(response.status_code, 200)
+        exam = Exam.objects.get(pk=self.exam.pk)
+        self.assertEqual(exam.university, self.data["university"])
+        self.assertEqual(exam.course_name, self.data["course_name"])
+        self.assertEqual(exam.course_code, self.data["course_code"])

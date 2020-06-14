@@ -116,6 +116,10 @@ class ExamUpdateView(UpdateAPIView):
 
     serializer_class = ExamEditSerializer
     permission_classes = (IsAuthenticated, IsOwner)
+    lookup_field = "uuid"
+
+    def get_object(self, *args, **kwargs):
+        return Exam.objects.get(pk=self.kwargs[self.lookup_field])
 
 
 # PDF Stuff
