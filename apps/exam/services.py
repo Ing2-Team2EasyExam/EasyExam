@@ -41,6 +41,7 @@ def create_or_update_exam(**data) -> Exam:
     )
     try:
         exam.generate_pdf()
+        return exam, created
     except CompilationErrorException as err:
         if created:
             exam.delete()
