@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
+import ProblemList from "./Problem_list/ProblemList";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class App extends React.Component {
       email: email,
       password: password,
     };
-    let response = fetch("api/users/login/", {
+    let response = fetch("/api/users/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +55,7 @@ class App extends React.Component {
   }
 
   doLogout() {
-    let response = fetch("api/users/logout/", {
+    let response = fetch("/api/users/logout/", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -85,6 +86,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/home">
               <h1>Examenes</h1>
+            </Route>
+            <Route exact path="/problems">
+              <ProblemList></ProblemList>
             </Route>
           </Switch>
         </BrowserRouter>
