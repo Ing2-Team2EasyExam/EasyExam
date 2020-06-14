@@ -34,11 +34,11 @@ def create_or_update_exam(**data) -> Exam:
         course_name=course_name,
         course_code=course_code,
         language=language,
-        due_date=dute_date,
-        start_date=start_date,
+        due_date=due_date,
+        start_time=start_time,
         end_time=end_time,
-        problems=problems,
     )
+    exam.problems.set(problems)
     try:
         exam.generate_pdf()
         return exam, created
