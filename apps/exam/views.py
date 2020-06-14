@@ -11,6 +11,7 @@ from rest_framework.generics import (
     RetrieveAPIView,
     get_object_or_404,
     CreateAPIView,
+    UpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ from sendfile import sendfile
 
 from apps.api.models import get_random_object
 from apps.exam.models import Topic, Exam, Problem
-from apps.exam.permissions import IsUploader, IsAuthenticatedAndIsOwnerOrIsNone
+from apps.exam.permissions import IsUploader, IsOwner
 from apps.exam.serializers import (
     TopicSerializer,
     ExamListSerializer,
@@ -87,7 +88,7 @@ class ProblemPDF(APIView):
 
 
 # Exam Views
-class ExamList(ListAPIView):
+class ExamListView(ListAPIView):
     """
     Returns a list of all Exams owned by the user.
     """
@@ -99,12 +100,25 @@ class ExamList(ListAPIView):
         return Exam.objects.filter(owner=self.request.user)
 
 
-class ExamCreate(CreateAPIView):
+class ExamCreateView(CreateAPIView):
     """
     Creates a new Exam instance.
     """
 
     serializer_class = ExamEditSerializer
+    permission_classes = (IsAuthenticated,)
+
+
+class ExamUpdateView(UpdateAPIView):
+    """
+    Update a existant Exam instance
+    """
+
+    serializer_class = ExamEditSerializer
+    permission_classes = (IsAuthenticated, IsOwner)
+
+
+# PDF Stuff
 
 
 class ExamPDF(APIView):
@@ -177,31 +191,6 @@ class ExamPay(APIView):
         exam.is_paid = True
         exam.save()
         return Response(status=status.HTTP_200_OK)
-
-
-class ExamDetail(RetrieveAPIView):
-    """
-    Returns the detail of an Exam, only the owner has access.
-    """
-
-    serializer_class = ExamDetailSerializer
-    permission_classes = (IsAuthenticatedAndIsOwnerOrIsNone,)
-    lookup_field = "uuid"
-    queryset = Exam.objects.all()
-
-    def get_object(self):
-        """
-        If an authenticated user accesses an exam created by an anonymous user,
-        the exam becomes owned by the authenticated user.
-        :return: Exam instance
-        """
-        exam = super().get_object()
-        if self.request.user.is_authenticated and exam.owner is None:
-            exam.owner = self.request.user
-            if Exam.calculate_cost(exam.problems.all(), self.request.user) == 0:
-                exam.is_paid = True
-            exam.save()
-        return exam
 
 
 class ProblemRandom(APIView):
