@@ -9,7 +9,8 @@ from apps.exam.services import (
     get_problem_topics,
     get_exam_topics,
     get_problems_from_serializers,
-    create_or_update_exam,
+    create_exam,
+    update_exam,
 )
 
 
@@ -173,8 +174,8 @@ class ExamEditSerializer(serializers.ModelSerializer):
         try:
             problems = get_problems_from_serializers(serialized_problems)
             user = instance.owner
-            exam, _ = create_or_update_exam(
-                **validated_data, owner=user, problems=problems
+            exam = update_exam(
+                uuid=instance.pk, **validated_data, owner=user, problems=problems
             )
             return exam
         except Problem.DoesNotExist:
@@ -191,9 +192,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
         try:
             problems = get_problems_from_serializers(serialized_problems)
             user = self.context["request"].user
-            exam, _ = create_or_update_exam(
-                **validated_data, owner=user, problems=problems
-            )
+            exam = create_exam(**validated_data, owner=user, problems=problems)
             return exam
         except Problem.DoesNotExist:
             raise Http404()

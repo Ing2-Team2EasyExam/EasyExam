@@ -13,7 +13,26 @@ def get_problems_from_serializers(serialized_problems: List[dict]) -> List[Probl
     return problems
 
 
-def create_or_update_exam(**data) -> Exam:
+def update_exam(uuid, **data) -> Exam:
+    problems = data.pop("problems")
+    exam = get_object_or_404(klass=Exam, pk=uuid)
+
+    for key in data:
+        setattr(exam, key, data[key])
+    exam.problems.set(problems)
+    exam.save()
+    try:
+        exam.generate_pdf()
+        return exam
+    except CompilationErrorException as err:
+        raise ValidationError(err.latex_logs)
+    except Exception:
+        raise ValidationError(
+            "There was an internal error in the compilation of the latex file"
+        )
+
+
+def create_exam(**data) -> Exam:
     name = data["name"]
     owner = data["owner"]
     teacher = data["teacher"]
@@ -26,7 +45,7 @@ def create_or_update_exam(**data) -> Exam:
     start_time = data["start_time"]
     end_time = data["end_time"]
 
-    exam, created = Exam.objects.update_or_create(
+    exam = Exam.objects.create(
         name=name,
         owner=owner,
         teacher=teacher,
@@ -41,14 +60,12 @@ def create_or_update_exam(**data) -> Exam:
     exam.problems.set(problems)
     try:
         exam.generate_pdf()
-        return exam, created
+        return exam
     except CompilationErrorException as err:
-        if created:
-            exam.delete()
+        exam.delete()
         raise ValidationError(err.latex_logs)
     except Exception:
-        if created:
-            exam.delete()
+        exam.delete()
         raise ValidationError(
             "There was an internal error in the compilation of the latex file"
         )
