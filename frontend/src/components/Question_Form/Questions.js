@@ -3,6 +3,9 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
 
+//Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
+//Falta la previsualización de las preguntas ingresadas.
+
 class Questions extends React.Component{
     constructor(props){
         super(props);
