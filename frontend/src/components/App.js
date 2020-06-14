@@ -87,7 +87,9 @@ class App extends React.Component {
             <Route exact path="/home">
               <h1>Examenes</h1>
             </Route>
-            <Route exact path='/problems'><ProblemList></ProblemList></Route>
+            <Route exact path="/problems">
+              <ProblemList></ProblemList>
+            </Route>
           </Switch>
         </BrowserRouter>
         <button onClick={this.doLogout}>Logout </button>
