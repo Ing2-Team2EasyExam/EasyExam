@@ -8,5 +8,7 @@ urlpatterns = [
     path(
         "problems/", views.FrontEndRendererView.as_view(), name="frontend-problem-list"
     ),
-    path("exam/create", views.FrontEndRendererView.as_view(), name="frontend-exam-create"),
+    path(
+        "exam/create", views.FrontEndRendererView.as_view(), name="frontend-exam-create"
+    ),
 ]
