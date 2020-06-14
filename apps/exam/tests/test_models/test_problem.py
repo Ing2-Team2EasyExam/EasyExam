@@ -5,10 +5,12 @@ from unittest import mock, skip
 
 class TestProblem(TestCase):
     def setUp(self):
-        self.problem = mixer.blend("exam.Problem", name="Problema bonito")
+        self.problem = mixer.blend(
+            "exam.Problem", name="Problema bonito", author="Jeremy"
+        )
 
     def test_str_method(self):
-        self.assertEqual(str(self.problem), "Problema bonito")
+        self.assertEqual(str(self.problem), "Problema bonito -- Jeremy")
 
     @skip("Test need tweaks for working")
     def test_generate_pdfs(self):
