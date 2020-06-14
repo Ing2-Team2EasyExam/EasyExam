@@ -1,11 +1,16 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.reverse import reverse
-
+from django.http import Http404
 from apps.exam.models import Topic, Exam, Problem, Image
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
-from apps.exam.services import get_problem_topics, get_exam_topics
+from apps.exam.services import (
+    get_problem_topics,
+    get_exam_topics,
+    get_problems_from_serializers,
+    create_or_update_exam,
+)
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -144,7 +149,6 @@ class ExamEditSerializer(serializers.ModelSerializer):
         fields = (
             "uuid",
             "name",
-            "owner",
             "teacher",
             "university",
             "course_name",
@@ -164,27 +168,16 @@ class ExamEditSerializer(serializers.ModelSerializer):
         :param validated_data: exam data
         :return: Created exam
         """
-        problem_data = validated_data.get("problems")
-        creator = self.context["request"].user
-        if not user.is_authenticated:
-            user = None
-        exam = Exam.objects.create(**validated_data, owner=user)
-
-        exam.problems.set(problem_data)
-        exam.save()
-
+        serialized_problems = validated_data.pop("exam_problems")
         try:
-            exam.generate_pdf()
-        except CompilationErrorException as err:
-            exam.delete()
-            raise ValidationError(err.latex_logs)
-        except Exception:
-            exam.delete()
-            raise ValidationError(
-                "There was an internal error in the compilation of the latex file"
+            problems = get_problems_from_serializers(serialized_problems)
+            user = self.context["request"].user
+            exam = create_or_update_exam(
+                **validated_data, owner=user, problems=problems
             )
-
-        return exam
+            return exam
+        except Problem.DoesNotExist:
+            raise Http404()
 
 
 class ExamDetailSerializer(object):
