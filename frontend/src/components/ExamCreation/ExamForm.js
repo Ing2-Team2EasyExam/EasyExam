@@ -19,7 +19,7 @@ class ExamForm extends React.Component {
       padding: "2%",
     };
     return (
-      <>
+      <div>
         <Form onSubmit={this.handleSubmit}>
           <FormSubmitButton />
           <div style={style}>
@@ -27,7 +27,7 @@ class ExamForm extends React.Component {
             <ExamProblemInputs />
           </div>
         </Form>
-      </>
+      </div>
     );
   }
 }
