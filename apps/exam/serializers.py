@@ -133,7 +133,7 @@ class ProblemNestedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
         fields = ("name", "author")
-        read_only_fields = ("name", "author")
+        validators = []
 
 
 class ExamEditSerializer(serializers.ModelSerializer):
@@ -142,7 +142,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
     problems is a list of uuids corresponding to the uuids of the problems to use
     """
 
-    exam_problems = ProblemNestedSerializer(many=True)
+    problems = ProblemNestedSerializer(many=True)
 
     class Meta:
         model = Exam
@@ -154,18 +154,18 @@ class ExamEditSerializer(serializers.ModelSerializer):
             "course_name",
             "course_code",
             "language",
-            "exam_problems",
+            "problems",
             "due_date",
             "start_time",
             "end_time",
         )
         read_only_fields = ("uuid",)
 
-    def update(self, validated_data):
-        serialized_problems = validated_data.pop("exam_problems")
+    def update(self, instance, validated_data):
+        serialized_problems = validated_data.pop("problems")
         try:
             problems = get_problems_from_serializers(serialized_problems)
-            user = self.context["request"].user
+            user = instance.owner
             exam, _ = create_or_update_exam(
                 **validated_data, owner=user, problems=problems
             )
@@ -180,7 +180,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
         :param validated_data: exam data
         :return: Created exam
         """
-        serialized_problems = validated_data.pop("exam_problems")
+        serialized_problems = validated_data.pop("problems")
         try:
             problems = get_problems_from_serializers(serialized_problems)
             user = self.context["request"].user
