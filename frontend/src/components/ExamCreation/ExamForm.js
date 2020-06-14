@@ -14,9 +14,11 @@ class ExamForm extends React.Component {
   }
   render() {
     const style = {
-      borderRadius: "25px",
+      borderRadius: "5px",
       border: "2px solid black",
       padding: "2%",
+      overflowY: "scroll",
+      height: "70vh",
     };
     return (
       <div>
