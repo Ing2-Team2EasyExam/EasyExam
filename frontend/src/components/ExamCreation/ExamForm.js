@@ -16,7 +16,7 @@ class ExamForm extends React.Component {
       courseCode: "",
       university: "",
       language: "EN",
-      problems: [],
+      problems: {},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,9 +39,16 @@ class ExamForm extends React.Component {
       [name]: value,
     });
   }
+  handleProblemSelection(name, author) {
+    this.setState({
+      problems: {
+        name: name,
+        author: author,
+      },
+    });
+  }
   handleSubmit(event) {
     event.preventDefault();
-    alert(Object.values(this.state));
   }
   render() {
     const style = {
@@ -60,7 +67,7 @@ class ExamForm extends React.Component {
               handleInputChange={this.handleInputChange}
               handleSelect={this.handleLanguageSelection}
             />
-            <ExamProblemInputs />
+            <ExamProblemInputs handleSelect={this.handleProblemSelection} />
           </div>
         </Form>
       </div>
