@@ -69,9 +69,10 @@ class App extends React.Component {
           isLoggedIn: this.isLoggedIn(),
         };
       });
-      alert("Deslogeado");
+      window.location.href = "/";
     });
   }
+
   doPrint() {
     alert(localStorage.getItem("token"));
   }
@@ -79,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navbar isLoggedIn={this.state.isLoggedIn} />
+        <Navbar isLoggedIn={this.state.isLoggedIn} doLogout={this.doLogout} />
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
@@ -96,8 +97,6 @@ class App extends React.Component {
             </Route>
           </Switch>
         </BrowserRouter>
-        <button onClick={this.doLogout}>Logout </button>
-        <button onClick={this.doPrint}>Print token</button>
       </div>
     );
   }
