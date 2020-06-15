@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container';
+import SaveButton from './SaveButton'
 
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
@@ -11,6 +12,13 @@ class QuestionForm extends React.Component{
         super(props);
     }
     render(){
+      //Style
+      const style = {
+        borderRadius: "25px",
+        border: "2px solid black",
+        padding: "2%",
+      };
+
       //Nombre Pregunta
       const questionName=<Form.Group controlId="name">
       <Form.Label>Nombre de la pregunta:</Form.Label>
@@ -75,8 +83,10 @@ class QuestionForm extends React.Component{
 
      return(
            //<Container style={{marginTop: '100px'}}>
+           <div>
             <Form>
-              {submit}
+              <SaveButton/>
+              <div style={style}>
               {questionName}
               {author}
               {topics}
@@ -88,7 +98,9 @@ class QuestionForm extends React.Component{
               {buttonsLtx}
               {solucion}
               {image}
+              </div>
               </Form>
+              </div>
               //</Container>
                )
         
