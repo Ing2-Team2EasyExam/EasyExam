@@ -49,6 +49,38 @@ class ExamForm extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
+    let token = localStorage.getItem("token");
+    let data = {
+      name: this.state.name,
+      due_date: this.state.dueDate,
+      start_time: this.state.startTime,
+      end_time: this.state.endTime,
+      teacher: this.state.teacher,
+      course_name: this.state.courseName,
+      course_code: this.state.courseCode,
+      university: this.state.university,
+      language: this.state.language,
+      problems: [this.state.problems],
+    };
+    fetch("/api/exams/create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then(
+        (response) => response.json(),
+        (error) => error
+      )
+      .then(
+        (data) => {
+          console.log(Object.values(data));
+          alert("Examen Creado");
+        },
+        (error) => console.log(error)
+      );
   }
   render() {
     const style = {
