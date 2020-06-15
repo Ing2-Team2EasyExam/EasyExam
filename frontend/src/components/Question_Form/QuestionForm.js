@@ -8,9 +8,17 @@ import SaveButton from './SaveButton'
 //Falta la previsualización de las preguntas ingresadas.
 
 class QuestionForm extends React.Component{
-    constructor(props){
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+
+
+  handleSubmit(event) {
+    event.preventDefault();
+    alert("Form Submitted");
+  }
     render(){
       //Style
       const style = {
@@ -84,7 +92,7 @@ class QuestionForm extends React.Component{
      return(
            //<Container style={{marginTop: '100px'}}>
            <div>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
               <SaveButton/>
               <div style={style}>
               {questionName}

@@ -3,6 +3,18 @@ import { Container, Row, Col } from "react-bootstrap";
 import QuestionForm from "./QuestionForm";
 import RenderPDF from "./RenderPDF"
 class Questions extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+
+
+  handleSubmit(event) {
+    event.preventDefault();
+    alert("Form Submitted");
+  }
     render() {
       return (
         <>
