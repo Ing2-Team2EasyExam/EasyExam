@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 class LoggedInNavbar extends React.Component {
   render() {
@@ -13,7 +13,11 @@ class LoggedInNavbar extends React.Component {
             <Nav.Link href="/problems">Preguntas</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="#perfil">Perfil</Nav.Link>
+            <NavDropdown title="Perfil" id="basic-nav-dropdown" alignRight>
+              <NavDropdown.Item as="button" onClick={this.props.doLogout}>
+                Cerrar sesión
+              </NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
