@@ -27,7 +27,8 @@ class App extends React.Component {
   }
 
   isLoggedIn() {
-    return localStorage.getItem("token") !== null;
+    let token = localStorage.getItem("token");
+    return token !== null && token !== undefined;
   }
 
   doLogin(email, password) {
