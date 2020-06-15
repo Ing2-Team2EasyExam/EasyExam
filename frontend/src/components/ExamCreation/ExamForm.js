@@ -6,11 +6,42 @@ import FormSubmitButton from "./FormButton";
 class ExamForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: "",
+      dueDate: "",
+      startTime: "",
+      endTime: "",
+      teacher: "",
+      courseName: "",
+      courseCode: "",
+      university: "",
+      language: "EN",
+      problems: [],
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleLanguageSelection = this.handleLanguageSelection.bind(this);
+    this.handleProblemSelection = this.handleProblemSelection.bind(this);
+  }
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  }
+  handleLanguageSelection(event) {
+    const target = event.target;
+    const value = target.value == "Ingles" ? "EN" : "ES";
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
   }
   handleSubmit(event) {
     event.preventDefault();
-    alert("Form Submitted");
+    alert(Object.values(this.state));
   }
   render() {
     const style = {
@@ -25,7 +56,10 @@ class ExamForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <FormSubmitButton />
           <div style={style}>
-            <ExamDataInputs />
+            <ExamDataInputs
+              handleInputChange={this.handleInputChange}
+              handleSelect={this.handleLanguageSelection}
+            />
             <ExamProblemInputs />
           </div>
         </Form>
