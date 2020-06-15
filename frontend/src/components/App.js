@@ -4,7 +4,8 @@ import Navbar from "./Navbar/Navbar";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
-
+import CreateExam from "./ExamCreation/CreateExam";
+import ExamList from "./ExamList/ExamList";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -85,8 +86,11 @@ class App extends React.Component {
             <Route exact path="/">
               <LoginForm doLogin={this.doLogin} />
             </Route>
+            <Route exac path="/exam/create">
+              <CreateExam />
+            </Route>
             <Route exact path="/home">
-              <h1>Examenes</h1>
+              <ExamList />
             </Route>
             <Route exact path="/problems">
               <ProblemList></ProblemList>

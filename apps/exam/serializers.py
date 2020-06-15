@@ -1,11 +1,17 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.reverse import reverse
-
+from django.http import Http404
 from apps.exam.models import Topic, Exam, Problem, Image
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
-from apps.exam.services import get_problem_topics, get_exam_topics
+from apps.exam.services import (
+    get_problem_topics,
+    get_exam_topics,
+    get_problems_from_serializers,
+    create_exam,
+    update_exam,
+)
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -117,84 +123,63 @@ class ExamListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exam
-        fields = ("uuid", "name", "date", "is_paid")
+        fields = ("uuid", "name", "updated_at")
 
 
-class ExamDetailSerializer(serializers.ModelSerializer):
+class ProblemNestedSerializer(serializers.ModelSerializer):
     """
-    Serializer of the Exam model, used for reading a detailed view of an exam.
+    Serializer for the edition of exams, to add the corresponding problems to it
     """
-
-    topics = serializers.SerializerMethodField()
-    cost = serializers.SerializerMethodField()
-    pdf_normal = serializers.SerializerMethodField()
-    pdf_solution = serializers.SerializerMethodField()
-
-    def get_topics(self, instance):
-        return get_exam_topics(instance)
-
-    def get_cost(self, instance):
-        return Exam.calculate_cost(
-            instance.problems.all(), self.context["request"].user
-        )
-
-    def get_pdf_normal(self, instance):
-        return reverse("exam-pdf", kwargs={"uuid": instance.uuid})
-
-    def get_pdf_solution(self, instance):
-        return reverse("exam-pdf-solution", kwargs={"uuid": instance.uuid})
 
     class Meta:
-        model = Exam
-        fields = (
-            "uuid",
-            "name",
-            "university",
-            "teacher",
-            "course",
-            "course_code",
-            "is_paid",
-            "date",
-            "start_time",
-            "end_time",
-            "topics",
-            "pdf_normal",
-            "pdf_solution",
-            "problems",
-            "cost",
-        )
+        model = Problem
+        fields = ("name", "author")
+        validators = []
+
+    # TODO: Write custom exception for this cases
+    def create(self, validated_data):
+        raise ValidationError("Can't write on this serializer")
+
+    def update(self, instance, validated_data):
+        raise ValidationError("Can't write on this serializer")
 
 
-class ExamCreateSerializer(serializers.ModelSerializer):
+class ExamEditSerializer(serializers.ModelSerializer):
     """
     Serializer of the Exam model, used for creating an exam instance.
     problems is a list of uuids corresponding to the uuids of the problems to use
     """
 
-    problems = serializers.SlugRelatedField(
-        many=True, slug_field="uuid", queryset=Problem.objects.all()
-    )
-    url = serializers.SerializerMethodField()
-
-    def get_url(self, instance):
-        return reverse("exam-detail", kwargs={"uuid": instance.uuid})
+    problems = ProblemNestedSerializer(many=True)
 
     class Meta:
         model = Exam
         fields = (
             "uuid",
             "name",
-            "university",
             "teacher",
-            "course",
+            "university",
+            "course_name",
             "course_code",
-            "date",
+            "language",
+            "problems",
+            "due_date",
             "start_time",
             "end_time",
-            "problems",
-            "url",
         )
-        extra_kwargs = {"uuid": {"read_only": True}}
+        read_only_fields = ("uuid",)
+
+    def update(self, instance, validated_data):
+        serialized_problems = validated_data.pop("problems")
+        try:
+            problems = get_problems_from_serializers(serialized_problems)
+            user = instance.owner
+            exam = update_exam(
+                uuid=instance.pk, **validated_data, owner=user, problems=problems
+            )
+            return exam
+        except Problem.DoesNotExist:
+            raise Http404()
 
     def create(self, validated_data):
         """
@@ -203,30 +188,19 @@ class ExamCreateSerializer(serializers.ModelSerializer):
         :param validated_data: exam data
         :return: Created exam
         """
-        problem_data = validated_data.pop("problems")
-        user = self.context["request"].user
-        if not user.is_authenticated:
-            user = None
-        exam = Exam.objects.create(**validated_data, owner=user)
-
-        exam.problems.set(problem_data)
-        exam.save()
-
+        serialized_problems = validated_data.pop("problems")
         try:
-            exam.generate_pdf()
-        except CompilationErrorException as err:
-            exam.delete()
-            raise ValidationError(err.latex_logs)
-        except Exception:
-            exam.delete()
-            raise ValidationError(
-                "There was an internal error in the compilation of the latex file"
-            )
+            problems = get_problems_from_serializers(serialized_problems)
+            user = self.context["request"].user
+            exam = create_exam(**validated_data, owner=user, problems=problems)
+            return exam
+        except Problem.DoesNotExist:
+            raise Http404()
 
-        cost = Exam.calculate_cost(problem_data, self.context["request"].user)
 
-        if cost == 0:
-            exam.is_paid = True
-            exam.save()
+class ExamDetailSerializer(object):
+    pass
 
-        return exam
+
+class ExamCreateSerializer(object):
+    pass

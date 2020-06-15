@@ -76,6 +76,9 @@ class Problem(models.Model):
     # boolean indicating that the problem is valid in at least one criterion
     # validated = models.BooleanField(default=False) # Legacy field
 
+    class Meta:
+        unique_together = ("name", "author")
+
     @property
     def content(self):
         return "".join((self.statement_content, self.solution_content))
@@ -89,7 +92,7 @@ class Problem(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name} -- {self.author}"
 
     def generate_pdf(self) -> None:
         self.tex_file.save("", ContentFile(problem_tex(self)), save=False)
