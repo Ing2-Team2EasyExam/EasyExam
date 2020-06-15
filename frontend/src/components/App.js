@@ -68,7 +68,7 @@ class App extends React.Component {
           isLoggedIn: this.isLoggedIn(),
         };
       });
-      alert("Deslogeado");
+      window.location.href = "/";
     });
   }
 
@@ -93,7 +93,6 @@ class App extends React.Component {
             </Route>
           </Switch>
         </BrowserRouter>
-        <button onClick={this.doPrint}>Print token</button>
       </div>
     );
   }
