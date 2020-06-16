@@ -90,7 +90,6 @@ class QuestionForm extends React.Component{
     </Form.Group>
 
      return(
-           //<Container style={{marginTop: '100px'}}>
            <div>
             <Form onSubmit={this.handleSubmit}>
               <SaveButton/>
@@ -109,7 +108,6 @@ class QuestionForm extends React.Component{
               </div>
               </Form>
               </div>
-              //</Container>
                )
         
             

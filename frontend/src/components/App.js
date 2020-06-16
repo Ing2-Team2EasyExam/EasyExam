@@ -97,7 +97,9 @@ class App extends React.Component {
             <Route exact path="/problems">
               <ProblemList></ProblemList>
             </Route>
-            <Route exact path='/problems/create'><Questions/></Route>
+            <Route exact path='/problems/create'>
+            {this.state.isLoggedIn ? <Questions/> : <Redirect to="/" />}
+            </Route>
           </Switch>
         </BrowserRouter>
       </div>
