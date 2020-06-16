@@ -34,6 +34,7 @@ The most important ones are described on the following table:
 | run                | Runs project on local machine port `8000`                        |
 | redis-run          | Runs redis on local machine port `6379`                          |
 | db-update          | Runs makemigrations and migrate of django on backend             |
+| load-fixtures      | Load initial data on the local database                          |
 | test               | Runs all test of the project                                     |
 | reset              | Delete previous database and create a new one with no data on it |
 | reset-full         | Reset all db's and starts new ones                               |
@@ -77,7 +78,13 @@ $ make ubuntu-node
 # make brew-node
 ```
 
-Fill up the credentials for your sudo user and then this will install `nodejs` on your computer.
+Fill up the credentials for your sudo user and then this will install `nodejs` on your computer. Now let's install the latex compiler, for this do:
+
+```bash
+$ make ubuntu-latex
+```
+
+This will take **Several Minutes** to install, so be patient.
 
 The second thing is to install the dependencies, so first of all make a python virtualenvironment with:
 
