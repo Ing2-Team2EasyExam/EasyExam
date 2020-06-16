@@ -41,7 +41,7 @@ class MyProblems extends React.Component {
     const { error, isLoaded, items } = this.state;
     const mystyle = {
       overflowY: "scroll",
-      height: "25vh",
+      height: "50vh",
       border: "solid teal 2px",
     };
 
