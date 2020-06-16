@@ -130,7 +130,7 @@ def generate_pdfs(instance):
             ],
             cwd=settings.SCRIPT_DIR,
             stdout=PIPE,
-            stderr=nul,
+            stderr=PIPE,
         )
         if result.returncode != 0:
             latex_logs = result.stdout.decode("utf-8")

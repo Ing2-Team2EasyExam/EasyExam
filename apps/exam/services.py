@@ -65,12 +65,10 @@ def create_exam(**data) -> Exam:
         return exam
     except CompilationErrorException as err:
         exam.delete()
-        raise ValidationError(err.latex_logs)
-    except Exception:
+        raise err
+    except Exception as err:
         exam.delete()
-        raise ValidationError(
-            "There was an internal error in the compilation of the latex file"
-        )
+        raise err
 
 
 def get_problem_topics(problem: Problem) -> Set[str]:
