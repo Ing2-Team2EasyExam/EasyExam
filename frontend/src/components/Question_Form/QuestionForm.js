@@ -10,18 +10,80 @@ import SaveButton from "./SaveButton";
 class QuestionForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      name: "",
+      author: "",
+      statement_content: "",
+      solution_content: "",
+      chosen_topics: [],
+      images: [],
+      available_topics: [],
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleTopicSelection = this.handleTopicSelection.bind(this);
   }
-
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    fetch("/api/topics/list/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then(
+        (response) => response.json(),
+        (errors) => console.log(errors)
+      )
+      .then((data) => {
+        this.setState({ available_topics: data });
+      });
+  }
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  }
+  handleTopicSelection(event) {
+    const target = event.target;
+    const value = target.value;
+    const { chosen_topics } = this.state;
+    chosen_topics.push(value);
+    this.setState({
+      chosen_topics: chosen_topics,
+    });
+  }
   handleSubmit(event) {
     event.preventDefault();
-    alert("Form Submitted");
+    console.log(Object.values(this.state));
+    let data = {
+      name: this.state.name,
+      author: this.state.author,
+      statement_content: this.state.statement_content,
+      solution_content: this.state.solution_content,
+      topics_data: this.state.chosen_topics,
+      figures: this.state.images,
+    };
+    let token = localStorage.getItem("token");
+    fetch("/api/problems/create/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((response_data) => console.log(response_data));
   }
   render() {
     //Style
     const style = {
       borderRadius: "25px",
-      border: "2px solid black",
+      border: "2px solid teal",
       padding: "2%",
     };
 
@@ -29,7 +91,12 @@ class QuestionForm extends React.Component {
     const questionName = (
       <Form.Group controlId="name">
         <Form.Label>Nombre de la pregunta:</Form.Label>
-        <Form.Control placeholder="Pregunta Induccion 1" />
+        <Form.Control
+          onChange={this.handleChange}
+          name="name"
+          type="text"
+          placeholder="Pregunta Induccion 1"
+        />
       </Form.Group>
     );
 
@@ -37,7 +104,12 @@ class QuestionForm extends React.Component {
     const author = (
       <Form.Group controlId="author">
         <Form.Label>Autor/a:</Form.Label>
-        <Form.Control placeholder="Jeremy Barbay" />
+        <Form.Control
+          onChange={this.handleChange}
+          name="author"
+          type="text"
+          placeholder="Jeremy Barbay"
+        />
       </Form.Group>
     );
 
@@ -52,12 +124,15 @@ class QuestionForm extends React.Component {
     const topics = (
       <Form.Group controlId="exampleForm.SelectCustomSizeSm">
         <Form.Label>Topicos</Form.Label>
-        <Form.Control as="select" size="sm" custom>
-          <option>Topico 1</option>
-          <option>Topico 2</option>
-          <option>Topico 3</option>
-          <option>Topico 4</option>
-          <option>Topico 5</option>
+        <Form.Control
+          onChange={this.handleTopicSelection}
+          as="select"
+          size="sm"
+          custom
+        >
+          {this.state.available_topics.map((topic) => {
+            return <option>{topic.name}</option>;
+          })}
         </Form.Control>
       </Form.Group>
     );
@@ -98,7 +173,13 @@ class QuestionForm extends React.Component {
     const enunciado = (
       <Form.Group controlId="enunciado">
         <Form.Label>Enunciado</Form.Label>
-        <Form.Control as="textarea" rows="3" />
+        <Form.Control
+          onChange={this.handleChange}
+          name="statement_content"
+          type="text"
+          as="textarea"
+          rows="3"
+        />
       </Form.Group>
     );
 
@@ -106,7 +187,13 @@ class QuestionForm extends React.Component {
     const solucion = (
       <Form.Group controlId="enunciado">
         <Form.Label>Solución </Form.Label>
-        <Form.Control as="textarea" rows="3" />
+        <Form.Control
+          onChange={this.handleChange}
+          name="solution_content"
+          type="text"
+          as="textarea"
+          rows="3"
+        />
       </Form.Group>
     );
 
