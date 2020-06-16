@@ -9,7 +9,7 @@
 %** Class provided:
 \ProvidesClass{exam}[2018/07/13 by Jeremy Barbay]
 %** Paper, size of the font, base class
-\LoadClass{assignment}
+\LoadClass[11pt]{article}
 \RequirePackage[utf8]{inputenc}
 
 %** Packages from American Mathematical Society (AMS), in particular fro fancyhdr
