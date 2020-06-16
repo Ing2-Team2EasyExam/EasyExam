@@ -31,6 +31,8 @@ help:
 	@echo "reset: Make a clean of the project database"
 	@echo "reset-full: Make a full clean on the database and redis"
 
+create-environment:
+	@python3 -m venv venv
 
 ubuntu-node:
 	sudo apt install nodejs
@@ -47,10 +49,20 @@ brew-node:
 	brew install node
 	brew install yarn
 
+ubuntu-latex:
+	@echo "Installing pdflatex this may take a while..."
+	sudo apt-get install texlive-latex-base
+	sudo apt-get install texlive-fonts-recommended
+	sudo apt-get install texlive-fonts-extra
+	sudo apt-get install texlive-latex-extra
 
-create-environment:
-	@python3 -m venv venv
+fedora-latex:
+	@echo "Installing pdflatex this may take a while..."
+	sudo dnf install texlive-scheme-full
 
+brew-latex:
+	@echo "Installing pdflatex this may take a while..."
+	brew cask install mactex
 
 makemigration:
 	@${django} makemigrations
@@ -78,6 +90,7 @@ load-fixtures:
 	@${django} loaddata ${topics_fixture}
 	@echo "Loading problem fixture"
 	@${django} loaddata ${problem_fixture}
+
 backend-db-delete:
 	@echo "Removing local database..."
 	@rm EasyExamAPI/db.sqlite3
