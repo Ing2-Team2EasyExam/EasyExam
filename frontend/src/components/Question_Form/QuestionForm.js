@@ -75,6 +75,7 @@ class QuestionForm extends React.Component {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
       },
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((response_data) => console.log(response_data));
