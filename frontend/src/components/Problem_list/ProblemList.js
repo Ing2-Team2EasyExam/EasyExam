@@ -5,7 +5,7 @@ import SearchComponent from "./SearchComponent";
 import AllProblems from "./AllProblems";
 import { Link } from "react-router-dom";
 import MyProblems from "./MyProblems";
-import { Row, Col } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 
 class ProblemList extends React.Component {
   constructor(props) {
@@ -28,20 +28,22 @@ class ProblemList extends React.Component {
 
     return (
       <Container>
-        <Row style={{ marginTop: "20px" }}>
-          <Col>
-            <h4>Preguntas</h4>
+        <Tabs
+          defaultActiveKey="preguntas"
+          id="tabs-problems"
+          style={{ marginTop: "20px" }}
+        >
+          <Tab eventKey="preguntas" title="Preguntas">
+            <h4 style={{ textAlign: "center" }}>Preguntas</h4>
             <SearchComponent />
             <AllProblems />
-          </Col>
-        </Row>
-        <Row style={{ marginTop: "20px" }}>
-          <Col>
-            <h4>Mis Preguntas</h4>
+          </Tab>
+          <Tab eventKey="misPreguntas" title="Mis Preguntas">
+            <h4 style={{ textAlign: "center" }}>Mis Preguntas</h4>
             <MyProblems />
-            {addProblem}
-          </Col>
-        </Row>
+          </Tab>
+        </Tabs>
+        {addProblem}
       </Container>
     );
   }
