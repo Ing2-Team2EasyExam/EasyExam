@@ -30,7 +30,7 @@ class App extends React.Component {
 
   isLoggedIn() {
     let token = localStorage.getItem("token");
-    return token !== null && token !== undefined;
+    return token !== null; //&& token !== undefined;
   }
 
   doLogin(email, password) {
@@ -87,23 +87,23 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              {this.state.isLoggedIn ? (
+              {this.isLoggedIn() ? (
                 <Redirect to="/home" />
               ) : (
                 <LoginForm doLogin={this.doLogin} />
               )}
             </Route>
             <Route exac path="/exam/create">
-              {this.state.isLoggedIn ? <CreateExam /> : <Redirect to="/" />}
+              {this.isLoggedIn() ? <CreateExam /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/home">
-              {this.state.isLoggedIn ? <ExamList /> : <Redirect to="/" />}
+              {this.isLoggedIn() ? <ExamList /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/problems">
-              {this.state.isLoggedIn ? <ProblemList /> : <Redirect to="/" />}
+              {this.isLoggedIn() ? <ProblemList /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/problems/create">
-              {this.state.isLoggedIn ? <Questions /> : <Redirect to="/" />}
+              {this.state.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
             </Route>
           </Switch>
         </BrowserRouter>
