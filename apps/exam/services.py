@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
 from .models import Problem, Exam, Topic
 from typing import Set, Tuple, List
+from .generate_exam.exceptions import CompilationErrorException
+from django.forms import ValidationError
 
 
 def get_problems_from_serializers(serialized_problems: List[dict]) -> List[Problem]:
@@ -63,12 +65,10 @@ def create_exam(**data) -> Exam:
         return exam
     except CompilationErrorException as err:
         exam.delete()
-        raise ValidationError(err.latex_logs)
-    except Exception:
+        raise err
+    except Exception as err:
         exam.delete()
-        raise ValidationError(
-            "There was an internal error in the compilation of the latex file"
-        )
+        raise err
 
 
 def get_problem_topics(problem: Problem) -> Set[str]:

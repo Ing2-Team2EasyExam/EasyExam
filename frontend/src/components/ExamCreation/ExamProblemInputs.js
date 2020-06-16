@@ -8,6 +8,7 @@ class SelectProblem extends React.Component {
       error: null,
       problems: [],
     };
+    this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     let token = localStorage.getItem("token");
@@ -31,17 +32,24 @@ class SelectProblem extends React.Component {
         }
       );
   }
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const problem_information = value.split(" -!-! ");
+    const author = problem_information[0];
+    const name = problem_information[1];
+    this.props.handleSelect(name, author);
+  }
   render() {
     const { problems } = this.state;
     return (
       <>
         <Form.Group controlId="problem1">
           <Form.Label>Problema {this.props.number}</Form.Label>
-          <Form.Control as="select">
+          <Form.Control onChange={this.handleChange} as="select">
             {problems.map((problem) => {
               return (
-                <option>
-                  {" "}
+                <option value={`${problem.author} -!-! ${problem.name}`}>
                   {problem.author} -- {problem.name}
                 </option>
               );
@@ -58,7 +66,9 @@ class ExamProblemInputs extends React.Component {
     this.state = {
       maximum: 5,
       current: 1,
-      problems: [<SelectProblem number="1" />],
+      problems: [
+        <SelectProblem handleSelect={this.props.handleSelect} number="1" />,
+      ],
     };
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
@@ -70,7 +80,12 @@ class ExamProblemInputs extends React.Component {
       alert(`Can't put more than ${maximum}`);
       return;
     }
-    problems.push(<SelectProblem number={current + 1} />);
+    problems.push(
+      <SelectProblem
+        handleSelect={this.props.handleSelect}
+        number={current + 1}
+      />
+    );
     this.setState((state, props) => {
       return {
         current: state.current + 1,
