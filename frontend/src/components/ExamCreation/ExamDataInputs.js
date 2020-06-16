@@ -73,8 +73,8 @@ class ExamDataInputs extends React.Component {
         <Form.Group controlId="language">
           <Form.Label>Idioma del examen</Form.Label>
           <Form.Control onChange={this.props.handleSelect} as="select">
-            <option>Ingles</option>
-            <option>Español</option>
+            <option value="EN">Ingles</option>
+            <option value="ES">Español</option>
           </Form.Control>
         </Form.Group>
       </>
