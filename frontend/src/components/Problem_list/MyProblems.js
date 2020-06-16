@@ -1,8 +1,8 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
-import Problem from "./Problem";
+import OwnProblem from "./OwnProblem";
 
-class AllProblems extends React.Component {
+class MyProblems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class AllProblems extends React.Component {
   }
 
   componentDidMount() {
-    fetch("/api/problems/list", {
+    fetch("/api/problems/uploaded/list/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -53,13 +53,13 @@ class AllProblems extends React.Component {
               <th>Nombre</th>
               <th>Creación</th>
               <th>Tópicos</th>
-              <th>Autor</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           {items && (
             <tbody>
               {items.map((item) => (
-                <Problem key={item.name} problem={item} />
+                <OwnProblem key={item.name} problem={item} />
               ))}
             </tbody>
           )}
@@ -69,4 +69,4 @@ class AllProblems extends React.Component {
   }
 }
 
-export default AllProblems;
+export default MyProblems;
