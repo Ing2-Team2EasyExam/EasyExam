@@ -5,6 +5,7 @@ import Problem from "./Problem";
 import Button from "react-bootstrap/Button";
 import SearchComponent from "./SearchComponent";
 import AllProblems from "./AllProblems";
+import {Link} from "react-router-dom";
 
 class ProblemList extends React.Component {
   constructor(props) {
@@ -13,15 +14,18 @@ class ProblemList extends React.Component {
 
   render() {
     const addProblem = (
+      <Link to="/problems/create">
       <Button
-        href="#"
+        href=""
         variant="primary"
         size="lg"
         block
         style={{ marginTop: "15px", marginBottom: "15px" }}
       >
+      
         Agregar Nueva Pregunta
       </Button>
+      </Link>
     );
 
     return (

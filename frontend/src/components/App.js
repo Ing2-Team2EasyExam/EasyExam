@@ -97,7 +97,7 @@ class App extends React.Component {
             <Route exact path="/problems">
               <ProblemList></ProblemList>
             </Route>
-            <Route exact path='/questions'><Questions/></Route>
+            <Route exact path='/problems/create'><Questions/></Route>
           </Switch>
         </BrowserRouter>
       </div>
