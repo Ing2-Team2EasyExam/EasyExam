@@ -5,7 +5,8 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
-import ExamList from "./ExamList/ExamList";
+import Exams from "./ExamList/Exams";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -95,7 +96,7 @@ class App extends React.Component {
               {this.state.isLoggedIn ? <CreateExam /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/home">
-              {this.state.isLoggedIn ? <ExamList /> : <Redirect to="/" />}
+              {this.state.isLoggedIn ? <Exams /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/problems">
               {this.state.isLoggedIn ? <ProblemList /> : <Redirect to="/" />}
