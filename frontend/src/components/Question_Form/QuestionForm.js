@@ -78,7 +78,10 @@ class QuestionForm extends React.Component {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((response_data) => console.log(response_data));
+      .then((response_data) => {
+        console.log(response_data);
+        console.log("Created!");
+      });
   }
   render() {
     //Style

@@ -9,7 +9,7 @@
 %** Class provided:
 \ProvidesClass{problem}[]
 %** Paper, size of the font, base class
-\LoadClass[11pt]{article}
+\LoadClass{assignment}
 \RequirePackage[utf8]{inputenc}
 
 %** Packages from American Mathematical Society (AMS), in particular fro fancyhdr

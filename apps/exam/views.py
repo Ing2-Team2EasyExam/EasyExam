@@ -76,7 +76,7 @@ class ProblemCreateView(CreateAPIView):
     Creates a new Problem instance.
     """
 
-    parser_classes = (MultiPartParser, FormParser)
+    # parser_classes = (MultiPartParser, FormParser)
     serializer_class = ProblemCreateSerializer
     permission_classes = (IsAuthenticated,)
 
