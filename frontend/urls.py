@@ -12,6 +12,8 @@ urlpatterns = [
         "exam/create", views.FrontEndRendererView.as_view(), name="frontend-exam-create"
     ),
     path(
-        "problems/create", views.FrontEndRendererView.as_view(), name="frontend-exam-create"
+        "problems/create",
+        views.FrontEndRendererView.as_view(),
+        name="frontend-exam-create",
     ),
 ]
