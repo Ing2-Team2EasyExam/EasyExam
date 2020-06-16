@@ -103,7 +103,7 @@ class App extends React.Component {
               {this.isLoggedIn() ? <ProblemList /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/problems/create">
-              {this.state.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
+              {this.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
             </Route>
           </Switch>
         </BrowserRouter>
