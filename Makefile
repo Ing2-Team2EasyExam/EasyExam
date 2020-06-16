@@ -11,7 +11,7 @@ problem_fixture := fixtures/Problems.json
 help:
 	@echo "create-environment: Create virtual environment with name venv"
 	@echo "ubuntu-node: download nodejs and yarn on ubuntu, if not using it check the web"
-	@echo "fedora-node: download nodejs and yarn on fedora, if not using it check the web
+	@echo "fedora-node: download nodejs and yarn on fedora, if not using it check the web"
 	@echo "brew-node: download nodejs and yarn on macOS, if not using mac check the web"
 	@echo "ubuntu-latex: download pdflatex compiler on ubuntu, if not using it check the web"
 	@echo "fedora-latex: download pdflatex compiler on fedora, if not using it check the web
