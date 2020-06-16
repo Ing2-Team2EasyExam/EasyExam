@@ -1,11 +1,11 @@
 import React from "react";
-import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
-import Problem from "./Problem";
 import Button from "react-bootstrap/Button";
 import SearchComponent from "./SearchComponent";
 import AllProblems from "./AllProblems";
 import {Link} from "react-router-dom";
+import MyProblems from "./MyProblems";
+import { Row, Col } from "react-bootstrap";
 
 class ProblemList extends React.Component {
   constructor(props) {
@@ -16,7 +16,6 @@ class ProblemList extends React.Component {
     const addProblem = (
       <Link to="/problems/create">
       <Button
-        href=""
         variant="primary"
         size="lg"
         block
@@ -29,10 +28,21 @@ class ProblemList extends React.Component {
     );
 
     return (
-      <Container style={{ marginTop: "50px" }}>
-        <SearchComponent />
-        <AllProblems />
-        {addProblem}
+      <Container>
+        <Row style={{ marginTop: "20px" }}>
+          <Col>
+            <h4>Preguntas</h4>
+            <SearchComponent />
+            <AllProblems />
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "20px" }}>
+          <Col>
+            <h4>Mis Preguntas</h4>
+            <MyProblems />
+            {addProblem}
+          </Col>
+        </Row>
       </Container>
     );
   }
