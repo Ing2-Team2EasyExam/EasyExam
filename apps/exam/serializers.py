@@ -111,7 +111,11 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
                     image=figure_data, problem=problem, name=figure_data.name
                 )
         problem.save()
-        problem.generate_pdf()
+        try:
+            problem.generate_pdf()
+        except CompilationErrorException as err:
+            problem.delete()
+            raise err
         return problem
 
 
