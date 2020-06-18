@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { Download, Trash } from "react-bootstrap-icons";
+import { Download } from "react-bootstrap-icons";
+import DeleteExamButton from "./DeleteExamButton";
 
-class Exam extends React.Component {
+class ExamRow extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,13 +18,11 @@ class Exam extends React.Component {
           <Button variant="light">
             <Download />
           </Button>
-          <Button variant="light">
-            <Trash />
-          </Button>
+          <DeleteExamButton />
         </td>
       </tr>
     );
   }
 }
 
-export default Exam;
+export default ExamRow;

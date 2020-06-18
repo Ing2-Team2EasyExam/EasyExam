@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Button, ButtonGroup } from "react-bootstrap";
-import Exam from "./Exam";
+import ExamRow from "./ExamRow";
 
 class ExamList extends React.Component {
   constructor(props) {
@@ -58,7 +58,7 @@ class ExamList extends React.Component {
           {items && (
             <tbody>
               {items.map((item) => (
-                <Exam key={item.name} exam={item} />
+                <ExamRow key={item.name} exam={item} />
               ))}
             </tbody>
           )}
