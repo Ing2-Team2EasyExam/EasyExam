@@ -84,7 +84,7 @@ Fill up the credentials for your sudo user and then this will install `nodejs` o
 $ make ubuntu-latex
 ```
 
-This will take **Several Minutes** to install, so be patient.
+This will take **Several Minutes or Several Hours** to install, so be patient.
 
 The second thing is to install the dependencies, so first of all make a python virtualenvironment with:
 
