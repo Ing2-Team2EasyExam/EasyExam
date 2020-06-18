@@ -80,7 +80,7 @@ class QuestionForm extends React.Component {
       .then((res) => res.json())
       .then((response_data) => {
         console.log(response_data);
-        console.log("Created!");
+        alert("Pregunta creada.");
       });
   }
   render() {
