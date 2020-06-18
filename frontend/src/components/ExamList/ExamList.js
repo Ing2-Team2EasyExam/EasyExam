@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, ButtonGroup } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import ExamRow from "./ExamRow";
 
 class ExamList extends React.Component {
