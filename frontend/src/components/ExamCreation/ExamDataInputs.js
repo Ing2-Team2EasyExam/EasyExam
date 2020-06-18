@@ -2,6 +2,9 @@ import React from "react";
 import FormInput from "./FormInput";
 import { Form } from "react-bootstrap";
 class ExamDataInputs extends React.Component {
+  /**
+   * Component that represents all inputs that the user has to manually enter or type
+   */
   render() {
     return (
       <>
@@ -72,7 +75,7 @@ class ExamDataInputs extends React.Component {
 
         <Form.Group controlId="language">
           <Form.Label>Idioma del examen</Form.Label>
-          <Form.Control onChange={this.props.handleSelect} as="select">
+          <Form.Control onChange={this.props.handleInputChange} as="select">
             <option value="EN">Ingles</option>
             <option value="ES">Español</option>
           </Form.Control>

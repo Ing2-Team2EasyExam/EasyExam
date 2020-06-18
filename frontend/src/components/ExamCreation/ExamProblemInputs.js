@@ -2,6 +2,13 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 
 class SelectProblem extends React.Component {
+  /**
+   * Component which represent the select html of which the problems show and can be selected for
+   *
+   * The state represents:
+   *  error: If an error is produced while the problems are retrieved
+   *  problems: List of problems objects serialized, that are going to be displayed on the interface
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -11,6 +18,9 @@ class SelectProblem extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
+    /**
+     * When the component mounts, the problems have to be retrieved from the backend
+     */
     let token = localStorage.getItem("token");
     fetch("/api/problems/list", {
       method: "GET",
@@ -33,6 +43,9 @@ class SelectProblem extends React.Component {
       );
   }
   handleChange(event) {
+    /**
+     * On change, tell the parent which problems was chosen with the name and the author.
+     */
     const target = event.target;
     const value = target.value;
     const problem_information = value.split(" -!-! ");
@@ -61,6 +74,13 @@ class SelectProblem extends React.Component {
   }
 }
 class ExamProblemInputs extends React.Component {
+  /**
+   * Component on which the user selects the problem to be added to her's or he's exams.
+   * The state represents:
+   *  The number of maximum problems that the exam can have
+   *  The number of current problems that the exam currently has
+   *  The problems selection components that will be rendered
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -74,6 +94,9 @@ class ExamProblemInputs extends React.Component {
     this.removeProblem = this.removeProblem.bind(this);
   }
   addProblem(event) {
+    /**
+     * Method on which the component add a problem select component to the interface
+     */
     event.preventDefault();
     const { current, problems, maximum } = this.state;
     if (current + 1 > maximum) {
@@ -94,6 +117,9 @@ class ExamProblemInputs extends React.Component {
     });
   }
   removeProblem(event) {
+    /**
+     * Method on which the component remove a problem select component of the interface
+     */
     event.preventDefault();
     const { current, problems, maximum } = this.state;
     if (current - 1 < 1) {

@@ -4,6 +4,20 @@ import ExamProblemInputs from "./ExamProblemInputs";
 import ExamDataInputs from "./ExamDataInputs";
 import FormSubmitButton from "./FormButton";
 class ExamForm extends React.Component {
+  /**
+   * Component that represents the form for creating an exam.
+   * The state is represented by
+   *  name : The name of the exam to be created
+   *  dueDate: The date on which the exam will take place
+   *  startTime: The time on which the exam will start
+   *  endTime: The time on which the exam will end
+   *  teacher: The teacher of the course that the exam is for
+   *  courseName: The name of the course
+   *  courseCode: The code of the course
+   *  university: The name of the university
+   *  language: On which language is the exam
+   *  problems: List of objects that represent the problems on the platform.
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -20,18 +34,13 @@ class ExamForm extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleLanguageSelection = this.handleLanguageSelection.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
   }
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value,
-    });
-  }
-  handleLanguageSelection(event) {
+    /**
+     * Method that handles the change of the text inputs for the problem.
+     * @param {} event: the event on which this method is called
+     */
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -40,6 +49,9 @@ class ExamForm extends React.Component {
     });
   }
   handleProblemSelection(name, author) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
     this.setState({
       problems: {
         name: name,
@@ -48,6 +60,10 @@ class ExamForm extends React.Component {
     });
   }
   handleSubmit(event) {
+    /**
+     * Handler of the form submittion, using asynchronous API with fetch send the
+     * data to the backend.
+     */
     event.preventDefault();
     let token = localStorage.getItem("token");
     let data = {
@@ -78,6 +94,7 @@ class ExamForm extends React.Component {
         (data) => {
           console.log(Object.values(data));
           alert("Examen Creado");
+          window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => console.log(error)
       );
@@ -95,10 +112,7 @@ class ExamForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <FormSubmitButton />
           <div style={style}>
-            <ExamDataInputs
-              handleInputChange={this.handleInputChange}
-              handleSelect={this.handleLanguageSelection}
-            />
+            <ExamDataInputs handleInputChange={this.handleInputChange} />
             <ExamProblemInputs handleSelect={this.handleProblemSelection} />
           </div>
         </Form>
