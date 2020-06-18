@@ -81,7 +81,10 @@ class Problem(models.Model):
 
     @property
     def content(self):
-        return "".join((self.statement_content, self.solution_content))
+        solution = "".join(
+            ("\\begin{solution}\n", self.solution_content, "\n\\end{solution}")
+        )
+        return "".join((self.statement_content, solution))
 
     def save(self, *args, **kwargs) -> "Problem":
         if self.pk is None:

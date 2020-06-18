@@ -102,8 +102,8 @@ def exam_tex(exam):
     tex.append(add_command("courseCode", exam.course_code))
 
     tex.append("\\maketitle\n")
-
-    for problem in exam.problems.all():
+    problems = exam.problems.all()
+    for problem in problems:
         tex.append(get_input_problem(problem, "2 pts"))
 
     tex.append("\\end{document}\n")
