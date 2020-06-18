@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, Button, ButtonGroup } from "react-bootstrap";
-import { Download, Trash } from "react-bootstrap-icons";
 import Exam from "./Exam";
 
 class ExamList extends React.Component {
@@ -61,21 +60,6 @@ class ExamList extends React.Component {
               {items.map((item) => (
                 <Exam key={item.name} exam={item} />
               ))}
-              <tr>
-                <td width="45%">
-                  {" "}
-                  <a href="#VerExamen">Examen CC4102-1 Otoño 2019</a>
-                </td>
-                <td width="45%"> 15-06-2020</td>
-                <td width="10%">
-                  <Button variant="light">
-                    <Download />
-                  </Button>
-                  <Button variant="light">
-                    <Trash />
-                  </Button>
-                </td>
-              </tr>
             </tbody>
           )}
         </Table>

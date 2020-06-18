@@ -94,7 +94,7 @@ class ExamListView(ListAPIView):
     """
 
     serializer_class = ExamListSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsOwner)
 
     def get_queryset(self):
         return Exam.objects.filter(owner=self.request.user)
