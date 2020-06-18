@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, Col, Button } from "react-bootstrap";
 class FormSubmitButton extends React.Component {
+  /**
+   * Button of the form submission
+   */
   render() {
     return (
       <>

@@ -2,6 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 
 class FormInput extends React.Component {
+  /**
+   * Component of the inputs of the exam form
+   */
   render() {
     return (
       <>
