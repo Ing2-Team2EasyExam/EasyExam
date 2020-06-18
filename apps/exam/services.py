@@ -60,6 +60,7 @@ def create_exam(**data) -> Exam:
         end_time=end_time,
     )
     exam.problems.set(problems)
+    exam.save()
     try:
         exam.generate_pdf()
         return exam
