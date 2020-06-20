@@ -1,5 +1,7 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
+import EditExamDataInputs from "./EditExamDataInputs";
+import EditFormSubmitButton from "./EditFormSubmitButton";
 
 class EditExamForm extends React.Component {
   /**
@@ -18,6 +20,67 @@ class EditExamForm extends React.Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      isLoaded: false,
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    /**
+     * Handler of the form submittion, using asynchronous API with fetch send the
+     * data to the backend.
+     */
+    event.preventDefault();
+    const url = "/api/exams/" + this.props.uuid + "/update/";
+    let token = localStorage.getItem("token");
+    let data = {
+      uuid: this.props.uuid,
+      name: this.state.name,
+      due_date: this.state.dueDate,
+      start_time: this.state.startTime,
+      end_time: this.state.endTime,
+      teacher: this.state.teacher,
+      course_name: this.state.courseName,
+      course_code: this.state.courseCode,
+      university: this.state.university,
+      language: this.state.language,
+      problems: [this.state.problems],
+    };
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then(
+        (response) => response.json(),
+        (error) => error
+      )
+      .then(
+        (data) => {
+          console.log(Object.values(data));
+          alert("Examen Editado");
+          //window.location.href = "/home/"; //TODO: Change redirection link!
+        },
+        (error) => console.log(error)
+      );
+  }
+
+  handleInputChange(event) {
+    /**
+     * Method that handles the change of the text inputs for the problem.
+     * @param {} event: the event on which this method is called
+     */
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
   }
 
   componentDidMount() {
@@ -66,7 +129,17 @@ class EditExamForm extends React.Component {
     };
     return (
       <div>
-        <h2>{this.props.uuid}</h2>
+        {this.state.isLoaded && (
+          <Form onSubmit={this.handleSubmit}>
+            <EditFormSubmitButton />
+            <div style={style}>
+              <EditExamDataInputs
+                data={this.state}
+                handleInputChange={this.handleInputChange}
+              />
+            </div>
+          </Form>
+        )}
       </div>
     );
   }
