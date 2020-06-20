@@ -36,7 +36,7 @@ class EditExamForm extends React.Component {
     const url = "/api/exams/" + this.props.uuid + "/update/";
     let token = localStorage.getItem("token");
     let data = {
-      uuid: this.props.uuid,
+      //uuid: this.props.uuid,
       name: this.state.name,
       due_date: this.state.dueDate,
       start_time: this.state.startTime,
@@ -46,7 +46,7 @@ class EditExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problems: [this.state.problems],
+      problems: this.state.problems,
     };
     fetch(url, {
       method: "PUT",
@@ -95,6 +95,7 @@ class EditExamForm extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          console.log("Result es " + result);
           this.setState({
             isLoaded: true,
             name: result.name,
