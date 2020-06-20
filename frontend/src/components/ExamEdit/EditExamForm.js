@@ -25,6 +25,19 @@ class EditExamForm extends React.Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleProblemSelection = this.handleProblemSelection.bind(this);
+  }
+
+  handleProblemSelection(name, author) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
+    this.setState({
+      problems: {
+        name: name,
+        author: author,
+      },
+    });
   }
 
   handleSubmit(event) {
@@ -78,6 +91,7 @@ class EditExamForm extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+    console.log("Modificando: " + name + " -> " + value);
     this.setState({
       [name]: value,
     });

@@ -86,6 +86,7 @@ class EditExamDataInputs extends React.Component {
           <Form.Label>Idioma del examen</Form.Label>
           <Form.Control
             onChange={this.props.handleInputChange}
+            name="language"
             as="select"
             value={this.props.data.language}
           >
