@@ -77,7 +77,7 @@ class EditExamForm extends React.Component {
         (data) => {
           console.log(Object.values(data));
           alert("Examen Editado");
-          //window.location.href = "/home/"; //TODO: Change redirection link!
+          window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => console.log(error)
       );
