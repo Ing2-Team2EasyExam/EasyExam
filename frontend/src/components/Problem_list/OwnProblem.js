@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 class OwnProblem extends React.Component {
   constructor(props) {
     super(props);
+    this.handlePreview = this.handlePreview.bind(this);
   }
   handlePreview(event) {
     event.preventDefault();
-    const preview_url = `problems/${this.props.problem.uuid}/pdf/`;
+    const preview_url = `/api/problems/${this.props.problem.uuid}/pdf/`;
     fetch(preview_url, {
       headers: {
         "Content-Type": "application/json",
