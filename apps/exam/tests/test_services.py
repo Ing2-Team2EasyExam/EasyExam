@@ -36,7 +36,13 @@ class TestSerializerServices(TestCase):
 class TestProblemServices(TestCase):
     def setUp(self):
         self.user = mixer.blend("user.User")
-        self.problem = mixer.blend("exam.Problem", owner=self.user)
+        self.problem = mixer.blend("exam.Problem", uploader=self.user)
 
     def test_problem_is_not_used(self):
         self.assertFalse(services.check_problem_is_used(self.problem))
+
+    def test_problem_is_used(self):
+        exam = mixer.blend("exam.Exam")
+        exam.problems.add(self.problem)
+        exam.save()
+        self.assertTrue(services.check_problem_is_used(self.problem))
