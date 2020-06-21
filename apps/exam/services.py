@@ -95,3 +95,7 @@ def get_exam_topics(exam: Exam) -> Set[str]:
         for topic in get_problem_topics(problem):
             topics.add(topic)
     return topics
+
+
+def check_problem_is_used(problem: Problem) -> bool:
+    return problem.exam_set.exists()
