@@ -1,7 +1,7 @@
 from django.test import TestCase
 from mixer.backend.django import mixer
 from apps.exam.models import Topic
-from apps.exam.serializers import ProblemSerializer, ProblemCreateSerializer
+from apps.exam.serializers import ProblemSerializer, ProblemEditSerializer
 from django.conf import settings
 from unittest import skip, mock
 
@@ -26,7 +26,7 @@ class TestProblemSerializer(TestCase):
         self.assertEqual(problem_serializer.data, self.problem_data)
 
 
-class TestProblemCreateSerializer(TestCase):
+class TestProblemEditSerializer(TestCase):
     @mock.patch("apps.exam.models.Problem.generate_pdf")
     def test_create_serializer(self, generate_pdf_mock):
         user = mixer.blend("user.User")
@@ -40,7 +40,7 @@ class TestProblemCreateSerializer(TestCase):
         }
         request = mock.MagicMock()
         request.user = user
-        serializer = ProblemCreateSerializer(
+        serializer = ProblemEditSerializer(
             data=problem_data, context={"request": request}
         )
         self.assertTrue(serializer.is_valid())

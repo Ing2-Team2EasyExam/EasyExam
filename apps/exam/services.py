@@ -99,3 +99,34 @@ def get_exam_topics(exam: Exam) -> Set[str]:
 
 def check_problem_is_used(problem: Problem) -> bool:
     return problem.exam_set.exists()
+
+
+def create_problem(**data) -> Problem:
+    topics_data = data.get("topics_data", [])
+    figures = data.get("figures", [])
+    name = data["name"]
+    author = data["author"]
+    statement_content = data["statement_content"]
+    solution_content = data["solution_content"]
+    uploader = data["uploader"]
+    problem = Problem.objects.create(
+        name=name,
+        author=author,
+        statement_content=statement_content,
+        solution_content=solution_content,
+        uploader=uploader,
+    )
+    topics = []
+    for topic_name in topics_data:
+        topic, _ = Topic.objects.get_or_create(name=topic_name)
+        topics.append(topic.pk)
+    problem.topics.set(topics)
+    for figure_data in figures:
+        Image.objects.create(image=figure_data, problem=problem, nanem=figure_data.name)
+    problem.save()
+    try:
+        problem.generate_pdf()
+    except CompilationErrorException as err:
+        problem.delete()
+        raise err
+    return problem

@@ -11,6 +11,7 @@ from apps.exam.services import (
     get_problems_from_serializers,
     create_exam,
     update_exam,
+    create_problem,
 )
 
 
@@ -53,7 +54,7 @@ class ProblemPDFSerializer(serializers.ModelSerializer):
         fields = ("pdf",)
 
 
-class ProblemCreateSerializer(serializers.ModelSerializer):
+class ProblemEditSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for creating a problem instance.
     topics_data is a list of strings corresponding to the topics of the problem.
@@ -91,32 +92,7 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         :param validated_data: problem data
         :return: Created problem
         """
-        topics_data = validated_data.get("topics_data", [])
-        figures = validated_data.get("figures", [])
-        problem = Problem.objects.create(
-            name=validated_data["name"],
-            author=validated_data["author"],
-            statement_content=validated_data["statement_content"],
-            solution_content=validated_data["solution_content"],
-            uploader=self.context["request"].user,
-        )
-        topics = []
-        for topic_name in topics_data:
-            topic, _ = Topic.objects.get_or_create(name=topic_name)
-            topics.append(topic.pk)
-        problem.topics.set(topics)
-        if figures is not None:
-            for figure_data in figures:
-                Image.objects.create(
-                    image=figure_data, problem=problem, name=figure_data.name
-                )
-        problem.save()
-        try:
-            problem.generate_pdf()
-        except CompilationErrorException as err:
-            problem.delete()
-            raise err
-        return problem
+        return create_problem(uploader=self.context["request"].user, **validated_data)
 
 
 class ExamListSerializer(serializers.ModelSerializer):

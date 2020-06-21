@@ -29,7 +29,7 @@ from apps.exam.serializers import (
     ExamDetailSerializer,
     ProblemSerializer,
     ProblemPDFSerializer,
-    ProblemCreateSerializer,
+    ProblemEditSerializer,
     ExamEditSerializer,
 )
 from apps.user.models import Transaction
@@ -77,7 +77,7 @@ class ProblemCreateView(CreateAPIView):
     """
 
     # parser_classes = (MultiPartParser, FormParser)
-    serializer_class = ProblemCreateSerializer
+    serializer_class = ProblemEditSerializer
     permission_classes = (IsAuthenticated,)
 
 
