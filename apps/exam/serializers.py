@@ -49,7 +49,7 @@ class ProblemSerializer(serializers.ModelSerializer):
         )
 
     def get_editable(self, instance):
-        return check_problem_is_used(instance)
+        return not check_problem_is_used(instance)
 
 
 class ProblemPDFSerializer(serializers.ModelSerializer):
