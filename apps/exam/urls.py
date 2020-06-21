@@ -9,6 +9,7 @@ from apps.exam.views import (
     ProblemCreateView,
     ExamCreateView,
     ExamUpdateView,
+    ExamDeleteView,
     ExamPDF,
     ExamPDFSolution,
     ProblemRandom,
@@ -32,4 +33,5 @@ urlpatterns = [
     path("exams/create/", ExamCreateView.as_view(), name="exam-create"),
     path("exams/lists/", ExamListView.as_view(), name="exam-list"),
     path("exams/<uuid:uuid>/update/", ExamUpdateView.as_view(), name="exam-update"),
+    path("exams/<uuid:uuid>/delete/", ExamDeleteView.as_view(), name="exam-delete"),
 ]
