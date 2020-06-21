@@ -11,6 +11,7 @@ class QuestionEditForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoaded: false,
       name: "",
       author: "",
       statement_content: "",
@@ -23,8 +24,37 @@ class QuestionEditForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleTopicSelection = this.handleTopicSelection.bind(this);
   }
+
   componentDidMount() {
-    let token = localStorage.getItem("token");
+    const url = "/api/problems/" + this.props.uuid + "/update";
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("Result es " + result);
+          this.setState({
+            isLoaded: true,
+            name: result.name,
+            author: result.author,
+            statement_content: result.statement_content,
+            solution_content: result.solution_content,
+            topics_data: result.topics_data,
+            figures: result.figures,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
     fetch("/api/topics/list/", {
       method: "GET",
       headers: {
@@ -40,6 +70,7 @@ class QuestionEditForm extends React.Component {
         this.setState({ available_topics: data });
       });
   }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -59,6 +90,7 @@ class QuestionEditForm extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
+    const url = "/api/problems/" + this.props.uuid + "/update/";
     console.log(Object.values(this.state));
     let data = {
       name: this.state.name,
@@ -69,8 +101,8 @@ class QuestionEditForm extends React.Component {
       figures: this.state.images,
     };
     let token = localStorage.getItem("token");
-    fetch("/api/problems/create/", {
-      method: "POST",
+    fetch(url, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
@@ -78,10 +110,14 @@ class QuestionEditForm extends React.Component {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((response_data) => {
-        console.log(response_data);
-        alert("Pregunta creada.");
-      });
+      .then(
+        (response_data) => {
+          console.log(response_data);
+          alert("Pregunta Editada.");
+          window.location.href = "/home/";
+        },
+        (error) => console.log(error)
+      );
   }
   render() {
     //Style
@@ -99,7 +135,7 @@ class QuestionEditForm extends React.Component {
           onChange={this.handleChange}
           name="name"
           type="text"
-          placeholder="Pregunta Induccion 1"
+          value={this.props.name}
         />
       </Form.Group>
     );
@@ -112,7 +148,7 @@ class QuestionEditForm extends React.Component {
           onChange={this.handleChange}
           name="author"
           type="text"
-          placeholder="Jeremy Barbay"
+          value={this.props.author}
         />
       </Form.Group>
     );
@@ -183,6 +219,7 @@ class QuestionEditForm extends React.Component {
           type="text"
           as="textarea"
           rows="3"
+          value={this.props.statement_content}
         />
       </Form.Group>
     );
@@ -197,6 +234,7 @@ class QuestionEditForm extends React.Component {
           type="text"
           as="textarea"
           rows="3"
+          value={this.props.solution_content}
         />
       </Form.Group>
     );
