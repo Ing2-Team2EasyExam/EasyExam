@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
+    RetrieveUpdateAPIView,
     get_object_or_404,
     CreateAPIView,
     UpdateAPIView,
@@ -109,7 +110,7 @@ class ExamCreateView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class ExamUpdateView(UpdateAPIView):
+class ExamUpdateView(RetrieveUpdateAPIView):
     """
     Update a existant Exam instance
     """

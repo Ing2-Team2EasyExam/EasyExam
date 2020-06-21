@@ -1,10 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Navbar from "./Navbar/Navbar";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Switch,
+  useParams,
+} from "react-router-dom";
 import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
+import EditExam from "./ExamEdit/EditExam";
 import Questions from "./Question_Form/Questions";
 import Exams from "./ExamList/Exams";
 
@@ -105,6 +112,7 @@ class App extends React.Component {
             <Route exact path="/problems/create">
               {this.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
             </Route>
+            <Route exact path="/exam/edit/:uuid" component={EditExam}></Route>
           </Switch>
         </BrowserRouter>
       </div>
