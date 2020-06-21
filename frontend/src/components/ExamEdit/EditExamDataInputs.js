@@ -6,7 +6,6 @@ class EditExamDataInputs extends React.Component {
    * Component that represents all inputs that the user has to manually enter or type
    */
   render() {
-    console.log(this.props);
     return (
       <>
         <EditFormInput

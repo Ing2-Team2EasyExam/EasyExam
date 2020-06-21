@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import EditExamDataInputs from "./EditExamDataInputs";
+import EditExamProblemInputs from "./EditExamProblemInputs";
 import EditFormSubmitButton from "./EditFormSubmitButton";
 
 class EditExamForm extends React.Component {
@@ -28,15 +29,12 @@ class EditExamForm extends React.Component {
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
   }
 
-  handleProblemSelection(name, author) {
+  handleProblemSelection(list) {
     /**
      * Handle the event when a problem is selected in the form
      */
     this.setState({
-      problems: {
-        name: name,
-        author: author,
-      },
+      problems: list,
     });
   }
 
@@ -91,7 +89,6 @@ class EditExamForm extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    console.log("Modificando: " + name + " -> " + value);
     this.setState({
       [name]: value,
     });
@@ -109,7 +106,6 @@ class EditExamForm extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("Result es " + result);
           this.setState({
             isLoaded: true,
             name: result.name,
@@ -134,7 +130,6 @@ class EditExamForm extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const style = {
       borderRadius: "5px",
       border: "2px solid teal",
@@ -151,6 +146,10 @@ class EditExamForm extends React.Component {
               <EditExamDataInputs
                 data={this.state}
                 handleInputChange={this.handleInputChange}
+              />
+              <EditExamProblemInputs
+                data={this.state.problems}
+                handleSelect={this.handleProblemSelection}
               />
             </div>
           </Form>
