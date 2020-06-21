@@ -63,7 +63,6 @@ class NoSerializerInformationMixin(object):
 
 
 class RetrieveFileMixin(NoSerializerInformationMixin):
-    permission_classes = (IsAuthenticated, IsOwner)
     file_attribute_name = None
     as_attachment = False
     filename = None
