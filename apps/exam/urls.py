@@ -3,19 +3,13 @@ from django.urls import path
 from apps.exam.views import (
     TopicListView,
     ExamListView,
-    ExamPay,
     ProblemListView,
     UserProblemListView,
     ProblemCreateView,
+    ProblemUpdateView,
     ExamCreateView,
     ExamUpdateView,
     ExamDeleteView,
-    ExamPDF,
-    ExamPDFSolution,
-    ProblemRandom,
-    ProblemPDF,
-    PreviewLatex,
-    PreviewLatexPDF,
 )
 
 urlpatterns = [
@@ -29,6 +23,11 @@ urlpatterns = [
         name="user-problem-list",
     ),
     path("problems/list/", ProblemListView.as_view(), name="problem-list"),
+    path(
+        "problems/<uuid:uuid>/update/",
+        ProblemUpdateView.as_view(),
+        name="problem-update",
+    ),
     # Exam paths
     path("exams/create/", ExamCreateView.as_view(), name="exam-create"),
     path("exams/lists/", ExamListView.as_view(), name="exam-list"),
