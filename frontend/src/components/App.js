@@ -116,7 +116,7 @@ class App extends React.Component {
             <Route exact path="/exam/edit/:uuid" component={EditExam}></Route>
             <Route
               exact
-              path="/exam/problems/:uuid"
+              path="/problems/edit/:uuid"
               component={EditQuestion}
             ></Route>
           </Switch>

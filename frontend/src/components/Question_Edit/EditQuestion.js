@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import RenderPDF from "./RenderPDF";
-
+import QuestionEditForm from "./QuestionEditForm";
 class EditQuestion extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +13,7 @@ class EditQuestion extends React.Component {
     alert("Form Submitted");
   }
   render() {
+    const { uuid } = this.props.match.params;
     return (
       <>
         <h1>Editar Pregunta </h1>
