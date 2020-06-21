@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { Download } from "react-bootstrap-icons";
 import DeleteExamButton from "./DeleteExamButton";
 import { Link } from "react-router-dom";
+import DownloadExamButton from "./DownloadExamButton";
 
 class ExamRow extends React.Component {
   constructor(props) {
@@ -17,9 +18,10 @@ class ExamRow extends React.Component {
         </td>
         <td width="45%"> {this.props.exam.updated_at}</td>
         <td width="10%">
-          <Button variant="light">
-            <Download />
-          </Button>
+          <DownloadExamButton
+            uuid={this.props.exam.uuid}
+            exam_name={this.props.exam.name}
+          />
           <DeleteExamButton />
         </td>
       </tr>
