@@ -70,7 +70,7 @@ class TestProblemEditSerializer(TestCase):
         request = mock.MagicMock()
         request.user = self.user
         serializer = ProblemEditSerializer(instance=problem, data=problem_data)
-        self.assertTrue(serializer.is_valid(raise_exception=True))
+        self.assertTrue(serializer.is_valid())
         problem = serializer.save()
         self.assertEqual(problem.name, "John Snow is bored")
         self.assertEqual(problem.statement_content, "John Snow is bored, ...")
