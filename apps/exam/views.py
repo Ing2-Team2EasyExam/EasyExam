@@ -4,7 +4,7 @@ from subprocess import PIPE
 
 from uuid import uuid4
 
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 from rest_framework import status
 from rest_framework.mixins import DestroyModelMixin
 from rest_framework.generics import (
@@ -62,6 +62,30 @@ class NoSerializerInformationMixin(object):
         return get_object_or_404(model, **filter_kwargs)
 
 
+class RetrieveFileMixin(NoSerializerInformationMixin):
+    file_attribute_name = None
+    as_attachment = False
+    filename = None
+
+    def get_filename(self, *args, **kwargs):
+        if filename is None:
+            return ""
+        return filename
+
+    def get_file_attribute_name(self, *args, **kwargs):
+        if self.file_attribute_name is None:
+            raise LookupError("Didn't defined file attribute name")
+        obj = self.get_object(*args, **kwargs)
+        return getattr(obj, self.file_attribute_name)
+
+    def retrieve(self, *args, **kwargs):
+        obj_file = self.get_file_attribute_name(*args, **kwargs)
+        filename = self.get_filename(*args, **kwargs)
+        return FileResponse(
+            obj_file, as_attachment=self.as_attachment, filename=filename
+        )
+
+
 # Topic Views
 class TopicListView(ListAPIView):
     """
@@ -115,10 +139,19 @@ class ProblemUpdateView(RetrieveUpdateAPIView):
         return get_object_or_404(Problem, pk=self.kwargs[self.lookup_field])
 
 
-class ProblemPDF(APIView):
-    def get(self, request, uuid):
-        problem = get_object_or_404(Problem, uuid=uuid)
-        return sendfile(request, problem.pdf.path)
+class ProblemPDFView(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated,)
+    lookup_field = "uuid"
+    model = Problem
+    file_attribute_name = "pdf"
+    as_attachment = True
+
+    def get_filename(self, *args, **kwargs):
+        problem = self.get_object(*args, **kwargs)
+        return f"{problem.name}_{problem.author}.pdf"
+
+    def get(self, request, uuid, *args, **kwargs):
+        return super().retrieve(request, uuid, *args, **kwargs)
 
 
 # Exam Views
@@ -168,23 +201,34 @@ class ExamDeleteView(DestroyModelMixin, NoSerializerInformationMixin, APIView):
 # PDF Stuff
 
 
-class ExamPDF(APIView):
-    def get(self, request, uuid):
-        exam = get_object_or_404(Exam, uuid=uuid)
-        return sendfile(request, exam.pdf_normal.path)
+class ExamNormalPDFDownloadView(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated, IsOwner)
+    lookup_field = "uuid"
+    model = Exam
+    file_attribute_name = "pdf_normal"
+    as_attachment = True
+
+    def get_filename(self, *args, **kwargs):
+        exam = self.get_object(*args, **kwargs)
+        return f"{exam.name}.pdf"
+
+    def get(self, request, uuid, *args, **kwargs):
+        return super().retrieve(request, uuid, *args, **kwargs)
 
 
-class ExamPDFSolution(APIView):
-    def get(self, request, uuid):
-        exam = get_object_or_404(Exam, uuid=uuid, is_paid=True)
-        return sendfile(request, exam.pdf_solution.path)
+class ExamSolutionPDFDownloadView(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated, IsOwner)
+    lookup_field = "uuid"
+    model = Exam
+    file_attribute_name = "pdf_solution"
+    as_attachment = True
 
+    def get_filename(self, *args, **kwargs):
+        exam = self.get_object(*args, **kwargs)
+        return f"{exam.name}_solution.pdf"
 
-class PreviewLatexPDF(APIView):
-    def get(self, request, uuid):
-        uuid = str(uuid)
-        pdf = os.path.join(settings.BASE_DIR, "previews", uuid + ".pdf")
-        return sendfile(request, pdf)
+    def get(self, request, uuid, *args, **kwargs):
+        return super().retrieve(request, uuid, *args, **kwargs)
 
 
 ############# Legacy endpoints that are not being used :)
