@@ -33,6 +33,7 @@ from apps.exam.serializers import (
     ProblemSerializer,
     ProblemPDFSerializer,
     ProblemEditSerializer,
+    ProblemUpdateSerializer,
     ExamEditSerializer,
 )
 from apps.user.models import Transaction
@@ -134,6 +135,10 @@ class ProblemUpdateView(RetrieveUpdateAPIView):
     serializer_class = ProblemEditSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = "uuid"
+
+    def get(self, request, *args, **kwargs):
+        self.serializer_class = ProblemUpdateSerializer
+        return super().get(request, *args, **kwargs)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(
