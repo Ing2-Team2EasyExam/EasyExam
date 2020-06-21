@@ -1,11 +1,13 @@
 import React from "react";
 import Topic from "./Topic";
+import { Link } from "react-router-dom";
 
 class OwnProblem extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
+    const url = "/problems/edit/" + this.props.problem.uuid;
     return (
       <tr>
         <td width="25%">
@@ -18,7 +20,7 @@ class OwnProblem extends React.Component {
           <Topic topics={this.props.problem.topics} />{" "}
         </td>
         <td width="25%">
-          <a href="#Editar">&#x270E;</a>
+          <Link to={url}>&#x270E;</Link>
           <a href="#Eliminar">&#x1F5D1;</a>
         </td>
       </tr>

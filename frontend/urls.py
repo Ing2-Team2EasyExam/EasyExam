@@ -21,4 +21,9 @@ urlpatterns = [
         views.FrontEndRendererView.as_view(),
         name="frontend-exam-edit",
     ),
+    path(
+        "problems/edit/<uuid:uuid>/",
+        views.FrontEndRendererView.as_view(),
+        name="frontend-problems-edit",
+    ),
 ]
