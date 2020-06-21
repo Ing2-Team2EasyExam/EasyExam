@@ -142,7 +142,7 @@ class ExamProblemInputs extends React.Component {
      */
     let list = this.state.problems;
     if (list.length === 1) {
-      alert("Cant submit exam with 0 problems");
+      alert("No puedes guardar un examen sin problemas");
       return;
     }
     list.splice(index, 1);

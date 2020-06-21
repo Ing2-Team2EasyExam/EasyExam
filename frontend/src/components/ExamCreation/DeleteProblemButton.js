@@ -4,7 +4,7 @@ import { XSquare } from "react-bootstrap-icons";
 
 class DeleteProblemButton extends React.Component {
   constructor(props) {
-    super();
+    super(props);
   }
   render() {
     return (

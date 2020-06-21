@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
+import ExamProblemInputs from "./ExamProblemInputs";
 
 class CreateExamForm extends React.Component {
   /**
@@ -31,10 +32,11 @@ class CreateExamForm extends React.Component {
       courseCode: "",
       university: "",
       language: "EN",
-      problems: [],
+      problems: {},
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleProblemSelection = this.handleProblemSelection.bind(this);
   }
 
   handleInputChange(event) {
@@ -47,6 +49,14 @@ class CreateExamForm extends React.Component {
     const name = target.name;
     this.setState({
       [name]: value,
+    });
+  }
+  handleProblemSelection(list) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
+    this.setState({
+      problems: list,
     });
   }
   handleSubmit(event) {
@@ -84,7 +94,7 @@ class CreateExamForm extends React.Component {
         (data) => {
           console.log(Object.values(data));
           alert("Examen Creado");
-          window.location.href = "/home/"; //TODO: Change redirection link!
+          //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => console.log(error)
       );
@@ -94,7 +104,7 @@ class CreateExamForm extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <ExamDataInputs handleInputChange={this.handleInputChange} />
-        <ExamProblems />
+        <ExamProblems handleSelect={this.handleProblemSelection} />
         <FormSubmitButton />
       </Form>
     );
