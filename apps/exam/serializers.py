@@ -12,6 +12,8 @@ from apps.exam.services import (
     create_exam,
     update_exam,
     create_problem,
+    update_problem,
+    check_problem_is_used,
 )
 
 
@@ -32,10 +34,22 @@ class ProblemSerializer(serializers.ModelSerializer):
     """
 
     topics = TopicSerializer(many=True)
+    editable = serializers.SerializerMethodField()
 
     class Meta:
         model = Problem
-        fields = ("name", "author", "created_at", "topics")
+        fields = ("uuid", "name", "author", "created_at", "topics", "editable")
+        read_only_fields = (
+            "uuid",
+            "name",
+            "author",
+            "created_at",
+            "topics",
+            "editable",
+        )
+
+    def get_editable(self, instance):
+        return check_problem_is_used(instance)
 
 
 class ProblemPDFSerializer(serializers.ModelSerializer):
@@ -71,6 +85,7 @@ class ProblemEditSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
         fields = (
+            "uuid",
             "name",
             "author",
             "statement_content",
@@ -78,11 +93,17 @@ class ProblemEditSerializer(serializers.ModelSerializer):
             "topics_data",
             "figures",
         )
+        read_only_fields = ("uuid",)
 
     def validate_topics_data(self, obj):
         if len(obj) == 0:
             raise ValidationError("topics_data should not be empty")
         return obj
+
+    def update(self, instance, validated_data):
+        if check_problem_is_used(instance):
+            raise ValidationError("Problem is not editable")
+        return update_problem(instance.pk, **validated_data)
 
     def create(self, validated_data):
         """
