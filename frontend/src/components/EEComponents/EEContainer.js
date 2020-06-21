@@ -7,7 +7,7 @@ class EEContainer extends React.Component {
   }
   render() {
     return (
-      <Container>
+      <Container style={{ padding: "16px" }}>
         <Row style={{ marginTop: "20px" }}>
           <Col>
             <h4 style={{ textAlign: "center" }}>{this.props.title}</h4>

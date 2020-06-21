@@ -1,9 +1,10 @@
 import React from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import ExamProblemInputs from "./ExamProblemInputs";
+import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
-import FormSubmitButton from "./FormButton";
-class ExamForm extends React.Component {
+import ExamProblems from "./ExamProblems";
+import FormSubmitButton from "./FormSubmitButton";
+
+class CreateExamForm extends React.Component {
   /**
    * Component that represents the form for creating an exam.
    * The state is represented by
@@ -29,17 +30,18 @@ class ExamForm extends React.Component {
       courseName: "",
       courseCode: "",
       university: "",
-      language: "EN",
+      language: "ES",
       problems: {},
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
   }
+
   handleInputChange(event) {
     /**
      * Method that handles the change of the text inputs for the problem.
-     * @param {} event: the event on which this method is called
+     * @param event: the event on which this method is called
      */
     const target = event.target;
     const value = target.value;
@@ -96,26 +98,16 @@ class ExamForm extends React.Component {
         (error) => console.log(error)
       );
   }
+
   render() {
-    const style = {
-      borderRadius: "5px",
-      border: "2px solid teal",
-      padding: "2%",
-      overflowY: "scroll",
-      height: "70vh",
-    };
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <FormSubmitButton />
-          <div style={style}>
-            <ExamDataInputs handleInputChange={this.handleInputChange} />
-            <ExamProblemInputs handleSelect={this.handleProblemSelection} />
-          </div>
-        </Form>
-      </div>
+      <Form onSubmit={this.handleSubmit}>
+        <ExamDataInputs handleInputChange={this.handleInputChange} />
+        <ExamProblems handleSelect={this.handleProblemSelection} />
+        <FormSubmitButton />
+      </Form>
     );
   }
 }
 
-export default ExamForm;
+export default CreateExamForm;

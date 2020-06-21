@@ -1,5 +1,5 @@
 import React from "react";
-import EEContainer from "./EEContainer";
+import EEContainer from "../EEComponents/EEContainer";
 import ExamList from "./ExamList";
 import CreateExamButton from "./CreateExamButton";
 
