@@ -6,6 +6,7 @@ from uuid import uuid4
 
 from django.http import JsonResponse
 from rest_framework import status
+from rest_framework.mixins import DestroyModelMixin
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -37,6 +38,28 @@ from apps.user.models import Transaction
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
+
+
+class NoSerializerInformationMixin(object):
+    lookup_field = None
+    model = None
+
+    def get_lookup_field(self, *args, **kwargs):
+        if self.lookup_field is None:
+            raise LookupError("No lookup field declared")
+        return self.lookup_field
+
+    def get_object_class(self, *args, **kwargs):
+        if self.model is None:
+            raise LookupError("No model is defined")
+        return self.model
+
+    def get_object(self, *args, **kwargs):
+        lookup_field = self.get_lookup_field(*args, **kwargs)
+        model = self.get_object_class(*args, **kwargs)
+        filter_kwargs = {lookup_field: self.kwargs[lookup_field]}
+        return get_object_or_404(model, **filter_kwargs)
+
 
 # Topic Views
 class TopicListView(ListAPIView):
@@ -121,6 +144,15 @@ class ExamUpdateView(RetrieveUpdateAPIView):
 
     def get_object(self, *args, **kwargs):
         return Exam.objects.get(pk=self.kwargs[self.lookup_field])
+
+
+class ExamDeleteView(DestroyModelMixin, NoSerializerInformationMixin, APIView):
+    permission_classes = (IsAuthenticated, IsOwner)
+    lookup_field = "uuid"
+    model = Exam
+
+    def delete(self, *args, **kwargs):
+        return super().destroy(self.request, *args, **kwargs)
 
 
 # PDF Stuff
