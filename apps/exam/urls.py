@@ -10,6 +10,8 @@ from apps.exam.views import (
     ExamCreateView,
     ExamUpdateView,
     ExamDeleteView,
+    ExamNormalPDFDownloadView,
+    ExamSolutionPDFDownloadView,
 )
 
 urlpatterns = [
@@ -33,4 +35,14 @@ urlpatterns = [
     path("exams/lists/", ExamListView.as_view(), name="exam-list"),
     path("exams/<uuid:uuid>/update/", ExamUpdateView.as_view(), name="exam-update"),
     path("exams/<uuid:uuid>/delete/", ExamDeleteView.as_view(), name="exam-delete"),
+    path(
+        "exams/<uuid:uuid>/normal_pdf/",
+        ExamNormalPDFDownloadView.as_view(),
+        name="exam-pdf-normal",
+    ),
+    path(
+        "exams/<uuid:uuid>/solution_pdf/",
+        ExamSolutionPDFDownloadView.as_view(),
+        name="exam-pdf-solution",
+    ),
 ]
