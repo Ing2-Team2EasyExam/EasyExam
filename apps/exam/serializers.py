@@ -167,6 +167,12 @@ class ExamProblemChoiceSerializer(serializers.ModelSerializer):
         model = ExamProblemChoice
         fields = ("points", "problem")
 
+    def create(self, validated_data):
+        raise ValidationError("Can't create a new model on this serializer")
+
+    def update(self, validated_data):
+        raise ValidationError("Can't update the existing model with this serializer")
+
 
 class ExamEditSerializer(serializers.ModelSerializer):
     """
