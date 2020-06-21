@@ -48,15 +48,12 @@ class ExamForm extends React.Component {
       [name]: value,
     });
   }
-  handleProblemSelection(name, author) {
+  handleProblemSelection(list) {
     /**
      * Handle the event when a problem is selected in the form
      */
     this.setState({
-      problems: {
-        name: name,
-        author: author,
-      },
+      problems: list,
     });
   }
   handleSubmit(event) {
@@ -76,7 +73,7 @@ class ExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problems: [this.state.problems],
+      problems: this.state.problems,
     };
     fetch("/api/exams/create/", {
       method: "POST",
@@ -94,7 +91,7 @@ class ExamForm extends React.Component {
         (data) => {
           console.log(Object.values(data));
           alert("Examen Creado");
-          window.location.href = "/home/"; //TODO: Change redirection link!
+          //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => console.log(error)
       );
