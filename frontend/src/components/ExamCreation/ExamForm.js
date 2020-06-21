@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import ExamProblemInputs from "./ExamProblemInputs";
-import ProblemInput from "./ProblemInput";
 import ExamDataInputs from "./ExamDataInputs";
 import FormSubmitButton from "./FormButton";
 class ExamForm extends React.Component {
@@ -62,7 +61,6 @@ class ExamForm extends React.Component {
      * Handler of the form submittion, using asynchronous API with fetch send the
      * data to the backend.
      */
-    console.log(this.props.children);
     event.preventDefault();
     let token = localStorage.getItem("token");
     let data = {
@@ -112,7 +110,7 @@ class ExamForm extends React.Component {
           <FormSubmitButton />
           <div style={style}>
             <ExamDataInputs handleInputChange={this.handleInputChange} />
-            <ProblemInput handleSelect={this.handleProblemSelection} />
+            <ExamProblemInputs handleSelect={this.handleProblemSelection} />
           </div>
         </Form>
       </div>

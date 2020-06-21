@@ -1,5 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import { XCircleFill } from "react-bootstrap-icons";
 
 class SelectProblem extends React.Component {
   /**
@@ -16,7 +18,14 @@ class SelectProblem extends React.Component {
       problems: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.removeProblem = this.removeProblem.bind(this);
   }
+
+  removeProblem(event) {
+    let index = this.props.number;
+    this.props.removeProblem(index);
+  }
+
   componentDidMount() {
     /**
      * When the component mounts, the problems have to be retrieved from the backend
@@ -51,24 +60,42 @@ class SelectProblem extends React.Component {
     const problem_information = value.split(" -!-! ");
     const author = problem_information[0];
     const name = problem_information[1];
-    this.props.handleSelect(name, author);
+    this.props.updateProblem(this.props.number, name, author);
   }
   render() {
     const { problems } = this.state;
     return (
       <>
-        <Form.Group controlId="problem1">
-          <Form.Label>Problema {this.props.number}</Form.Label>
-          <Form.Control onChange={this.handleChange} as="select">
-            {problems.map((problem) => {
-              return (
-                <option value={`${problem.author} -!-! ${problem.name}`}>
-                  {problem.author} -- {problem.name}
+        <Row>
+          <Col sm={10}>
+            <Form.Group controlId="problem1">
+              <Form.Label>Problema {this.props.number + 1}</Form.Label>
+              <Form.Control
+                onChange={this.handleChange}
+                as="select"
+                value={`${this.props.author} -!-! ${this.props.name}`}
+              >
+                <option key={0} value={`DEFAULT -!-! DEFAULT`}>
+                  {" "}
+                  No ha seleccionado Problema
                 </option>
-              );
-            })}
-          </Form.Control>
-        </Form.Group>
+                {problems.map((problem, i) => {
+                  return (
+                    <option
+                      key={i + 1}
+                      value={`${problem.author} -!-! ${problem.name}`}
+                    >
+                      {problem.author} -- {problem.name}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col sm={2}>
+            <XCircleFill onClick={this.removeProblem} />
+          </Col>
+        </Row>
       </>
     );
   }
@@ -85,17 +112,11 @@ class ExamProblemInputs extends React.Component {
     super(props);
     this.state = {
       maximum: 5,
-      current: 1,
-      problems: [
-        <SelectProblem
-          key="1"
-          handleSelect={this.props.handleSelect}
-          number="1"
-        />,
-      ],
+      problems: [{ name: "DEFAULT", author: "DEFAULT" }],
     };
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
+    this.updateProblem = this.updateProblem.bind(this);
   }
   addProblem(event) {
     /**
@@ -103,57 +124,70 @@ class ExamProblemInputs extends React.Component {
      */
     event.preventDefault();
     const { current, problems, maximum } = this.state;
-    if (current + 1 > maximum) {
+    if (problems.length === maximum) {
       alert(`Can't put more than ${maximum}`);
       return;
     }
-    problems.push(
-      <SelectProblem
-        key={current + 1}
-        handleSelect={this.props.handleSelect}
-        number={current + 1}
-      />
-    );
+    problems.push({ name: "DEFAULT", author: "DEFAULT" });
     this.setState((state, props) => {
       return {
-        current: state.current + 1,
         problems: problems,
       };
     });
   }
-  removeProblem(event) {
+
+  removeProblem(index) {
     /**
      * Method on which the component remove a problem select component of the interface
      */
-    event.preventDefault();
-    const { current, problems, maximum } = this.state;
-    if (current - 1 < 1) {
+    let list = this.state.problems;
+    if (list.length === 1) {
       alert("Cant submit exam with 0 problems");
       return;
     }
-    problems.pop();
+    list.splice(index, 1);
     this.setState((state, props) => {
       return {
-        current: state.current - 1,
-        problems: problems,
+        problems: list,
       };
     });
   }
+
+  updateProblem(index, name, author) {
+    let list = this.state.problems;
+    list[index].name = name;
+    list[index].author = author;
+    this.setState((state, props) => {
+      return {
+        problems: list,
+      };
+    });
+
+    this.props.handleSelect(list);
+  }
+
   render() {
-    const { problems } = this.state;
-    console.log(this.props.children);
+    const problems = this.state.problems;
     return (
       <>
         <h3 style={{ center: true }}>Problemas</h3>
-        {problems.map((problem) => problem)}
-        <Button variant="primary" type="button" onClick={this.addProblem}>
+        {problems.map((problem, i) => {
+          return (
+            <SelectProblem
+              key={i}
+              handleSelect={this.props.handleSelect}
+              number={i}
+              updateProblem={this.updateProblem}
+              removeProblem={this.removeProblem}
+              author={problem.author}
+              name={problem.name}
+            />
+          );
+        })}
+        <Button variant="primary" type="button" onClick={this.addProblem} block>
           {" "}
           Add other problem
         </Button>{" "}
-        <Button variant="danger" type="button" onClick={this.removeProblem}>
-          {" "}
-          Remove last problem
-        </Button>
       </>
     );
   }
