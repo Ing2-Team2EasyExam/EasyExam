@@ -22,10 +22,10 @@ class DeleteExamButton extends React.Component {
       <Link to="/#delete-exam">
         <OverlayTrigger
           placement="right"
-          delay={{ show: 250, hide: 400 }}
+          delay={{ show: 100, hide: 100 }}
           overlay={this.renderTooltip}
         >
-          <Button variant="light">
+          <Button variant="light" onClick={this.deleteExam}>
             <Trash />
           </Button>
         </OverlayTrigger>
