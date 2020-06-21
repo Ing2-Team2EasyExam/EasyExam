@@ -11,6 +11,9 @@ from apps.exam.services import (
     get_problems_from_serializers,
     create_exam,
     update_exam,
+    create_problem,
+    update_problem,
+    check_problem_is_used,
 )
 
 
@@ -31,10 +34,22 @@ class ProblemSerializer(serializers.ModelSerializer):
     """
 
     topics = TopicSerializer(many=True)
+    editable = serializers.SerializerMethodField()
 
     class Meta:
         model = Problem
-        fields = ("name", "author", "created_at", "topics")
+        fields = ("uuid", "name", "author", "created_at", "topics", "editable")
+        read_only_fields = (
+            "uuid",
+            "name",
+            "author",
+            "created_at",
+            "topics",
+            "editable",
+        )
+
+    def get_editable(self, instance):
+        return check_problem_is_used(instance)
 
 
 class ProblemPDFSerializer(serializers.ModelSerializer):
@@ -53,7 +68,7 @@ class ProblemPDFSerializer(serializers.ModelSerializer):
         fields = ("pdf",)
 
 
-class ProblemCreateSerializer(serializers.ModelSerializer):
+class ProblemEditSerializer(serializers.ModelSerializer):
     """
     Serializer of the Problem model, used for creating a problem instance.
     topics_data is a list of strings corresponding to the topics of the problem.
@@ -70,6 +85,7 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
         fields = (
+            "uuid",
             "name",
             "author",
             "statement_content",
@@ -77,11 +93,17 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
             "topics_data",
             "figures",
         )
+        read_only_fields = ("uuid",)
 
     def validate_topics_data(self, obj):
         if len(obj) == 0:
             raise ValidationError("topics_data should not be empty")
         return obj
+
+    def update(self, instance, validated_data):
+        if check_problem_is_used(instance):
+            raise ValidationError("Problem is not editable")
+        return update_problem(instance.pk, **validated_data)
 
     def create(self, validated_data):
         """
@@ -91,32 +113,7 @@ class ProblemCreateSerializer(serializers.ModelSerializer):
         :param validated_data: problem data
         :return: Created problem
         """
-        topics_data = validated_data.get("topics_data", [])
-        figures = validated_data.get("figures", [])
-        problem = Problem.objects.create(
-            name=validated_data["name"],
-            author=validated_data["author"],
-            statement_content=validated_data["statement_content"],
-            solution_content=validated_data["solution_content"],
-            uploader=self.context["request"].user,
-        )
-        topics = []
-        for topic_name in topics_data:
-            topic, _ = Topic.objects.get_or_create(name=topic_name)
-            topics.append(topic.pk)
-        problem.topics.set(topics)
-        if figures is not None:
-            for figure_data in figures:
-                Image.objects.create(
-                    image=figure_data, problem=problem, name=figure_data.name
-                )
-        problem.save()
-        try:
-            problem.generate_pdf()
-        except CompilationErrorException as err:
-            problem.delete()
-            raise err
-        return problem
+        return create_problem(uploader=self.context["request"].user, **validated_data)
 
 
 class ExamListSerializer(serializers.ModelSerializer):
