@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import ExamProblemInputs from "./ExamProblemInputs";
+import ProblemInput from "./ProblemInput";
 import ExamDataInputs from "./ExamDataInputs";
 import FormSubmitButton from "./FormButton";
 class ExamForm extends React.Component {
@@ -48,15 +49,12 @@ class ExamForm extends React.Component {
       [name]: value,
     });
   }
-  handleProblemSelection(name, author) {
+  handleProblemSelection(list) {
     /**
      * Handle the event when a problem is selected in the form
      */
     this.setState({
-      problems: {
-        name: name,
-        author: author,
-      },
+      problems: list,
     });
   }
   handleSubmit(event) {
@@ -64,6 +62,7 @@ class ExamForm extends React.Component {
      * Handler of the form submittion, using asynchronous API with fetch send the
      * data to the backend.
      */
+    console.log(this.props.children);
     event.preventDefault();
     let token = localStorage.getItem("token");
     let data = {
@@ -76,7 +75,7 @@ class ExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problems: [this.state.problems],
+      problems: this.state.problems,
     };
     fetch("/api/exams/create/", {
       method: "POST",
@@ -94,7 +93,7 @@ class ExamForm extends React.Component {
         (data) => {
           console.log(Object.values(data));
           alert("Examen Creado");
-          window.location.href = "/home/"; //TODO: Change redirection link!
+          //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => console.log(error)
       );
@@ -113,7 +112,7 @@ class ExamForm extends React.Component {
           <FormSubmitButton />
           <div style={style}>
             <ExamDataInputs handleInputChange={this.handleInputChange} />
-            <ExamProblemInputs handleSelect={this.handleProblemSelection} />
+            <ProblemInput handleSelect={this.handleProblemSelection} />
           </div>
         </Form>
       </div>
