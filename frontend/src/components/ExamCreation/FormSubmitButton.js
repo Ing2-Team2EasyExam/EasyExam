@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Button } from "react-bootstrap";
+import { Col, Row, Form, Button } from "react-bootstrap";
 class FormSubmitButton extends React.Component {
   /**
    * Button of the form submission
@@ -7,14 +7,13 @@ class FormSubmitButton extends React.Component {
   render() {
     return (
       <>
-        <Form.Row style={{ paddingBottom: "1%" }}>
-          <Col></Col>
-          <Col>
+        <Form.Group as={Row}>
+          <Col sm={{ offset: 5 }}>
             <Button variant="success" type="submit">
               Guardar
             </Button>
           </Col>
-        </Form.Row>
+        </Form.Group>
       </>
     );
   }
