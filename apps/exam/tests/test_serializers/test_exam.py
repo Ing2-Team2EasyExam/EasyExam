@@ -49,7 +49,7 @@ class TestExamEditSerializer(TestCase):
             "due_date": datetime.datetime.now().date(),
             "start_time": datetime.datetime.now().time(),
             "end_time": (datetime.datetime.now() + datetime.timedelta(hours=2)).time(),
-            "problems": self.serialized_problems,
+            "problem_choices": self.serialized_problems,
         }
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")
