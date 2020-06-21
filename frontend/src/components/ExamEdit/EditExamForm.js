@@ -130,31 +130,22 @@ class EditExamForm extends React.Component {
   }
 
   render() {
-    const style = {
-      borderRadius: "5px",
-      border: "2px solid teal",
-      padding: "2%",
-      overflowY: "scroll",
-      height: "70vh",
-    };
     return (
-      <div>
+      <>
         {this.state.isLoaded && (
           <Form onSubmit={this.handleSubmit}>
+            <EditExamDataInputs
+              data={this.state}
+              handleInputChange={this.handleInputChange}
+            />
+            <EditExamProblemInputs
+              data={this.state.problems}
+              handleSelect={this.handleProblemSelection}
+            />
             <EditFormSubmitButton />
-            <div style={style}>
-              <EditExamDataInputs
-                data={this.state}
-                handleInputChange={this.handleInputChange}
-              />
-              <EditExamProblemInputs
-                data={this.state.problems}
-                handleSelect={this.handleProblemSelection}
-              />
-            </div>
           </Form>
         )}
-      </div>
+      </>
     );
   }
 }
