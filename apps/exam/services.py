@@ -130,3 +130,27 @@ def create_problem(**data) -> Problem:
         problem.delete()
         raise err
     return problem
+
+
+def update_problem(uuid, **data) -> Problem:
+    problem = get_object_or_404(klass=Problem, pk=uuid)
+    topics_data = data.pop("topics_data")
+    figures = data.pop("figures")
+    for key in data:
+        setattr(problem, key, data[key])
+    topics = []
+    for topic_name in topics_data:
+        topic, _ = Topic.objects.get_or_create(name=topic_name)
+        topics.append(topic.pk)
+    problem.topics.set(topics)
+    for figure_data in figures:
+        Image.objects.get_or_create(
+            image=figure_data, problem=problem, nanem=figure_data.name
+        )
+    problem.save()
+    try:
+        problem.generate_pdf()
+    except CompilationErrorException as err:
+        problem.delete()
+        raise err
+    return problem
