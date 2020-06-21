@@ -14,8 +14,8 @@ class TestExamCreateView(TestCase):
         self.factory = APIRequestFactory()
         self.url = reverse("exam-create")
         self.problems = mixer.cycle(2).blend("exam.Problem", owner=self.user)
-        self.serialized_problems = [
-            {"name": problem.name, "author": problem.author}
+        self.serialized_problems_choices = [
+            {"points": 2, "problem": {"name": problem.name, "author": problem.author}}
             for problem in self.problems
         ]
         self.data = {
@@ -28,7 +28,7 @@ class TestExamCreateView(TestCase):
             "due_date": datetime.datetime.now().date(),
             "start_time": datetime.datetime.now().time(),
             "end_time": (datetime.datetime.now() + datetime.timedelta(hours=2)).time(),
-            "problems": self.serialized_problems,
+            "problem_choices": self.serialized_problems_choices,
         }
 
     def test_create_exam_anonymous(self):
@@ -56,7 +56,7 @@ class TestExamUpdateView(TestCase):
         self.exam.save()
         self.url = reverse("exam-update", kwargs={"uuid": self.exam.uuid})
         self.serialized_problems = [
-            {"name": problem.name, "author": problem.author}
+            {"points": 3, "problem": {"name": problem.name, "author": problem.author}}
             for problem in self.problems
         ]
         self.data = {
@@ -69,7 +69,7 @@ class TestExamUpdateView(TestCase):
             "due_date": self.exam.due_date,
             "start_time": self.exam.start_time,
             "end_time": self.exam.end_time,
-            "problems": self.serialized_problems,
+            "problem_choices": self.serialized_problems,
         }
 
     def test_anonymous_user(self):
