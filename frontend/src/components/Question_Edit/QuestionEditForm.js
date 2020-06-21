@@ -135,7 +135,7 @@ class QuestionEditForm extends React.Component {
           onChange={this.handleChange}
           name="name"
           type="text"
-          value={this.props.name}
+          value={this.state.name}
         />
       </Form.Group>
     );
@@ -148,7 +148,7 @@ class QuestionEditForm extends React.Component {
           onChange={this.handleChange}
           name="author"
           type="text"
-          value={this.props.author}
+          value={this.state.author}
         />
       </Form.Group>
     );
@@ -219,7 +219,7 @@ class QuestionEditForm extends React.Component {
           type="text"
           as="textarea"
           rows="3"
-          value={this.props.statement_content}
+          value={this.state.statement_content}
         />
       </Form.Group>
     );
@@ -234,7 +234,7 @@ class QuestionEditForm extends React.Component {
           type="text"
           as="textarea"
           rows="3"
-          value={this.props.solution_content}
+          value={this.state.solution_content}
         />
       </Form.Group>
     );
