@@ -116,6 +116,21 @@ class ProblemEditSerializer(serializers.ModelSerializer):
         return create_problem(uploader=self.context["request"].user, **validated_data)
 
 
+class ProblemUpdateSerializer(serializers.ModelSerializer):
+    topics = TopicSerializer(many=True)
+
+    class Meta:
+        model = Problem
+        fields = (
+            "uuid",
+            "name",
+            "author",
+            "statement_content",
+            "solution_content",
+            "topics",
+        )
+
+
 class ExamListSerializer(serializers.ModelSerializer):
     """
     Serializer of the Exam model, used for reading a simplified view of an exam best used when
