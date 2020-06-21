@@ -30,7 +30,7 @@ class CreateExamForm extends React.Component {
       courseName: "",
       courseCode: "",
       university: "",
-      language: "EN",
+      language: "ES",
       problems: {},
     };
     this.handleInputChange = this.handleInputChange.bind(this);
