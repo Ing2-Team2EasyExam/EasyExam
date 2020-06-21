@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.reverse import reverse
 from django.http import Http404
-from apps.exam.models import Topic, Exam, Problem, Image
+from apps.exam.models import Topic, Exam, Problem, Image, ExamProblemChoice
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from apps.exam.services import (
@@ -158,6 +158,14 @@ class ProblemNestedSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         raise ValidationError("Can't write on this serializer")
+
+
+class ExamProblemChoiceSerializer(serializers.ModelSerializer):
+    problem = ProblemNestedSerializer()
+
+    class Meta:
+        model = ExamProblemChoice
+        fields = ("points", "problem")
 
 
 class ExamEditSerializer(serializers.ModelSerializer):
