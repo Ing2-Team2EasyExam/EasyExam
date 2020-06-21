@@ -201,7 +201,6 @@ class ExamEditSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         user = instance.owner
-        print(validated_data)
         exam = update_exam(uuid=instance.pk, **validated_data, owner=user)
         return exam
 
