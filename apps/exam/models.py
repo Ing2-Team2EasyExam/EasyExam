@@ -228,3 +228,9 @@ class Exam(models.Model):
         os.remove(normal_path)
         os.remove(solution_path)
         self.save()
+
+
+class ExamProblemChoice(models.Model):
+    points = models.PositiveIntegerField(default=2)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
