@@ -140,10 +140,19 @@ class ProblemUpdateView(RetrieveUpdateAPIView):
         return get_object_or_404(Problem, pk=self.kwargs[self.lookup_field])
 
 
-class ProblemPDF(APIView):
-    def get(self, request, uuid):
-        problem = get_object_or_404(Problem, uuid=uuid)
-        return sendfile(request, problem.pdf.path)
+class ProblemDownloadPDF(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated, IsOwner)
+    lookup_field = "uuid"
+    model = Problem
+    file_attribute_name = "pdf"
+    as_attachment = True
+
+    def get_filename(self, *args, **kwargs):
+        problem = self.get_object(*args, **kwargs)
+        return f"{problem.name}_{problem.author}.pdf"
+
+    def get(self, request, uuid, *args, **kwargs):
+        return super().retrieve(request, uuid, *args, **kwargs)
 
 
 # Exam Views
@@ -221,13 +230,6 @@ class ExamSolutionPDFDownloadView(RetrieveFileMixin, APIView):
 
     def get(self, request, uuid, *args, **kwargs):
         return super().retrieve(request, uuid, *args, **kwargs)
-
-
-class PreviewLatexPDF(APIView):
-    def get(self, request, uuid):
-        uuid = str(uuid)
-        pdf = os.path.join(settings.BASE_DIR, "previews", uuid + ".pdf")
-        return sendfile(request, pdf)
 
 
 ############# Legacy endpoints that are not being used :)
