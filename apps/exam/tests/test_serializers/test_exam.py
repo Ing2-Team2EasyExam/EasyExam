@@ -33,7 +33,10 @@ class TestExamEditSerializer(TestCase):
         self.user = mixer.blend("user.User")
         self.problems = mixer.cycle(2).blend("exam.Problem")
         self.serialized_problems = [
-            OrderedDict(name=problem.name, author=problem.author)
+            {
+                "points": 2,
+                "problem": OrderedDict(name=problem.name, author=problem.author),
+            }
             for problem in self.problems
         ]
         self.data = {
