@@ -5,23 +5,37 @@ from .generate_exam.exceptions import CompilationErrorException
 from django.forms import ValidationError
 
 
+def get_problem_from_serializer(serialized_problem: dict) -> Problem:
+    return get_object_or_404(
+        klass=Problem,
+        name=serialized_problem["name"],
+        author=serialized_problem["author"],
+    )
+
+
 def get_problems_from_serializers(serialized_problems: List[dict]) -> List[Problem]:
     problems = list()
     for serialized_problem in serialized_problems:
-        problem = Problem.objects.get(
-            name=serialized_problem["name"], author=serialized_problem["author"]
-        )
+        problem = get_problem_from_serializer(serialized_problem)
         problems.append(problem)
     return problems
 
 
 def update_exam(uuid, **data) -> Exam:
-    problems = data.pop("problems")
+
+    serialized_problems_choices = data.pop("problem_choices")
     exam = get_object_or_404(klass=Exam, pk=uuid)
 
     for key in data:
         setattr(exam, key, data[key])
-    exam.problems.set(problems)
+
+    exam.problems.clear()
+    for serialized_problem_choice in serialized_problems_choices:
+        serialized_problem = serialized_problem_choice["problem"]
+        points = serialized_problem_choice.get("points", 2)
+        problem = get_problem_from_serializer(serialized_problem)
+        exam.problems.add(problem, through_defaults={"points": points})
+
     exam.save()
     try:
         exam.generate_pdf()
@@ -42,11 +56,10 @@ def create_exam(**data) -> Exam:
     course_name = data["course_name"]
     course_code = data["course_code"]
     language = data["language"]
-    problems = data["problems"]
     due_date = data["due_date"]
     start_time = data["start_time"]
     end_time = data["end_time"]
-
+    serialized_problems_choices = data.get("problem_choices", [])
     exam = Exam.objects.create(
         name=name,
         owner=owner,
@@ -59,7 +72,11 @@ def create_exam(**data) -> Exam:
         start_time=start_time,
         end_time=end_time,
     )
-    exam.problems.set(problems)
+    for serialized_problem_choice in serialized_problems_choices:
+        serialized_problem = serialized_problem_choice["problem"]
+        points = serialized_problem_choice.get("points", 2)
+        problem = get_problem_from_serializer(serialized_problem)
+        exam.problems.add(problem, through_defaults={"points": points})
     exam.save()
     try:
         exam.generate_pdf()

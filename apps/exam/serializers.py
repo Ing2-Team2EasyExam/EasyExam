@@ -180,7 +180,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
     problems is a list of uuids corresponding to the uuids of the problems to use
     """
 
-    problems = ProblemNestedSerializer(many=True)
+    problem_choices = ExamProblemChoiceSerializer(many=True)
 
     class Meta:
         model = Exam
@@ -192,7 +192,7 @@ class ExamEditSerializer(serializers.ModelSerializer):
             "course_name",
             "course_code",
             "language",
-            "problems",
+            "problem_choices",
             "due_date",
             "start_time",
             "end_time",
@@ -200,16 +200,10 @@ class ExamEditSerializer(serializers.ModelSerializer):
         read_only_fields = ("uuid",)
 
     def update(self, instance, validated_data):
-        serialized_problems = validated_data.pop("problems")
-        try:
-            problems = get_problems_from_serializers(serialized_problems)
-            user = instance.owner
-            exam = update_exam(
-                uuid=instance.pk, **validated_data, owner=user, problems=problems
-            )
-            return exam
-        except Problem.DoesNotExist:
-            raise Http404()
+        user = instance.owner
+        print(validated_data)
+        exam = update_exam(uuid=instance.pk, **validated_data, owner=user)
+        return exam
 
     def create(self, validated_data):
         """
@@ -218,14 +212,9 @@ class ExamEditSerializer(serializers.ModelSerializer):
         :param validated_data: exam data
         :return: Created exam
         """
-        serialized_problems = validated_data.pop("problems")
-        try:
-            problems = get_problems_from_serializers(serialized_problems)
-            user = self.context["request"].user
-            exam = create_exam(**validated_data, owner=user, problems=problems)
-            return exam
-        except Problem.DoesNotExist:
-            raise Http404()
+        user = self.context["request"].user
+        exam = create_exam(**validated_data, owner=user)
+        return exam
 
 
 class ExamDetailSerializer(object):
