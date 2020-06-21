@@ -51,7 +51,9 @@ class TestExamUpdateView(TestCase):
         self.user = mixer.blend("user.User")
         self.factory = APIRequestFactory()
         self.problems = mixer.cycle(2).blend("exam.Problem", owner=self.user)
-        self.exam = mixer.blend("exam.Exam", problems=self.problems, owner=self.user)
+        self.exam = mixer.blend("exam.Exam", owner=self.user)
+        self.exam.problems.set(self.problems)
+        self.exam.save()
         self.url = reverse("exam-update", kwargs={"uuid": self.exam.uuid})
         self.serialized_problems = [
             {"name": problem.name, "author": problem.author}

@@ -170,7 +170,7 @@ class Exam(models.Model):
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="EN")
 
-    problems = models.ManyToManyField(to=Problem)
+    problems = models.ManyToManyField(to=Problem, through="ExamProblemChoice")
 
     # A lot of times and dates
     due_date = models.DateField()
@@ -228,3 +228,9 @@ class Exam(models.Model):
         os.remove(normal_path)
         os.remove(solution_path)
         self.save()
+
+
+class ExamProblemChoice(models.Model):
+    points = models.PositiveIntegerField(default=2)
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)

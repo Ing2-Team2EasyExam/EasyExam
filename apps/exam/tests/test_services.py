@@ -8,7 +8,9 @@ class TestTopicServices(TestCase):
         self.user = mixer.blend("user.User")
         self.topics = mixer.cycle(5).blend("exam.Topic")
         self.problem = mixer.blend("exam.Problem", topics=self.topics)
-        self.exam = mixer.blend("exam.Exam", problems=[self.problem])
+        self.exam = mixer.blend("exam.Exam")
+        self.exam.problems.add(self.problem)
+        self.exam.save()
 
     def test_get_problem_topics(self):
         problem_topics = services.get_problem_topics(self.problem)
