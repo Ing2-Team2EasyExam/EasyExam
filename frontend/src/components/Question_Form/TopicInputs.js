@@ -58,7 +58,7 @@ class SelectTopic extends React.Component {
       <>
         <Row>
           <Col sm={10}>
-            <Form.Group controlId="topic1">
+            <Form.Group controlId="topic 1">
               <Form.Label>Tópico {this.props.number + 1}</Form.Label>
               <Form.Control
                 onChange={this.handleChange}
@@ -66,7 +66,7 @@ class SelectTopic extends React.Component {
                 value={this.props.name}
               >
                 <option key={0} value="DEFAULT">
-                  No ha seleccionado Tópico
+                  Seleccione Tópico
                 </option>
                 {topics.map((topic, i) => {
                   return (
