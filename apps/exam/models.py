@@ -170,7 +170,7 @@ class Exam(models.Model):
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="EN")
 
-    problems = models.ManyToManyField(to=Problem)
+    problems = models.ManyToManyField(to=Problem, through="ExamProblemChoice")
 
     # A lot of times and dates
     due_date = models.DateField()
