@@ -117,6 +117,9 @@ class TestProblemUpdateView(TestCase):
     def setUp(self):
         self.user = mixer.blend("user.User")
         self.problem = mixer.blend("exam.Problem", uploader=self.user)
+        self.topic = mixer.blend("exam.Topic")
+        self.problem.topics.add(self.topic)
+        self.problem.save()
         self.factory = APIRequestFactory()
         self.kwargs = {"uuid": self.problem.pk}
         self.url = reverse("problem-update", kwargs=self.kwargs)
