@@ -26,6 +26,7 @@ class QuestionEditForm extends React.Component {
   }
 
   componentDidMount() {
+    let token = localStorage.getItem("token");
     const url = "/api/problems/" + this.props.uuid + "/update";
     fetch(url, {
       method: "GET",
@@ -51,7 +52,7 @@ class QuestionEditForm extends React.Component {
         (error) => {
           this.setState({
             isLoaded: true,
-            error,
+            error: error,
           });
         }
       );
