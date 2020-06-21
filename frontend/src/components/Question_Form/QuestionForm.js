@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import SaveButton from "./SaveButton";
+import TopicInputs from "./TopicInputs";
 
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
@@ -17,29 +18,12 @@ class QuestionForm extends React.Component {
       solution_content: "",
       chosen_topics: [],
       images: [],
-      available_topics: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleTopicSelection = this.handleTopicSelection.bind(this);
   }
-  componentDidMount() {
-    let token = localStorage.getItem("token");
-    fetch("/api/topics/list/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-    })
-      .then(
-        (response) => response.json(),
-        (errors) => console.log(errors)
-      )
-      .then((data) => {
-        this.setState({ available_topics: data });
-      });
-  }
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -48,15 +32,16 @@ class QuestionForm extends React.Component {
       [name]: value,
     });
   }
-  handleTopicSelection(event) {
-    const target = event.target;
-    const value = target.value;
-    const { chosen_topics } = this.state;
-    chosen_topics.push(value);
+
+  handleTopicSelection(list) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
     this.setState({
-      chosen_topics: chosen_topics,
+      chosen_topics: list,
     });
   }
+
   handleSubmit(event) {
     event.preventDefault();
     console.log(Object.values(this.state));
@@ -124,30 +109,11 @@ class QuestionForm extends React.Component {
       </Button>
     );
 
-    //Topicos
-    const topics = (
-      <Form.Group controlId="exampleForm.SelectCustomSizeSm">
-        <Form.Label>Topicos</Form.Label>
-        <Form.Control
-          onChange={this.handleTopicSelection}
-          as="select"
-          size="sm"
-          custom
-        >
-          {this.state.available_topics.map((topic) => {
-            return <option>{topic.name}</option>;
-          })}
-        </Form.Control>
-      </Form.Group>
-    );
-
     //Subir Imagenes
     const image = (
-      <Form>
-        <Form.Group>
-          <Form.File id="QuestionImage" label="Insertar Imagen" />
-        </Form.Group>
-      </Form>
+      <Form.Group>
+        <Form.File id="QuestionImage" label="Insertar Imagen" />
+      </Form.Group>
     );
 
     //Placeholder para botones Latex
@@ -170,8 +136,6 @@ class QuestionForm extends React.Component {
         <Button variant="dark"> &#10227; </Button>{" "}
       </>
     );
-    //Link Agregar Topicos
-    const addtopic = <a href="#addtopic">Agregar Tópico</a>;
 
     //Text Area Enunciado
     const enunciado = (
@@ -208,8 +172,7 @@ class QuestionForm extends React.Component {
           <div style={style}>
             {questionName}
             {author}
-            {topics}
-            {addtopic}
+            <TopicInputs handleSelect={this.handleTopicSelection} />
             <p></p>
             {buttonsLtx}
             {enunciado}

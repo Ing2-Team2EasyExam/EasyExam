@@ -21,9 +21,6 @@ class Questions extends React.Component {
             <Col>
               <QuestionForm />
             </Col>
-            <Col>
-              <RenderPDF />
-            </Col>
           </Row>
         </Container>
       </>
