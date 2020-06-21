@@ -1,11 +1,13 @@
 import React from "react";
 import Topic from "./Topic";
 import { Link } from "react-router-dom";
-
+import { Pencil } from "react-bootstrap-icons";
+import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 class OwnProblem extends React.Component {
   constructor(props) {
     super(props);
     this.handlePreview = this.handlePreview.bind(this);
+    this.renderTooltip = this.renderTooltip.bind(this);
   }
   handlePreview(event) {
     event.preventDefault();
@@ -22,12 +24,28 @@ class OwnProblem extends React.Component {
         window.open(blob_url);
       });
   }
+  renderTooltip(props) {
+    return (
+      <Tooltip id="button-tooltip" {...props}>
+        Editar pregunta
+      </Tooltip>
+    );
+  }
   render() {
     const edit_url = "/problems/edit/" + this.props.problem.uuid;
     const actions = this.props.problem.editable ? (
       <>
-        <Link to={edit_url}>&#x270E;</Link>
-        <a href="#Eliminar">&#x1F5D1;</a>{" "}
+        <Link to={edit_url}>
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 100, hide: 100 }}
+            overlay={this.renderTooltip}
+          >
+            <Button variant="light">
+              <Pencil />
+            </Button>
+          </OverlayTrigger>
+        </Link>
       </>
     ) : (
       "No hay acciones disponibles"

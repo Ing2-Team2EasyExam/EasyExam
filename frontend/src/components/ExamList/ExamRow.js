@@ -22,7 +22,7 @@ class ExamRow extends React.Component {
             uuid={this.props.exam.uuid}
             exam_name={this.props.exam.name}
           />
-          <DeleteExamButton />
+          <DeleteExamButton exam={this.props.exam} />
         </td>
       </tr>
     );
