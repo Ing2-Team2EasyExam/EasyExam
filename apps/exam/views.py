@@ -14,6 +14,7 @@ from rest_framework.generics import (
     get_object_or_404,
     CreateAPIView,
     UpdateAPIView,
+    RetrieveUpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -103,6 +104,15 @@ class ProblemCreateView(CreateAPIView):
     # parser_classes = (MultiPartParser, FormParser)
     serializer_class = ProblemEditSerializer
     permission_classes = (IsAuthenticated,)
+
+
+class ProblemUpdateView(RetrieveUpdateAPIView):
+    serializer_class = ProblemEditSerializer
+    permission_classes = (IsAuthenticated, IsUploader)
+    lookup_field = "uuid"
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Problem, pk=self.kwargs[self.lookup_field])
 
 
 class ProblemPDF(APIView):
