@@ -4,7 +4,12 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 from mixer.backend.django import mixer
 
 from apps.exam.models import Problem
-from apps.exam.views import ProblemListView, UserProblemListView, ProblemCreateView
+from apps.exam.views import (
+    ProblemListView,
+    UserProblemListView,
+    ProblemCreateView,
+    ProblemUpdateView,
+)
 from apps.exam.serializers import ProblemSerializer
 from unittest import mock
 
@@ -105,3 +110,65 @@ class TestProblemCreateView(TestCase):
         request = self.factory.post(self.url, self.problem_data, format="json")
         response = ProblemCreateView.as_view()(request)
         self.assertEqual(response.status_code, 401)
+
+
+@mock.patch("apps.exam.models.Problem.generate_pdf")
+class TestProblemUpdateView(TestCase):
+    def setUp(self):
+        self.user = mixer.blend("user.User")
+        self.problem = mixer.blend("exam.Problem", uploader=self.user)
+        self.factory = APIRequestFactory()
+        self.kwargs = {"uuid": self.problem.pk}
+        self.url = reverse("problem-update", kwargs=self.kwargs)
+        self.data = {
+            "name": self.problem.name,
+            "author": self.problem.author,
+            "statement_content": "Habia una vez...",
+            "solution_content": self.problem.solution_content,
+            "topics_data": ["Fisica"],
+            "figures": [],
+        }
+
+    def test_retrieve_problem_from_data(self, generate_pdf_mock):
+        request = self.factory.get(self.url)
+        force_authenticate(request, self.user)
+        response = ProblemUpdateView.as_view()(request, **self.kwargs)
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_problem(self, generate_pdf_mock):
+        request = self.factory.put(self.url, self.data, format="json")
+        force_authenticate(request, self.user)
+        response = ProblemUpdateView.as_view()(request, **self.kwargs)
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_problem_with_exam(self, generate_pdf_mock):
+        exam = mixer.blend("exam.Exam")
+        exam.problems.add(self.problem)
+        exam.save()
+        get_request = self.factory.get(self.url)
+        put_request = self.factory.put(self.url, self.data, format="json")
+        force_authenticate(get_request, self.user)
+        force_authenticate(put_request, self.user)
+        get_response = ProblemUpdateView.as_view()(get_request, **self.kwargs)
+        put_response = ProblemUpdateView.as_view()(put_request, **self.kwargs)
+        self.assertEqual(get_response.status_code, 200)
+        self.assertEqual(put_response.status_code, 400)
+
+    def test_update_other_problem(self, generate_pdf_mock):
+        other_user = mixer.blend("user.User")
+        get_request = self.factory.get(self.url)
+        put_request = self.factory.put(self.url, self.data)
+        force_authenticate(get_request, other_user)
+        force_authenticate(put_request, other_user)
+        get_response = ProblemUpdateView.as_view()(get_request, **self.kwargs)
+        put_response = ProblemUpdateView.as_view()(put_request, **self.kwargs)
+        self.assertEqual(get_response.status_code, 404)
+        self.assertEqual(put_response.status_code, 404)
+
+    def test_anonymous_cant_update_problem(self, generate_pdf_mock):
+        get_request = self.factory.get(self.url)
+        put_request = self.factory.put(self.url, self.data)
+        get_response = ProblemUpdateView.as_view()(get_request, **self.kwargs)
+        put_response = ProblemUpdateView.as_view()(put_request, **self.kwargs)
+        self.assertEqual(get_response.status_code, 401)
+        self.assertEqual(put_response.status_code, 401)

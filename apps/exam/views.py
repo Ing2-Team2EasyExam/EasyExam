@@ -114,7 +114,7 @@ class UserProblemListView(ListAPIView):
     """
 
     serializer_class = ProblemSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         return Problem.objects.filter(uploader=self.request.user)
@@ -132,11 +132,13 @@ class ProblemCreateView(CreateAPIView):
 
 class ProblemUpdateView(RetrieveUpdateAPIView):
     serializer_class = ProblemEditSerializer
-    permission_classes = (IsAuthenticated, IsUploader)
+    permission_classes = (IsAuthenticated,)
     lookup_field = "uuid"
 
     def get_object(self, *args, **kwargs):
-        return get_object_or_404(Problem, pk=self.kwargs[self.lookup_field])
+        return get_object_or_404(
+            Problem, pk=self.kwargs[self.lookup_field], uploader=self.request.user
+        )
 
 
 class ProblemPDFView(RetrieveFileMixin, APIView):
