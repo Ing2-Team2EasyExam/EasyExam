@@ -140,8 +140,8 @@ class ProblemUpdateView(RetrieveUpdateAPIView):
         return get_object_or_404(Problem, pk=self.kwargs[self.lookup_field])
 
 
-class ProblemDownloadPDF(RetrieveFileMixin, APIView):
-    permission_classes = (IsAuthenticated, IsOwner)
+class ProblemPDFView(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated,)
     lookup_field = "uuid"
     model = Problem
     file_attribute_name = "pdf"
