@@ -64,7 +64,9 @@ class TestExamEditSerializer(TestCase):
         request = mock.MagicMock()
         request.user = self.user
         context = {"request": request}
-        exam = mixer.blend("exam.Exam", problems=self.problems)
+        exam = mixer.blend("exam.Exam")
+        exam.problems.set(self.problems)
+        exam.save()
         serializer = serializers.ExamEditSerializer(
             context=context, instance=exam, data=self.data
         )
