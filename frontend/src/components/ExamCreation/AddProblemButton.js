@@ -10,7 +10,7 @@ class AddProblemButton extends React.Component {
     return (
       <>
         <Form.Group as={Row}>
-          <Col sm={{ offset: 3 }}>
+          <Col sm={{ offset: 2 }}>
             <Button variant="light" onClick={this.props.addProblem}>
               <Plus /> Añadir otra pregunta
             </Button>
