@@ -2,7 +2,7 @@ import React from "react";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Download } from "react-bootstrap-icons";
-
+import FileSaver from "file-saver";
 class DownloadExamButton extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,7 @@ class DownloadExamButton extends React.Component {
   }
 
   downloadExam(props) {
-    const url = "/api/exams/" + this.state.uuid + "/solution_pdf/";
+    const url = "/api/exams/" + this.state.uuid + "/normal_pdf/";
     fetch(url, {
       headers: {
         "Content-Type": "application/json",
@@ -31,8 +31,19 @@ class DownloadExamButton extends React.Component {
     })
       .then((res) => res.blob())
       .then((blob) => {
-        let url = URL.createObjectURL(blob);
-        window.open(url);
+        FileSaver.saveAs(blob, this.props.exam_name + "_normal.pdf");
+        const solution_url =
+          "/api/exams/" + this.status.uuid + "/solution_pdf/";
+        fetch(solution_url, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        })
+          .then((res) => res.blob())
+          .then((blob) => {
+            FileSaver.saveAs(blob, this.props.exam_name + "_solution.pdf");
+          });
       });
   }
 

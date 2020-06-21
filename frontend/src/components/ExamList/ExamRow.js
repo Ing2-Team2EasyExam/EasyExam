@@ -18,7 +18,10 @@ class ExamRow extends React.Component {
         </td>
         <td width="45%"> {this.props.exam.updated_at}</td>
         <td width="10%">
-          <DownloadExamButton uuid={this.props.exam.uuid} />
+          <DownloadExamButton
+            uuid={this.props.exam.uuid}
+            exam_name={this.props.exam.name}
+          />
           <DeleteExamButton />
         </td>
       </tr>
