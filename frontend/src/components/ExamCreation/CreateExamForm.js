@@ -3,7 +3,6 @@ import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
-import ExamProblemInputs from "./ExamProblemInputs";
 
 class CreateExamForm extends React.Component {
   /**
