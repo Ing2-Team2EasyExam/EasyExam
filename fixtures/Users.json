@@ -1,0 +1,38 @@
+[
+  {
+    "model": "user.User",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$LQc4PrCtEdJJ$FA0HunzcQarkFgwFkn3J3eE7hZSp16NC7xdUbMKF7rc=",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "cosme@fulanito.com",
+      "first_name": "Cosme",
+      "last_name": "Fulanito",
+      "is_active": true,
+      "created_at": "2020-05-13T21:09:26Z",
+      "updated_at": "2020-05-13T21:09:26Z",
+      "groups": [],
+      "user_permissions": [],
+      "image": ""
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$150000$j6KOuQ7fPf89$XzAyIwfyQKC9H7zJWGH+0+lYbe5PIAG3iflsq70D+ZA=",
+      "last_login": null,
+      "is_superuser": true,
+      "email": "admin@localhost.com",
+      "first_name": "Jeremy",
+      "last_name": "Barbay",
+      "is_active": true,
+      "created_at": "2020-06-07T23:54:12.979Z",
+      "updated_at": "2020-06-07T23:54:12.979Z",
+      "image": "",
+      "groups": [1],
+      "user_permissions": []
+    }
+  }
+]

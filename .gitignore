@@ -5,7 +5,7 @@ venv/
 __pychache__/
 
 # backend local settings
-backend/EasyExamAPI/settings/local.py
+EasyExamAPI/settings/local.py
 # local tools
 requirements-local.txt
 # redis stuff
@@ -41,14 +41,14 @@ yarn-error.log*
 
 ## Django affairs
 
-/backend/apps/api/migrations/*
-!/backend/apps/api/migrations/__init__.py
-/backend/apps/user/migrations/*
-!/backend/apps/user/migrations/__init__.py
-/backend/apps/exam/migrations/*
-!/backend/apps/exam/migrations/__init__.py
-/backend/apps/challenge/migrations/*
-!/backend/apps/challenge/migrations/__init__.py
+/apps/api/migrations/*
+!/apps/api/migrations/__init__.py
+/apps/user/migrations/*
+!/apps/user/migrations/__init__.py
+/apps/exam/migrations/*
+!/apps/exam/migrations/__init__.py
+/apps/challenge/migrations/*
+!/apps/challenge/migrations/__init__.py
 *.sqlite3
 
 # backend
@@ -56,6 +56,10 @@ backend/media/
 backend/script/exam*_*.*
 backend/script/problem*_*.*
 backend/previews/*-*
+
+# frontend, webpack stuff
+frontend/static/frontend/main.js
+
 
 # Created by https://www.gitignore.io/api/react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=react,django,python,pycharm,webstorm,jupyternotebooks,visualstudiocode

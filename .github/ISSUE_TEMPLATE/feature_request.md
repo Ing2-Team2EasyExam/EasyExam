@@ -1,11 +1,11 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
-
+title: ""
+labels: ""
+assignees: ""
 ---
+
 **Esta tu petición de feature relacionada con algún problema? Por favor describe como.**
 _Descripción clara y concisa de cual es el problema_
 

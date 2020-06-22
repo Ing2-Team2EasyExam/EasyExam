@@ -1,0 +1,66 @@
+[
+  { "model": "exam.topic", "fields": { "name": "Practical" } },
+  { "model": "exam.topic", "fields": { "name": "Fundamentals" } },
+  {
+    "model": "exam.topic",
+    "fields": { "name": "Algorithmic Analysis" }
+  },
+  { "model": "exam.topic", "fields": { "name": "Simple ADTs" } },
+  { "model": "exam.topic", "fields": { "name": "Simple Trees" } },
+  { "model": "exam.topic", "fields": { "name": "Graphs" } },
+  { "model": "exam.topic", "fields": { "name": "Priority Queues" } },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Unordered Dictionaries" }
+  },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Ordered Dictionaries" }
+  },
+  { "model": "exam.topic", "fields": { "name": "AVLTrees" } },
+  { "model": "exam.topic", "fields": { "name": "Skip Lists" } },
+  { "model": "exam.topic", "fields": { "name": "2-4Trees" } },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "BTrees And External Searching" }
+  },
+  { "model": "exam.topic", "fields": { "name": "Hash Tables" } },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Extensible Hashing" }
+  },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Lempel Ziv Compression" }
+  },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Huffman Compression" }
+  },
+  { "model": "exam.topic", "fields": { "name": "Pattern Matching" } },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Advanced Pattern Matching" }
+  },
+  { "model": "exam.topic", "fields": { "name": "Advanced Sorting" } },
+  { "model": "exam.topic", "fields": { "name": "Databases-SQL" } },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Databases-Implementation" }
+  },
+  {
+    "model": "exam.topic",
+
+    "fields": { "name": "Memory Management" }
+  },
+  { "model": "exam.topic", "fields": { "name": "Heap Management" } },
+  { "model": "exam.topic", "fields": { "name": "General Questions" } }
+]
