@@ -3,6 +3,7 @@ import { Form, Button, Col } from "react-bootstrap";
 import EditExamDataInputs from "./EditExamDataInputs";
 import EditExamProblemInputs from "./EditExamProblemInputs";
 import EditFormSubmitButton from "./EditFormSubmitButton";
+import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 
 class EditExamForm extends React.Component {
   /**
@@ -130,31 +131,22 @@ class EditExamForm extends React.Component {
   }
 
   render() {
-    const style = {
-      borderRadius: "5px",
-      border: "2px solid teal",
-      padding: "2%",
-      overflowY: "scroll",
-      height: "70vh",
-    };
     return (
-      <div>
+      <>
         {this.state.isLoaded && (
           <Form onSubmit={this.handleSubmit}>
-            <EditFormSubmitButton />
-            <div style={style}>
-              <EditExamDataInputs
-                data={this.state}
-                handleInputChange={this.handleInputChange}
-              />
-              <EditExamProblemInputs
-                data={this.state.problems}
-                handleSelect={this.handleProblemSelection}
-              />
-            </div>
+            <EditExamDataInputs
+              data={this.state}
+              handleInputChange={this.handleInputChange}
+            />
+            <EditExamProblemInputs
+              data={this.state.problems}
+              handleSelect={this.handleProblemSelection}
+            />
+            <FormSubmitButton />
           </Form>
         )}
-      </div>
+      </>
     );
   }
 }

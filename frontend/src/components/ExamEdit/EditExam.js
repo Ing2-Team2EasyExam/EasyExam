@@ -1,6 +1,6 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import EditExamForm from "./EditExamForm";
+import CardForm from "../EEComponents/CardForm";
 
 class EditExam extends React.Component {
   /**
@@ -9,16 +9,9 @@ class EditExam extends React.Component {
   render() {
     const { uuid } = this.props.match.params;
     return (
-      <>
-        <h1>Edit Exam </h1>
-        <Container>
-          <Row>
-            <Col>
-              <EditExamForm uuid={uuid} />
-            </Col>
-          </Row>
-        </Container>
-      </>
+      <CardForm title="Editar Examen">
+        <EditExamForm uuid={uuid} />
+      </CardForm>
     );
   }
 }

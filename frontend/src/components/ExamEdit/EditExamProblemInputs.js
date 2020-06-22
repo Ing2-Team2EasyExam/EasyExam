@@ -1,7 +1,10 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, ButtonGroup } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { XCircleFill } from "react-bootstrap-icons";
+import AddProblemButton from "../ExamCreation/AddProblemButton";
+import PreviewProblemButton from "../ExamCreation/PreviewProblemButton";
+import DeleteProblemButton from "../ExamCreation/DeleteProblemButton";
 
 class SelectProblem extends React.Component {
   /**
@@ -66,36 +69,40 @@ class SelectProblem extends React.Component {
     const { problems } = this.state;
     return (
       <>
-        <Row>
-          <Col sm={10}>
-            <Form.Group controlId="problem1">
-              <Form.Label>Problema {this.props.number + 1}</Form.Label>
-              <Form.Control
-                onChange={this.handleChange}
-                as="select"
-                value={`${this.props.author} -!-! ${this.props.name}`}
-              >
-                <option key={0} value={`DEFAULT -!-! DEFAULT`}>
-                  {" "}
-                  No ha seleccionado Problema
-                </option>
-                {problems.map((problem, i) => {
-                  return (
-                    <option
-                      key={i + 1}
-                      value={`${problem.author} -!-! ${problem.name}`}
-                    >
-                      {problem.author} -- {problem.name}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-            </Form.Group>
+        <Form.Group as={Row} controlId="problem1">
+          <Form.Label column sm={2}>
+            Problema {this.props.number + 1}
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              onChange={this.handleChange}
+              as="select"
+              value={`${this.props.author} -!-! ${this.props.name}`}
+            >
+              <option key={0} value={`DEFAULT -!-! DEFAULT`}>
+                {" "}
+                No ha seleccionado Problema
+              </option>
+              {problems.map((problem, i) => {
+                return (
+                  <option
+                    key={i + 1}
+                    value={`${problem.author} -!-! ${problem.name}`}
+                  >
+                    {problem.author} -- {problem.name}
+                  </option>
+                );
+              })}
+            </Form.Control>
           </Col>
-          <Col sm={2}>
-            <XCircleFill onClick={this.removeProblem} />
+
+          <Col sm={1}>
+            <ButtonGroup>
+              <PreviewProblemButton />
+              <DeleteProblemButton onClick={this.removeProblem} />
+            </ButtonGroup>
           </Col>
-        </Row>
+        </Form.Group>
       </>
     );
   }
@@ -170,7 +177,7 @@ class ExamProblemInputs extends React.Component {
     const problems = this.state.problems;
     return (
       <>
-        <h3 style={{ center: true }}>Problemas</h3>
+        <h5 style={{ textAlign: "center" }}>Problemas</h5>
         {problems.map((problem, i) => {
           return (
             <SelectProblem
@@ -184,10 +191,7 @@ class ExamProblemInputs extends React.Component {
             />
           );
         })}
-        <Button variant="primary" type="button" onClick={this.addProblem} block>
-          {" "}
-          Add other problem
-        </Button>{" "}
+        <AddProblemButton addProblem={this.addProblem} />
       </>
     );
   }
