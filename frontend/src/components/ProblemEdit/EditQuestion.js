@@ -1,13 +1,12 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import RenderPDF from "./RenderPDF";
 import QuestionEditForm from "./QuestionEditForm";
+import EEContainer from "../EEComponents/EEContainer";
+
 class EditQuestion extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   handleSubmit(event) {
     event.preventDefault();
     alert("Form Submitted");
@@ -15,16 +14,9 @@ class EditQuestion extends React.Component {
   render() {
     const { uuid } = this.props.match.params;
     return (
-      <>
-        <h1>Editar Pregunta </h1>
-        <Container>
-          <Row>
-            <Col>
-              <QuestionEditForm uuid={uuid} />
-            </Col>
-          </Row>
-        </Container>
-      </>
+      <EEContainer title="Editar Pregunta">
+        <QuestionEditForm uuid={uuid} />
+      </EEContainer>
     );
   }
 }

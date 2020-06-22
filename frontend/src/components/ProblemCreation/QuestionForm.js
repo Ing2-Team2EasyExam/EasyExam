@@ -1,8 +1,5 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import SaveButton from "./SaveButton";
+import { Button, Form } from "react-bootstrap";
 import TopicInputs from "./TopicInputs";
 import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
@@ -87,7 +84,6 @@ class QuestionForm extends React.Component {
   render() {
     //Style
     const style = {
-      borderRadius: "25px",
       border: "2px solid teal",
       padding: "2%",
     };
@@ -100,7 +96,7 @@ class QuestionForm extends React.Component {
           onChange={this.handleChange}
           name="name"
           type="text"
-          placeholder="Pregunta Induccion 1"
+          placeholder="Ingresar nombre de la pregunta"
         />
       </Form.Group>
     );
@@ -113,7 +109,7 @@ class QuestionForm extends React.Component {
           onChange={this.handleChange}
           name="author"
           type="text"
-          placeholder="Jeremy Barbay"
+          placeholder="Nombre del autor/a del problema"
         />
       </Form.Group>
     );
@@ -184,7 +180,6 @@ class QuestionForm extends React.Component {
             {questionName}
             {author}
             <TopicInputs handleSelect={this.handleTopicSelection} />
-            <p></p>
             {buttonsLtx}
             {enunciado}
             {image}
