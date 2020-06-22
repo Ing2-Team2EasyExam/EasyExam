@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import SaveButton from "./SaveButton";
+import EditTopicInputs from "./EditTopicInputs";
 
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
@@ -38,15 +39,18 @@ class QuestionEditForm extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("Result es " + result);
+          let list = [];
+          result.topics.map((topic, i) => {
+            list[i] = topic.name;
+          });
           this.setState({
             isLoaded: true,
             name: result.name,
             author: result.author,
             statement_content: result.statement_content,
             solution_content: result.solution_content,
-            topics_data: result.topics_data,
-            figures: result.figures,
+            topics_data: result.topics,
+            chosen_topics: list,
           });
         },
         (error) => {
@@ -56,20 +60,6 @@ class QuestionEditForm extends React.Component {
           });
         }
       );
-    fetch("/api/topics/list/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-    })
-      .then(
-        (response) => response.json(),
-        (errors) => console.log(errors)
-      )
-      .then((data) => {
-        this.setState({ available_topics: data });
-      });
   }
 
   handleChange(event) {
@@ -80,13 +70,12 @@ class QuestionEditForm extends React.Component {
       [name]: value,
     });
   }
-  handleTopicSelection(event) {
-    const target = event.target;
-    const value = target.value;
-    const { chosen_topics } = this.state;
-    chosen_topics.push(value);
+  handleTopicSelection(list) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
     this.setState({
-      chosen_topics: chosen_topics,
+      chosen_topics: list,
     });
   }
   handleSubmit(event) {
@@ -121,6 +110,7 @@ class QuestionEditForm extends React.Component {
       );
   }
   render() {
+    console.log(this.state);
     //Style
     const style = {
       borderRadius: "25px",
@@ -161,30 +151,11 @@ class QuestionEditForm extends React.Component {
       </Button>
     );
 
-    //Topicos
-    const topics = (
-      <Form.Group controlId="exampleForm.SelectCustomSizeSm">
-        <Form.Label>Topicos</Form.Label>
-        <Form.Control
-          onChange={this.handleTopicSelection}
-          as="select"
-          size="sm"
-          custom
-        >
-          {this.state.available_topics.map((topic) => {
-            return <option>{topic.name}</option>;
-          })}
-        </Form.Control>
-      </Form.Group>
-    );
-
     //Subir Imagenes
     const image = (
-      <Form>
-        <Form.Group>
-          <Form.File id="QuestionImage" label="Insertar Imagen" />
-        </Form.Group>
-      </Form>
+      <Form.Group>
+        <Form.File id="QuestionImage" label="Insertar Imagen" />
+      </Form.Group>
     );
 
     //Placeholder para botones Latex
@@ -207,8 +178,6 @@ class QuestionEditForm extends React.Component {
         <Button variant="dark"> &#10227; </Button>{" "}
       </>
     );
-    //Link Agregar Topicos
-    const addtopic = <a href="#addtopic">Agregar Tópico</a>;
 
     //Text Area Enunciado
     const enunciado = (
@@ -243,12 +212,16 @@ class QuestionEditForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <SaveButton />
+          {submit}
           <div style={style}>
             {questionName}
             {author}
-            {topics}
-            {addtopic}
+            {this.state.isLoaded && (
+              <EditTopicInputs
+                data={this.state.chosen_topics}
+                handleSelect={this.handleTopicSelection}
+              />
+            )}
             <p></p>
             {buttonsLtx}
             {enunciado}
