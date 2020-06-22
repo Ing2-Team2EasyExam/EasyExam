@@ -146,7 +146,7 @@ class QuestionEditForm extends React.Component {
 
     //Submit
     const submit = (
-      <Button variant="success" className="my-1">
+      <Button variant="success" className="my-1" type="submit">
         Guardar
       </Button>
     );
