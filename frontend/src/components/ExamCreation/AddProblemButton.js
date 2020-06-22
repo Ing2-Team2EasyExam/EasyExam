@@ -11,7 +11,7 @@ class AddProblemButton extends React.Component {
       <>
         <Form.Group as={Row}>
           <Col sm={{ offset: 2 }}>
-            <Button variant="light" onClick={this.props.addProblem}>
+            <Button variant="primary" onClick={this.props.addProblem}>
               <Plus /> Añadir otra pregunta
             </Button>
           </Col>

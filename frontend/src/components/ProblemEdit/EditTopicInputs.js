@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { XCircleFill } from "react-bootstrap-icons";
+import AddTopicButton from "../ProblemCreation/AddTopicButton";
 
 class SelectTopic extends React.Component {
   /**
@@ -56,17 +57,17 @@ class SelectTopic extends React.Component {
     const topics = this.state.available_topics;
     return (
       <>
-        <Row>
-          <Col sm={10}>
-            <Form.Group controlId="topic 1">
-              <Form.Label>Tópico {this.props.number + 1}</Form.Label>
+        <Form.Group controlId="topic 1">
+          <Form.Label>Tópico {this.props.number + 1}</Form.Label>
+          <Form.Row>
+            <Col sm={11}>
               <Form.Control
                 onChange={this.handleChange}
                 as="select"
                 value={this.props.name}
               >
                 <option key={0} value="DEFAULT">
-                  Seleccione Tópico
+                  Selecciona un Tópico
                 </option>
                 {topics.map((topic, i) => {
                   return (
@@ -76,12 +77,12 @@ class SelectTopic extends React.Component {
                   );
                 })}
               </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <XCircleFill onClick={this.removeTopic} />
-          </Col>
-        </Row>
+            </Col>
+            <Col sm={1}>
+              <XCircleFill onClick={this.removeTopic} />
+            </Col>
+          </Form.Row>
+        </Form.Group>
       </>
     );
   }
@@ -163,10 +164,7 @@ class TopicInputs extends React.Component {
             />
           );
         })}
-        <Button variant="primary" type="button" onClick={this.addTopic} block>
-          {" "}
-          Agregar Tópico
-        </Button>{" "}
+        <AddTopicButton addTopic={this.addTopic} />
       </>
     );
   }
