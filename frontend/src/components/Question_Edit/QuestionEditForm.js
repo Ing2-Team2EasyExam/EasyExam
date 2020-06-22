@@ -212,7 +212,6 @@ class QuestionEditForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          {submit}
           <div style={style}>
             {questionName}
             {author}
