@@ -151,6 +151,5 @@ def update_problem(uuid, **data) -> Problem:
     try:
         problem.generate_pdf()
     except CompilationErrorException as err:
-        problem.delete()
         raise err
     return problem
