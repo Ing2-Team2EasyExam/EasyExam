@@ -52,18 +52,18 @@ class OwnProblem extends React.Component {
     );
     return (
       <tr>
-        <td width="25%">
+        <td width="30%">
           {" "}
           <a href="#" onClick={this.handlePreview}>
             {this.props.problem.name}
           </a>
         </td>
-        <td width="25%"> {this.props.problem.created_at}</td>
-        <td width="25%">
+        <td width="30%"> {this.props.problem.created_at}</td>
+        <td width="30%">
           {" "}
           <Topic topics={this.props.problem.topics} />{" "}
         </td>
-        <td width="25%">{actions}</td>
+        <td width="10%">{actions}</td>
       </tr>
     );
   }

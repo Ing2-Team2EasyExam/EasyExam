@@ -12,9 +12,9 @@ import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
 import EditExam from "./ExamEdit/EditExam";
-import Questions from "./Question_Form/Questions";
+import Questions from "./ProblemCreation/Questions";
 import Exams from "./ExamList/Exams";
-import EditQuestion from "./Question_Edit/EditQuestion";
+import EditQuestion from "./ProblemEdit/EditQuestion";
 
 class App extends React.Component {
   constructor(props) {
@@ -113,12 +113,8 @@ class App extends React.Component {
             <Route exact path="/problems/create">
               {this.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
             </Route>
-            <Route exact path="/exam/edit/:uuid" component={EditExam}></Route>
-            <Route
-              exact
-              path="/problems/edit/:uuid"
-              component={EditQuestion}
-            ></Route>
+            <Route exact path="/exam/edit/:uuid" component={EditExam} />
+            <Route exact path="/problems/edit/:uuid" component={EditQuestion} />
           </Switch>
         </BrowserRouter>
       </div>

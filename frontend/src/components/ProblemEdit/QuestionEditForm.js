@@ -126,7 +126,6 @@ class QuestionEditForm extends React.Component {
     console.log(this.state);
     //Style
     const style = {
-      borderRadius: "25px",
       border: "2px solid teal",
       padding: "2%",
     };
@@ -230,7 +229,6 @@ class QuestionEditForm extends React.Component {
                 handleSelect={this.handleTopicSelection}
               />
             )}
-            <p></p>
             {buttonsLtx}
             {enunciado}
             {image}
