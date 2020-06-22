@@ -3,6 +3,7 @@ import { Form, Button, Col } from "react-bootstrap";
 import EditExamDataInputs from "./EditExamDataInputs";
 import EditExamProblemInputs from "./EditExamProblemInputs";
 import EditFormSubmitButton from "./EditFormSubmitButton";
+import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 
 class EditExamForm extends React.Component {
   /**
@@ -142,7 +143,7 @@ class EditExamForm extends React.Component {
               data={this.state.problems}
               handleSelect={this.handleProblemSelection}
             />
-            <EditFormSubmitButton />
+            <FormSubmitButton />
           </Form>
         )}
       </>
