@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import SaveButton from "./SaveButton";
 import EditTopicInputs from "./EditTopicInputs";
-
+import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
 
@@ -13,6 +13,7 @@ class QuestionEditForm extends React.Component {
     super(props);
     this.state = {
       isLoaded: false,
+      isLoading: false,
       name: "",
       author: "",
       statement_content: "",
@@ -90,6 +91,9 @@ class QuestionEditForm extends React.Component {
       topics_data: this.state.chosen_topics,
       figures: this.state.images,
     };
+    this.setState({
+      isLoading: true,
+    });
     let token = localStorage.getItem("token");
     fetch(url, {
       method: "PUT",
@@ -104,9 +108,18 @@ class QuestionEditForm extends React.Component {
         (response_data) => {
           console.log(response_data);
           alert("Pregunta Editada.");
+          this.setState({
+            isLoading: false,
+          });
           window.location.href = "/home/";
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          alert("Algo ocurrio mal :(");
+          this.setState({
+            isLoading: false,
+          });
+        }
       );
   }
   render() {
@@ -145,11 +158,7 @@ class QuestionEditForm extends React.Component {
     );
 
     //Submit
-    const submit = (
-      <Button variant="success" className="my-1" type="submit">
-        Guardar
-      </Button>
-    );
+    const submit = <FormSubmitButton isLoading={this.state.isLoading} />;
 
     //Subir Imagenes
     const image = (
