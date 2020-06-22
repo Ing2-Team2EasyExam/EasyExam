@@ -22,9 +22,6 @@ class EditQuestion extends React.Component {
             <Col>
               <QuestionEditForm uuid={uuid} />
             </Col>
-            <Col>
-              <RenderPDF />
-            </Col>
           </Row>
         </Container>
       </>
