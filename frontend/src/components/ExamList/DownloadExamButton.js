@@ -23,6 +23,7 @@ class DownloadExamButton extends React.Component {
 
   downloadExam(props) {
     const url = "/api/exams/" + this.state.uuid + "/normal_pdf/";
+    const solution_url = `/api/exams/${this.state.uuid}/solution_pdf/`;
     fetch(url, {
       headers: {
         "Content-Type": "application/json",
@@ -32,8 +33,6 @@ class DownloadExamButton extends React.Component {
       .then((res) => res.blob())
       .then((blob) => {
         FileSaver.saveAs(blob, this.props.exam_name + "_normal.pdf");
-        const solution_url =
-          "/api/exams/" + this.status.uuid + "/solution_pdf/";
         fetch(solution_url, {
           headers: {
             "Content-Type": "application/json",
