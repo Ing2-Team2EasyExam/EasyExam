@@ -22,6 +22,7 @@ class CreateExamForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       name: "",
       dueDate: "",
       startTime: "",
@@ -77,6 +78,9 @@ class CreateExamForm extends React.Component {
       language: this.state.language,
       problems: this.state.problems,
     };
+    this.setState({
+      isLoading: true,
+    });
     fetch("/api/exams/create/", {
       method: "POST",
       headers: {
@@ -92,10 +96,19 @@ class CreateExamForm extends React.Component {
       .then(
         (data) => {
           console.log(Object.values(data));
+          this.setState({
+            isLoading: false,
+          });
           alert("Examen Creado");
           //window.location.href = "/home/"; //TODO: Change redirection link!
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          alert("Ocurrio un error");
+          this.setState({
+            isLoading: false,
+          });
+        }
       );
   }
 
@@ -104,7 +117,7 @@ class CreateExamForm extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <ExamDataInputs handleInputChange={this.handleInputChange} />
         <ExamProblems handleSelect={this.handleProblemSelection} />
-        <FormSubmitButton />
+        <FormSubmitButton isLoading={this.state.isLoading} />
       </Form>
     );
   }
