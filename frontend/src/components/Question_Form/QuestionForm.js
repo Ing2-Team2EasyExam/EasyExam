@@ -168,7 +168,6 @@ class QuestionForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <SaveButton />
           <div style={style}>
             {questionName}
             {author}
@@ -181,6 +180,7 @@ class QuestionForm extends React.Component {
             {solucion}
             {image}
           </div>
+          <SaveButton />
         </Form>
       </div>
     );

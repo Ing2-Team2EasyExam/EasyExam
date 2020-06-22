@@ -146,7 +146,7 @@ class QuestionEditForm extends React.Component {
 
     //Submit
     const submit = (
-      <Button type="submit" className="my-1">
+      <Button variant="success" className="my-1">
         Guardar
       </Button>
     );
@@ -212,7 +212,7 @@ class QuestionEditForm extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          {submit}
+          
           <div style={style}>
             {questionName}
             {author}
@@ -230,6 +230,7 @@ class QuestionEditForm extends React.Component {
             {solucion}
             {image}
           </div>
+          {submit}
         </Form>
       </div>
     );
