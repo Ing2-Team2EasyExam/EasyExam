@@ -1,18 +1,34 @@
 import React from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Form, Button, Spinner } from "react-bootstrap";
 class FormSubmitButton extends React.Component {
   /**
    * Button of the form submission
    */
   render() {
+    const normal_button = (
+      <Button variant="success" type="submit">
+        {" "}
+        Guardar{" "}
+      </Button>
+    );
+    const loading_button = (
+      <Button variant="success" disabled>
+        {" "}
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />{" "}
+        Guardando...
+      </Button>
+    );
+    const button = this.props.isLoading ? loading_button : normal_button;
     return (
       <>
         <Form.Group as={Row}>
-          <Col sm={{ offset: 5 }}>
-            <Button variant="success" type="submit">
-              Guardar
-            </Button>
-          </Col>
+          <Col sm={{ offset: 5 }}>{button}</Col>
         </Form.Group>
       </>
     );

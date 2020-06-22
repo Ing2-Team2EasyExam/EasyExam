@@ -24,6 +24,7 @@ class EditExamForm extends React.Component {
     super(props);
     this.state = {
       isLoaded: false,
+      isLoading: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,6 +61,9 @@ class EditExamForm extends React.Component {
       language: this.state.language,
       problems: this.state.problems,
     };
+    this.setState({
+      isLoading: true,
+    });
     fetch(url, {
       method: "PUT",
       headers: {
@@ -75,10 +79,18 @@ class EditExamForm extends React.Component {
       .then(
         (data) => {
           console.log(Object.values(data));
+          this.setState({
+            isLoading: false,
+          });
           alert("Examen Editado");
-          window.location.href = "/home/"; //TODO: Change redirection link!
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          alert("Ha ocurrido un error");
+          this.setState({
+            isLoading: false,
+          });
+        }
       );
   }
 
@@ -143,7 +155,7 @@ class EditExamForm extends React.Component {
               data={this.state.problems}
               handleSelect={this.handleProblemSelection}
             />
-            <FormSubmitButton />
+            <FormSubmitButton isLoading={this.state.isLoading} />
           </Form>
         )}
       </>

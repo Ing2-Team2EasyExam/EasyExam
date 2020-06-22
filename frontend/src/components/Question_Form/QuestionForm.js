@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import SaveButton from "./SaveButton";
 import TopicInputs from "./TopicInputs";
-
+import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
 
@@ -12,6 +12,7 @@ class QuestionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       name: "",
       author: "",
       statement_content: "",
@@ -54,6 +55,9 @@ class QuestionForm extends React.Component {
       figures: this.state.images,
     };
     let token = localStorage.getItem("token");
+    this.setState({
+      isLoading: true,
+    });
     fetch("/api/problems/create/", {
       method: "POST",
       headers: {
@@ -63,10 +67,22 @@ class QuestionForm extends React.Component {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((response_data) => {
-        console.log(response_data);
-        alert("Pregunta creada.");
-      });
+      .then(
+        (response_data) => {
+          console.log(response_data);
+          this.setState({
+            isLoading: false,
+          });
+          alert("Pregunta creada.");
+        },
+        (error) => {
+          console.log(error);
+          alert("Algo a salido mal");
+          this.setState({
+            isLoading: false,
+          });
+        }
+      );
   }
   render() {
     //Style
@@ -103,11 +119,7 @@ class QuestionForm extends React.Component {
     );
 
     //Submit
-    const submit = (
-      <Button type="submit" className="my-1">
-        Guardar
-      </Button>
-    );
+    const submit = <FormSubmitButton isLoading={this.state.isLoading} />;
 
     //Subir Imagenes
     const image = (
@@ -179,8 +191,8 @@ class QuestionForm extends React.Component {
             {buttonsLtx}
             {solucion}
             {image}
+            {submit}
           </div>
-          <SaveButton />
         </Form>
       </div>
     );
