@@ -1,9 +1,19 @@
 import React from "react";
-
-class RenderPDF extends React.Component {
+import { Form, Col, Button } from "react-bootstrap";
+class SaveButton extends React.Component {
   render() {
-    return <h3>Questions Preview</h3>;
+    return (
+      <>
+        <Form.Row style={{ paddingBottom: "1%" }}>
+          <Col></Col>
+          <Col>
+            <Button variant="success" type="submit">
+              Guardar Pregunta
+            </Button>
+          </Col>
+        </Form.Row>
+      </>
+    );
   }
 }
-
-export default RenderPDF;
+export default SaveButton;

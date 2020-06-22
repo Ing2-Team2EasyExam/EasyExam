@@ -7,7 +7,9 @@ class SaveButton extends React.Component {
         <Form.Row style={{ paddingBottom: "1%" }}>
           <Col></Col>
           <Col>
-            <Button type="submit">Guardar Pregunta</Button>
+            <Button variant="success" type="submit">
+              Guardar Pregunta
+            </Button>
           </Col>
         </Form.Row>
       </>
