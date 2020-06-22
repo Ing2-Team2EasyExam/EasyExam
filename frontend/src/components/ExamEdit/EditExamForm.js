@@ -84,7 +84,13 @@ class EditExamForm extends React.Component {
           });
           alert("Examen Editado");
         },
-        (error) => console.log(error)
+        (error) => {
+          console.log(error);
+          alert("Ha ocurrido un error");
+          this.setState({
+            isLoading: false,
+          });
+        }
       );
   }
 
