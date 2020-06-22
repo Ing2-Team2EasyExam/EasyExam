@@ -191,8 +191,8 @@ class QuestionForm extends React.Component {
             {buttonsLtx}
             {solucion}
             {image}
+            {submit}
           </div>
-          {submit}
         </Form>
       </div>
     );
