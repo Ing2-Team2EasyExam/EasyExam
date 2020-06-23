@@ -22,7 +22,8 @@ function easyexam(){
     "test") cd frontend/ && npm run test && cd ..
             python manage.py test -v 2 $2
             ;;
-
+    "backend-test") python manage.py test -v 2 $2
+                    ;;
     "fixtures") echo "Loading groups fixture"
                 python manage.py loaddata fixtures/Group.json
                 echo "Loading users fixture"
@@ -38,7 +39,6 @@ function easyexam(){
 	   echo "backend-test: Run all test of the backend"
 	   echo "makemigrations: Make database migration on Django"
 	   echo "migrate: Execute the migrations on Django"
-	   echo "db-update: Runs makemigrations and migrate at once"
 	   echo "frontend-install: Install the dependencies of the frontend"
 	   echo "frontend-configurate: Create configurations to start react on django"
 	   echo "install: Install both project dependencies"
