@@ -156,3 +156,12 @@ reset-with-fixtures: reset load-fixtures
 
 build-django:
 	@uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
+up:
+	@docker-compose up -d
+	@docker exec -it easyexam_web_1 /bin/bash
+
+stop:
+	@docker-compose stop
+
+down:
+	@docker-compose down

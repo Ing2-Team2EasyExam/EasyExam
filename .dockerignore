@@ -1,0 +1,6 @@
+.git
+.ipynb_checkpoints/*
+venv/*
+.gitignore
+README.md
+Dockerfile
