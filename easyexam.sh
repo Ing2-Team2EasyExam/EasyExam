@@ -20,7 +20,7 @@ function easyexam(){
            python manage.py runserver 0.0.0.0:8000
            ;;
     "test") cd frontend/ && npm run test && cd ..
-            python manage.py test -v 2
+            python manage.py test -v 2 $2
             ;;
 
     "fixtures") echo "Loading groups fixture"
