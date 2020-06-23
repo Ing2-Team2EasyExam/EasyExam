@@ -6,6 +6,7 @@ COPY . /easyexam/
 WORKDIR /easyexam/
 
 RUN apt-get update
+RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
 RUN yes | apt-get install texlive-latex-base
 RUN yes | apt-get install texlive-latex-extra
 RUN yes | apt-get install texlive
