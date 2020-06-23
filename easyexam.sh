@@ -34,19 +34,16 @@ function easyexam(){
                 python manage.py loaddata fixtures/Problems.json
                 ;;
     *)
-	   echo "fixtures: Create initial data on your database to work with"
-	   echo "jupyter: Run jupyter with django shell integrated"
-	   echo "backend-test: Run all test of the backend"
+       echo "install: Install both project dependencies"
+       echo "backend-install: Install only the backend dependencies"
+       echo "frontend-install: Install only the dependencies of the frontend"
 	   echo "makemigrations: Make database migration on Django"
 	   echo "migrate: Execute the migrations on Django"
-	   echo "frontend-install: Install the dependencies of the frontend"
-	   echo "frontend-configurate: Create configurations to start react on django"
-	   echo "install: Install both project dependencies"
-	   echo "run: Run backend with the latest frontend configuration"
-	   echo "test: Test both projects unittest"
-	   echo "reset: Make a clean of the project database"
-	   echo "reset-with-fixtures: Reset the database and load the fixtures"
-	   echo "reset-full: Make a full clean on the database and redis"
+	   echo "jupyter: Run jupyter with django shell integrated"
+       echo "run: Run backend with the latest frontend configuration"
+       echo "test: Test both projects unittest"
+	   echo "backend-test: Run all test of the backend"
+       echo "fixtures: Create initial data on your database to work with"
        ;;
     esac
 }
