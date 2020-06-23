@@ -57,20 +57,21 @@ class App extends React.Component {
         if (!response.ok) {
           throw new Error("Error en el login!");
         }
-        response.json();
+        return response.json();
       })
-      .then(
-        (data) => {
-          localStorage.setItem("token", data["token"]);
-          this.setState((state, props) => {
-            return {
-              isLoggedIn: this.isLoggedIn(),
-            };
-          });
-          window.location.href = "/home";
-        },
-        (error) => alert(error.message)
-      );
+      .then((data) => {
+        localStorage.setItem("token", data["token"]);
+        this.setState((state, props) => {
+          return {
+            isLoggedIn: this.isLoggedIn(),
+          };
+        });
+        window.location.href = "/home";
+      })
+      .catch((error) => {
+        alert(error.message);
+        localStorage.removeItem("token");
+      });
   }
 
   doLogout() {
