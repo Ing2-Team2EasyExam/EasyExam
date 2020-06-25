@@ -14,8 +14,8 @@ To develop on this project on your local machine (i.e your computer) you need to
 - Python 3.7
 - [pre-commit](https://pre-commit.com/#install)
 - [Docker](https://www.docker.com/get-started)
-- [GNU Make]() (This is pre-installed on Unix based systems)
-- [Git]() (This is pre-installed on Linux or Mac)
+- [GNU Make](http://mingw-w64.org/doku.php) (This is pre-installed on Unix based systems)
+- [Git](https://gitforwindows.org/) (This is pre-installed on Linux or Mac)
   Then follow this guideline to use it.
 
 ## Running the servers locally
@@ -129,6 +129,81 @@ Finally, let's run the server. Run on your terminal with docker:
 ```bash
 $ easyexam runserver
 ```
+
+## Installing the project on Windows
+
+So this have a lot of Unix based commands in order to run, so that is bad for Windows users. There are three approches, one easier to set up (but limited to your windows version), other one that is also easy to set up and is available to all windows version and one more difficult to set up and not limited to your windows version. The easier is more fast but I strongly recommend the more difficult one, because it will give you limited tools to use on future projects.
+
+Because the first method is limited to only certain version of windows (Pro and educational), I will explain the two others.
+
+### First method: Install Git, GNU make, Virtual box and docker toolbox
+
+**Resume** All this method is a combination of this [video](https://www.youtube.com/watch?v=taCJhnBXG_w) to install GNU Make, and this [video](https://www.youtube.com/watch?v=YH3sutAsxEM) to install docker. You must install Git command prompt first :)
+
+So this first method will be installing Windows tools to make docker work and works for all versions of Windows (Home, Educational or Pro). This is faster to set up, but have very limitations (It doesn't give you a Linux kernel for example).
+
+First things first, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
+
+If you can't see it there, you go to your BIOS and check that Virtualization is enabled.
+
+Now install Git on your system with the link above, it's pretty straight forward and you shouldn't have any major problems with it.
+
+Then install GNU make, I will not explain it, just follow this [video](https://www.youtube.com/watch?v=taCJhnBXG_w) and you are good to go.
+
+Third install [Virtual Box](https://www.virtualbox.org/), you will not use it, but it's necessary because this approach use virtualization behind the scenes to make docker works.
+
+Finally install [docker toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/), with the instructions that appear on the page.
+
+Now open the docker start terminal, run
+
+```bash
+$ docker -v
+$ docker-compose -v
+$ make -v
+$ git -v
+```
+
+And check if everything is installed. Now let's check if the containers and images run as expected. On that command prompt use:
+
+```bash
+$ docker run hello-world
+```
+
+If you see the [output](https://hub.docker.com/_/hello-world) as in these page says, you have everything setted up, follow the instruccions above of how to install the project with this terminal and you should be good to go!
+
+### Second method: Install WSL, upgrade it to WSL 2 and install docker desktop
+
+So this one is a little bit more difficult that the last one, but I **strongly** recommend it. Why? You will have a Linux kernel on windows, and that will get away all future headaches that a project might give you (or that low level courses, like Operating Systems can give you).
+
+Okay first, you have to set up WSL, this is Linux Subsystem for Windows. I recommend to follow this [video](https://www.youtube.com/watch?v=5RTSlby-l9w), or the
+[microsoft's guide](https://docs.microsoft.com/en-us/windows/wsl/install-win10), on
+the second one run a powershell as an administrator with the command:
+
+```powershell
+Start-Process powershell -Verb runAs
+```
+
+When you have WSL installed, upgrade it to WSL 2. The best guide to follow is the [official one from microsoft](https://docs.microsoft.com/en-us/windows/wsl/install-win10#update-to-wsl-2), you will probable upgrade windows on the process, so this could take a while.
+
+Then you can move the distro to use WSL 2 with:
+
+```powershell
+wsl --set-version <distribution name> <versionNumber>
+```
+
+Finally install docker desktop, with these [link](https://docs.docker.com/docker-for-windows/wsl/#:~:text=With%20Docker%20Desktop%20running%20on,features%20for%20Docker%20Desktop%20users.) instructions.
+
+Open your wsl 2 command prompt and follow the instructions above!, there is nothing more to install and you have a linux kernel in your windows machine :).
+
+#### Known issues
+
+In either of these approaches, there could be an issue with the `easyexam` command, if so, on the folder of the project run:
+
+```bash
+$ git checkout -- .
+```
+
+Windows add some weird formatting when downloading the project, with these you should be good to go.
 
 ### Using jupyter
 
