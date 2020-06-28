@@ -14,7 +14,7 @@ build-django:
 	@uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
 
 docker-build:
-	@docker-compose build
+	@docker-compose build web
 
 docker-up:
 	@docker-compose up -d
