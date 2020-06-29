@@ -186,7 +186,8 @@ X_FRAME_OPTIONS = "ALLOW-FROM https://easyexam.repositorium.cl/1"
 
 # HTTPS
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+# Jupyter
+NOTEBOOK_ARGUMENTS = ["--ip", "0.0.0.0", "--port", "8001", "--allow-root"]
 # Celery stuff and redis stuff
 
 BROKER_URL = "redis://localhost:6379"

@@ -12,6 +12,7 @@ from apps.exam.views import (
 )
 from apps.exam.serializers import ProblemSerializer
 from unittest import mock
+from collections import OrderedDict
 
 
 class TestProblemListView(TestCase):
@@ -20,11 +21,15 @@ class TestProblemListView(TestCase):
         self.factory = APIRequestFactory()
         self.user_problems = mixer.cycle(5).blend("exam.Problem", uploader=self.user)
         self.other_problems = mixer.cycle(5).blend("exam.Problem", uploader=None)
+        user_problems = Problem.objects.filter(uploader=self.user).order_by(
+            "-created_at"
+        )
         self.user_problems_serialized = [
-            ProblemSerializer(instance=x).data for x in self.user_problems
+            OrderedDict(**ProblemSerializer(instance=x).data) for x in user_problems
         ]
         self.other_problems_serialized = [
-            ProblemSerializer(instance=x).data for x in self.other_problems
+            OrderedDict(**ProblemSerializer(instance=x).data)
+            for x in self.other_problems
         ]
 
     def test_anonymous_user_cant_check_problems(self):
@@ -58,6 +63,7 @@ class TestProblemListView(TestCase):
         force_authenticate(request, user=self.user)
         response = UserProblemListView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(list(response.data)), 5)
         self.assertEqual(list(response.data), self.user_problems_serialized)
 
 

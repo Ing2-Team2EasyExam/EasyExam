@@ -13,10 +13,20 @@ To develop on this project on your local machine (i.e your computer) you need to
 
 - Python 3.7
 - [pre-commit](https://pre-commit.com/#install)
-
-Then follow this guideline to use it.
+- [Docker](https://www.docker.com/get-started)
+- [GNU Make](http://mingw-w64.org/doku.php) (This is pre-installed on Unix based systems)
+- [Git](https://gitforwindows.org/) (This is pre-installed on Linux or Mac)
+  Then follow this guideline to use it.
 
 ## Running the servers locally
+
+We use docker to develop on containers locally, a container is a more simple virtual machine of ubuntu. This is why we need to install docker on our system first, make sure on the terminal.
+Check if you have docker and docker-compose by doing:
+
+```bash
+$ docker -v
+$ docker-compose -v
+```
 
 Here it is a makefile that does almost everything for you. To use it on your local machine (With a running Unix base system like linux with ubuntu distro) just type:
 
@@ -26,34 +36,40 @@ make <name_of_the_command>
 
 The most important ones are described on the following table:
 
-| Instruction        | What it does                                                     |
-| ------------------ | ---------------------------------------------------------------- |
-| create-environment | Creates a local virtual environment to run the backend           |
-| install            | Install all frontend and backend dependencies                    |
-| install-redis      | Install redis on local machine with wget                         |
-| run                | Runs project on local machine port `8000`                        |
-| redis-run          | Runs redis on local machine port `6379`                          |
-| db-update          | Runs makemigrations and migrate of django on backend             |
-| load-fixtures      | Load initial data on the local database                          |
-| test               | Runs all test of the project                                     |
-| reset              | Delete previous database and create a new one with no data on it |
-| reset-full         | Reset all db's and starts new ones                               |
+| Instruction  | What it does                                                            |
+| ------------ | ----------------------------------------------------------------------- |
+| docker-build | Build the docker container on your local pc                             |
+| docker-up    | Launch the terminal that is going to be used for running the project    |
+| docker-stop  | Stop the the docker container                                           |
+| docker-down  | Stop the image and delete the containers                                |
+| docker-prune | Delete unused images of the container, useful when it's short of memory |
+| docker-reset | Delete the containers, and rebuilt them from scratch                    |
 
 For all commands descriptions type `make` on the command line for help
 
-### Using jupyter
-
-You can use jupyter on the backend if you want, to run it do:
+On the container terminal there are some useful commands to use, which are used with:
 
 ```bash
-make jupyter
+easyexam <name-of-the-command>
 ```
 
-And select django shell plus as interpreter
+This are resumend in:
+| Instruction | What it does |
+| ------------------ | ---------------------------------------------------------------- |
+| install | Install the frontend and backend dependencies |
+| backend-install | Install only the backend dependencies |
+| frontend-install | Install only the dependencies of the frontend |
+| makemigrations | Make the django migrations of the models |
+| migrate | Apply the database migrations in the project |
+| jupyter | Launch jupyter notebook on the port 8001 |
+| run | Run the project on the port 8000 |
+| test | Run the test for the frontend and backend |
+| backend-test | Run the test for the backend |
+| fixtures | Load the database initial data |
 
-#### Installing and running the system
+## Installing and running the system (Unix based systems)
 
-First of all, this guide is for unix like system like linux with ubuntu. So plis, if your are using windows install WSL (Linux subsystem for Windows) and with ubuntu distro on it. Then search the folder of this project and run the commands as told on this tutorial.
+First of all, this guide is for unix like system like linux with ubuntu. Then search (or make) the folder of this project and run the commands as told on this tutorial.
 
 First of all download the repo on the local machine with https (or ssh if you have a ssh key configurated on your github)
 
@@ -67,86 +83,137 @@ Fill the credentials with your own ones. Then install pre commit on this repo:
 $ pre-commit install
 ```
 
-This make the commits on the files have a good structure. If a check doesn't pass, pre-commit will change the files so add them and make the commit again.
+This make when you commit, change the files to have a good structure. If a check doesn't pass, pre-commit will change the files so add them and make the commit again.
 
-Now, we have our makefile that does everything for us.
-The first thing to install is `nodejs` to run the react server on the local machine. In order to do this we have the command on the makefile:
-
-```bash
-$ make ubuntu-node
-# if your are using macOS with homebrew use:
-# make brew-node
-```
-
-Fill up the credentials for your sudo user and then this will install `nodejs` on your computer. Now let's install the latex compiler, for this do:
+Now, we have our makefile that does everything for us. (Be sure that you have docker on your machine!). So first things first, let's build the container on your local machine:
 
 ```bash
-$ make ubuntu-latex
+$ make docker-build
 ```
 
-This will take **Several Minutes or Several Hours** to install, so be patient.
-
-The second thing is to install the dependencies, so first of all make a python virtualenvironment with:
+This will take **several minutes** but when it's finished, do:
 
 ```bash
-$ make create-environment
+$ make docker-up
 ```
 
-This will make a virtual environment folder of name `venv`, make sure to **never** commit this folder, the name of the `venv` is on the gitignore, if you change it's name pls add it to the gitignore.
+Now you will be on the docker container command prompt, so with this you can run the project. First things first, **never use a git command here**, this is only for running the project (making the migrations, etc...), nothing more than that.
 
-Now that we have our environment created let's start it, the makefile don't support this operation so we have to manually start it on our terminal:
+So now let's start doing some migrations, for that run:
 
 ```bash
-$ source venv/bin/activate
+easyexam makemigrations
+easyexam migrate
 ```
 
-That should start a virtual environment when all the dependencies will be stored. Having a virtual environment is a good practice on every python project that you have, not just this one or the ones that runs django.
+This commands will run the migrations to the `postgresql`, we have postgresql on the container (docker magic uau), so this is best when trying to have an environment close as posible to production.
 
-Now let's install the dependencies with:
+Next up, let's set up the frontend. To do this, we run on the docker container:
 
 ```bash
-make install
+$ easyexam install
 ```
 
-This will install all backend and frontend dependencies that are described on the `requirements.txt` and `package.json` files. So if you want to add a dependendencie just add it's name on one of that file (if it's backend, `requirements.txt` if it's frontend `package.json`).
+That will install all the dependencies of the project, including our frontend and webpack.
 
-The third thing to do is installing redis on your local machine for some task that need to run on your computer (sending emails, cache memory, etc...). Run
+After that let's add some initial data to our database, run:
 
 ```bash
-make install-redis
+$ easyexam fixtures
 ```
 
-This will install redis on the `venv` folder and in your local machine.
+And that should load the initial users and data of our system.
 
-Now let's make the migrations on the backend. The backend runs a `sqlite3` locally but in production this is a `postgresql`. This is because we don't want a postgresql server in every machine, so a `sqlite3` is, well... more lite (?). In order to do this, run:
+Finally, let's run the server. Run on your terminal with docker:
 
 ```bash
-make db-update
+$ easyexam runserver
 ```
 
-Now let's run the project, first we need to compress webpack on our project (Do this every time you delete your venv and/or your node_modules folder). To do this run the following commands:
+## Installing the project on Windows
+
+So this have a lot of Unix based commands in order to run, so that is bad for Windows users. There are three approches, one easier to set up (but limited to your windows version), other one that is also easy to set up and is available to all windows version and one more difficult to set up and not limited to your windows version. The easier is more fast but I strongly recommend the more difficult one, because it will give you limited tools to use on future projects.
+
+Because the first method is limited to only certain version of windows (Pro and educational), I will explain the two others.
+
+### First method: Install Git, GNU make, Virtual box and docker toolbox
+
+**Resume** All this method is a combination of this [video](https://www.youtube.com/watch?v=taCJhnBXG_w) to install GNU Make, and this [video](https://www.youtube.com/watch?v=YH3sutAsxEM) to install docker. You must install Git command prompt first :)
+
+So this first method will be installing Windows tools to make docker work and works for all versions of Windows (Home, Educational or Pro). This is faster to set up, but have very limitations (It doesn't give you a Linux kernel for example).
+
+First things first, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
+
+If you can't see it there, you go to your BIOS and check that Virtualization is enabled.
+
+Now install Git on your system with the link above, it's pretty straight forward and you shouldn't have any major problems with it.
+
+Then install GNU make, I will not explain it, just follow this [video](https://www.youtube.com/watch?v=taCJhnBXG_w) and you are good to go.
+
+Third install [Virtual Box](https://www.virtualbox.org/), you will not use it, but it's necessary because this approach use virtualization behind the scenes to make docker works.
+
+Finally install [docker toolbox](https://docs.docker.com/toolbox/toolbox_install_windows/), with the instructions that appear on the page.
+
+Now open the docker start terminal, run
 
 ```bash
-cd frontend/
-npm run dev
-cd ../
+$ docker -v
+$ docker-compose -v
+$ make -v
+$ git -v
 ```
 
-To start the server we need an extra terminal all in our virtual environment (remember to always be on it to run the commands, if not your computer will suffer bad consequences).
-
-First, run the redis server with the command:
+And check if everything is installed. Now let's check if the containers and images run as expected. On that command prompt use:
 
 ```bash
-make redis-run
+$ docker run hello-world
 ```
 
-On the other terminal, let's start django and react:
+If you see the [output](https://hub.docker.com/_/hello-world) as in these page says, you have everything setted up, follow the instruccions above of how to install the project with this terminal and you should be good to go!
+
+### Second method: Install WSL, upgrade it to WSL 2 and install docker desktop
+
+So this one is a little bit more difficult that the last one, but I **strongly** recommend it. Why? You will have a Linux kernel on windows, and that will get away all future headaches that a project might give you (or that low level courses, like Operating Systems can give you).
+
+Okay first, you have to set up WSL, this is Linux Subsystem for Windows. I recommend to follow this [video](https://www.youtube.com/watch?v=5RTSlby-l9w), or the
+[microsoft's guide](https://docs.microsoft.com/en-us/windows/wsl/install-win10), on
+the second one run a powershell as an administrator with the command:
+
+```powershell
+Start-Process powershell -Verb runAs
+```
+
+When you have WSL installed, upgrade it to WSL 2. The best guide to follow is the [official one from microsoft](https://docs.microsoft.com/en-us/windows/wsl/install-win10#update-to-wsl-2), you will probable upgrade windows on the process, so this could take a while.
+
+Then you can move the distro to use WSL 2 with:
+
+```powershell
+wsl --set-version <distribution name> <versionNumber>
+```
+
+Finally install docker desktop, with these [link](https://docs.docker.com/docker-for-windows/wsl/#:~:text=With%20Docker%20Desktop%20running%20on,features%20for%20Docker%20Desktop%20users.) instructions.
+
+Open your wsl 2 command prompt and follow the instructions above!, there is nothing more to install and you have a linux kernel in your windows machine :).
+
+#### Known issues
+
+In either of these approaches, there could be an issue with the `easyexam` command, if so, on the folder of the project run:
 
 ```bash
-make run
+$ git checkout -- .
 ```
 
-And there we go. You have running the easyexam for the first time on your local computer!
+Windows add some weird formatting when downloading the project, with these you should be good to go.
+
+### Using jupyter
+
+You can use jupyter on the backend if you want, to run it do:
+
+```bash
+easyexam jupyter
+```
+
+And select django shell plus as interpreter
 
 #### Local settings
 
@@ -170,51 +237,61 @@ If any settings change that you want to perform doesn't have to be for everyone,
 
 #### Running test
 
-To run unittest on your local machine, there is a make command:
+To run unittest on your local machine, on the docker terminal run the command:
 
 ```bash
-make test
+$ easyexam test
 ```
 
-#### Reseting local database
-
-**WARNING** This will reset your local database, so every data that you have introduce on it will dissapear. Run just if any problem is encountered.
-
-To reset your local database and make a new one with new migrations do:
+This will run all the test (frontend and backend) on the container. Currently there is only backend tests, so to run only those you can do:
 
 ```bash
-make reset
+$ easyexam backend-test
 ```
 
-If you want to also reset redis with the backend:
+If you want to run a particular test suit, you can run the command:
 
 ```bash
-make reset-full
+$ easyexam backend-test <test-suite-import-path>
 ```
 
-Or if you just want to reset redis:
+For example:
 
 ```bash
-make redis-reset
+$ easyexam backend-test apps.exam.tests.test_views.test_exam
+```
+
+If you want to run only a class for that suite:
+
+```bash
+$ easyexam backend-test apps.exam.tests.test_views.test_exam::TestExamCreateView
+```
+
+And if you want to run only a method of that suite:
+
+```bash
+$ easyexam backend-test apps.exam.tests.test_views.test_exam::TestExamCreateView::test_create_exam_anonymous
+```
+
+#### Reseting docker image
+
+**WARNING** This will delete the database mounted on the docker container, so be carefull to not lose the data. You should avoid these at all cost.
+
+If you want to reset your docker image of the project and re mounted, run:
+
+```bash
+$ make docker-reset
 ```
 
 #### Adding pre recorded data
 
-On `fixtures` there are jsons with pre recorded data, to add them onto your database you can run:
+On `fixtures` there are jsons with pre recorded data, to add them onto your database you can run on the container terminal:
 
 ```bash
-make load-fixtures
+$ easyexam fixtures
 ```
 
 This will add all pre recorded data, if a model change pls change the pre recorded data also.
-
-##### Reset and loading pre recorded data
-
-You can reset the database and load the pre recorded data with the command:
-
-```bash
-make reset-with-fixtures
-```
 
 ### Pull Request
 

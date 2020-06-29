@@ -106,7 +106,7 @@ class ProblemListView(ListAPIView):
 
     serializer_class = ProblemSerializer
     permission_classes = (IsAuthenticated,)
-    queryset = Problem.objects.all()
+    queryset = Problem.objects.all().order_by("-created_at")
 
 
 class UserProblemListView(ListAPIView):
