@@ -22,7 +22,7 @@ RUN yes | apt-get install texlive-science
 RUN yes | apt-get install texlive-pstricks
 RUN yes | apt-get install nodejs
 RUN yes | apt-get install npm
-RUN yes | npm install -g npm@latest
+RUN yes | npm install npm@latest -g
 RUN pip install -r requirements.txt
 RUN cd frontend/ && npm install
 
