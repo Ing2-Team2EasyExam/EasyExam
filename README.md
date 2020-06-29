@@ -171,6 +171,14 @@ $ docker run hello-world
 
 If you see the [output](https://hub.docker.com/_/hello-world) as in these page says, you have everything setted up, follow the instruccions above of how to install the project with this terminal and you should be good to go!
 
+Now the server doesn't work with `localhost` with these method, you have to enter into the IP of your docker machine. To see this run on the docker toolbox terminal:
+
+```bash
+docker-machine ls
+```
+
+And copy only the IP of the `default` machine, without the port.
+
 ### Second method: Install WSL, upgrade it to WSL 2 and install docker desktop
 
 So this one is a little bit more difficult that the last one, but I **strongly** recommend it. Why? You will have a Linux kernel on windows, and that will get away all future headaches that a project might give you (or that low level courses, like Operating Systems can give you).
