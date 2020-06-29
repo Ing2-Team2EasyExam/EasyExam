@@ -11,6 +11,7 @@ COPY ./easyexam.sh /easyexam/
 COPY ./manage.py /easyexam/
 COPY ./requirements.txt /easyexam/
 COPY ./*ipynb /easyexam/
+RUN chmod -R 755 /easyexam/
 WORKDIR /easyexam/
 
 RUN apt-get update
@@ -21,6 +22,7 @@ RUN yes | apt-get install texlive-science
 RUN yes | apt-get install texlive-pstricks
 RUN yes | apt-get install nodejs
 RUN yes | apt-get install npm
+RUN yes | npm install -g npm@latest
 RUN pip install -r requirements.txt
 RUN cd frontend/ && npm install
 
