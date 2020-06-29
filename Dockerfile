@@ -27,3 +27,6 @@ RUN cd frontend/ && npm install
 RUN adduser easyexam
 USER easyexam
 RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
+
+EXPOSE 8000
+EXPOSE 8001
