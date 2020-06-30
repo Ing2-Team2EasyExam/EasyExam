@@ -31,11 +31,26 @@ jobs:
           pre-commit run --all-files
       - name: Make migrations
         run: python manage.py makemigrations
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
       - name: Migrate
         run: python manage.py migrate
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
       - name: Run Tests
         run: |
           python manage.py test -v 2
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
 
   frontend-test:
     runs-on: ubuntu-latest
