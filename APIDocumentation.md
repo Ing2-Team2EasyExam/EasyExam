@@ -143,6 +143,29 @@ sequenceDiagram
 
 ### Problem Creation endpoint
 
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBQT1NUIC9hcGkvcHJvYmxlbXMvY3JlYXRlL1xuICBia25kIC0-PiBia25kOiBnZXRfcmVxdWVzdF91c2VyXG4gIGJrbmQgLT4-IGJrbmQ6IHZhbGlkYXRlX2RhdGFcbiAgYWx0IFZhbGlkIERhdGFcbiAgYmtuZCAtPj4gYmtuZDogY3JlYXRlX3Byb2JsZW1cbiAgYmtuZCAtPj4gYmtuZDogY3JlYXRlX3BkZlxuICBhbHQgQ29tcGlsYXRpb24gRXJyb3JcbiAgYmtuZCAtPj4gYmtuZDogZGVsZXRlX2NyZWF0ZWRfcHJvYmxlbVxuICBia25kIC0-PiBjbDogNTAwXG4gIGVsc2UgQ29tcGlsYXRpb24gU3VjY2Vzc2Z1bFxuICBia25kIC0-PiBjbDogMjAwXG4gIGVuZFxuICBlbHNlIEludmFsaWQgRGF0YVxuICBia25kIC0-Pi0gY2w6IDQwMFxuICBlbmQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBQT1NUIC9hcGkvcHJvYmxlbXMvY3JlYXRlL1xuICBia25kIC0-PiBia25kOiBnZXRfcmVxdWVzdF91c2VyXG4gIGJrbmQgLT4-IGJrbmQ6IHZhbGlkYXRlX2RhdGFcbiAgYWx0IFZhbGlkIERhdGFcbiAgYmtuZCAtPj4gYmtuZDogY3JlYXRlX3Byb2JsZW1cbiAgYmtuZCAtPj4gYmtuZDogY3JlYXRlX3BkZlxuICBhbHQgQ29tcGlsYXRpb24gRXJyb3JcbiAgYmtuZCAtPj4gYmtuZDogZGVsZXRlX2NyZWF0ZWRfcHJvYmxlbVxuICBia25kIC0-PiBjbDogNTAwXG4gIGVsc2UgQ29tcGlsYXRpb24gU3VjY2Vzc2Z1bFxuICBia25kIC0-PiBjbDogMjAwXG4gIGVuZFxuICBlbHNlIEludmFsaWQgRGF0YVxuICBia25kIC0-Pi0gY2w6IDQwMFxuICBlbmQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
+
+```js
+sequenceDiagram
+  participant cl as Client
+  participant bknd as Backend
+  cl ->>+ bknd: POST /api/problems/create/
+  bknd ->> bknd: get_request_user
+  bknd ->> bknd: validate_data
+  alt Valid Data
+  bknd ->> bknd: create_problem
+  bknd ->> bknd: create_pdf
+  alt Compilation Error
+  bknd ->> bknd: delete_created_problem
+  bknd ->> cl: 500
+  else Compilation Successful
+  bknd ->> cl: 200
+  end
+  else Invalid Data
+  bknd ->>- cl: 400
+  end
+```
+
 ### Problem edition endpoint
 
 ### Problem pdf endpoint
