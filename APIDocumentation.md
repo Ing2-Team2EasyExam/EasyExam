@@ -234,6 +234,22 @@ sequenceDiagram
 
 ### Problem pdf endpoint
 
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBHRVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vcGRmL1xuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBhbHQgUHJvYmxlbSBFeGlzdHNcbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3Byb2JsZW1fcGRmX2ZpbGVcbiAgYmtuZCAtPj4gY2w6IDIwMFxuICBlbHNlIFByb2JsZW0gRG9lcyBub3QgZXhpc3RzXG4gIGJrbmQgLT4-LSBjbDogNDA0XG4gIGVuZCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBHRVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vcGRmL1xuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBhbHQgUHJvYmxlbSBFeGlzdHNcbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3Byb2JsZW1fcGRmX2ZpbGVcbiAgYmtuZCAtPj4gY2w6IDIwMFxuICBlbHNlIFByb2JsZW0gRG9lcyBub3QgZXhpc3RzXG4gIGJrbmQgLT4-LSBjbDogNDA0XG4gIGVuZCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
+
+```js
+sequenceDiagram
+  participant cl as Client
+  participant bknd as Backend
+  cl ->>+ bknd: GET /api/problems/<uuid>/pdf/
+  bknd ->> bknd: get_problem
+  alt Problem Exists
+  bknd ->> bknd: get_problem_pdf_file
+  bknd ->> cl: 200
+  else Problem Does not exists
+  bknd ->>- cl: 404
+  end
+```
+
 ## Exam Endpoints
 
 ### User exams endpoint
