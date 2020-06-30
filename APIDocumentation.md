@@ -127,6 +127,53 @@ sequenceDiagram
   bknd ->> cl: 200
 ```
 
+1. Authenticated client request all the problems of the platform
+
+   `GET /api/problems/list/`
+
+   ```js
+   Request:
+       Headers:{
+           "Content-Type": "application/json",
+           "Authorization": "Token 6b7215e48545c761500a04b5dfbed8dba400076f",
+       }
+       Body: {}
+
+   Response: 200
+       Headers:{
+           "Content-Type": "application/json",
+       }
+       Body:[
+           {
+               "uuid": "edf81aae-50b5-4a1e-a630-d9adee5e52f7",
+               "name": "Problem Induccion 1",
+               "author": "Gonzalo Navarro",
+               "created_at": "2020-06-30T19:49:51.473164",
+               "topics": [
+                   {
+                       "name": "Analisis de Algoritmos"
+                   },
+                   {
+                       "name": "Grafos"
+                   }
+               ],
+               "editable": false,
+           },
+           {
+               "uuid": "dc89c333-ab4d-44a7-a9ae-1406732b9a08",
+               "name": "Problema de Probabilidades",
+               "author": "Juanito Perez",
+               "created_at": "2020-06-30T19:51:47.190254",
+               "topics": [
+                   {
+                       "name": "Probabilidades"
+                   },
+               ]
+               "editable": true,
+           },
+       ]
+   ```
+
 ### User problems list endpoint
 
 [![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-IGJrbmQ6IEdFVCAvYXBpL3Byb2JsZW1zL3VwbG9hZGVkL2xpc3QvXG4gIGJrbmQgLT4-IGJrbmQ6IGdldF9yZXF1ZXN0X3VzZXJcbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3VzZXJfcHJvYmxlbXNcbiAgYmtuZCAtPj4gY2w6IDIwMCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-IGJrbmQ6IEdFVCAvYXBpL3Byb2JsZW1zL3VwbG9hZGVkL2xpc3QvXG4gIGJrbmQgLT4-IGJrbmQ6IGdldF9yZXF1ZXN0X3VzZXJcbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3VzZXJfcHJvYmxlbXNcbiAgYmtuZCAtPj4gY2w6IDIwMCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
@@ -140,6 +187,38 @@ sequenceDiagram
   bknd ->> bknd: get_user_problems
   bknd ->> cl: 200
 ```
+
+1.  Client request to the backend the problems uploaded by the request user
+    `GET /api/problems/uploaded/list/`
+
+    ````js
+    Request:
+    Headers:{
+    "Content-Type": "application/json",
+    "Authorization": "Token 6b7215e48545c761500a04b5dfbed8dba400076f",
+    }
+    Body: {}
+
+        Response: 200
+            Headers:{
+                "Content-Type": "application/json",
+            }
+            Body:[
+                {
+                    "uuid": "dc89c333-ab4d-44a7-a9ae-1406732b9a08",
+                    "name": "Problema de Probabilidades",
+                    "author": "Juanito Perez",
+                    "created_at": "2020-06-30T19:51:47.190254",
+                    "topics": [
+                        {
+                            "name": "Probabilidades"
+                        },
+                    ]
+                    "editable": true,
+                },
+            ]
+        ```
+    ````
 
 ### Problem Creation endpoint
 
@@ -167,6 +246,8 @@ sequenceDiagram
 ```
 
 ### Problem edition endpoint
+
+This endpoint has two parts, one to request the data of the problem which the user wants to edit, the other to perform the update action.
 
 #### Get the problem current data to be editted
 
