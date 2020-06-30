@@ -168,6 +168,70 @@ sequenceDiagram
 
 ### Problem edition endpoint
 
+#### Get the problem current data to be editted
+
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBHRVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vZWRpdC9cbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3JlcXVlc3RfdXNlclxuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBhbHQgUHJvYmxlbSBFeGlzdHNcbiAgYmtuZCAtPj4gYmtuZDogY2hlY2tfcHJvYmxlbV9pc19lZGl0YWJsZVxuICBhbHQgUHJvYmxlbSBFZGl0YWJsZVxuICBia25kIC0-PiBia25kOiBjaGVja19wcm9ibGVtX3VwbG9hZGVyX2lzX3JlcXVlc3RfdXNlclxuICBhbHQgVXNlciBpcyBQcm9ibGVtIFVwbG9hZGVyXG4gIGJrbmQgLT4-IGNsOiAyMDBcbiAgZWxzZSBVc2VyIGlzIG5vdCBwcm9ibGVtIHVwbG9hZGVyXG4gIGJrbmQgLT4-IGNsOiA0MDRcbiAgZW5kXG4gIGVsc2UgUHJvYmxlbSBEb2VzIE5vdCBFeGlzdHNcbiAgYmtuZCAtPj4gY2w6IDQwNFxuICBlbmRcbiAgZWxzZSBQcm9ibGVtIENhbid0IGJlIGVkaXR0ZWRcbiAgYmtuZCAtPj4tIGNsOiA0MDNcbiAgZW5kIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifSwidXBkYXRlRWRpdG9yIjpmYWxzZX0)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBHRVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vZWRpdC9cbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3JlcXVlc3RfdXNlclxuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBhbHQgUHJvYmxlbSBFeGlzdHNcbiAgYmtuZCAtPj4gYmtuZDogY2hlY2tfcHJvYmxlbV9pc19lZGl0YWJsZVxuICBhbHQgUHJvYmxlbSBFZGl0YWJsZVxuICBia25kIC0-PiBia25kOiBjaGVja19wcm9ibGVtX3VwbG9hZGVyX2lzX3JlcXVlc3RfdXNlclxuICBhbHQgVXNlciBpcyBQcm9ibGVtIFVwbG9hZGVyXG4gIGJrbmQgLT4-IGNsOiAyMDBcbiAgZWxzZSBVc2VyIGlzIG5vdCBwcm9ibGVtIHVwbG9hZGVyXG4gIGJrbmQgLT4-IGNsOiA0MDRcbiAgZW5kXG4gIGVsc2UgUHJvYmxlbSBEb2VzIE5vdCBFeGlzdHNcbiAgYmtuZCAtPj4gY2w6IDQwNFxuICBlbmRcbiAgZWxzZSBQcm9ibGVtIENhbid0IGJlIGVkaXR0ZWRcbiAgYmtuZCAtPj4tIGNsOiA0MDNcbiAgZW5kIiwibWVybWFpZCI6eyJ0aGVtZSI6ImRlZmF1bHQifSwidXBkYXRlRWRpdG9yIjpmYWxzZX0)
+
+```js
+sequenceDiagram
+  participant cl as Client
+  participant bknd as Backend
+  cl ->>+ bknd: GET /api/problems/<uuid>/edit/
+  bknd ->> bknd: get_request_user
+  bknd ->> bknd: get_problem
+  alt Problem Exists
+  bknd ->> bknd: check_problem_is_editable
+  alt Problem Editable
+  bknd ->> bknd: check_problem_uploader_is_request_user
+  alt User is Problem Uploader
+  bknd ->> cl: 200
+  else User is not problem uploader
+  bknd ->> cl: 404
+  end
+  else Problem Does Not Exists
+  bknd ->> cl: 404
+  end
+  else Problem Can't be editted
+  bknd ->>- cl: 403
+  end
+```
+
+#### Perform the update action on the problem
+
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBQVVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vZWRpdC9cbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3JlcXVlc3RfdXNlclxuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBia25kIC0-PiBia25kOiB2YWxpZGF0ZV9wcm9ibGVtX2RhdGFcbiAgYWx0IFZhbGlkIERhdGFcbiAgYmtuZCAtPj4gYmtuZDogY2hlY2tfcHJvYmxlbV9pc19lZGl0YWJsZVxuICBhbHQgUHJvYmxlbSBpcyBFZGl0YWJsZVxuICBia25kIC0-PiBia25kOiBjaGVja19wcm9ibGVtX3VwbG9hZGVyX2lzX3JlcXVlc3RfdXNlclxuICBhbHQgVXNlciBpcyBVcGxvYWRlclxuICBia25kIC0-PiBia25kOiB1cGRhdGVfcHJvYmxlbVxuICBia25kIC0-PiBia25kOiB1cGRhdGVfcGRmXG4gIGFsdCBDb21waWxhdGlvbiBFcnJvclxuICBia25kIC0-PiBia25kOiBkZWxldGVfY3JlYXRlZF9wcm9ibGVtXG4gIGJrbmQgLT4-IGNsOiA1MDBcbiAgZWxzZSBDb21waWxhdGlvbiBTdWNjZXNzZnVsXG4gIGJrbmQgLT4-IGNsOiAyMDBcbiAgZW5kXG4gIGVsc2UgVXNlciBpcyBub3QgVXBsb2FkZXJcbiAgYmtuZCAtPj4gY2w6IDQwMFxuICBlbmRcbiAgZWxzZSBQcm9ibGVtIGNhbnQgYmUgZWRpdHRlZFxuICBia25kIC0-PiBjbDogNDAwXG4gIGVuZFxuICBlbHNlIEludmFsaWQgRGF0YVxuICBia25kIC0-Pi0gY2w6IDQwMFxuICBlbmQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBQVVQgL2FwaS9wcm9ibGVtcy88dXVpZD4vZWRpdC9cbiAgYmtuZCAtPj4gYmtuZDogZ2V0X3JlcXVlc3RfdXNlclxuICBia25kIC0-PiBia25kOiBnZXRfcHJvYmxlbVxuICBia25kIC0-PiBia25kOiB2YWxpZGF0ZV9wcm9ibGVtX2RhdGFcbiAgYWx0IFZhbGlkIERhdGFcbiAgYmtuZCAtPj4gYmtuZDogY2hlY2tfcHJvYmxlbV9pc19lZGl0YWJsZVxuICBhbHQgUHJvYmxlbSBpcyBFZGl0YWJsZVxuICBia25kIC0-PiBia25kOiBjaGVja19wcm9ibGVtX3VwbG9hZGVyX2lzX3JlcXVlc3RfdXNlclxuICBhbHQgVXNlciBpcyBVcGxvYWRlclxuICBia25kIC0-PiBia25kOiB1cGRhdGVfcHJvYmxlbVxuICBia25kIC0-PiBia25kOiB1cGRhdGVfcGRmXG4gIGFsdCBDb21waWxhdGlvbiBFcnJvclxuICBia25kIC0-PiBia25kOiBkZWxldGVfY3JlYXRlZF9wcm9ibGVtXG4gIGJrbmQgLT4-IGNsOiA1MDBcbiAgZWxzZSBDb21waWxhdGlvbiBTdWNjZXNzZnVsXG4gIGJrbmQgLT4-IGNsOiAyMDBcbiAgZW5kXG4gIGVsc2UgVXNlciBpcyBub3QgVXBsb2FkZXJcbiAgYmtuZCAtPj4gY2w6IDQwMFxuICBlbmRcbiAgZWxzZSBQcm9ibGVtIGNhbnQgYmUgZWRpdHRlZFxuICBia25kIC0-PiBjbDogNDAwXG4gIGVuZFxuICBlbHNlIEludmFsaWQgRGF0YVxuICBia25kIC0-Pi0gY2w6IDQwMFxuICBlbmQiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
+
+```js
+sequenceDiagram
+  participant cl as Client
+  participant bknd as Backend
+  cl ->>+ bknd: PUT /api/problems/<uuid>/edit/
+  bknd ->> bknd: get_request_user
+  bknd ->> bknd: get_problem
+  bknd ->> bknd: validate_problem_data
+  alt Valid Data
+  bknd ->> bknd: check_problem_is_editable
+  alt Problem is Editable
+  bknd ->> bknd: check_problem_uploader_is_request_user
+  alt User is Uploader
+  bknd ->> bknd: update_problem
+  bknd ->> bknd: update_pdf
+  alt Compilation Error
+  bknd ->> bknd: delete_created_problem
+  bknd ->> cl: 500
+  else Compilation Successful
+  bknd ->> cl: 200
+  end
+  else User is not Uploader
+  bknd ->> cl: 400
+  end
+  else Problem cant be editted
+  bknd ->> cl: 400
+  end
+  else Invalid Data
+  bknd ->>- cl: 400
+  end
+```
+
 ### Problem pdf endpoint
 
 ## Exam Endpoints
