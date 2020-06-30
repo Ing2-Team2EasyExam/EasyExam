@@ -1,6 +1,6 @@
 # API documentation
 
-Sequence flow diagram for the
+Sequence flow diagram for the API. For all the flow charts except the login and password reset, assume a alternate flowchart where the response is `401` or `403` of unauthorized access.
 
 ## Login
 
@@ -24,6 +24,8 @@ sequenceDiagram
 
 1. Client submit user data to the backend, the data is valid
 
+   `POST /api/users/login/`
+
    ```js
    Request:
        Headers: {
@@ -38,7 +40,7 @@ sequenceDiagram
            "Content-Type": "application/json",
        }
        Body:{
-           "token": "",
+           "token": "6b7215e48545c761500a04b5dfbed8dba400076f",
        }
    ```
 
@@ -79,3 +81,20 @@ sequenceDiagram
 ## Logout
 
 [![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBERUxFVEUgL2FwaS91c2Vycy9sb2dvdXQvXG4gIGJrbmQgLT4-IGJrbmQ6IGdldF9yZXF1ZXN0X3VzZXJcbiAgYmtuZCAtPj4gYmtuZDogcmV2b2tlX2FjY2Vzc190b2tlblxuICBia25kIC0-Pi0gY2w6IDIwMCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtXG4gIHBhcnRpY2lwYW50IGNsIGFzIENsaWVudFxuICBwYXJ0aWNpcGFudCBia25kIGFzIEJhY2tlbmRcbiAgY2wgLT4-KyBia25kOiBERUxFVEUgL2FwaS91c2Vycy9sb2dvdXQvXG4gIGJrbmQgLT4-IGJrbmQ6IGdldF9yZXF1ZXN0X3VzZXJcbiAgYmtuZCAtPj4gYmtuZDogcmV2b2tlX2FjY2Vzc190b2tlblxuICBia25kIC0-Pi0gY2w6IDIwMCIsIm1lcm1haWQiOnsidGhlbWUiOiJkZWZhdWx0In0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
+
+1. Cliente make a delete request to the backend, for revoking current access token
+
+   `DELETE /api/users/logout/`
+
+   ```js
+   Request:
+       Headers: {
+           "Content-Type": "application/json",
+           "Authorization": "Token 6b7215e48545c761500a04b5dfbed8dba400076f",
+       }
+       Body: {}
+   Response: 200
+       Headers: {
+           "Content-Type": "application/json",
+       }
+   ```
