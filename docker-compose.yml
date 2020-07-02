@@ -34,6 +34,8 @@ services:
       - POSTGRES_HOST=db
     depends_on:
       - db
+    links:
+      - redis
 volumes:
   postgres_data:
   redisdata:
