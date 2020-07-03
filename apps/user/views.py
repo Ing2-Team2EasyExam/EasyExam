@@ -19,6 +19,7 @@ from apps.user.serializers import (
     TransactionSerializer,
 )
 from apps.user.services import generate_access_token, revoke_access_token
+from .tasks import send_reset_password_email
 
 User = get_user_model()
 
@@ -64,6 +65,12 @@ class LogoutView(APIView):
         revoke_access_token(user)
         return Response(status=status.HTTP_200_OK)
 
+
+
+class ResetEmail(APIView):
+    def get(self, request, *args, **kwargs):
+        send_reset_password_email.delay("cosme@fulanito.com", "123124")
+        return Response(status=status.HTTP_200_OK)
 
 class UserAccountView(RetrieveUpdateAPIView):
     """

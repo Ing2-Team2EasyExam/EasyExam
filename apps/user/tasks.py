@@ -1,17 +1,17 @@
-from EasyExamAPI.celery import app
 from django.template import Context
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
 from .models import User
+from celery import shared_task
 
 
-@app.task
+@shared_task
 def send_reset_password_email(email: str, reset_token: str) -> int:
     email_subject = "[EasyExam] Reset password"
-    context = Context(
-        {"reset_url": "".join(settings.SERVER_URL, "/reset_password/", reset_token)}
-    )
+    context = {
+        "reset_url": "".join([settings.SERVER_URL, "/reset_password/", reset_token])
+    }
     html_message = render_to_string("emails/reset_password_email.html", context)
     user_email = [email]
     server_email = "easyexam@noreply.com"

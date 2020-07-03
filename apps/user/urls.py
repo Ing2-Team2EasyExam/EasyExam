@@ -16,4 +16,5 @@ urlpatterns = [
         views.ChangePasswordView.as_view(),
         name="change-password",
     ),
+    path("reset_password/", views.ResetEmail.as_view(), name="password_reset"),
 ]
