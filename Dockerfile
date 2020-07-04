@@ -14,6 +14,7 @@ COPY ./*ipynb /easyexam/
 RUN chmod -R 755 /easyexam/
 WORKDIR /easyexam/
 
+RUN chmod +x easyexam.sh
 RUN apt-get update
 RUN yes | apt-get install texlive-latex-base
 RUN yes | apt-get install texlive-latex-extra
