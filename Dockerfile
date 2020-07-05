@@ -11,7 +11,7 @@ COPY ./easyexam.sh /easyexam/
 COPY ./manage.py /easyexam/
 COPY ./requirements.txt /easyexam/
 COPY ./*ipynb /easyexam/
-RUN chmod -R 755 /easyexam/
+RUN chmod -R 777 /easyexam/
 WORKDIR /easyexam/
 
 RUN chmod +x easyexam.sh
