@@ -5,6 +5,12 @@ from subprocess import PIPE
 
 from django.conf import settings
 from .exceptions import CompilationErrorException
+import logging
+
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+logger.setLevel(logging.DEBUG)
+logger.addHandler(handler)
 
 
 def problem_pbtex(problem: "Problem") -> str:
@@ -123,14 +129,14 @@ def generate_pdfs(instance):
     filename = os.path.basename(instance.tex_file.name)
     filename = os.path.splitext(filename)[0]
     with open(os.devnull, "w") as nul:
+        command = [
+            os.path.join(settings.SCRIPT_DIR, "buildExam.pl"),
+            os.path.join(settings.MEDIA_ROOT, instance.tex_file.name),
+        ]
+        if settings.WINDOWS_USER:
+            command = ["perl"] + command
         result = subprocess.run(
-            [
-                os.path.join(settings.SCRIPT_DIR, "buildExam.pl"),
-                os.path.join(settings.MEDIA_ROOT, instance.tex_file.name),
-            ],
-            cwd=settings.SCRIPT_DIR,
-            stdout=PIPE,
-            stderr=PIPE,
+            command, cwd=settings.SCRIPT_DIR, stdout=PIPE, stderr=PIPE
         )
         if result.returncode != 0:
             latex_logs = result.stdout.decode("utf-8")

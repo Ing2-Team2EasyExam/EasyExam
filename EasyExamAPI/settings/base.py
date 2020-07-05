@@ -207,3 +207,5 @@ CACHE = {
         "KEY_PREFIX": ""
     }
 }"""
+# If developing in windows, default is false change it on your local.py
+WINDOWS_USER = False
