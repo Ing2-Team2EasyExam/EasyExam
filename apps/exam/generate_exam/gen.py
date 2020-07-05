@@ -5,12 +5,6 @@ from subprocess import PIPE
 
 from django.conf import settings
 from .exceptions import CompilationErrorException
-import logging
-
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler()
-logger.setLevel(logging.DEBUG)
-logger.addHandler(handler)
 
 
 def problem_pbtex(problem: "Problem") -> str:
