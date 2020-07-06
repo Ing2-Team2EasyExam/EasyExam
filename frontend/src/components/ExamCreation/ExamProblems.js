@@ -14,7 +14,9 @@ class ExamProblems extends React.Component {
     super(props);
     this.state = {
       maximum: 5,
-      problems: [{ name: "DEFAULT", author: "DEFAULT" }],
+      problems: [
+        { points: 2, problem: { name: "DEFAULT", author: "DEFAULT" } },
+      ],
     };
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
@@ -31,7 +33,10 @@ class ExamProblems extends React.Component {
       alert(`Can't put more than ${maximum}`);
       return;
     }
-    problems.push({ name: "DEFAULT", author: "DEFAULT" });
+    problems.push({
+      points: 2,
+      problem: { name: "DEFAULT", author: "DEFAULT" },
+    });
     this.setState((state, props) => {
       return {
         problems: problems,
@@ -58,8 +63,11 @@ class ExamProblems extends React.Component {
 
   updateProblem(index, name, author) {
     let list = this.state.problems;
-    list[index].name = name;
-    list[index].author = author;
+    let problem = {};
+    problem.name = name;
+    problem.author = author;
+    list[index].problem = problem;
+    list[index].points = 2;
     this.setState((state, props) => {
       return {
         problems: list,
@@ -82,8 +90,8 @@ class ExamProblems extends React.Component {
               number={i}
               updateProblem={this.updateProblem}
               removeProblem={this.removeProblem}
-              author={problem.author}
-              name={problem.name}
+              author={problem.problem.author}
+              name={problem.problem.name}
             />
           );
         })}
