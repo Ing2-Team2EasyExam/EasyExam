@@ -76,7 +76,7 @@ class CreateExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problems: this.state.problems,
+      problem_choices: this.state.problems,
     };
     this.setState({
       isLoading: true,
