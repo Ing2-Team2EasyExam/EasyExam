@@ -36,6 +36,14 @@ services:
       - db
     links:
       - redis
+  celery:
+    build: .
+    command: celery -A EasyExamAPI worker -l info
+    volumes:
+      - .:/easyexam
+    depends_on:
+      - db
+      - redis
 volumes:
   postgres_data:
   redisdata:
