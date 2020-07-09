@@ -10,7 +10,7 @@ COPY ./media /easyexam/media
 COPY ./easyexam.sh /easyexam/
 COPY ./manage.py /easyexam/
 COPY ./requirements.txt /easyexam/
-COPY ./*ipynb /easyexam/
+RUN chmod -R 755 /easyexam/
 WORKDIR /easyexam/
 
 RUN apt-get update
@@ -26,5 +26,7 @@ RUN pip install -r requirements.txt
 RUN cd frontend/ && npm install
 RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
 
+RUN adduser easyexam
+USER easyexam
 EXPOSE 8000
 EXPOSE 8001
