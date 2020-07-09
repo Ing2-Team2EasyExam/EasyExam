@@ -24,9 +24,8 @@ RUN yes | apt-get install npm
 RUN yes | npm install npm@latest -g
 RUN pip install -r requirements.txt
 RUN cd frontend/ && npm install
-RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
-
 RUN adduser easyexam
 USER easyexam
-EXPOSE 8000
-EXPOSE 8001
+RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
+
+CMD python manage.py runserver 0.0.0.0:$PORT --settings=EasyExamAPI.settings.qa
