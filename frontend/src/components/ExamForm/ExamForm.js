@@ -32,7 +32,7 @@ class ExamForm extends React.Component {
      * Handle the event when a problem is selected in the form
      */
     this.setState({
-      problems: list,
+      problem_choices: list,
     });
   }
 
@@ -54,6 +54,7 @@ class ExamForm extends React.Component {
      * Handler of the form submittion, using asynchronous API with fetch send the
      * data to the backend.
      */
+    console.log(this.state.problem_choices);
     event.preventDefault();
     const url = this.props.url;
     const method = this.props.method;
@@ -68,7 +69,7 @@ class ExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problem_choices: this.state.problems,
+      problem_choices: this.state.problem_choices,
     };
     this.setState({
       isLoading: true,
