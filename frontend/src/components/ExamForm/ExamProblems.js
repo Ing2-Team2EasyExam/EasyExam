@@ -19,6 +19,7 @@ class ExamProblems extends React.Component {
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
     this.updateProblem = this.updateProblem.bind(this);
+    this.updatePoints = this.updatePoints.bind(this);
   }
 
   addProblem(event) {
@@ -32,7 +33,7 @@ class ExamProblems extends React.Component {
       return;
     }
     problems.push({
-      points: 2,
+      points: 0,
       problem: { name: "DEFAULT", author: "DEFAULT" },
     });
     this.setState((state, props) => {
@@ -65,7 +66,18 @@ class ExamProblems extends React.Component {
     problem.name = name;
     problem.author = author;
     list[index].problem = problem;
-    list[index].points = 2;
+    this.setState((state, props) => {
+      return {
+        problems: list,
+      };
+    });
+
+    this.props.handleSelect(list);
+  }
+
+  updatePoints(index, points) {
+    let list = this.state.problems;
+    list[index].points = points;
     this.setState((state, props) => {
       return {
         problems: list,
@@ -87,9 +99,11 @@ class ExamProblems extends React.Component {
               handleSelect={this.props.handleSelect}
               number={i}
               updateProblem={this.updateProblem}
+              updatePoints={this.updatePoints}
               removeProblem={this.removeProblem}
               author={problem.problem.author}
               name={problem.problem.name}
+              points={problem.points}
             />
           );
         })}

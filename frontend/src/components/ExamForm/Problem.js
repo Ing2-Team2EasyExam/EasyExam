@@ -12,11 +12,19 @@ class Problem extends React.Component {
       problems: [],
     };
     this.removeProblem = this.removeProblem.bind(this);
+    this.updateScore = this.updateScore.bind(this);
   }
   removeProblem(event) {
     let index = this.props.number;
     this.props.removeProblem(index);
   }
+
+  updateScore(event) {
+    const target = event.target;
+    const value = target.value;
+    this.props.updatePoints(this.props.number, value);
+  }
+
   render() {
     return (
       <>
@@ -38,7 +46,13 @@ class Problem extends React.Component {
                 Puntos :
               </Form.Label>
               <Col sm={6}>
-                <Form.Control name="point" type="number" placeholder="0" />
+                <Form.Control
+                  onChange={this.updateScore}
+                  name="points"
+                  type="number"
+                  placeholder="0"
+                  value={this.props.points}
+                />
               </Col>
             </Form.Group>
           </Col>
