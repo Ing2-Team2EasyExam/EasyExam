@@ -24,13 +24,23 @@ class Problem extends React.Component {
           <Form.Label column sm={2}>
             Problema {this.props.number + 1} :
           </Form.Label>
-          <Col sm={8}>
+          <Col sm={5}>
             <ProblemSelect
               handleChange={this.handleChange}
               value={`${this.props.author} -!-! ${this.props.name}`}
               number={this.props.number}
               updateProblem={this.props.updateProblem}
             />
+          </Col>
+          <Col sm={3}>
+            <Form.Group as={Row} controlId={this.props.controlId}>
+              <Form.Label column sm={6}>
+                Puntos :
+              </Form.Label>
+              <Col sm={6}>
+                <Form.Control name="point" type="number" placeholder="0" />
+              </Col>
+            </Form.Group>
           </Col>
           <Col sm={1}>
             <ButtonGroup>

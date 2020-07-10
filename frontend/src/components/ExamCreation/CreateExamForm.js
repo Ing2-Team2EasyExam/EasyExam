@@ -1,8 +1,5 @@
 import React from "react";
-import { Form } from "react-bootstrap";
-import ExamDataInputs from "./ExamDataInputs";
-import ExamProblems from "./ExamProblems";
-import FormSubmitButton from "./FormSubmitButton";
+import ExamForm from "../ExamForm/ExamForm";
 
 class CreateExamForm extends React.Component {
   /**
@@ -32,93 +29,21 @@ class CreateExamForm extends React.Component {
       courseCode: "",
       university: "",
       language: "ES",
-      problems: {},
+      problem_choices: [
+        { points: 0, problem: { name: "DEFAULT", author: "DEFAULT" } },
+      ],
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleProblemSelection = this.handleProblemSelection.bind(this);
-  }
-
-  handleInputChange(event) {
-    /**
-     * Method that handles the change of the text inputs for the problem.
-     * @param event: the event on which this method is called
-     */
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value,
-    });
-  }
-  handleProblemSelection(list) {
-    /**
-     * Handle the event when a problem is selected in the form
-     */
-    this.setState({
-      problems: list,
-    });
-  }
-  handleSubmit(event) {
-    /**
-     * Handler of the form submittion, using asynchronous API with fetch send the
-     * data to the backend.
-     */
-    event.preventDefault();
-    let token = localStorage.getItem("token");
-    let data = {
-      name: this.state.name,
-      due_date: this.state.dueDate,
-      start_time: this.state.startTime,
-      end_time: this.state.endTime,
-      teacher: this.state.teacher,
-      course_name: this.state.courseName,
-      course_code: this.state.courseCode,
-      university: this.state.university,
-      language: this.state.language,
-      problem_choices: this.state.problems,
-    };
-    this.setState({
-      isLoading: true,
-    });
-    fetch("/api/exams/create/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${token}`,
-      },
-      body: JSON.stringify(data),
-    })
-      .then(
-        (response) => response.json(),
-        (error) => error
-      )
-      .then(
-        (data) => {
-          console.log(Object.values(data));
-          this.setState({
-            isLoading: false,
-          });
-          alert("Examen Creado");
-          //window.location.href = "/home/"; //TODO: Change redirection link!
-        },
-        (error) => {
-          console.log(error);
-          alert("Ocurrio un error");
-          this.setState({
-            isLoading: false,
-          });
-        }
-      );
   }
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <ExamDataInputs handleInputChange={this.handleInputChange} />
-        <ExamProblems handleSelect={this.handleProblemSelection} />
-        <FormSubmitButton isLoading={this.state.isLoading} />
-      </Form>
+      <ExamForm
+        data={this.state}
+        url="/api/exams/create/"
+        method="POST"
+        successMessage="Examen Creado"
+        errorMessage="Ha ocurrido un error"
+      />
     );
   }
 }

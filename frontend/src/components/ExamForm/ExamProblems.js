@@ -14,9 +14,7 @@ class ExamProblems extends React.Component {
     super(props);
     this.state = {
       maximum: 5,
-      problems: [
-        { points: 2, problem: { name: "DEFAULT", author: "DEFAULT" } },
-      ],
+      problems: props.data,
     };
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
