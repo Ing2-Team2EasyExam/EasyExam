@@ -35,7 +35,6 @@ class Problem extends React.Component {
 
   render() {
     let created_at = this.formatDate(this.props.problem.created_at);
-    //let created_at = this.props.problem.created_at;
     return (
       <tr>
         <td width="25%">
