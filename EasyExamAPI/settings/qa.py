@@ -3,7 +3,7 @@ import dj_database_url
 import django_heroku
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "easyexam-qa.herokuapp.com"]
-DEBUG = False
+DEBUG = True
 DATABASE_URL = os.environ.get("DATABASE_URL")
 db_from_env = dj_database_url.config(
     default=DATABASE_URL, conn_max_age=500, ssl_require=True
