@@ -6,7 +6,7 @@ on:
       - master
       - herkou/deployment
 jobs:
-  test-build-deploy:
+  backend-test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -16,12 +16,13 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: github_actions
         ports:
-          - 5432
+          - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.7]
+
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -51,7 +52,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: github_actions
           POSTGRES_HOST: "127.0.0.1"
-      - name: Run backend test
+      - name: Run Tests
         run: |
           python manage.py test -v 2
         env:
