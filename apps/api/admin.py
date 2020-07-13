@@ -8,16 +8,16 @@ from apps.user.models import User, Transaction
 
 admin.site.site_header = "EasyExam Admin"
 
-# Definimos la clase admin
+# Admin class
 
-# Campos para creación y edición de un usuario
-# Correo electronico
-# Usuario activo
-# Avatar / Foto de perfil
-# Contraseña
-# Grupo de Usuario
-# Permisos TODO ver diferencias entre is_staff y is_superuser, si es staff puede entrar al admin de django, es equivalente
-# al campo is_admin del modelo de datos
+# Fields For User Creation And Edit
+# User E-mail
+# Check if User Is Active
+# Avatar / Profile Picture
+# Password
+# User Group
+# User Permissions TODO check differences between is_staff y is_superuser, if staff user can enter to the Django Admin Interface
+# I'ts the same as the is_admin field on Our Model
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -31,12 +31,12 @@ class UserAdmin(admin.ModelAdmin):
     ]
 
 
-# Registramos la clase admin con su modelo asociado
+# Admin class register with his asociated model
 admin.site.register(User, UserAdmin)
 
-# Registramos la clase problema con su modelo asociado
+# Problem class register with his asociated model
 admin.site.register(Exam, ExamAdmin)
 admin.site.register(Problem, ProblemAdmin)
 
-# Registramos la clase Topicos
+# Topic class register with his asociated model
 admin.site.register(Topic)
