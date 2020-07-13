@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework.views import APIView, Response
+from rest_framework import status
 
-# Create your views here.
+
+class HealthCheckView(APIView):
+    def get(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_200_OK)

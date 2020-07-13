@@ -10,7 +10,7 @@ COPY ./media /easyexam/media
 COPY ./easyexam.sh /easyexam/
 COPY ./manage.py /easyexam/
 COPY ./requirements.txt /easyexam/
-COPY ./*ipynb /easyexam/
+RUN chmod -R 755 /easyexam/
 WORKDIR /easyexam/
 
 RUN apt-get update
@@ -24,7 +24,10 @@ RUN yes | apt-get install npm
 RUN yes | npm install npm@latest -g
 RUN pip install -r requirements.txt
 RUN cd frontend/ && npm install
+RUN cd frontend/ && npm run build
+RUN python manage.py collectstatic --noinput
+RUN adduser easyexam
+USER easyexam
 RUN echo "source /easyexam/easyexam.sh" >> ~/.bashrc
 
-EXPOSE 8000
-EXPOSE 8001
+CMD gunicorn EasyExamAPI.wsgi:application --bind 0.0.0.0:$PORT

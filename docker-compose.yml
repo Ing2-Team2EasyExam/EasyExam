@@ -21,6 +21,7 @@ services:
       dockerfile: Dockerfile
     stdin_open: true
     tty: true
+    entrypoint: /bin/sh
     volumes:
       - .:/easyexam
     ports:

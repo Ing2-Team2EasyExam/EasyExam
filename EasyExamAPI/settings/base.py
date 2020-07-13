@@ -3,7 +3,9 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 
 # Function for environment variables
-def get_env_variable(var_name: str) -> str:
+def get_env_variable(var_name: str, default: str = None) -> str:
+    if default is not None:
+        return os.environ.get(var_name, default)
     try:
         return os.environ[var_name]
     except KeyError:
@@ -66,6 +68,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -209,3 +212,9 @@ CACHE = {
 }"""
 # If developing in windows, default is false change it on your local.py
 WINDOWS_USER = False
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}

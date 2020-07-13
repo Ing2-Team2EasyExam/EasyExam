@@ -1,0 +1,77 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - master
+      - herkou/deployment
+jobs:
+  test-build-deploy:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: pre-commit hooks
+        run: |
+          python -m pip install pre-commit
+          pre-commit install
+          pre-commit run --all-files
+      - name: Make migrations
+        run: python manage.py makemigrations
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
+      - name: Migrate
+        run: python manage.py migrate
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
+      - name: Run Tests
+        run: |
+          python manage.py test -v 2
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build, push and release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
+        run: |
+          docker build -t registry.heroku.com/easyexam-qa/web .
+          docker push registry.heroku.com/easyexam-qa/web
+          heroku container:release -a easyexam-qa web
