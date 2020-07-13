@@ -64,7 +64,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:login
-      - name: Build and push
+      - name: Build, push and release
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           POSTGRES_USER: postgres
@@ -74,8 +74,4 @@ jobs:
         run: |
           docker build -t registry.heroku.com/easyexam-qa/web .
           docker push registry.heroku.com/easyexam-qa/web
-
-      - name: Release new deployment
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:release -a easyexam-qa web
+          heroku container:release -a easyexam-qa web
