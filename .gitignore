@@ -40,15 +40,6 @@ yarn-error.log*
 **/.idea/tasks.xml
 
 ## Django affairs
-
-/apps/api/migrations/*
-!/apps/api/migrations/__init__.py
-/apps/user/migrations/*
-!/apps/user/migrations/__init__.py
-/apps/exam/migrations/*
-!/apps/exam/migrations/__init__.py
-/apps/challenge/migrations/*
-!/apps/challenge/migrations/__init__.py
 *.sqlite3
 
 # backend
