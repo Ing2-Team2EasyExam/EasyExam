@@ -6,10 +6,10 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": get_env_variable("POSTGRES_DB"),
-        "USER": get_env_variable("POSTGRES_USER"),
-        "PASSWORD": get_env_variable("POSTGRES_PASSWORD"),
-        "HOST": get_env_variable("POSTGRES_HOST"),
+        "NAME": get_env_variable("POSTGRES_DB", "postgres"),
+        "USER": get_env_variable("POSTGRES_USER", "postgres"),
+        "PASSWORD": get_env_variable("POSTGRES_PASSWORD", "postgres"),
+        "HOST": get_env_variable("POSTGRES_HOST", "db"),
         "PORT": 5432,
     }
 }

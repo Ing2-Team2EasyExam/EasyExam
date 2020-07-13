@@ -3,7 +3,9 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 
 # Function for environment variables
-def get_env_variable(var_name: str) -> str:
+def get_env_variable(var_name: str, default: str = None) -> str:
+    if default is not None:
+        return os.environ.get(var_name, default)
     try:
         return os.environ[var_name]
     except KeyError:
