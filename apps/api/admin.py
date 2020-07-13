@@ -4,6 +4,9 @@ from apps.exam.admin import ProblemAdmin, ExamAdmin
 from apps.exam.models import Problem, Topic, Exam
 from apps.user.models import User, Transaction
 
+# Site Header
+
+admin.site.site_header = "EasyExam Admin"
 
 # Definimos la clase admin
 
