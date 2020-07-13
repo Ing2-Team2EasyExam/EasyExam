@@ -67,7 +67,14 @@ jobs:
       - name: Build and push
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: docker build -t registry.heroku.com/easyexam-qa/web .
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
+        run: |
+          docker build -t registry.heroku.com/easyexam-qa/web .
+          docker push registry.heroku.com/easyexam-qa/web
+
       - name: Release new deployment
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
