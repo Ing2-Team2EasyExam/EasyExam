@@ -1,9 +1,11 @@
-name: Continuos Integration
+name: Deploy Production
 
-on: [pull_request]
-
+on:
+  push:
+    branches:
+      - master
 jobs:
-  backend-test:
+  test-build-deploy:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -57,29 +59,18 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: github_actions
           POSTGRES_HOST: "127.0.0.1"
-
-  frontend-test:
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        node-version: [3.x]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
+      - name: Login to Heroku Container registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Build, push and release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+          POSTGRES_HOST: "127.0.0.1"
         run: |
-          cd frontend/
-          npm install
-      - name: build module webpack
-        run: |
-          cd frontend/
-          npm run dev
-      - name: Run Tests
-        run: |
-          cd frontend/
-          npm test
+          docker build -t registry.heroku.com/easyexam-qa/web .
+          docker push registry.heroku.com/easyexam-qa/web
+          heroku container:release -a easyexam-qa web

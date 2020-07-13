@@ -3,7 +3,9 @@ import os
 from django.core.exceptions import ImproperlyConfigured
 
 # Function for environment variables
-def get_env_variable(var_name: str) -> str:
+def get_env_variable(var_name: str, default: str = None) -> str:
+    if default is not None:
+        return os.environ.get(var_name, default)
     try:
         return os.environ[var_name]
     except KeyError:
@@ -66,6 +68,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -186,7 +189,8 @@ X_FRAME_OPTIONS = "ALLOW-FROM https://easyexam.repositorium.cl/1"
 
 # HTTPS
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+# Jupyter
+NOTEBOOK_ARGUMENTS = ["--ip", "0.0.0.0", "--port", "8001", "--allow-root"]
 # Celery stuff and redis stuff
 
 BROKER_URL = "redis://localhost:6379"
@@ -206,3 +210,11 @@ CACHE = {
         "KEY_PREFIX": ""
     }
 }"""
+# If developing in windows, default is false change it on your local.py
+WINDOWS_USER = False
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}

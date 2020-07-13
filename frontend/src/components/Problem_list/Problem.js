@@ -22,7 +22,19 @@ class Problem extends React.Component {
         window.open(preview_url);
       });
   }
+
+  formatDate(dateTime) {
+    let arr = dateTime.split("Z")[0];
+    arr = arr.split("T");
+    let date = arr[0];
+    let time_arr = arr[1].split(".");
+    let time = time_arr[0];
+
+    return date + " a las " + time;
+  }
+
   render() {
+    let created_at = this.formatDate(this.props.problem.created_at);
     return (
       <tr>
         <td width="25%">
@@ -31,7 +43,7 @@ class Problem extends React.Component {
             {this.props.problem.name}
           </a>
         </td>
-        <td width="25%"> {this.props.problem.created_at}</td>
+        <td width="25%"> {created_at}</td>
         <td width="25%">
           {" "}
           <Topic topics={this.props.problem.topics} />{" "}
