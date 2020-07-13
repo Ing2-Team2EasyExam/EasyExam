@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - herkou/deployment
 jobs:
   test-build-deploy:
     runs-on: ubuntu-latest
