@@ -48,6 +48,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def username(self):
         return self.email
 
+    @property
+    def is_staff(self):
+        return self.is_admin
+
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
