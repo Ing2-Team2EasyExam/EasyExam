@@ -10,7 +10,7 @@ class CardForm extends React.Component {
     return (
       <Container style={{ padding: "16px" }}>
         <Row className="justify-content-md-center">
-          <Card style={{ width: "70%" }}>
+          <Card style={{ width: "80%" }}>
             <Card.Body>
               <Card.Title style={{ textAlign: "center" }}>
                 {this.props.title}

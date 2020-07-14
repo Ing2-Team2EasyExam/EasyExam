@@ -212,6 +212,10 @@ class Exam(models.Model):
         """
         return self.course_name
 
+    @property
+    def problem_choices(self):
+        return self.examproblemchoice_set.all()
+
     def __str__(self):
         return self.name
 

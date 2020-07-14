@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import SaveButton from "./SaveButton";
 import EditTopicInputs from "./EditTopicInputs";
-import FormSubmitButton from "../ExamCreation/FormSubmitButton";
+import FormSubmitButton from "../ExamForm/FormSubmitButton";
 //Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
 //Falta la previsualización de las preguntas ingresadas.
 
