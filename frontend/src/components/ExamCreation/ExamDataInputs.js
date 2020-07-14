@@ -14,7 +14,6 @@ class ExamDataInputs extends React.Component {
           label="Nombre del Examen:"
           input_type="text"
           placeholder="Ingresar Nombre del Examen"
-          value={this.props.data.name}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -23,7 +22,6 @@ class ExamDataInputs extends React.Component {
           label="Fecha de realización:"
           input_type="date"
           placeholder="dd/mm/aaaa"
-          value={this.props.data.dueDate}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -32,7 +30,6 @@ class ExamDataInputs extends React.Component {
           label="Hora de inicio:"
           input_type="time"
           placeholder="HH:MM"
-          value={this.props.data.startTime}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -41,7 +38,6 @@ class ExamDataInputs extends React.Component {
           label="Hora de termino:"
           input_type="time"
           placeholder="HH:MM"
-          value={this.props.data.endTime}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -50,7 +46,6 @@ class ExamDataInputs extends React.Component {
           label="Nombre profesor/a:"
           input_type="text"
           placeholder="Nombre del profesor/a"
-          value={this.props.data.teacher}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -59,7 +54,6 @@ class ExamDataInputs extends React.Component {
           label="Nombre del curso:"
           input_type="text"
           placeholder="Nombre del curso"
-          value={this.props.data.courseName}
           handleChange={this.props.handleInputChange}
         />
         <FormInput
@@ -67,20 +61,17 @@ class ExamDataInputs extends React.Component {
           name="courseCode"
           label="Código del curso:"
           input_type="text"
-          placeholder="Código del curso"
-          value={this.props.data.courseCode}
+          placeholder="Codigo del curso"
           handleChange={this.props.handleInputChange}
         />
         <FormInput
           controlId="university"
           name="university"
-          label="Universidad"
+          label="Universidad:"
           input_type="text"
           placeholder="Nombre de la Universidad"
-          value={this.props.data.university}
           handleChange={this.props.handleInputChange}
         />
-
         <Form.Group as={Row} controlId="language">
           <Form.Label column sm={3}>
             Idioma del examen:
@@ -90,7 +81,6 @@ class ExamDataInputs extends React.Component {
               name="language"
               onChange={this.props.handleInputChange}
               as="select"
-              value={this.props.data.language}
             >
               <option value="ES">Español</option>
               <option value="EN">Inglés</option>

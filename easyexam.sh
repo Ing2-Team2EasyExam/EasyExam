@@ -9,7 +9,7 @@ function easyexam(){
                         ;;
     "frontend-install")  cd frontend/ && npm install && cd ..
                         ;;
-    "makemigrations") python manage.py makemigrations --name $2 $3
+    "makemigrations") python manage.py makemigrations
                       ;;
     "migrate") python manage.py migrate
                 ;;

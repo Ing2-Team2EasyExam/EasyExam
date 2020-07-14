@@ -33,10 +33,7 @@ class TestExamEditSerializer(TestCase):
         self.user = mixer.blend("user.User")
         self.problems = mixer.cycle(2).blend("exam.Problem")
         self.serialized_problems = [
-            {
-                "points": 2,
-                "problem": OrderedDict(name=problem.name, author=problem.author),
-            }
+            OrderedDict(name=problem.name, author=problem.author)
             for problem in self.problems
         ]
         self.data = {
@@ -49,7 +46,7 @@ class TestExamEditSerializer(TestCase):
             "due_date": datetime.datetime.now().date(),
             "start_time": datetime.datetime.now().time(),
             "end_time": (datetime.datetime.now() + datetime.timedelta(hours=2)).time(),
-            "problem_choices": self.serialized_problems,
+            "problems": self.serialized_problems,
         }
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")

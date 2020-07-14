@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Col, Row } from "react-bootstrap";
 
-class FormInput extends React.Component {
+class EditFormInput extends React.Component {
   /**
    * Component of the inputs of the exam form
    */
@@ -26,4 +26,4 @@ class FormInput extends React.Component {
     );
   }
 }
-export default FormInput;
+export default EditFormInput;

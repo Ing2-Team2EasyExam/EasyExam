@@ -1,11 +1,7 @@
 from django.test import TestCase
 from mixer.backend.django import mixer
 from apps.exam.models import Topic
-from apps.exam.serializers import (
-    ProblemSerializer,
-    ProblemEditSerializer,
-    ExamProblemChoiceSerializer,
-)
+from apps.exam.serializers import ProblemSerializer, ProblemEditSerializer
 from django.conf import settings
 from unittest import skip, mock
 
@@ -78,20 +74,3 @@ class TestProblemEditSerializer(TestCase):
         problem = serializer.save()
         self.assertEqual(problem.name, "John Snow is bored")
         self.assertEqual(problem.statement_content, "John Snow is bored, ...")
-
-
-class TestExamProblemChoiceSerializer(TestCase):
-    def setUp(self):
-        self.problem = mixer.blend("exam.Problem")
-        self.exam = mixer.blend("exam.Exam")
-        self.exam_problem_choice = mixer.blend(
-            "exam.ExamProblemChoice", points=4, problem=self.problem, exam=self.exam
-        )
-
-    def test_data_serialized(self):
-        serializer = ExamProblemChoiceSerializer(instance=self.exam_problem_choice)
-        data = {
-            "points": 4,
-            "problem": {"name": self.problem.name, "author": self.problem.author},
-        }
-        self.assertEqual(serializer.data, data)
