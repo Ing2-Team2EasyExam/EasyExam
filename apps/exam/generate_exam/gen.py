@@ -5,7 +5,6 @@ from subprocess import PIPE
 
 from django.conf import settings
 from .exceptions import CompilationErrorException
-from apps.exam.services import get_problem_points
 
 
 def problem_pbtex(problem: "Problem") -> str:
@@ -105,8 +104,10 @@ def exam_tex(exam):
     tex.append("\\maketitle\n")
     problems = exam.problems.all()
     for problem in problems:
-        status, points = get_problem_points(problem, exam)
-        tex.append(get_input_problem(problem, points))
+        related_model = problem.examproblemchoice_set.get(exam=exam)
+        points = related_model.points
+        points_text = "puntos" if points_text == "ES" else "marks"
+        tex.append(get_input_problem(problem, f"{points} {points_text}"))
 
     tex.append("\\end{document}\n")
 
