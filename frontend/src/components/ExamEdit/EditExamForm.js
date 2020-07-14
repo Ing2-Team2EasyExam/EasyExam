@@ -1,5 +1,9 @@
 import React from "react";
-import ExamForm from "../ExamForm/ExamForm";
+import { Form, Button, Col } from "react-bootstrap";
+import EditExamDataInputs from "./EditExamDataInputs";
+import EditExamProblemInputs from "./EditExamProblemInputs";
+import EditFormSubmitButton from "./EditFormSubmitButton";
+import FormSubmitButton from "../ExamCreation/FormSubmitButton";
 
 class EditExamForm extends React.Component {
   /**
@@ -22,6 +26,85 @@ class EditExamForm extends React.Component {
       isLoaded: false,
       isLoading: false,
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleProblemSelection = this.handleProblemSelection.bind(this);
+  }
+
+  handleProblemSelection(list) {
+    /**
+     * Handle the event when a problem is selected in the form
+     */
+    this.setState({
+      problems: list,
+    });
+  }
+
+  handleSubmit(event) {
+    /**
+     * Handler of the form submittion, using asynchronous API with fetch send the
+     * data to the backend.
+     */
+    event.preventDefault();
+    const url = "/api/exams/" + this.props.uuid + "/update/";
+    let token = localStorage.getItem("token");
+    let data = {
+      //uuid: this.props.uuid,
+      name: this.state.name,
+      due_date: this.state.dueDate,
+      start_time: this.state.startTime,
+      end_time: this.state.endTime,
+      teacher: this.state.teacher,
+      course_name: this.state.courseName,
+      course_code: this.state.courseCode,
+      university: this.state.university,
+      language: this.state.language,
+      problems: this.state.problems,
+    };
+    this.setState({
+      isLoading: true,
+    });
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then(
+        (response) => response.json(),
+        (error) => error
+      )
+      .then(
+        (data) => {
+          console.log(Object.values(data));
+          this.setState({
+            isLoading: false,
+          });
+          alert("Examen Editado");
+        },
+        (error) => {
+          console.log(error);
+          alert("Ha ocurrido un error");
+          this.setState({
+            isLoading: false,
+          });
+        }
+      );
+  }
+
+  handleInputChange(event) {
+    /**
+     * Method that handles the change of the text inputs for the problem.
+     * @param {} event: the event on which this method is called
+     */
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
   }
 
   componentDidMount() {
@@ -36,7 +119,6 @@ class EditExamForm extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
           this.setState({
             isLoaded: true,
             name: result.name,
@@ -48,7 +130,7 @@ class EditExamForm extends React.Component {
             courseCode: result.course_code,
             university: result.university,
             language: result.language,
-            problem_choices: result.problem_choices,
+            problems: result.problems,
           });
         },
         (error) => {
@@ -61,17 +143,20 @@ class EditExamForm extends React.Component {
   }
 
   render() {
-    const url = "/api/exams/" + this.props.uuid + "/update/";
     return (
       <>
         {this.state.isLoaded && (
-          <ExamForm
-            data={this.state}
-            url={url}
-            method="PUT"
-            successMessage="Examen Editado"
-            errorMessage="Ha ocurrido un error"
-          />
+          <Form onSubmit={this.handleSubmit}>
+            <EditExamDataInputs
+              data={this.state}
+              handleInputChange={this.handleInputChange}
+            />
+            <EditExamProblemInputs
+              data={this.state.problems}
+              handleSelect={this.handleProblemSelection}
+            />
+            <FormSubmitButton isLoading={this.state.isLoading} />
+          </Form>
         )}
       </>
     );
