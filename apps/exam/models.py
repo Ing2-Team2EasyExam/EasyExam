@@ -238,3 +238,6 @@ class ExamProblemChoice(models.Model):
     points = models.PositiveIntegerField(default=2)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("problem", "exam")
