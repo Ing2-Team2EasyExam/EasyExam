@@ -58,3 +58,11 @@ class TestProblemServices(TestCase):
         exam.problems.add(self.problem)
         exam.save()
         self.assertTrue(services.check_problem_is_used(self.problem))
+
+    def test_get_problem_points(self):
+        exam = mixer.blend("exam.Exam")
+        exam.problems.add(self.problem)
+        exam.save()
+        status, points = services.get_problem_points(self.problem, exam)
+        self.assertEqual(status, 200)
+        self.assertEqual(points, 2)

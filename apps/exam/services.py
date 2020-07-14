@@ -3,6 +3,7 @@ from .models import Problem, Exam, Topic
 from typing import Set, Tuple, List
 from .generate_exam.exceptions import CompilationErrorException
 from django.forms import ValidationError
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def get_problem_from_serializer(serialized_problem: dict) -> Problem:
@@ -170,3 +171,11 @@ def update_problem(uuid, **data) -> Problem:
     except CompilationErrorException as err:
         raise err
     return problem
+
+
+def get_problem_points(problem: Problem, exam: Exam) -> Tuple[int, int]:
+    try:
+        relation_model = problem.examproblemchoice_set.get(exam=exam)
+        return 200, relation_model.points
+    except ObjectDoesNotExist:
+        return 404, -1
