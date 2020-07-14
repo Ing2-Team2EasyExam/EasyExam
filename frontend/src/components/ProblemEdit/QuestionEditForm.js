@@ -1,11 +1,8 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import SaveButton from "./SaveButton";
 import EditTopicInputs from "./EditTopicInputs";
-import FormSubmitButton from "../ExamForm/FormSubmitButton";
-//Solo interfaz gráfica, falta conectar el backend para almacenar las preguntas
+import FormSubmitButton from "../EEComponents/FormSubmitButton";
 //Falta la previsualización de las preguntas ingresadas.
 
 class QuestionEditForm extends React.Component {
