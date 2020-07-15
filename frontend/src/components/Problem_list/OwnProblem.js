@@ -31,6 +31,17 @@ class OwnProblem extends React.Component {
       </Tooltip>
     );
   }
+
+  formatDate(dateTime) {
+    let arr = dateTime.split("Z")[0];
+    arr = arr.split("T");
+    let date = arr[0];
+    let time_arr = arr[1].split(".");
+    let time = time_arr[0];
+
+    return date.replace(/-/g, "/") + " a las " + time;
+  }
+
   render() {
     const edit_url = "/problems/edit/" + this.props.problem.uuid;
     const actions = this.props.problem.editable ? (
@@ -50,6 +61,7 @@ class OwnProblem extends React.Component {
     ) : (
       "No hay acciones disponibles"
     );
+    let created_at = this.formatDate(this.props.problem.created_at);
     return (
       <tr>
         <td width="30%">
@@ -58,7 +70,7 @@ class OwnProblem extends React.Component {
             {this.props.problem.name}
           </a>
         </td>
-        <td width="30%"> {this.props.problem.created_at}</td>
+        <td width="30%"> {created_at}</td>
         <td width="30%">
           {" "}
           <Topic topics={this.props.problem.topics} />{" "}
