@@ -10,6 +10,16 @@ import { Tabs, Tab } from "react-bootstrap";
 class ProblemList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      filter_topic: null,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(topic) {
+    this.setState({
+      filter_topic: topic,
+    });
   }
 
   render() {
@@ -35,8 +45,8 @@ class ProblemList extends React.Component {
         >
           <Tab eventKey="preguntas" title="Preguntas">
             <h4 style={{ textAlign: "center" }}>Preguntas</h4>
-            <SearchComponent />
-            <AllProblems />
+            <SearchComponent onValueChange={this.handleChange} />
+            <AllProblems filterTopic={this.state.filter_topic} />
           </Tab>
           <Tab eventKey="misPreguntas" title="Mis Preguntas">
             <h4 style={{ textAlign: "center" }}>Mis Preguntas</h4>
