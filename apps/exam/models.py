@@ -212,6 +212,10 @@ class Exam(models.Model):
         """
         return self.course_name
 
+    @property
+    def problem_choices(self):
+        return self.examproblemchoice_set.all()
+
     def __str__(self):
         return self.name
 
@@ -234,3 +238,6 @@ class ExamProblemChoice(models.Model):
     points = models.PositiveIntegerField(default=2)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("problem", "exam")
