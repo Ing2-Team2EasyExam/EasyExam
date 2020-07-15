@@ -8,6 +8,7 @@ class SearchComponent extends React.Component {
     super(props);
     this.state = {
       selectedOption: null,
+      available_topics: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,12 +18,35 @@ class SearchComponent extends React.Component {
     console.log(`Option selected:`, selectedOption);
   }
 
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    fetch("/api/topics/list/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then(
+        (response) => response.json(),
+        (errors) => console.log(errors)
+      )
+      .then((data) => {
+        this.setState({ available_topics: data });
+      });
+  }
+
+  transformDict(array) {
+    return array.map((topic) => {
+      return {
+        value: topic.name,
+        label: topic.name,
+      };
+    });
+  }
+
   render() {
-    const options = [
-      { value: "chocolate", label: "Chocolate" },
-      { value: "strawberry", label: "Strawberry" },
-      { value: "vanilla", label: "Vanilla" },
-    ];
+    const available_topics = this.transformDict(this.state.available_topics);
     const selectedOption = this.state.selectedOption;
     return (
       <Form>
@@ -35,7 +59,7 @@ class SearchComponent extends React.Component {
               isSearchable
               value={selectedOption}
               onChange={this.handleChange}
-              options={options}
+              options={available_topics}
             />
           </Col>
         </Form.Group>
