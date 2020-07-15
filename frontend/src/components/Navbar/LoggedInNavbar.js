@@ -14,7 +14,7 @@ class LoggedInNavbar extends React.Component {
           </Nav>
           <Nav>
             <NavDropdown title="Perfil" id="basic-nav-dropdown" alignRight>
-              <NavDropdown.Item href="#perfil">Ver Perfil</NavDropdown.Item>
+              <NavDropdown.Item href="/profile">Ver Perfil</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as="button" onClick={this.props.doLogout}>
                 Cerrar sesión

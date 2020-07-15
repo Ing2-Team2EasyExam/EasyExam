@@ -26,4 +26,5 @@ urlpatterns = [
         views.FrontEndRendererView.as_view(),
         name="frontend-problems-edit",
     ),
+    path("profile/", views.FrontEndRendererView.as_view(), name="profile"),
 ]

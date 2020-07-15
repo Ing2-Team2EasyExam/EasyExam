@@ -104,7 +104,10 @@ def exam_tex(exam):
     tex.append("\\maketitle\n")
     problems = exam.problems.all()
     for problem in problems:
-        tex.append(get_input_problem(problem, "2 pts"))
+        related_model = problem.examproblemchoice_set.get(exam=exam)
+        points = related_model.points
+        points_text = "puntos" if exam.language == "ES" else "marks"
+        tex.append(get_input_problem(problem, f"{points} {points_text}"))
 
     tex.append("\\end{document}\n")
 

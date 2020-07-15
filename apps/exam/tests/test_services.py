@@ -34,6 +34,16 @@ class TestSerializerServices(TestCase):
         for problem in problems:
             self.assertIn(problem, services_problems)
 
+    def test_get_problem_from_serializer(self):
+        expected_problem = mixer.blend("exam.Problem")
+        problem_data = {
+            "name": expected_problem.name,
+            "author": expected_problem.author,
+        }
+        problem = services.get_problem_from_serializer(problem_data)
+        self.assertEqual(problem.name, expected_problem.name)
+        self.assertEqual(problem.author, expected_problem.author)
+
 
 class TestProblemServices(TestCase):
     def setUp(self):
@@ -48,3 +58,11 @@ class TestProblemServices(TestCase):
         exam.problems.add(self.problem)
         exam.save()
         self.assertTrue(services.check_problem_is_used(self.problem))
+
+    def test_get_problem_points(self):
+        exam = mixer.blend("exam.Exam")
+        exam.problems.add(self.problem)
+        exam.save()
+        status, points = services.get_problem_points(self.problem, exam)
+        self.assertEqual(status, 200)
+        self.assertEqual(points, 2)

@@ -1,27 +1,42 @@
 from django.contrib import admin
-
-"""
-from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-
-from apps.challenge.models import Criterion, Challenge
 from apps.exam.admin import ProblemAdmin, ExamAdmin
 from apps.exam.models import Problem, Topic, Exam
 from apps.user.models import User, Transaction
 
-UserAdmin.list_display = ("username", "email", "credits")
-UserAdmin.list_filter += ("credits",)
-UserAdmin.fieldsets += (("credits", {"fields": ("credits",)}),)
+# Site Header
 
+admin.site.site_header = "EasyExam Admin"
+
+# Admin class
+
+# Fields For User Creation And Edit
+# User E-mail
+# Check if User Is Active
+# Avatar / Profile Picture
+# Password
+# User Group
+# User Permissions TODO check differences between is_staff y is_superuser, if staff user can enter to the Django Admin Interface
+# I'ts the same as the is_admin field on Our Model
+
+
+class UserAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ("Correo Electrónico ", {"fields": ["email"]}),
+        ("Contraseña", {"fields": ["password"]}),
+        ("Nombre Completo", {"fields": ["first_name", "last_name"]}),
+        ("Foto De Perfil", {"fields": ["image"]}),
+        ("Grupos", {"fields": ["groups"]}),
+        ("Usuario Activo", {"fields": ["is_active"]}),
+    ]
+
+
+# Admin class register with his asociated model
 admin.site.register(User, UserAdmin)
+
+# Problem class register with his asociated model
 admin.site.register(Exam, ExamAdmin)
 admin.site.register(Problem, ProblemAdmin)
-# admin.site.register(Image)
+
+# Topic class register with his asociated model
 admin.site.register(Topic)
-# admin.site.register(Criterion)
-# admin.site.register(Challenge)
-# admin.site.register(Vote)
-# admin.site.register(CurrentChallenge)
-# admin.site.register(Transaction)
-# admin.site.unregister(Group)
-"""  # Comment this for now
