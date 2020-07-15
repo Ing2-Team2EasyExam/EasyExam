@@ -1,24 +1,44 @@
 import React from "react";
-import { InputGroup, FormControl } from "react-bootstrap/";
+import { Form, Row, Col } from "react-bootstrap/";
+import Select from "react-select";
+import { Search } from "react-bootstrap-icons";
 
 class SearchComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      selectedOption: null,
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(selectedOption) {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
   }
 
   render() {
+    const options = [
+      { value: "chocolate", label: "Chocolate" },
+      { value: "strawberry", label: "Strawberry" },
+      { value: "vanilla", label: "Vanilla" },
+    ];
+    const selectedOption = this.state.selectedOption;
     return (
-      <InputGroup className="mb-3">
-        <InputGroup.Prepend>
-          <InputGroup.Text id="inputGroup-sizing-default">
-            Buscar
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl
-          aria-label="Buscar"
-          aria-describedby="inputGroup-sizing-default"
-        />
-      </InputGroup>
+      <Form>
+        <Form.Group as={Row} controlId="search_by_topic">
+          <Form.Label column xs="auto">
+            <Search /> Buscar:
+          </Form.Label>
+          <Col>
+            <Select
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={options}
+            />
+          </Col>
+        </Form.Group>
+      </Form>
     );
   }
 }
