@@ -14,8 +14,10 @@ class SearchComponent extends React.Component {
   }
 
   handleChange(selectedOption) {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    this.setState({
+      selectedOption: selectedOption,
+    });
+    this.props.onValueChange(selectedOption);
   }
 
   componentDidMount() {
@@ -57,6 +59,8 @@ class SearchComponent extends React.Component {
           <Col>
             <Select
               isSearchable
+              isClearable
+              placeholder="Ingrese tópico..."
               value={selectedOption}
               onChange={this.handleChange}
               options={available_topics}
