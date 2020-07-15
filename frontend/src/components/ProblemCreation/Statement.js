@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import AddImage from "./AddImage";
+//TODO: generalize this component to be used in solution
 class Statement extends React.Component {
   constructor(props) {
     super(props);
