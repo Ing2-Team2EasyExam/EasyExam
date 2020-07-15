@@ -30,7 +30,7 @@ class Problem extends React.Component {
     let time_arr = arr[1].split(".");
     let time = time_arr[0];
 
-    return date + " a las " + time;
+    return date.replace(/-/g, "/") + " a las " + time;
   }
 
   render() {
