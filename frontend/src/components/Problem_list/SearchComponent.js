@@ -32,6 +32,7 @@ class SearchComponent extends React.Component {
           </Form.Label>
           <Col>
             <Select
+              isSearchable
               value={selectedOption}
               onChange={this.handleChange}
               options={options}
