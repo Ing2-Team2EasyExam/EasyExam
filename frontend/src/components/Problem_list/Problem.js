@@ -1,5 +1,7 @@
 import React from "react";
 import Topic from "./Topic";
+import { Button } from "react-bootstrap";
+import { PlusSquare } from "react-bootstrap-icons";
 
 class Problem extends React.Component {
   constructor(props) {
@@ -48,7 +50,12 @@ class Problem extends React.Component {
           {" "}
           <Topic topics={this.props.problem.topics} />{" "}
         </td>
-        <td width="25%"> {this.props.problem.author}</td>
+        <td width="20%"> {this.props.problem.author}</td>
+        <td>
+          <Button variant="light">
+            <PlusSquare />
+          </Button>
+        </td>
       </tr>
     );
   }
