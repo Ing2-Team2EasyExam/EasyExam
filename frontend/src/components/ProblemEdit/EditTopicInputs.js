@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
 import { XCircleFill } from "react-bootstrap-icons";
-import AddTopicButton from "../ProblemCreation/AddTopicButton";
+import AddTopicButton from "./AddTopicButton";
 
 class SelectTopic extends React.Component {
   /**

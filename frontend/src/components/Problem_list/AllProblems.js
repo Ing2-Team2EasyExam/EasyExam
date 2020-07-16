@@ -37,8 +37,23 @@ class AllProblems extends React.Component {
       );
   }
 
+  containTopic(topics, value) {
+    return topics.some((topic) => topic.name === value);
+  }
+
+  filterByTopic(problems) {
+    if (problems == null) return problems;
+    let mainTopic = this.props.filterTopic;
+    if (mainTopic == null) return problems;
+    else {
+      let value = mainTopic.value;
+      return problems.filter((prob) => this.containTopic(prob.topics, value));
+    }
+  }
+
   render() {
-    const { error, isLoaded, items } = this.state;
+    const items = this.state.items;
+    const filteredProblems = this.filterByTopic(items);
     const mystyle = {
       overflowY: "scroll",
       height: "50vh",
@@ -58,7 +73,7 @@ class AllProblems extends React.Component {
           </thead>
           {items && (
             <tbody>
-              {items.map((item) => (
+              {filteredProblems.map((item) => (
                 <Problem key={item.name} problem={item} />
               ))}
             </tbody>

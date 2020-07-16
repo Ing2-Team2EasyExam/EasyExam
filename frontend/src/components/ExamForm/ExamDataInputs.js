@@ -1,5 +1,5 @@
 import React from "react";
-import FormInput from "./FormInput";
+import FormInput from "../EEComponents/FormInput";
 import { Form, Col, Row } from "react-bootstrap";
 class ExamDataInputs extends React.Component {
   /**

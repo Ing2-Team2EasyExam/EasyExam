@@ -12,10 +12,10 @@ import LoginForm from "./Login/LoginForm";
 import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
 import EditExam from "./ExamEdit/EditExam";
-import Questions from "./ProblemCreation/Questions";
 import Exams from "./ExamList/Exams";
 import EditQuestion from "./ProblemEdit/EditQuestion";
 import Profile from "./Profile/Profile";
+import CreateProblem from "./ProblemCreation/CreateProblem";
 
 class App extends React.Component {
   constructor(props) {
@@ -120,7 +120,7 @@ class App extends React.Component {
               {this.isLoggedIn() ? <ProblemList /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/problems/create">
-              {this.isLoggedIn() ? <Questions /> : <Redirect to="/" />}
+              {this.isLoggedIn() ? <CreateProblem /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/exam/edit/:uuid" component={EditExam} />
             <Route exact path="/problems/edit/:uuid" component={EditQuestion} />
