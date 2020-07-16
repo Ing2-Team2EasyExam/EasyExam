@@ -40,6 +40,7 @@ from apps.user.models import Transaction
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
+from .services import recompile_exam, recompile_problem
 
 
 class NoSerializerInformationMixin(object):
@@ -153,6 +154,11 @@ class ProblemPDFView(RetrieveFileMixin, APIView):
     file_attribute_name = "pdf"
     as_attachment = True
 
+    def get_object(self, *args, **kwargs):
+        problem = super().get_object(*args, **kwargs)
+        recompile_problem(problem)  # Delete this when uploading to buho
+        return problem
+
     def get_filename(self, *args, **kwargs):
         problem = self.get_object(*args, **kwargs)
         return f"{problem.name}_{problem.author}.pdf"
@@ -214,6 +220,11 @@ class ExamNormalPDFDownloadView(RetrieveFileMixin, APIView):
     model = Exam
     file_attribute_name = "pdf_normal"
     as_attachment = True
+
+    def get_object(self, *args, **kwargs):
+        exam = super().get_object(*args, **kwargs)
+        recompile_exam(exam)  # TODO: Delete this when uploading to buho
+        return exam
 
     def get_filename(self, *args, **kwargs):
         exam = self.get_object(*args, **kwargs)
