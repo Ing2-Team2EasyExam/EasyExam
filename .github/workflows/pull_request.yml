@@ -51,7 +51,7 @@ jobs:
           POSTGRES_HOST: "127.0.0.1"
       - name: Run Tests
         run: |
-          pytest
+          python manage.py test -v 2
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
