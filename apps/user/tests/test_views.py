@@ -1,11 +1,15 @@
-import pytest
+from django.test import TestCase
 from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
 from apps.user import views
+<<<<<<< HEAD
 
 from mixer.backend.django import mixer
 import pytest
+=======
+from mixer.backend.django import mixer
+>>>>>>> test(pytest): Revert migration to pytest of the tests
 
 
 class TestLoginView(TestCase):
