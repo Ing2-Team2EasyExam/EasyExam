@@ -69,6 +69,9 @@ class LogoutView(APIView):
 
 class ResetEmail(APIView):
     def get(self, request, *args, **kwargs):
+class SendResetPasswordEmailView(APIView):
+    def post(self, request, *args, **kwargs):
+
         send_reset_password_email.delay("cosme@fulanito.com", "123124")
         return Response(status=status.HTTP_200_OK)
 

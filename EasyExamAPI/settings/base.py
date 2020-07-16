@@ -218,3 +218,5 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
+
+RESET_PASSWORD_SECRET = "5b30af983f2ca54bad7d0b5c03365dde"

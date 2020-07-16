@@ -1,4 +1,5 @@
 from django.test import TestCase
+import pytest
 from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
@@ -7,6 +8,7 @@ from mixer.backend.django import mixer
 import pytest
 
 
+<<<<<<< HEAD
 class TestLoginView(TestCase):
     def setUp(self):
         self.factory = APIRequestFactory()
@@ -165,3 +167,59 @@ def test_change_password_view(
     response = views.ChangePasswordView.as_view()(request)
     assert response.status_code == expected_status
     assert response.data == expected_information
+=======
+@pytest.fixture
+def factory():
+    return APIRequestFactory()
+
+
+@pytest.fixture
+def login_url():
+    return reverse("login")
+
+
+@pytest.fixture
+def logout_url():
+    return reverse("logout")
+
+
+@pytest.mark.django_db
+def test_login_request_no_data(factory, credentials, login_url):
+    request = factory.post(login_url)
+    response = views.LoginView.as_view()(request)
+    assert response.status_code == 400
+    assert response.data == {"error": "Please provide both username and password"}
+
+
+@pytest.mark.django_db
+def test_login_request_non_existant_user(factory, credentials, login_url):
+    request = factory.post(login_url, data=credentials, format="json")
+    response = views.LoginView.as_view()(request)
+    assert response.status_code == 404
+    assert response.data == {"error": "Invalid Credentials"}
+
+
+@pytest.mark.django_db
+def test_valid_login(factory, credentials, login_url, cosme_fulanito):
+    request = factory.post(login_url, data=credentials, format="json")
+    response = views.LoginView.as_view()(request)
+    assert response.status_code == 200
+    assert "token" in response.data
+    assert response.data["token"] is not None
+
+
+@pytest.mark.django_db
+def test_non_authenticated_logout_request(factory, logout_url):
+    request = factory.delete(logout_url)
+    response = views.LogoutView.as_view()(request)
+    assert response.status_code == 401
+
+
+@pytest.mark.django_db
+def test_authenticated_user_logout_request(factory, logout_url, cosme_fulanito):
+    request = factory.delete(logout_url)
+    Token.objects.create(user=cosme_fulanito)
+    force_authenticate(request, cosme_fulanito)
+    response = views.LogoutView.as_view()(request)
+    assert response.status_code == 200
+>>>>>>> test(login): Migrate user views test to pytest
