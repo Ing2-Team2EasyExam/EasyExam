@@ -156,7 +156,7 @@ class ProblemPDFView(RetrieveFileMixin, APIView):
 
     def get_object(self, *args, **kwargs):
         problem = super().get_object(*args, **kwargs)
-        recompile_problem(problem)  # Delete this when uploading to buho
+        recompile_problem(problem)  # TODO: Delete this when uploading to buho
         return problem
 
     def get_filename(self, *args, **kwargs):
