@@ -17,7 +17,7 @@ class ExamRow extends React.Component {
     let time_arr = arr[1].split(".");
     let time = time_arr[0];
 
-    return date.replace(/-/g, "/") + " a las " + time;
+    return date + " a las " + time;
   }
 
   render() {
