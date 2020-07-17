@@ -1,26 +1,32 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import (
+    ModelSerializer,
+    Serializer,
+    EmailField,
+    CharField,
+)
 from apps.user.services import create_inactive_user_from_email
 from apps.user.models import Transaction
 
 User = get_user_model()
 
 
-class UserSerializer(ModelSerializer):
+class UserSerializer(Serializer):
     """
     Serializer of the User model, used for reading the detail of a user.
     """
 
-    class Meta:
-        model = User
-        fields = ("pk", "email", "is_active")
-        extra_kwargs = {
-            "email": {"read_only": True},
-            "pk": {"read_only": True},
-            "is_active": {"read_only": True},
-        }
+    email = EmailField(read_only=True)
+    first_name = CharField()
+    last_name = CharField()
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get("first_name", instance.first_name)
+        instance.last_name = validated_data.get("last_name", instance.last_name)
+        instance.save()
+        return instance
 
 
 class UserCreateSerializer(ModelSerializer):
