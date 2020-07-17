@@ -221,11 +221,6 @@ class ExamNormalPDFDownloadView(RetrieveFileMixin, APIView):
     file_attribute_name = "pdf_normal"
     as_attachment = True
 
-    def get_object(self, *args, **kwargs):
-        exam = super().get_object(*args, **kwargs)
-        recompile_exam(exam)  # TODO: Delete this when uploading to buho
-        return exam
-
     def get_filename(self, *args, **kwargs):
         exam = self.get_object(*args, **kwargs)
         return f"{exam.name}.pdf"
