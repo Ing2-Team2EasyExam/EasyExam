@@ -53,7 +53,10 @@ class TestExamEditSerializer(TestCase):
         }
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")
-    def test_create_exam_from_serializer(self, mock_generate_pdf):
+    @mock.patch("apps.exam.models.Problem.generate_pdf")
+    def test_create_exam_from_serializer(
+        self, mock_generate_pdf, mock_generate_problem
+    ):
         request = mock.MagicMock()
         request.user = self.user
         context = {"request": request}
@@ -63,7 +66,10 @@ class TestExamEditSerializer(TestCase):
         self.assertIsNotNone(exam)
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")
-    def test_update_exam_from_serializer(self, mock_generate_pdf):
+    @mock.patch("apps.exam.models.Problem.generate_pdf")
+    def test_update_exam_from_serializer(
+        self, mock_generate_pdf, mock_generate_problem
+    ):
         request = mock.MagicMock()
         request.user = self.user
         context = {"request": request}

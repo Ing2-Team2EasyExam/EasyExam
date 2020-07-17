@@ -40,6 +40,7 @@ from apps.user.models import Transaction
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
+from .services import recompile_exam, recompile_problem
 
 
 class NoSerializerInformationMixin(object):
@@ -152,6 +153,11 @@ class ProblemPDFView(RetrieveFileMixin, APIView):
     model = Problem
     file_attribute_name = "pdf"
     as_attachment = True
+
+    def get_object(self, *args, **kwargs):
+        problem = super().get_object(*args, **kwargs)
+        recompile_problem(problem)  # TODO: Delete this when uploading to buho
+        return problem
 
     def get_filename(self, *args, **kwargs):
         problem = self.get_object(*args, **kwargs)
