@@ -1,13 +1,14 @@
 import React from "react";
 import Topic from "./Topic";
 import { Button } from "react-bootstrap";
-import { PlusSquare } from "react-bootstrap-icons";
+import { Files } from "react-bootstrap-icons";
 
 class Problem extends React.Component {
   constructor(props) {
     super(props);
 
     this.getPreview = this.getPreview.bind(this);
+    this.duplicateProblem = this.duplicateProblem.bind(this);
   }
   getPreview(event) {
     event.preventDefault();
@@ -23,6 +24,10 @@ class Problem extends React.Component {
         let preview_url = URL.createObjectURL(blob);
         window.open(preview_url);
       });
+  }
+
+  duplicateProblem(event) {
+    console.log(this.props.problem.uuid);
   }
 
   formatDate(dateTime) {
@@ -52,8 +57,8 @@ class Problem extends React.Component {
         </td>
         <td width="20%"> {this.props.problem.author}</td>
         <td>
-          <Button variant="light">
-            <PlusSquare />
+          <Button variant="light" onClick={this.duplicateProblem}>
+            <Files />
           </Button>
         </td>
       </tr>
