@@ -6,6 +6,23 @@ from django.forms import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 
 
+def recompile_problem(problem: Problem) -> None:
+    problem.save()
+    problem.generate_pdf()
+
+
+def regenerate_exam_problems(exam: Exam) -> None:
+    exam_problems = exam.problems.all()
+    for problem in exam_problems:
+        recompile_problem(problem)
+
+
+def recompile_exam(exam: Exam) -> None:
+    regenerate_exam_problems(exam)
+    exam.save()
+    exam.generate_pdf()
+
+
 def get_problem_from_serializer(serialized_problem: dict) -> Problem:
     return get_object_or_404(
         klass=Problem,
@@ -39,6 +56,7 @@ def update_exam(uuid, **data) -> Exam:
 
     exam.save()
     try:
+        regenerate_exam_problems(exam)
         exam.generate_pdf()
         return exam
     except CompilationErrorException as err:
@@ -80,6 +98,7 @@ def create_exam(**data) -> Exam:
         exam.problems.add(problem, through_defaults={"points": points})
     exam.save()
     try:
+        regenerate_exam_problems(exam)
         exam.generate_pdf()
         return exam
     except CompilationErrorException as err:

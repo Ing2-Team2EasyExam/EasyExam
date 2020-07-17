@@ -37,7 +37,8 @@ class TestExamCreateView(TestCase):
         self.assertEqual(response.status_code, 401)
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")
-    def test_create_exam_authenticated(self, mock_generate_pdf):
+    @mock.patch("apps.exam.models.Problem.generate_pdf")
+    def test_create_exam_authenticated(self, mock_generate_pdf, mock_generate_problem):
         request = self.factory.post(self.url, self.data, format="json")
         force_authenticate(request, self.user)
         response = ExamCreateView.as_view()(request)
@@ -78,7 +79,8 @@ class TestExamUpdateView(TestCase):
         self.assertEqual(response.status_code, 401)
 
     @mock.patch("apps.exam.models.Exam.generate_pdf")
-    def test_update_exam(self, mock_generate_pdf):
+    @mock.patch("apps.exam.models.Problem.generate_pdf")
+    def test_update_exam(self, mock_generate_pdf, mock_generate_problem):
         request = self.factory.put(self.url, self.data, format="json")
         force_authenticate(request, self.user)
         response = ExamUpdateView.as_view()(request, *[], **{"uuid": self.exam.pk})
