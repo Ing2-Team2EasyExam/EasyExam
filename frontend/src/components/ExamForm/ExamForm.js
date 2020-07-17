@@ -25,6 +25,7 @@ class ExamForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   handleProblemSelection(list) {
@@ -49,12 +50,58 @@ class ExamForm extends React.Component {
     });
   }
 
+  validate(data) {
+    let errors = "";
+
+    let name = data.name;
+    if (name.trim().length == 0)
+      errors = errors.concat("- 'Nombre del Exámen' inválido.\n");
+
+    let due_date = data.due_date;
+    if (due_date.length == 0)
+      errors = errors.concat("- 'Fecha de realización' inválida.\n");
+
+    let start_time = data.start_time;
+    if (start_time.length == 0)
+      errors = errors.concat("- 'Hora de inicio' inválida.\n");
+
+    let end_time = data.end_time;
+    if (end_time.length == 0)
+      errors = errors.concat("- 'Hora de término' inválida.\n");
+
+    let teacher = data.teacher;
+    if (teacher.trim().length == 0)
+      errors = errors.concat("- 'Nombre profesor/a' inválido.\n");
+
+    let course_name = data.course_name;
+    if (course_name.trim().length == 0)
+      errors = errors.concat("- 'Nombre del Curso' inválido.\n");
+
+    let course_code = data.course_code;
+    if (course_code.trim().length == 0)
+      errors = errors.concat("- 'Código del Curso' inválido.\n");
+
+    let university = data.university;
+    if (university.trim().length == 0)
+      errors = errors.concat("- 'Universidad' inválido.\n");
+
+    let problem_choices = data.problem_choices;
+    if (
+      problem_choices.some(
+        (item) =>
+          item.problem.name === "DEFAULT" && item.problem.author === "DEFAULT"
+      )
+    )
+      errors = errors.concat("- 'Problemas' inválido.\n");
+
+    return errors;
+  }
+
   handleSubmit(event) {
     /**
      * Handler of the form submittion, using asynchronous API with fetch send the
      * data to the backend.
      */
-    console.log(this.state.problem_choices);
     event.preventDefault();
     const url = this.props.url;
     const method = this.props.method;
@@ -71,6 +118,12 @@ class ExamForm extends React.Component {
       language: this.state.language,
       problem_choices: this.state.problem_choices,
     };
+    let form_invalid = this.validate(data);
+    if (form_invalid.length > 0) {
+      alert(form_invalid);
+      return false;
+    }
+
     this.setState({
       isLoading: true,
     });
