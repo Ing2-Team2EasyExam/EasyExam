@@ -40,7 +40,7 @@ from apps.user.models import Transaction
 
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
-from .services import recompile_exam, recompile_problem
+from .services import recompile_exam, recompile_problem, get_problem, clone_problem
 
 
 class NoSerializerInformationMixin(object):
@@ -165,6 +165,21 @@ class ProblemPDFView(RetrieveFileMixin, APIView):
 
     def get(self, request, uuid, *args, **kwargs):
         return super().retrieve(request, uuid, *args, **kwargs)
+
+
+class ProblemCloneView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            problem_id = self.request.data["uuid"]
+            problem = get_problem(problem_id)
+            cloned_problem = clone_problem(problem, self.request.user)
+            response_data = {"uuid": cloned_problem.uuid}
+            return Response(data=response_data, status=status.HTTP_201_CREATED)
+        except KeyError:
+            response_data = {"uuid": "Original problem uuid required"}
+            return Response(data=response_data, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Exam Views

@@ -7,6 +7,10 @@ from django.forms import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 
 
+def get_problem(problem_id: str) -> Problem:
+    return get_object_or_404(klass=Problem, pk=problem_id)
+
+
 def recompile_problem(problem: Problem) -> None:
     problem.save()
     problem.generate_pdf()

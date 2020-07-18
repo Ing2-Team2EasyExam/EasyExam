@@ -7,6 +7,7 @@ from apps.exam.views import (
     UserProblemListView,
     ProblemCreateView,
     ProblemUpdateView,
+    ProblemCloneView,
     ProblemPDFView,
     ExamCreateView,
     ExamUpdateView,
@@ -32,6 +33,7 @@ urlpatterns = [
         name="problem-update",
     ),
     path("problems/<uuid:uuid>/pdf/", ProblemPDFView.as_view(), name="problem-pdf"),
+    path("problems/clone/", ProblemCloneView.as_view(), name="problem-clone"),
     # Exam paths
     path("exams/create/", ExamCreateView.as_view(), name="exam-create"),
     path("exams/lists/", ExamListView.as_view(), name="exam-list"),
