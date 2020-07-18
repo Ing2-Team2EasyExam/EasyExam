@@ -21,7 +21,12 @@ class Profile extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Button href="#changePassword" variant="primary" size="lg" block>
+          <Button
+            href="/profile/change-password"
+            variant="primary"
+            size="lg"
+            block
+          >
             Cambiar Contraseña
           </Button>
         </Row>

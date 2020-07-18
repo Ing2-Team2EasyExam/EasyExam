@@ -16,6 +16,7 @@ import Exams from "./ExamList/Exams";
 import EditQuestion from "./ProblemEdit/EditQuestion";
 import Profile from "./Profile/Profile";
 import CreateProblem from "./ProblemCreation/CreateProblem";
+import ChangePass from "./Profile/ChangePass";
 
 class App extends React.Component {
   constructor(props) {
@@ -126,6 +127,9 @@ class App extends React.Component {
             <Route exact path="/problems/edit/:uuid" component={EditQuestion} />
             <Route exact path="/profile">
               {this.isLoggedIn() ? <Profile /> : <Redirect to="/" />}
+            </Route>
+            <Route exact path="/profile/change-password">
+              {this.isLoggedIn() ? <ChangePass /> : <Redirect to="/" />}
             </Route>
           </Switch>
         </BrowserRouter>
