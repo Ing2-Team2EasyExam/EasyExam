@@ -69,7 +69,7 @@ def cosme_credentials():
     return {
         "email": "cosme@fulanito.com",
         "first_name": "Cosme",
-        "last_name": "fulanito",
+        "last_name": "Fulanito",
         "password": "Me da una copilla porfavor",
     }
 
@@ -97,6 +97,7 @@ def test_retrieve_information_from_view(
     force_authenticate(request, user)
     response = views.UserAccountView.as_view()(request)
     assert response.status_code == expected_status
+    assert response.data == expected_information
 
 
 @pytest.mark.django_db
@@ -122,5 +123,45 @@ def test_update_account_information(
     request = factory.put(url, data=updated_data, format="json")
     force_authenticate(request, user)
     response = views.UserAccountView.as_view()(request)
+    assert response.status_code == expected_status
+    assert response.data == expected_information
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "updated_credentials,expected_status,expected_information",
+    [
+        (
+            {
+                "old_password": "Me da una copilla porfavor",
+                "new_password": "Homero? Quien es homero?",
+            },
+            200,
+            {},
+        ),
+        (
+            {
+                "old_password": "Mi nombre es cosme fulanito",
+                "new_password": "Este hombre es mi doble exacto",
+            },
+            400,
+            {"old_password": ["Invalid password"]},
+        ),
+    ],
+)
+def test_change_password_view(
+    factory,
+    cosme_credentials,
+    updated_credentials,
+    expected_status,
+    expected_information,
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    user.set_password(cosme_credentials["password"])
+    user.save()
+    url = reverse("change-password")
+    request = factory.put(url, data=updated_credentials, format="json")
+    force_authenticate(request, user)
+    response = views.ChangePasswordView.as_view()(request)
     assert response.status_code == expected_status
     assert response.data == expected_information
