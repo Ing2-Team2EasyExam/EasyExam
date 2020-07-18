@@ -14,6 +14,22 @@ class ProfileForm extends React.Component {
       email: "",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validate = this.validate.bind(this);
+  }
+
+  validate(data) {
+    let errors = "";
+
+    let first_name = data.first_name;
+    if (first_name.trim().length == 0)
+      errors = errors.concat("- 'Nombre' inválido.\n");
+
+    let last_name = data.last_name;
+    if (last_name.length == 0)
+      errors = errors.concat("- 'Apellido' inválido.\n");
+
+    return errors;
   }
 
   handleInputChange(event) {
@@ -23,6 +39,51 @@ class ProfileForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const url = "/api/users/account/";
+    let token = localStorage.getItem("token");
+    let data = {
+      email: this.state.email,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
+    };
+    let form_invalid = this.validate(data);
+    if (form_invalid.length > 0) {
+      alert(form_invalid);
+      return false;
+    }
+
+    this.setState({
+      isLoading: true,
+    });
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then(
+        (data) => {
+          console.log(Object.values(data));
+          this.setState({
+            isLoading: false,
+          });
+          alert("Se ha guardado exitósamente");
+        },
+        (error) => {
+          console.log(error);
+          alert("Ha ocurrido un error");
+          this.setState({
+            isLoading: false,
+          });
+        }
+      );
   }
 
   componentDidMount() {
@@ -54,9 +115,8 @@ class ProfileForm extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <FormInput
           controlId="myFirstName"
           name="first_name"
