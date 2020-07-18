@@ -5,6 +5,7 @@ from typing import Set, Tuple, List
 from .generate_exam.exceptions import CompilationErrorException
 from django.forms import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
+import pdb
 
 
 def get_problem(problem_id: str) -> Problem:
@@ -144,6 +145,7 @@ def check_problem_is_used(problem: Problem) -> bool:
 
 
 def create_problem(**data) -> Problem:
+    pdb.set_trace()
     topics_data = data.get("topics_data", [])
     figures = data.get("figures", [])
     name = data["name"]

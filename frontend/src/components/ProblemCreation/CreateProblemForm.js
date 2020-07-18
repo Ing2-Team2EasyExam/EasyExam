@@ -72,7 +72,7 @@ class CreateProblemForm extends React.Component {
     form_data.append("statement_content", this.state.statement_content);
     form_data.append("solution_content", this.state.solution_content);
     form_data.append("topics_data", topics);
-    form_data.append("figures[]", this.state.image, this.state.image.name);
+    form_data.append("figures", this.state.image, this.state.image.name);
 
     console.log(form_data);
 
