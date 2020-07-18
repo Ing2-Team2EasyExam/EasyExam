@@ -77,14 +77,6 @@ class UserAccountView(RetrieveUpdateAPIView):
         return self.request.user
 
 
-class UserCreate(CreateAPIView):
-    """
-    Creates a new non-active User instance.
-    """
-
-    serializer_class = UserCreateSerializer
-
-
 class ChangePasswordView(UpdateAPIView):
     """
     Change the password of the user.
@@ -95,6 +87,15 @@ class ChangePasswordView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+### Legacy views
+class UserCreate(CreateAPIView):
+    """
+    Creates a new non-active User instance.
+    """
+
+    serializer_class = UserCreateSerializer
 
 
 class TransactionList(ListAPIView):
