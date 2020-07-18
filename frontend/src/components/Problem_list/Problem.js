@@ -27,7 +27,31 @@ class Problem extends React.Component {
   }
 
   duplicateProblem(event) {
-    console.log(this.props.problem.uuid);
+    const uuid = this.props.problem.uuid;
+    console.log(uuid);
+    /*
+    const url = "/preguntas/copy/";
+    let token = localStorage.getItem("token");
+    let data = { "uuid": uuid};
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then(
+        (response) => response.json()
+      )
+      .then(
+        (data) => {
+          let response_uuid = data.uuid;
+          let clone_url = "/problems/edit/" + response_uuid;
+          window.location.href = clone_url;
+        }
+      );
+      */
   }
 
   formatDate(dateTime) {
