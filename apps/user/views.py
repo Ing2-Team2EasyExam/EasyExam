@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
+from django.db.models import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,6 +21,7 @@ from apps.user.serializers import (
 )
 from apps.user.services import generate_access_token, revoke_access_token
 from .tasks import send_reset_password_email
+from .services import create_user_reset_password_url, get_user_from_email
 
 User = get_user_model()
 
@@ -67,9 +69,17 @@ class LogoutView(APIView):
 
 
 class SendResetPasswordEmailView(APIView):
-    def post(self, request, *args, **kwargs):
-        send_reset_password_email.delay("cosme@fulanito.com", "123124")
-        return Response(status=status.HTTP_200_OK)
+    def post(self, *args, **kwargs):
+        try:
+            email = self.request.data["email"]
+            user = get_user_from_email(email)
+            url = create_user_reset_password_url(user)
+            send_reset_password_email.delay(email, url)
+            return Response(status=status.HTTP_200_OK)
+        except KeyError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_200_OK)
 
 
 class UserAccountView(RetrieveUpdateAPIView):

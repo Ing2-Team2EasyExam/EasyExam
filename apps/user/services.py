@@ -69,6 +69,13 @@ def validate_token(
     return False
 
 
-def create_user_reset_url(user: User) -> str:
+def create_user_reset_password_url(user: User) -> str:
+    email_b64 = urlsafe_base64_encode(user.email)
+    updated_at_b64 = urlsafe_base64_encode(user.updated_at)
+    updated_at = urlsafe_base64_encode(updated_at_b64)
+    token = reset_password_signature(user.email, updated_at)
+    return f"/reset_password/{email_b64}/{updated_at_b64}/{token}/"
 
-    return ""
+
+def get_user_from_email(email: str) -> User:
+    return User.objects.get(email=email)
