@@ -76,11 +76,9 @@ def cosme_credentials():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "view,url_name,expected_status,expected_information",
+    "expected_status,expected_information",
     [
         (
-            views.UserAccountView,
-            "account",
             200,
             {
                 "email": "cosme@fulanito.com",
@@ -91,11 +89,38 @@ def cosme_credentials():
     ],
 )
 def test_retrieve_information_from_view(
-    factory, cosme_credentials, view, url_name, expected_status, expected_information
+    factory, cosme_credentials, expected_status, expected_information
 ):
     user = mixer.blend("user.User", **cosme_credentials)
-    url = reverse(url_name)
+    url = reverse("account")
     request = factory.get(url, format="json")
     force_authenticate(request, user)
-    response = view.as_view()(request)
+    response = views.UserAccountView.as_view()(request)
     assert response.status_code == expected_status
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "updated_data,expected_status,expected_information",
+    [
+        (
+            {"first_name": "Homero", "last_name": "Tompson"},
+            200,
+            {
+                "email": "cosme@fulanito.com",
+                "first_name": "Homero",
+                "last_name": "Tompson",
+            },
+        )
+    ],
+)
+def test_update_account_information(
+    factory, cosme_credentials, updated_data, expected_status, expected_information
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    url = reverse("account")
+    request = factory.put(url, data=updated_data, format="json")
+    force_authenticate(request, user)
+    response = views.UserAccountView.as_view()(request)
+    assert response.status_code == expected_status
+    assert response.data == expected_information

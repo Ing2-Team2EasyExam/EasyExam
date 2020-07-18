@@ -73,9 +73,6 @@ class UserAccountView(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get_serializer(self, *args, **kwargs):
-        return self.serializer_class
-
     def get_object(self):
         return self.request.user
 
