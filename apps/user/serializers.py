@@ -29,6 +29,27 @@ class UserSerializer(Serializer):
         return instance
 
 
+class ChangePasswordSerializer(Serializer):
+    """
+    Serializer of the User model, used specifically for changing the user's password.
+    """
+
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+
+    def validate_old_password(self, value):
+        if not check_password(value, self.context["request"].user.password):
+            raise serializers.ValidationError("Invalid password")
+        return value
+
+    def update(self, instance, validated_data):
+        password = validated_data["new_password"]
+        instance.set_password(password)
+        instance.save()
+        return instance
+
+
+### Legacy stuff
 class UserCreateSerializer(ModelSerializer):
     """
     Serializer of the User model, used for creation of a user instance.
@@ -45,30 +66,6 @@ class UserCreateSerializer(ModelSerializer):
         instance = create_inactive_user_from_email(
             email=email, first_name=first_name, last_name=last_name
         )
-        return instance
-
-
-class ChangePasswordSerializer(ModelSerializer):
-    """
-    Serializer of the User model, used specifically for changing the user's password.
-    """
-
-    old_password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = User
-        fields = ("old_password", "password")
-        extra_kwargs = {"password": {"write_only": True}}
-
-    def validate_old_password(self, value):
-        if not check_password(value, self.context["request"].user.password):
-            raise serializers.ValidationError("Invalid password")
-        return value
-
-    def update(self, instance, validated_data):
-        password = validated_data.pop("password")
-        instance.set_password(password)
-        instance.save()
         return instance
 
 

@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
 from apps.user import views
 from mixer.backend.django import mixer
+import pytest
 
 
 class TestLoginView(TestCase):
@@ -56,3 +57,45 @@ class TestLogoutView(TestCase):
         force_authenticate(request, self.user)
         response = views.LogoutView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+
+
+@pytest.fixture
+def factory():
+    return APIRequestFactory()
+
+
+@pytest.fixture
+def cosme_credentials():
+    return {
+        "email": "cosme@fulanito.com",
+        "first_name": "Cosme",
+        "last_name": "fulanito",
+        "password": "Me da una copilla porfavor",
+    }
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "view,url_name,expected_status,expected_information",
+    [
+        (
+            views.UserAccountView,
+            "account",
+            200,
+            {
+                "email": "cosme@fulanito.com",
+                "first_name": "Cosme",
+                "last_name": "Fulanito",
+            },
+        )
+    ],
+)
+def test_retrieve_information_from_view(
+    factory, cosme_credentials, view, url_name, expected_status, expected_information
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    url = reverse(url_name)
+    request = factory.get(url, format="json")
+    force_authenticate(request, user)
+    response = view.as_view()(request)
+    assert response.status_code == expected_status

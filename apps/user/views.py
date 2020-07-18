@@ -2,12 +2,13 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import (
     CreateAPIView,
     UpdateAPIView,
-    RetrieveAPIView,
+    RetrieveUpdateAPIView,
     ListAPIView,
 )
 from apps.user.models import Transaction
@@ -64,13 +65,16 @@ class LogoutView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class UserDetail(RetrieveAPIView):
+class UserAccountView(RetrieveUpdateAPIView):
     """
     Returns the detail of the User authenticated.
     """
 
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer(self, *args, **kwargs):
+        return self.serializer_class
 
     def get_object(self):
         return self.request.user
@@ -84,7 +88,7 @@ class UserCreate(CreateAPIView):
     serializer_class = UserCreateSerializer
 
 
-class ChangePassword(UpdateAPIView):
+class ChangePasswordView(UpdateAPIView):
     """
     Change the password of the user.
     """
