@@ -66,19 +66,11 @@ class LogoutView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-<<<<<<< HEAD
-
-class ResetEmail(APIView):
-    def get(self, request, *args, **kwargs):
 class SendResetPasswordEmailView(APIView):
     def post(self, request, *args, **kwargs):
-
-=======
-class ResetEmail(APIView):
-    def get(self, request, *args, **kwargs):
->>>>>>> test(pytest): Revert migration to pytest of the tests
         send_reset_password_email.delay("cosme@fulanito.com", "123124")
         return Response(status=status.HTTP_200_OK)
+
 
 class UserAccountView(RetrieveUpdateAPIView):
     """
