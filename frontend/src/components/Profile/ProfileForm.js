@@ -1,5 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import FormInput from "../EEComponents/FormInput";
+import FormSubmitButton from "../EEComponents/FormSubmitButton";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -11,6 +13,16 @@ class ProfileForm extends React.Component {
       last_name: "",
       email: "",
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
   }
 
   componentDidMount() {
@@ -45,39 +57,25 @@ class ProfileForm extends React.Component {
     console.log(this.state);
     return (
       <Form>
-        <Form.Group as={Row} controlId={this.props.controlId}>
-          <Form.Label column sm={3}>
-            {"Nombre: "}
-          </Form.Label>
-          <Col sm={9}>
-            <Form.Control
-              name={"MyName"}
-              type={"text"}
-              value={this.state.first_name}
-              placeholder={"Ingresa tu nombre"}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} controlId={this.props.controlId}>
-          <Form.Label column sm={3}>
-            {"Apellido: "}
-          </Form.Label>
-          <Col sm={9}>
-            <Form.Control
-              name={"MyLastname"}
-              type={"text"}
-              value={this.state.last_name}
-              placeholder={"Ingresa tu apellido"}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Col sm={{ offset: 5 }}>
-            <Button variant="success" type="submit">
-              Guardar
-            </Button>
-          </Col>
-        </Form.Group>
+        <FormInput
+          controlId="myFirstName"
+          name="first_name"
+          label="Nombre: "
+          inputType="text"
+          placeholder="Ingresa tu nombre"
+          value={this.state.first_name}
+          handleChange={this.handleInputChange}
+        />
+        <FormInput
+          controlId="myLastName"
+          name="last_name"
+          label="Apellido: "
+          inputType="text"
+          placeholder="Ingresa tu apellido"
+          value={this.state.last_name}
+          handleChange={this.handleInputChange}
+        />
+        <FormSubmitButton isLoading={this.state.isLoading} />
       </Form>
     );
   }
