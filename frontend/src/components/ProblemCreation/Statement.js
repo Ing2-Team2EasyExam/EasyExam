@@ -20,7 +20,7 @@ class Statement extends React.Component {
             rows="3"
           />
         </Form.Group>
-        <AddImage />
+        <AddImage handleImage={this.props.handleImageChange} />
       </>
     );
   }
