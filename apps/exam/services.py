@@ -1,9 +1,14 @@
 from django.shortcuts import get_object_or_404
-from .models import Problem, Exam, Topic
+from .models import Problem, Exam, Topic, Image
+from apps.user.models import User
 from typing import Set, Tuple, List
 from .generate_exam.exceptions import CompilationErrorException
 from django.forms import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
+
+
+def get_problem(problem_id: str) -> Problem:
+    return get_object_or_404(klass=Problem, pk=problem_id)
 
 
 def recompile_problem(problem: Problem) -> None:
@@ -159,7 +164,7 @@ def create_problem(**data) -> Problem:
         topics.append(topic.pk)
     problem.topics.set(topics)
     for figure_data in figures:
-        Image.objects.create(image=figure_data, problem=problem, nanem=figure_data.name)
+        Image.objects.create(image=figure_data, problem=problem, name=figure_data.name)
     problem.save()
     try:
         problem.generate_pdf()
@@ -182,7 +187,7 @@ def update_problem(uuid, **data) -> Problem:
     problem.topics.set(topics)
     for figure_data in figures:
         Image.objects.get_or_create(
-            image=figure_data, problem=problem, nanem=figure_data.name
+            image=figure_data, problem=problem, name=figure_data.name
         )
     problem.save()
     try:
@@ -198,3 +203,32 @@ def get_problem_points(problem: Problem, exam: Exam) -> Tuple[int, int]:
         return 200, relation_model.points
     except ObjectDoesNotExist:
         return 404, -1
+
+
+def clone_problem(problem: Problem, uploader: User) -> Problem:
+    clone_name = f"{problem.name} clone for user {uploader.full_name}"
+    clone_author = problem.author
+    clone_uploader = uploader
+    clone_statement = problem.statement_content
+    clone_solution = problem.solution_content
+    clone_topics = problem.topics.all()
+    original_images = problem.image_set.all()
+
+    clone = Problem.objects.create(
+        name=clone_name,
+        author=clone_author,
+        uploader=clone_uploader,
+        statement_content=clone_statement,
+        solution_content=clone_solution,
+    )
+    clone.topics.set(clone_topics)
+
+    for image in original_images:
+        Image.objects.create(image=image.image, problem=clone, name=image.name)
+    clone.save()
+    try:
+        clone.generate_pdf()
+    except CompilationErrorException as err:
+        clone.delete()
+        raise err
+    return clone
