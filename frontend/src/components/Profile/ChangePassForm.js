@@ -3,15 +3,15 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import FormInput from "../EEComponents/FormInput";
 import FormSubmitButton from "../EEComponents/FormSubmitButton";
 
-class ProfileForm extends React.Component {
+class ChangePassForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
       isLoading: false,
-      first_name: "",
-      last_name: "",
-      email: "",
+      old_password: "",
+      new_password: "",
+      new_pass_conf: "",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,13 +21,27 @@ class ProfileForm extends React.Component {
   validate(data) {
     let errors = "";
 
-    let first_name = data.first_name;
-    if (first_name.trim().length == 0)
-      errors = errors.concat("- 'Nombre' inválido.\n");
+    let old_password = data.old_password;
+    if (old_password.length == 0)
+      errors = errors.concat("- 'Antigua contraseña' inválida.\n");
 
-    let last_name = data.last_name;
-    if (last_name.length == 0)
-      errors = errors.concat("- 'Apellido' inválido.\n");
+    let new_password = data.new_password;
+    if (new_password.length == 0)
+      errors = errors.concat("- 'Nueva contraseña' inválida.\n");
+
+    let new_pass_conf = this.state.new_pass_conf;
+    if (new_pass_conf.length == 0)
+      errors = errors.concat("- 'Repita nueva contraseña' inválida.\n");
+
+    if (errors.length > 0) return errors;
+
+    if (new_password === old_password)
+      errors = errors.concat("- Antigua y nueva contraseña son idénticas.\n");
+
+    if (new_password !== new_pass_conf)
+      errors = errors.concat(
+        "- Nueva contraseña no coincide con la confirmación.\n"
+      );
 
     return errors;
   }
@@ -43,12 +57,11 @@ class ProfileForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const url = "/api/users/account/";
+    const url = "/api/users/account/change-password/";
     let token = localStorage.getItem("token");
     let data = {
-      email: this.state.email,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
+      old_password: this.state.old_password,
+      new_password: this.state.new_password,
     };
     let form_invalid = this.validate(data);
     if (form_invalid.length > 0) {
@@ -70,7 +83,6 @@ class ProfileForm extends React.Component {
       .then((response) => response.json())
       .then(
         (data) => {
-          console.log(Object.values(data));
           this.setState({
             isLoading: false,
           });
@@ -86,53 +98,34 @@ class ProfileForm extends React.Component {
       );
   }
 
-  componentDidMount() {
-    const url = "/api/users/account/";
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then(
-        (data) => {
-          this.setState({
-            isLoaded: true,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
-  }
-
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormInput
-          controlId="myFirstName"
-          name="first_name"
-          label="Nombre: "
-          input_type="text"
-          placeholder="Ingresa tu nombre"
-          value={this.state.first_name}
+          controlId="oldPass"
+          name="old_password"
+          label="Antigua contraseña: "
+          input_type="password"
+          placeholder=""
+          value={this.state.old_password}
           handleChange={this.handleInputChange}
         />
         <FormInput
-          controlId="myLastName"
-          name="last_name"
-          label="Apellido: "
-          input_type="text"
-          placeholder="Ingresa tu apellido"
-          value={this.state.last_name}
+          controlId="newPass"
+          name="new_password"
+          label="Nueva contraseña: "
+          input_type="password"
+          placeholder=""
+          value={this.state.new_password}
+          handleChange={this.handleInputChange}
+        />
+        <FormInput
+          controlId="newPassConf"
+          name="new_pass_conf"
+          label="Repita nueva contraseña: "
+          input_type="password"
+          placeholder=""
+          value={this.state.new_pass_conf}
           handleChange={this.handleInputChange}
         />
         <FormSubmitButton isLoading={this.state.isLoading} />
@@ -141,4 +134,4 @@ class ProfileForm extends React.Component {
   }
 }
 
-export default ProfileForm;
+export default ChangePassForm;
