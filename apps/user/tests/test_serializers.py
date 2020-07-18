@@ -10,12 +10,24 @@ class TestUserSerializers(TestCase):
 
     def test_user_serializer(self):
         user_data = {
-            "pk": self.user.pk,
             "email": self.user.email,
-            "is_active": self.user.is_active,
+            "first_name": self.user.first_name,
+            "last_name": self.user.last_name,
         }
         serializer = serializers.UserSerializer(instance=self.user)
         self.assertEqual(serializer.data, user_data)
+
+    def test_user_serializer_edition(self):
+        user_data = {
+            "email": self.user.email,
+            "first_name": "Cosme",
+            "last_name": "Fulanito",
+        }
+        serializer = serializers.UserSerializer(instance=self.user, data=user_data)
+        self.assertTrue(serializer.is_valid())
+        new_user = serializer.save()
+        self.assertEqual(new_user.first_name, "Cosme")
+        self.assertEqual(new_user.last_name, "Fulanito")
 
     def test_user_create_serializer(self,):
         email = "dave@newuser.com"
