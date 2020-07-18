@@ -10,4 +10,10 @@ from apps.user import views
 urlpatterns = [
     path("login/", views.LoginView.as_view(), name="login"),
     path("logout/", views.LogoutView.as_view(), name="logout"),
+    path("account/", views.UserAccountView.as_view(), name="account"),
+    path(
+        "account/change-password/",
+        views.ChangePasswordView.as_view(),
+        name="change-password",
+    ),
 ]

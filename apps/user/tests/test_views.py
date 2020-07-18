@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
 from apps.user import views
 from mixer.backend.django import mixer
+import pytest
 
 
 class TestLoginView(TestCase):
@@ -56,3 +57,111 @@ class TestLogoutView(TestCase):
         force_authenticate(request, self.user)
         response = views.LogoutView.as_view()(request)
         self.assertEqual(response.status_code, 200)
+
+
+@pytest.fixture
+def factory():
+    return APIRequestFactory()
+
+
+@pytest.fixture
+def cosme_credentials():
+    return {
+        "email": "cosme@fulanito.com",
+        "first_name": "Cosme",
+        "last_name": "Fulanito",
+        "password": "Me da una copilla porfavor",
+    }
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "expected_status,expected_information",
+    [
+        (
+            200,
+            {
+                "email": "cosme@fulanito.com",
+                "first_name": "Cosme",
+                "last_name": "Fulanito",
+            },
+        )
+    ],
+)
+def test_retrieve_information_from_view(
+    factory, cosme_credentials, expected_status, expected_information
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    url = reverse("account")
+    request = factory.get(url, format="json")
+    force_authenticate(request, user)
+    response = views.UserAccountView.as_view()(request)
+    assert response.status_code == expected_status
+    assert response.data == expected_information
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "updated_data,expected_status,expected_information",
+    [
+        (
+            {"first_name": "Homero", "last_name": "Tompson"},
+            200,
+            {
+                "email": "cosme@fulanito.com",
+                "first_name": "Homero",
+                "last_name": "Tompson",
+            },
+        )
+    ],
+)
+def test_update_account_information(
+    factory, cosme_credentials, updated_data, expected_status, expected_information
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    url = reverse("account")
+    request = factory.put(url, data=updated_data, format="json")
+    force_authenticate(request, user)
+    response = views.UserAccountView.as_view()(request)
+    assert response.status_code == expected_status
+    assert response.data == expected_information
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "updated_credentials,expected_status,expected_information",
+    [
+        (
+            {
+                "old_password": "Me da una copilla porfavor",
+                "new_password": "Homero? Quien es homero?",
+            },
+            200,
+            {},
+        ),
+        (
+            {
+                "old_password": "Mi nombre es cosme fulanito",
+                "new_password": "Este hombre es mi doble exacto",
+            },
+            400,
+            {"old_password": ["Invalid password"]},
+        ),
+    ],
+)
+def test_change_password_view(
+    factory,
+    cosme_credentials,
+    updated_credentials,
+    expected_status,
+    expected_information,
+):
+    user = mixer.blend("user.User", **cosme_credentials)
+    user.set_password(cosme_credentials["password"])
+    user.save()
+    url = reverse("change-password")
+    request = factory.put(url, data=updated_credentials, format="json")
+    force_authenticate(request, user)
+    response = views.ChangePasswordView.as_view()(request)
+    assert response.status_code == expected_status
+    assert response.data == expected_information
