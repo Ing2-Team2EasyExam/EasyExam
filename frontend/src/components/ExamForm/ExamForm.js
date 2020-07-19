@@ -4,6 +4,7 @@ import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
 import CreateProblemButton from "./CreateProblemButton";
+import AlertMessage from "../EEComponents/AlertMessage";
 
 class ExamForm extends React.Component {
   /**
@@ -29,11 +30,18 @@ class ExamForm extends React.Component {
     this.validate = this.validate.bind(this);
     this.refreshProblems = this.refreshProblems.bind(this);
     this.getProblems = this.getProblems.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   refreshProblems() {
     console.log("Refrescando listado de problemas");
     this.getProblems();
+  }
+
+  closeAlert() {
+    this.setState({
+      showAlert: false,
+    });
   }
 
   handleProblemSelection(list) {
@@ -194,6 +202,14 @@ class ExamForm extends React.Component {
   render() {
     return (
       <>
+        {this.state.showAlert && (
+          <AlertMessage
+            variant="success"
+            title="Excelente"
+            message="Salió todo bien"
+            closeAlert={this.closeAlert}
+          />
+        )}
         <Form onSubmit={this.handleSubmit}>
           <ExamDataInputs
             handleInputChange={this.handleInputChange}
