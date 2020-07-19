@@ -1,13 +1,13 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import FormSubmitButton from "../EEComponents/FormSubmitButton";
-import FormInput from "../ProblemForm/FormInput";
+import FormInput from "./FormInput";
 import Statement from "./Statement";
 import Solution from "./Solution";
 import SelectTopics from "./SelectTopics";
-//Falta la previsualización de las preguntas ingresadas.
+//TODO: preview of the problem
 
-class CreateProblemForm extends React.Component {
+class ProblemForm extends React.Component {
   /**
    * Component that represents the form for creating a problem.
    * The state is represented by
@@ -17,15 +17,7 @@ class CreateProblemForm extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.state = {
-      isLoading: false,
-      name: "",
-      author: "",
-      statement_content: "",
-      solution_content: "",
-      chosen_topics: [],
-      images: [],
-    };
+    this.state = this.props.data;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleTopicSelection = this.handleTopicSelection.bind(this);
@@ -50,31 +42,34 @@ class CreateProblemForm extends React.Component {
   }
 
   transformDict(array) {
-    return array.map((topic) => {
-      return topic.label;
-    });
+    if (array !== "" && array.length && array[0].hasOwnProperty("label")) {
+      return array.map((topic) => {
+        return topic.label;
+      });
+    }
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log("State in handleSubmit of Problem Form");
     console.log(Object.values(this.state));
-    const topics = this.transformDict(this.state.chosen_topics);
-    console.log(Object.values(topics));
-
+    let topics = this.transformDict(this.state.chosen_topics);
+    const url = this.props.url;
+    const method = this.props.method;
     let data = {
       name: this.state.name,
       author: this.state.author,
       statement_content: this.state.statement_content,
       solution_content: this.state.solution_content,
       topics_data: topics,
-      figures: this.state.images,
+      figures: [],
     };
     let token = localStorage.getItem("token");
     this.setState({
       isLoading: true,
     });
-    fetch("/api/problems/create/", {
-      method: "POST",
+    fetch(url, {
+      method: method,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
@@ -88,11 +83,11 @@ class CreateProblemForm extends React.Component {
           this.setState({
             isLoading: false,
           });
-          alert("Pregunta creada.");
+          alert(this.props.successMessage);
         },
         (error) => {
           console.log(error);
-          alert("Algo ha salido mal");
+          alert(this.props.errorMessage);
           this.setState({
             isLoading: false,
           });
@@ -107,22 +102,31 @@ class CreateProblemForm extends React.Component {
           controlId="problemName"
           name="name"
           label="Nombre de la pregunta:"
-          input_type="text"
           handleChange={this.handleChange}
+          value={this.state.name}
         />
         <FormInput
           controlId="author"
           name="author"
           label="Autor/a:"
-          input_type="text"
           handleChange={this.handleChange}
+          value={this.state.author}
         />
-        <SelectTopics handleSelect={this.handleTopicSelection} />
-        <Statement handleChange={this.handleChange} />
-        <Solution handleChange={this.handleChange} />
+        <SelectTopics
+          handleSelect={this.handleTopicSelection}
+          value={this.state.chosen_topics}
+        />
+        <Statement
+          handleChange={this.handleChange}
+          value={this.state.statement_content}
+        />
+        <Solution
+          handleChange={this.handleChange}
+          value={this.state.solution_content}
+        />
         <FormSubmitButton isLoading={this.state.isLoading} />
       </Form>
     );
   }
 }
-export default CreateProblemForm;
+export default ProblemForm;

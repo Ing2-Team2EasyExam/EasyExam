@@ -13,10 +13,10 @@ import ProblemList from "./Problem_list/ProblemList";
 import CreateExam from "./ExamCreation/CreateExam";
 import EditExam from "./ExamEdit/EditExam";
 import Exams from "./ExamList/Exams";
-import EditQuestion from "./ProblemEdit/EditQuestion";
 import Profile from "./Profile/Profile";
 import CreateProblem from "./ProblemCreation/CreateProblem";
 import ChangePass from "./Profile/ChangePass";
+import EditProblem from "./ProblemEdit/EditProblem";
 
 class App extends React.Component {
   constructor(props) {
@@ -124,7 +124,7 @@ class App extends React.Component {
               {this.isLoggedIn() ? <CreateProblem /> : <Redirect to="/" />}
             </Route>
             <Route exact path="/exam/edit/:uuid" component={EditExam} />
-            <Route exact path="/problems/edit/:uuid" component={EditQuestion} />
+            <Route exact path="/problems/edit/:uuid" component={EditProblem} />
             <Route exact path="/profile">
               {this.isLoggedIn() ? <Profile /> : <Redirect to="/" />}
             </Route>
