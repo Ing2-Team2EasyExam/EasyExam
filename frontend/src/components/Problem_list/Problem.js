@@ -5,6 +5,7 @@ import { Files } from "react-bootstrap-icons";
 import ModalPDFRender from "./ModalPDFRender";
 
 class Problem extends React.Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
 
@@ -34,6 +35,10 @@ class Problem extends React.Component {
         let clone_url = "/problems/edit/" + response_uuid;
         window.location.href = clone_url;
       });
+=======
+  constructor(props, context) {
+    super(props, context);
+>>>>>>> Changes
   }
 
   formatDate(dateTime) {
