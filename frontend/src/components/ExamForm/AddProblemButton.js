@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { Plus } from "react-bootstrap-icons";
-import CreateProblemButton from "./CreateProblemButton";
 
 class AddProblemButton extends React.Component {
   constructor(props) {
@@ -11,11 +10,14 @@ class AddProblemButton extends React.Component {
     return (
       <>
         <Form.Group as={Row}>
-          <Col sm={{ offset: 2 }}>
-            <Button variant="primary" onClick={this.props.addProblem}>
+          <Col sm={{ offset: 3 }}>
+            <Button
+              variant="primary"
+              onClick={this.props.addProblem}
+              style={{ marginRight: "5px" }}
+            >
               <Plus /> Añadir otra pregunta
             </Button>
-            <CreateProblemButton />
           </Col>
         </Form.Group>
       </>

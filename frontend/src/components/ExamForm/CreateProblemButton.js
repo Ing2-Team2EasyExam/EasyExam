@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { Plus } from "react-bootstrap-icons";
+import CreateProblem from "../ProblemCreation/CreateProblem";
 
 class CreateProblemButton extends React.Component {
   constructor(props) {
@@ -31,11 +32,11 @@ class CreateProblemButton extends React.Component {
           <Plus /> Crear una pregunta
         </Button>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal size="lg" show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            <CreateProblem />
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
               Close

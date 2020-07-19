@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
+import CreateProblemButton from "./CreateProblemButton";
 
 class ExamForm extends React.Component {
   /**
@@ -160,17 +161,20 @@ class ExamForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <ExamDataInputs
-          handleInputChange={this.handleInputChange}
-          data={this.state}
-        />
-        <ExamProblems
-          handleSelect={this.handleProblemSelection}
-          data={this.state.problem_choices}
-        />
-        <FormSubmitButton isLoading={this.state.isLoading} />
-      </Form>
+      <>
+        <Form onSubmit={this.handleSubmit}>
+          <ExamDataInputs
+            handleInputChange={this.handleInputChange}
+            data={this.state}
+          />
+          <ExamProblems
+            handleSelect={this.handleProblemSelection}
+            data={this.state.problem_choices}
+          />
+          <FormSubmitButton isLoading={this.state.isLoading} />
+        </Form>
+        <CreateProblemButton />
+      </>
     );
   }
 }
