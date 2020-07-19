@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from apps.user.models import User
 from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
+from django.utils.encoding import force_str, force_bytes
 from typing import Dict, Optional, Callable
 
 
@@ -70,9 +70,9 @@ def validate_token(
 
 
 def create_user_reset_password_url(user: User) -> str:
-    email_b64 = urlsafe_base64_encode(user.email)
-    updated_at_b64 = urlsafe_base64_encode(user.updated_at)
-    updated_at = urlsafe_base64_encode(updated_at_b64)
+    updated_at = force_str(user.updated_at)
+    email_b64 = urlsafe_base64_encode(force_bytes(user.email))
+    updated_at_b64 = urlsafe_base64_encode(force_bytes(updated_at))
     token = reset_password_signature(user.email, updated_at)
     return f"/reset_password/{email_b64}/{updated_at_b64}/{token}/"
 

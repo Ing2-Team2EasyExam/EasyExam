@@ -23,8 +23,18 @@ class ResetPasswordForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(Object.values(this.state));
-    this.setState({
-      sended: true,
+    let url = "/api/users/reset-password/";
+    let data = this.state;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((res) => {
+      this.setState({
+        sended: true,
+      });
     });
   }
 

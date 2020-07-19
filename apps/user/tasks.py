@@ -7,11 +7,9 @@ from celery import shared_task
 
 
 @shared_task
-def send_reset_password_email(email: str, reset_token: str) -> int:
+def send_reset_password_email(email: str, reset_url: str) -> int:
     email_subject = "[EasyExam] Reset password"
-    context = {
-        "reset_url": "".join([settings.SERVER_URL, "/reset_password/", reset_token])
-    }
+    context = {"reset_url": "".join([settings.SERVER_URL, reset_url])}
     html_message = render_to_string("emails/reset_password_email.html", context)
     user_email = [email]
     server_email = "easyexam@noreply.com"
