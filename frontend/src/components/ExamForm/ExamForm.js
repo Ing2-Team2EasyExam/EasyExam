@@ -28,11 +28,12 @@ class ExamForm extends React.Component {
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
     this.validate = this.validate.bind(this);
     this.refreshProblems = this.refreshProblems.bind(this);
+    this.getProblems = this.getProblems.bind(this);
   }
 
-  refreshProblems(value) {
-    let data = this.state;
-    this.setState(data);
+  refreshProblems() {
+    console.log("Refrescando listado de problemas");
+    this.getProblems();
   }
 
   handleProblemSelection(list) {
@@ -57,10 +58,7 @@ class ExamForm extends React.Component {
     });
   }
 
-  componentDidMount() {
-    /**
-     * When the component mounts, the problems have to be retrieved from the backend
-     */
+  getProblems() {
     let token = localStorage.getItem("token");
     fetch("/api/problems/list", {
       method: "GET",
@@ -76,6 +74,13 @@ class ExamForm extends React.Component {
           this.setState({ error: error });
         }
       );
+  }
+
+  componentDidMount() {
+    /**
+     * When the component mounts, the problems have to be retrieved from the backend
+     */
+    this.getProblems();
   }
 
   validate(data) {

@@ -17,14 +17,13 @@ class CreateProblemButton extends React.Component {
     this.setState({
       show: true,
     });
-    this.props.refreshProblems(false);
   }
 
   handleClose() {
     this.setState({
       show: false,
     });
-    this.props.refreshProblems(true);
+    this.props.refreshProblems();
   }
 
   render() {
