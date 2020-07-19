@@ -121,8 +121,17 @@ class PasswordResetView(View):
     template_name = "reset_password/reset_password.html"
     redirect_url = reverse_lazy("reset-password-success")
 
-    def dispatch(self, request, email_b64, updated_at_b64, signature, *args, **kwargs):
-        if not validate_token(email_b64, updated_at_b64, signature):
+    def dispatch(
+        self,
+        request,
+        email_b64,
+        updated_at_b64,
+        created_time_b64,
+        signature,
+        *args,
+        **kwargs
+    ):
+        if not validate_token(email_b64, updated_at_b64, created_time_b64, signature):
             raise Http404()
         return super().dispatch(
             request, email_b64, updated_at_b64, signature, *args, **kwargs

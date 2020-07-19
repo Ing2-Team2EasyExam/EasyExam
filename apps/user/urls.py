@@ -22,7 +22,7 @@ urlpatterns = [
         name="reset-password",
     ),
     path(
-        "reset-password/<email_b64>/<updated_at_b64>/<signature>/",
+        "reset-password/<email_b64>/<updated_at_b64>/<created_time_b64>/<signature>/",
         views.PasswordResetView.as_view(),
         name="reset-password-form",
     ),
