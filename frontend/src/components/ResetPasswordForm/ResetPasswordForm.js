@@ -49,11 +49,11 @@ class ResetPasswordForm extends React.Component {
     );
     let button = this.state.sended ? (
       <Button block type="submit" variant="primary" disabled>
-        Reestrablecer contraseña
+        Restrablecer contraseña
       </Button>
     ) : (
       <Button block type="submit" variant="primary">
-        Reestablecer contraseña
+        Restablecer contraseña
       </Button>
     );
     return (
