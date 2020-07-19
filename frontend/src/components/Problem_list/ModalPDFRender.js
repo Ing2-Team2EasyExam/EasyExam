@@ -35,7 +35,6 @@ class ModalPDFRender extends React.Component {
       });
   }
   render() {
-    console.log(this.state);
     return (
       <>
         <a href="modal" onClick={this.getPreview}>
