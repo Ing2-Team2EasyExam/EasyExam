@@ -27,6 +27,14 @@ class ExamForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
     this.validate = this.validate.bind(this);
+    this.refreshProblems = this.refreshProblems.bind(this);
+  }
+
+  refreshProblems() {
+    let data = this.state.problem_choices;
+    this.setState({
+      problem_choices: data,
+    });
   }
 
   handleProblemSelection(list) {
@@ -173,7 +181,7 @@ class ExamForm extends React.Component {
           />
           <FormSubmitButton isLoading={this.state.isLoading} />
         </Form>
-        <CreateProblemButton />
+        <CreateProblemButton refreshProblems={this.refreshProblems} />
       </>
     );
   }

@@ -23,6 +23,7 @@ class CreateProblemButton extends React.Component {
     this.setState({
       show: false,
     });
+    this.props.refreshProblems();
   }
 
   render() {
