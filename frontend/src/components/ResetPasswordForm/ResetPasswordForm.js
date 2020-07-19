@@ -23,12 +23,16 @@ class ResetPasswordForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(Object.values(this.state));
+    this.setState({
+      sended: true,
+    });
   }
 
   render() {
     let msg = this.state.sended ? (
       <Alert variant="info">
-        Se ha enviado un mail para iniciar el proceso
+        Se ha enviado un mail con un link para cambiar su contraseña, por favor,
+        revisalo antes de 3 dias.
       </Alert>
     ) : (
       ""
@@ -56,7 +60,7 @@ class ResetPasswordForm extends React.Component {
                   </Form.Group>
                   <Form.Group>
                     <Button block type="submit" variant="primary">
-                      Enviar mail.
+                      Reestablecer contraseña
                     </Button>
                   </Form.Group>
                 </Form>
