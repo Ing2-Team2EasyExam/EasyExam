@@ -32,6 +32,7 @@ class CreateExamForm extends React.Component {
       problem_choices: [
         { points: 0, problem: { name: "DEFAULT", author: "DEFAULT" } },
       ],
+      available_problems: [],
     };
   }
 

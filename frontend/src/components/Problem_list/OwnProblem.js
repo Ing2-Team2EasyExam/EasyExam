@@ -3,6 +3,8 @@ import Topic from "./Topic";
 import { Link } from "react-router-dom";
 import { Pencil } from "react-bootstrap-icons";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import ModalPDFRender from "./ModalPDFRender";
+
 class OwnProblem extends React.Component {
   constructor(props) {
     super(props);
@@ -66,9 +68,10 @@ class OwnProblem extends React.Component {
       <tr>
         <td width="30%">
           {" "}
-          <a href="#" onClick={this.handlePreview}>
-            {this.props.problem.name}
-          </a>
+          <ModalPDFRender
+            uuid={this.props.problem.uuid}
+            problemName={this.props.problem.name}
+          />
         </td>
         <td width="30%"> {created_at}</td>
         <td width="30%">

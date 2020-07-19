@@ -69,6 +69,7 @@ class AllProblems extends React.Component {
               <th>Creación</th>
               <th>Tópicos</th>
               <th>Autor</th>
+              <th>Clonar</th>
             </tr>
           </thead>
           {items && (

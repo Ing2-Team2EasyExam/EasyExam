@@ -49,6 +49,7 @@ class EditExamForm extends React.Component {
             university: result.university,
             language: result.language,
             problem_choices: result.problem_choices,
+            available_problems: [],
           });
         },
         (error) => {

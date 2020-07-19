@@ -1,3 +1,4 @@
+import pytest
 from django.test import TestCase
 from django.shortcuts import reverse
 from rest_framework.test import APIRequestFactory, force_authenticate
@@ -9,6 +10,7 @@ from apps.exam.views import (
     UserProblemListView,
     ProblemCreateView,
     ProblemUpdateView,
+    ProblemCloneView,
 )
 from apps.exam.serializers import ProblemSerializer
 from unittest import mock
@@ -181,3 +183,26 @@ class TestProblemUpdateView(TestCase):
         put_response = ProblemUpdateView.as_view()(put_request, **self.kwargs)
         self.assertEqual(get_response.status_code, 401)
         self.assertEqual(put_response.status_code, 401)
+
+
+@pytest.fixture
+def factory():
+    return APIRequestFactory()
+
+
+@pytest.fixture
+def cosme():
+    return mixer.blend("user.User", email="cosme@fulanito.com")
+
+
+@pytest.mark.django_db
+def test_problem_clone_view(factory, cosme):
+    usuario_externo = mixer.blend("user.User")
+    problem = mixer.blend("exam.Problem", uploader=usuario_externo)
+    request_data = {"uuid": problem.pk}
+    url = reverse("problem-clone")
+    with mock.patch("apps.exam.models.Problem.generate_pdf") as pdf_mock:
+        request = factory.post(url, data=request_data)
+        force_authenticate(request, cosme)
+        response = ProblemCloneView.as_view()(request)
+        assert response.status_code == 201

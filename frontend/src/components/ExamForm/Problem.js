@@ -38,6 +38,7 @@ class Problem extends React.Component {
               value={`${this.props.author} -!-! ${this.props.name}`}
               number={this.props.number}
               updateProblem={this.props.updateProblem}
+              available_problems={this.props.available_problems}
             />
           </Col>
           <Col sm={3}>

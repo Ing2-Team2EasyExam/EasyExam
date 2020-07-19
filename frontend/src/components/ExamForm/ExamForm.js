@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
+import CreateProblemButton from "./CreateProblemButton";
 
 class ExamForm extends React.Component {
   /**
@@ -26,6 +27,13 @@ class ExamForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
     this.validate = this.validate.bind(this);
+    this.refreshProblems = this.refreshProblems.bind(this);
+    this.getProblems = this.getProblems.bind(this);
+  }
+
+  refreshProblems() {
+    console.log("Refrescando listado de problemas");
+    this.getProblems();
   }
 
   handleProblemSelection(list) {
@@ -48,6 +56,31 @@ class ExamForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  getProblems() {
+    let token = localStorage.getItem("token");
+    fetch("/api/problems/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => this.setState({ available_problems: result }),
+        (error) => {
+          this.setState({ error: error });
+        }
+      );
+  }
+
+  componentDidMount() {
+    /**
+     * When the component mounts, the problems have to be retrieved from the backend
+     */
+    this.getProblems();
   }
 
   validate(data) {
@@ -160,17 +193,21 @@ class ExamForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <ExamDataInputs
-          handleInputChange={this.handleInputChange}
-          data={this.state}
-        />
-        <ExamProblems
-          handleSelect={this.handleProblemSelection}
-          data={this.state.problem_choices}
-        />
-        <FormSubmitButton isLoading={this.state.isLoading} />
-      </Form>
+      <>
+        <Form onSubmit={this.handleSubmit}>
+          <ExamDataInputs
+            handleInputChange={this.handleInputChange}
+            data={this.state}
+          />
+          <ExamProblems
+            handleSelect={this.handleProblemSelection}
+            selected_problems={this.state.problem_choices}
+            available_problems={this.state.available_problems}
+          />
+          <FormSubmitButton isLoading={this.state.isLoading} />
+        </Form>
+        <CreateProblemButton refreshProblems={this.refreshProblems} />
+      </>
     );
   }
 }
