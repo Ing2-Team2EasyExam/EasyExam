@@ -28,7 +28,7 @@ class CreateProblemButton extends React.Component {
   render() {
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>
+        <Button variant="secondary" onClick={this.handleShow} block>
           <Plus /> Crear una pregunta
         </Button>
 
