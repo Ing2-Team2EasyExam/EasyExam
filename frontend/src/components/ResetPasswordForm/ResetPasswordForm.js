@@ -47,6 +47,15 @@ class ResetPasswordForm extends React.Component {
     ) : (
       ""
     );
+    let button = this.state.sended ? (
+      <Button block type="submit" variant="primary" disabled>
+        Reestrablecer contraseña
+      </Button>
+    ) : (
+      <Button block type="submit" variant="primary">
+        Reestablecer contraseña
+      </Button>
+    );
     return (
       <>
         <Container style={{ padding: "16px" }}>
@@ -68,11 +77,7 @@ class ResetPasswordForm extends React.Component {
                       onChange={this.handleInputChange}
                     />
                   </Form.Group>
-                  <Form.Group>
-                    <Button block type="submit" variant="primary">
-                      Reestablecer contraseña
-                    </Button>
-                  </Form.Group>
+                  <Form.Group>{button}</Form.Group>
                 </Form>
               </Card.Body>
             </Card>
