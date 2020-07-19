@@ -5,15 +5,11 @@ import { Files } from "react-bootstrap-icons";
 import ModalPDFRender from "./ModalPDFRender";
 
 class Problem extends React.Component {
-<<<<<<< HEAD
   constructor(props) {
     super(props);
 
     this.duplicateProblem = this.duplicateProblem.bind(this);
   }
-
-
-
 
   duplicateProblem(event) {
     const uuid = this.props.problem.uuid;
@@ -35,10 +31,6 @@ class Problem extends React.Component {
         let clone_url = "/problems/edit/" + response_uuid;
         window.location.href = clone_url;
       });
-=======
-  constructor(props, context) {
-    super(props, context);
->>>>>>> Changes
   }
 
   formatDate(dateTime) {
@@ -59,9 +51,9 @@ class Problem extends React.Component {
         <td width="25%">
           {" "}
           <ModalPDFRender
-              uuid={this.props.problem.uuid}
-              problemName={this.props.problem.name}
-            />
+            uuid={this.props.problem.uuid}
+            problemName={this.props.problem.name}
+          />
         </td>
         <td width="25%"> {created_at}</td>
         <td width="25%">
@@ -74,7 +66,7 @@ class Problem extends React.Component {
             <Files />
           </Button>
         </td>
-      </tr> 
+      </tr>
     );
   }
 }

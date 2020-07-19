@@ -7,6 +7,9 @@ class ModalPDFRender extends React.Component {
     super(props);
     this.handleClose = this.handleClose.bind(this);
     this.getPreview = this.getPreview.bind(this);
+    this.state = {
+      show: false,
+    };
   }
   handleClose() {
     this.setState({ show: false });
