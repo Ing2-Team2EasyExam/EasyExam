@@ -7,6 +7,7 @@ from django.utils.crypto import salted_hmac, constant_time_compare
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_str, force_bytes
 from typing import Dict, Optional, Callable
+from django.urls import reverse
 
 
 def create_token_factory(secret: str, salt: str) -> Callable[[], str]:
@@ -74,7 +75,12 @@ def create_user_reset_password_url(user: User) -> str:
     email_b64 = urlsafe_base64_encode(force_bytes(user.email))
     updated_at_b64 = urlsafe_base64_encode(force_bytes(updated_at))
     token = reset_password_signature(user.email, updated_at)
-    return f"/reset_password/{email_b64}/{updated_at_b64}/{token}/"
+    url_kwargs = {
+        "email_b64": email_b64,
+        "updated_at_b64": updated_at_b64,
+        "signature": token,
+    }
+    return reverse("reset-password-form", kwargs=url_kwargs)
 
 
 def get_user_from_email(email: str) -> User:
