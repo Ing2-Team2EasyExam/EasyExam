@@ -33,7 +33,8 @@ class CreateExamForm extends React.Component {
         { points: 0, problem: { name: "DEFAULT", author: "DEFAULT" } },
       ],
       available_problems: [],
-      showAlert: true,
+      showAlert: false,
+      validation_error: [],
     };
   }
 

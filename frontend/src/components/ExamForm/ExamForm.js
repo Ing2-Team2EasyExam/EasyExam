@@ -92,39 +92,34 @@ class ExamForm extends React.Component {
   }
 
   validate(data) {
-    let errors = "";
+    let errors = [];
 
     let name = data.name;
-    if (name.trim().length == 0)
-      errors = errors.concat("- 'Nombre del Exámen' inválido.\n");
+    if (name.trim().length == 0) errors.push("'Nombre del Exámen' inválido.");
 
     let due_date = data.due_date;
-    if (due_date.length == 0)
-      errors = errors.concat("- 'Fecha de realización' inválida.\n");
+    if (due_date.length == 0) errors.push("'Fecha de realización' inválida.");
 
     let start_time = data.start_time;
-    if (start_time.length == 0)
-      errors = errors.concat("- 'Hora de inicio' inválida.\n");
+    if (start_time.length == 0) errors.push("'Hora de inicio' inválida.");
 
     let end_time = data.end_time;
-    if (end_time.length == 0)
-      errors = errors.concat("- 'Hora de término' inválida.\n");
+    if (end_time.length == 0) errors.push("'Hora de término' inválida.");
 
     let teacher = data.teacher;
     if (teacher.trim().length == 0)
-      errors = errors.concat("- 'Nombre profesor/a' inválido.\n");
+      errors.push("'Nombre profesor/a' inválido.");
 
     let course_name = data.course_name;
     if (course_name.trim().length == 0)
-      errors = errors.concat("- 'Nombre del Curso' inválido.\n");
+      errors.push("'Nombre del Curso' inválido.");
 
     let course_code = data.course_code;
     if (course_code.trim().length == 0)
-      errors = errors.concat("- 'Código del Curso' inválido.\n");
+      errors.push("'Código del Curso' inválido.");
 
     let university = data.university;
-    if (university.trim().length == 0)
-      errors = errors.concat("- 'Universidad' inválido.\n");
+    if (university.trim().length == 0) errors.push("'Universidad' inválido.");
 
     let problem_choices = data.problem_choices;
     if (
@@ -133,7 +128,7 @@ class ExamForm extends React.Component {
           item.problem.name === "DEFAULT" && item.problem.author === "DEFAULT"
       )
     )
-      errors = errors.concat("- 'Problemas' inválido.\n");
+      errors.push("'Problemas' inválido.");
 
     return errors;
   }
@@ -161,7 +156,11 @@ class ExamForm extends React.Component {
     };
     let form_invalid = this.validate(data);
     if (form_invalid.length > 0) {
-      alert(form_invalid);
+      this.setState({
+        showAlert: true,
+        validation_error: form_invalid,
+      });
+      window.scrollTo(0, 0);
       return false;
     }
 
@@ -197,6 +196,7 @@ class ExamForm extends React.Component {
           });
         }
       );
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -204,9 +204,9 @@ class ExamForm extends React.Component {
       <>
         {this.state.showAlert && (
           <AlertMessage
-            variant="success"
-            title="Excelente"
-            message="Salió todo bien"
+            variant="danger"
+            title="Algo salió mal"
+            message={this.state.validation_error}
             closeAlert={this.closeAlert}
           />
         )}

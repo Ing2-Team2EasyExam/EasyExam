@@ -19,7 +19,11 @@ class AlertMessage extends React.Component {
         dismissible
       >
         <Alert.Heading>{this.props.title}</Alert.Heading>
-        <p>{this.props.message}</p>
+        <ul>
+          {this.props.message.map((info, idx) => (
+            <li key={idx}>{info}</li>
+          ))}
+        </ul>
       </Alert>
     );
   }
