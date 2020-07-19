@@ -30,11 +30,9 @@ class ExamForm extends React.Component {
     this.refreshProblems = this.refreshProblems.bind(this);
   }
 
-  refreshProblems() {
-    let data = this.state.problem_choices;
-    this.setState({
-      problem_choices: data,
-    });
+  refreshProblems(value) {
+    let data = this.state;
+    this.setState(data);
   }
 
   handleProblemSelection(list) {
@@ -57,6 +55,27 @@ class ExamForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  componentDidMount() {
+    /**
+     * When the component mounts, the problems have to be retrieved from the backend
+     */
+    let token = localStorage.getItem("token");
+    fetch("/api/problems/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => this.setState({ available_problems: result }),
+        (error) => {
+          this.setState({ error: error });
+        }
+      );
   }
 
   validate(data) {
@@ -177,7 +196,8 @@ class ExamForm extends React.Component {
           />
           <ExamProblems
             handleSelect={this.handleProblemSelection}
-            data={this.state.problem_choices}
+            selected_problems={this.state.problem_choices}
+            available_problems={this.state.available_problems}
           />
           <FormSubmitButton isLoading={this.state.isLoading} />
         </Form>

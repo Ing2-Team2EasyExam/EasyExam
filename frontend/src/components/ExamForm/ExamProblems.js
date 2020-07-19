@@ -14,7 +14,7 @@ class ExamProblems extends React.Component {
     super(props);
     this.state = {
       maximum: 5,
-      problems: props.data,
+      problems: props.selected_problems,
     };
     this.addProblem = this.addProblem.bind(this);
     this.removeProblem = this.removeProblem.bind(this);
@@ -27,7 +27,7 @@ class ExamProblems extends React.Component {
      * Method on which the component add a problem select component to the interface
      */
     event.preventDefault();
-    const { current, problems, maximum } = this.state;
+    const { problems, maximum } = this.state;
     if (problems.length === maximum) {
       alert(`Can't put more than ${maximum}`);
       return;
@@ -101,6 +101,7 @@ class ExamProblems extends React.Component {
               updateProblem={this.updateProblem}
               updatePoints={this.updatePoints}
               removeProblem={this.removeProblem}
+              available_problems={this.props.available_problems}
               author={problem.problem.author}
               name={problem.problem.name}
               points={problem.points}
