@@ -33,8 +33,6 @@ class CreateExamForm extends React.Component {
         { points: 0, problem: { name: "DEFAULT", author: "DEFAULT" } },
       ],
       available_problems: [],
-      showAlert: false,
-      validation_error: [],
     };
   }
 
@@ -44,7 +42,8 @@ class CreateExamForm extends React.Component {
         data={this.state}
         url="/api/exams/create/"
         method="POST"
-        successMessage="Examen Creado"
+        titleSuccess="Examen Creado"
+        successMessage="Su examen se ha creado exitósamente"
         errorMessage="Ha ocurrido un error"
       />
     );

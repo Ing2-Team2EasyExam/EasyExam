@@ -158,7 +158,9 @@ class ExamForm extends React.Component {
     if (form_invalid.length > 0) {
       this.setState({
         showAlert: true,
-        validation_error: form_invalid,
+        infoAlert: form_invalid,
+        variantAlert: "danger",
+        titleAlert: "Algo ha salido mal",
       });
       window.scrollTo(0, 0);
       return false;
@@ -184,8 +186,12 @@ class ExamForm extends React.Component {
           console.log(Object.values(data));
           this.setState({
             isLoading: false,
+            showAlert: true,
+            infoAlert: [this.props.successMessage],
+            variantAlert: "success",
+            titleAlert: this.props.titleSuccess,
           });
-          alert(this.props.successMessage);
+          window.scrollTo(0, 0);
           //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => {
@@ -196,7 +202,6 @@ class ExamForm extends React.Component {
           });
         }
       );
-    window.scrollTo(0, 0);
   }
 
   render() {
@@ -204,9 +209,9 @@ class ExamForm extends React.Component {
       <>
         {this.state.showAlert && (
           <AlertMessage
-            variant="danger"
-            title="Algo salió mal"
-            message={this.state.validation_error}
+            variant={this.state.variantAlert}
+            title={this.state.titleAlert}
+            message={this.state.infoAlert}
             closeAlert={this.closeAlert}
           />
         )}
