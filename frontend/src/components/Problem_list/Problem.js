@@ -2,29 +2,17 @@ import React from "react";
 import Topic from "./Topic";
 import { Button } from "react-bootstrap";
 import { Files } from "react-bootstrap-icons";
+import ModalPDFRender from "./ModalPDFRender";
 
 class Problem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getPreview = this.getPreview.bind(this);
     this.duplicateProblem = this.duplicateProblem.bind(this);
   }
-  getPreview(event) {
-    event.preventDefault();
-    const url = `/api/problems/${this.props.problem.uuid}/pdf/`;
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => res.blob())
-      .then((blob) => {
-        let preview_url = URL.createObjectURL(blob);
-        window.open(preview_url);
-      });
-  }
+
+
+
 
   duplicateProblem(event) {
     const uuid = this.props.problem.uuid;
@@ -60,13 +48,15 @@ class Problem extends React.Component {
 
   render() {
     let created_at = this.formatDate(this.props.problem.created_at);
+
     return (
       <tr>
         <td width="25%">
           {" "}
-          <a href="#" onClick={this.getPreview}>
-            {this.props.problem.name}
-          </a>
+          <ModalPDFRender
+              uuid={this.props.problem.uuid}
+              problemName={this.props.problem.name}
+            />
         </td>
         <td width="25%"> {created_at}</td>
         <td width="25%">
@@ -79,7 +69,7 @@ class Problem extends React.Component {
             <Files />
           </Button>
         </td>
-      </tr>
+      </tr> 
     );
   }
 }
