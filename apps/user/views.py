@@ -1,5 +1,11 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.db.models import ObjectDoesNotExist
+from django.views import View
+from django.views.generic import TemplateView
+from django.contrib.auth.forms import SetPasswordForm
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,7 +27,12 @@ from apps.user.serializers import (
 )
 from apps.user.services import generate_access_token, revoke_access_token
 from .tasks import send_reset_password_email
-from .services import create_user_reset_password_url, get_user_from_email
+from .services import (
+    create_user_reset_password_url,
+    get_user_from_email,
+    validate_token,
+    get_user_from_email_b64,
+)
 
 User = get_user_model()
 
@@ -104,6 +115,37 @@ class ChangePasswordView(UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class PasswordResetView(View):
+    template_name = "reset_password/reset_password.html"
+    redirect_url = reverse_lazy("reset-password-success")
+
+    def dispatch(self, request, email_b64, updated_at_b64, signature, *args, **kwargs):
+        if not validate_token(email_b64, updated_at_b64, signature):
+            raise Http404()
+        return super().dispatch(
+            request, email_b64, updated_at_b64, signature, *args, **kwargs
+        )
+
+    def get(self, request, email_b64, *args, **kwargs):
+        user = get_user_from_email_b64(email_b64)
+        form = SetPasswordForm(user=user)
+        context = {"form": form}
+        return render(request, self.template_name, context=context)
+
+    def post(self, request, email_b64, *args, **kwargs):
+        user = get_user_from_email_b64(email_b64)
+        form = SetPasswordForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(self.redirect_url)
+        context = {"form": form}
+        return render(request, self.template_name, context=context)
+
+
+class PasswordResetSuccess(TemplateView):
+    template_name = "reset_password/reset_success.html"
 
 
 ### Legacy views

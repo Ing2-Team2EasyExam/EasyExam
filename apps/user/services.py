@@ -55,9 +55,9 @@ def create_active_user_from_email(email: str, **extra_data) -> User:
 def validate_token(
     user_email_b64: str, user_updated_at_b64: str, signature: str
 ) -> bool:
-    user_email = urlsafe_base64_decode(user_email_b64)
-    user_updated_at = urlsafe_base64_decode(user_updated_at_b64)
-    if not User.objects.filter(email=user_email, updated_at=user_updated_at).exists():
+    user_email = urlsafe_base64_decode(user_email_b64).decode()
+    user_updated_at = urlsafe_base64_decode(user_updated_at_b64).decode()
+    if not User.objects.filter(email=user_email).exists():
         return False
     if (
         constant_time_compare(
@@ -79,3 +79,8 @@ def create_user_reset_password_url(user: User) -> str:
 
 def get_user_from_email(email: str) -> User:
     return User.objects.get(email=email)
+
+
+def get_user_from_email_b64(email_b64: str) -> User:
+    email = urlsafe_base64_decode(email_b64).decode()
+    return get_user_from_email(email)
