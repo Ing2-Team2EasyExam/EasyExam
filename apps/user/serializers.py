@@ -6,6 +6,7 @@ from rest_framework.serializers import (
     Serializer,
     EmailField,
     CharField,
+    BooleanField,
 )
 from apps.user.services import create_inactive_user_from_email
 from apps.user.models import Transaction
@@ -21,6 +22,7 @@ class UserSerializer(Serializer):
     email = EmailField(read_only=True)
     first_name = CharField()
     last_name = CharField()
+    is_admin = BooleanField(read_only=True)
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get("first_name", instance.first_name)

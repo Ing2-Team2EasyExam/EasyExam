@@ -85,6 +85,7 @@ def cosme_credentials():
                 "email": "cosme@fulanito.com",
                 "first_name": "Cosme",
                 "last_name": "Fulanito",
+                "is_admin": False,
             },
         )
     ],
@@ -112,6 +113,7 @@ def test_retrieve_information_from_view(
                 "email": "cosme@fulanito.com",
                 "first_name": "Homero",
                 "last_name": "Tompson",
+                "is_admin": False,
             },
         )
     ],
