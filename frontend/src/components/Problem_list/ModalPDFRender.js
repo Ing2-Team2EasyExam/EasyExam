@@ -38,17 +38,20 @@ class ModalPDFRender extends React.Component {
     console.log(this.state);
     return (
       <>
-        <a onClick={this.getPreview}>{this.props.problemName}</a>
+        <a href="modal" onClick={this.getPreview}>
+          {this.props.problemName}
+        </a>
 
-        <Modal show={this.state.show} onHide={this.handleClose}>
+        <Modal show={this.state.show} onHide={this.handleClose} size="lg">
           <Modal.Header closeButton>
-            <Modal.Title>Previsualización</Modal.Title>
+            <Modal.Title>
+              Previsualización :{this.props.problemName}{" "}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Aca debería ir la previsualización
             <div>
               <embed
-                src={this.state.url}
+                src={this.state.url + "#toolbar=0"}
                 frameBorder="0"
                 width="100%"
                 height="400px"
