@@ -18,7 +18,10 @@ class EditProblemForm extends React.Component {
         Authorization: `Token ${localStorage.getItem("token")}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
       .then(
         (result) => {
           this.setState({
@@ -31,6 +34,10 @@ class EditProblemForm extends React.Component {
           });
         },
         (error) => {
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
           this.setState({
             isLoaded: true,
             error: error,
