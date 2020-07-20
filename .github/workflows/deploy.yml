@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - heroku/upload_method
 jobs:
   test-build-deploy:
     runs-on: ubuntu-latest
