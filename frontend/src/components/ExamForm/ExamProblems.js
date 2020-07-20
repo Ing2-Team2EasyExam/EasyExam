@@ -29,7 +29,7 @@ class ExamProblems extends React.Component {
     event.preventDefault();
     const { problems, maximum } = this.state;
     if (problems.length === maximum) {
-      alert(`Can't put more than ${maximum}`);
+      alert(`No se permiten más de ${maximum} problemas`);
       return;
     }
     problems.push({
@@ -48,10 +48,6 @@ class ExamProblems extends React.Component {
      * Method on which the component remove a problem select component of the interface
      */
     let list = this.state.problems;
-    if (list.length === 1) {
-      alert("No puedes guardar un examen sin problemas");
-      return;
-    }
     list.splice(index, 1);
     this.setState((state, props) => {
       return {

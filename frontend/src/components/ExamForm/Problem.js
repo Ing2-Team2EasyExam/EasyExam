@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonGroup, Form, Col, Row } from "react-bootstrap";
 import DeleteProblemButton from "./DeleteProblemButton";
-import PreviewProblemButton from "./PreviewProblemButton";
+import ModalPDFExam from "./ModalPDFExam";
 import ProblemSelect from "./ProblemSelect";
 
 class Problem extends React.Component {
@@ -59,7 +59,10 @@ class Problem extends React.Component {
           </Col>
           <Col sm={1}>
             <ButtonGroup>
-              <PreviewProblemButton />
+              <ModalPDFExam
+                author={this.props.author}
+                problemName={this.props.name}
+              />
               <DeleteProblemButton onClick={this.removeProblem} />
             </ButtonGroup>
           </Col>
