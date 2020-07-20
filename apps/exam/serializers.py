@@ -123,7 +123,7 @@ class ImageSerializer(serializers.Serializer):
 
 class ProblemUpdateSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(many=True)
-    images = ImageSerializer(many=True)
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Problem
@@ -136,6 +136,10 @@ class ProblemUpdateSerializer(serializers.ModelSerializer):
             "topics",
             "images",
         )
+
+    def get_images(self, instance):
+        images = instance.image_set.all()
+        return ImageSerializer(images, many=True).data
 
 
 class ExamListSerializer(serializers.ModelSerializer):
