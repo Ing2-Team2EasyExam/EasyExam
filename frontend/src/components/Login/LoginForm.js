@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
     return (
       <Container style={{ padding: "16px" }}>
         <Row className="justify-content-md-center">
-          <Card className="text-center" style={{ width: "30%" }}>
+          <Card className="text-center" style={{ width: "30vw" }}>
             <Card.Body>
               <Card.Title>Iniciar Sesión</Card.Title>
               <Form onSubmit={this.handleSubmit}>
@@ -58,7 +58,7 @@ class LoginForm extends React.Component {
                   </Button>
                 </Form.Group>
               </Form>
-              <Card.Link href="#recuperar_contraseña">
+              <Card.Link href="/reset_password">
                 ¿Olvidaste tu contraseña?
               </Card.Link>
             </Card.Body>

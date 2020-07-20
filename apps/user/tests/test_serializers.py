@@ -13,6 +13,7 @@ class TestUserSerializers(TestCase):
             "email": self.user.email,
             "first_name": self.user.first_name,
             "last_name": self.user.last_name,
+            "is_admin": self.user.is_admin,
         }
         serializer = serializers.UserSerializer(instance=self.user)
         self.assertEqual(serializer.data, user_data)

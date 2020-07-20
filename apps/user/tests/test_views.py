@@ -3,6 +3,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate
 from rest_framework.authtoken.models import Token
 from django.shortcuts import reverse
 from apps.user import views
+
 from mixer.backend.django import mixer
 import pytest
 
@@ -84,6 +85,7 @@ def cosme_credentials():
                 "email": "cosme@fulanito.com",
                 "first_name": "Cosme",
                 "last_name": "Fulanito",
+                "is_admin": False,
             },
         )
     ],
@@ -111,6 +113,7 @@ def test_retrieve_information_from_view(
                 "email": "cosme@fulanito.com",
                 "first_name": "Homero",
                 "last_name": "Tompson",
+                "is_admin": False,
             },
         )
     ],

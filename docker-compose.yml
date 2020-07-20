@@ -34,6 +34,16 @@ services:
       - POSTGRES_HOST=db
     depends_on:
       - db
+    links:
+      - redis
+  celery:
+    build: .
+    command: celery -A EasyExamAPI worker -l info
+    volumes:
+      - .:/easyexam
+    depends_on:
+      - db
+      - redis
 volumes:
   postgres_data:
   redisdata:

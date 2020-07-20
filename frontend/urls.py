@@ -32,4 +32,9 @@ urlpatterns = [
         views.FrontEndRendererView.as_view(),
         name="change-password",
     ),
+    path(
+        "reset_password/",
+        views.FrontEndRendererView.as_view(),
+        name="frontend-reset-password",
+    ),
 ]

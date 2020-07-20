@@ -7,11 +7,9 @@ class ProfileForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded: false,
       isLoading: false,
       first_name: "",
       last_name: "",
-      email: "",
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,6 +37,39 @@ class ProfileForm extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  componentDidMount() {
+    const url = "/api/users/account/";
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
+      .then(
+        (data) => {
+          this.setState({
+            first_name: data.first_name,
+            last_name: data.last_name,
+          });
+        },
+        (error) => {
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
   }
 
   handleSubmit(event) {
@@ -81,34 +112,6 @@ class ProfileForm extends React.Component {
           alert("Ha ocurrido un error");
           this.setState({
             isLoading: false,
-          });
-        }
-      );
-  }
-
-  componentDidMount() {
-    const url = "/api/users/account/";
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Token ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then(
-        (data) => {
-          this.setState({
-            isLoaded: true,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
           });
         }
       );

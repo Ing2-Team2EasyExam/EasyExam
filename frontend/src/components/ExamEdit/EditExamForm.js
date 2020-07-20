@@ -33,10 +33,13 @@ class EditExamForm extends React.Component {
         Authorization: `Token ${localStorage.getItem("token")}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
       .then(
         (result) => {
-          console.log(result);
           this.setState({
             isLoaded: true,
             name: result.name,
@@ -53,6 +56,10 @@ class EditExamForm extends React.Component {
           });
         },
         (error) => {
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
           this.setState({
             isLoaded: true,
             error,
@@ -70,7 +77,8 @@ class EditExamForm extends React.Component {
             data={this.state}
             url={url}
             method="PUT"
-            successMessage="Examen Editado"
+            titleSuccess="Examen editado"
+            successMessage="Su examen se ha editado exitosamente"
             errorMessage="Ha ocurrido un error"
           />
         )}

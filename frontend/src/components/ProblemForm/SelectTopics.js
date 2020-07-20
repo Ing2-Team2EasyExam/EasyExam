@@ -22,13 +22,21 @@ class SelectTopics extends React.Component {
         Authorization: `Token ${token}`,
       },
     })
+      .then((res) => {
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
       .then(
-        (response) => response.json(),
-        (errors) => console.log(errors)
-      )
-      .then((data) => {
-        this.setState({ available_topics: data });
-      });
+        (data) => {
+          this.setState({ available_topics: data });
+        },
+        (error) => {
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
+        }
+      );
   }
 
   handleChange(newValue) {

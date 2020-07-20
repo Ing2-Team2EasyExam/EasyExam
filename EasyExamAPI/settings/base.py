@@ -193,8 +193,8 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 NOTEBOOK_ARGUMENTS = ["--ip", "0.0.0.0", "--port", "8001", "--allow-root"]
 # Celery stuff and redis stuff
 
-BROKER_URL = "redis://localhost:6379"
-CELERY_RESULT_BACKEND = "redis://localhost:6379"
+BROKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
@@ -218,3 +218,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
+RESET_PASSWORD_SECRET = "28e2cbf07d978f488f900848e6c5aea8"
+RESET_PASSWORD_TTL_DAYS = 3
+SERVER_URL = "http://localhost:8000"

@@ -4,6 +4,7 @@ import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
 import FormSubmitButton from "./FormSubmitButton";
 import CreateProblemButton from "./CreateProblemButton";
+import AlertMessage from "../EEComponents/AlertMessage";
 
 class ExamForm extends React.Component {
   /**
@@ -29,11 +30,18 @@ class ExamForm extends React.Component {
     this.validate = this.validate.bind(this);
     this.refreshProblems = this.refreshProblems.bind(this);
     this.getProblems = this.getProblems.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
   }
 
   refreshProblems() {
     console.log("Refrescando listado de problemas");
     this.getProblems();
+  }
+
+  closeAlert() {
+    this.setState({
+      showAlert: false,
+    });
   }
 
   handleProblemSelection(list) {
@@ -67,11 +75,17 @@ class ExamForm extends React.Component {
         Authorization: `Token ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
       .then(
         (result) => this.setState({ available_problems: result }),
         (error) => {
-          this.setState({ error: error });
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
         }
       );
   }
@@ -84,39 +98,34 @@ class ExamForm extends React.Component {
   }
 
   validate(data) {
-    let errors = "";
+    let errors = [];
 
     let name = data.name;
-    if (name.trim().length == 0)
-      errors = errors.concat("- 'Nombre del Exámen' inválido.\n");
+    if (name.trim().length == 0) errors.push("'Nombre del Examen' inválido.");
 
     let due_date = data.due_date;
-    if (due_date.length == 0)
-      errors = errors.concat("- 'Fecha de realización' inválida.\n");
+    if (due_date.length == 0) errors.push("'Fecha de realización' inválida.");
 
     let start_time = data.start_time;
-    if (start_time.length == 0)
-      errors = errors.concat("- 'Hora de inicio' inválida.\n");
+    if (start_time.length == 0) errors.push("'Hora de inicio' inválida.");
 
     let end_time = data.end_time;
-    if (end_time.length == 0)
-      errors = errors.concat("- 'Hora de término' inválida.\n");
+    if (end_time.length == 0) errors.push("'Hora de término' inválida.");
 
     let teacher = data.teacher;
     if (teacher.trim().length == 0)
-      errors = errors.concat("- 'Nombre profesor/a' inválido.\n");
+      errors.push("'Nombre profesor/a' inválido.");
 
     let course_name = data.course_name;
     if (course_name.trim().length == 0)
-      errors = errors.concat("- 'Nombre del Curso' inválido.\n");
+      errors.push("'Nombre del Curso' inválido.");
 
     let course_code = data.course_code;
     if (course_code.trim().length == 0)
-      errors = errors.concat("- 'Código del Curso' inválido.\n");
+      errors.push("'Código del Curso' inválido.");
 
     let university = data.university;
-    if (university.trim().length == 0)
-      errors = errors.concat("- 'Universidad' inválido.\n");
+    if (university.trim().length == 0) errors.push("'Universidad' inválido.");
 
     let problem_choices = data.problem_choices;
     if (
@@ -125,7 +134,7 @@ class ExamForm extends React.Component {
           item.problem.name === "DEFAULT" && item.problem.author === "DEFAULT"
       )
     )
-      errors = errors.concat("- 'Problemas' inválido.\n");
+      errors.push("'Problemas' inválido.");
 
     return errors;
   }
@@ -153,7 +162,13 @@ class ExamForm extends React.Component {
     };
     let form_invalid = this.validate(data);
     if (form_invalid.length > 0) {
-      alert(form_invalid);
+      this.setState({
+        showAlert: true,
+        infoAlert: form_invalid,
+        variantAlert: "danger",
+        titleAlert: "Algo ha salido mal",
+      });
+      window.scrollTo(0, 0);
       return false;
     }
 
@@ -177,8 +192,12 @@ class ExamForm extends React.Component {
           console.log(Object.values(data));
           this.setState({
             isLoading: false,
+            showAlert: true,
+            infoAlert: [this.props.successMessage],
+            variantAlert: "success",
+            titleAlert: this.props.titleSuccess,
           });
-          alert(this.props.successMessage);
+          window.scrollTo(0, 0);
           //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => {
@@ -194,6 +213,14 @@ class ExamForm extends React.Component {
   render() {
     return (
       <>
+        {this.state.showAlert && (
+          <AlertMessage
+            variant={this.state.variantAlert}
+            title={this.state.titleAlert}
+            message={this.state.infoAlert}
+            closeAlert={this.closeAlert}
+          />
+        )}
         <Form onSubmit={this.handleSubmit}>
           <ExamDataInputs
             handleInputChange={this.handleInputChange}

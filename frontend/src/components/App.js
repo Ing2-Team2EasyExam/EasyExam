@@ -17,6 +17,7 @@ import Profile from "./Profile/Profile";
 import CreateProblem from "./ProblemCreation/CreateProblem";
 import ChangePass from "./Profile/ChangePass";
 import EditProblem from "./ProblemEdit/EditProblem";
+import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
 
 class App extends React.Component {
   constructor(props) {
@@ -109,6 +110,13 @@ class App extends React.Component {
                 <Redirect to="/home" />
               ) : (
                 <LoginForm doLogin={this.doLogin} />
+              )}
+            </Route>
+            <Route exact path="/reset_password">
+              {this.isLoggedIn() ? (
+                <Redirect to="/home" />
+              ) : (
+                <ResetPasswordForm />
               )}
             </Route>
             <Route exac path="/exam/create">

@@ -116,8 +116,14 @@ class ProblemEditSerializer(serializers.ModelSerializer):
         return create_problem(uploader=self.context["request"].user, **validated_data)
 
 
+class ImageSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    image = serializers.ImageField()
+
+
 class ProblemUpdateSerializer(serializers.ModelSerializer):
     topics = TopicSerializer(many=True)
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Problem
@@ -128,7 +134,12 @@ class ProblemUpdateSerializer(serializers.ModelSerializer):
             "statement_content",
             "solution_content",
             "topics",
+            "images",
         )
+
+    def get_images(self, instance):
+        images = instance.image_set.all()
+        return ImageSerializer(images, many=True).data
 
 
 class ExamListSerializer(serializers.ModelSerializer):
