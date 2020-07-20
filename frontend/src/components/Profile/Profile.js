@@ -10,6 +10,8 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       is_admin: null,
+      first_name: "1",
+      last_name: "2",
     };
   }
 
@@ -26,6 +28,8 @@ class Profile extends React.Component {
       .then(
         (data) => {
           this.setState({
+            first_name: data.first_name,
+            last_name: data.last_name,
             is_admin: data.is_admin,
           });
         },
@@ -52,15 +56,12 @@ class Profile extends React.Component {
         <Row>
           <Button
             href="/profile/change-password"
-            variant="primary"
+            variant="warning"
             size="lg"
             block
           >
             Cambiar Contraseña
           </Button>
-        </Row>
-        <Row>
-          <p></p>
         </Row>
         <Row>
           <AdminForward isAdmin={this.state.is_admin} />
