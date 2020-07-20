@@ -163,9 +163,9 @@ class Exam(models.Model):
     # General Information
     name = models.CharField(max_length=100)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    teacher = models.CharField(max_length=100)
-    university = models.CharField(max_length=100)
-    course_name = models.CharField(max_length=100)
+    teacher = models.CharField(max_length=100, blank=True)
+    university = models.CharField(max_length=100, blank=True)
+    course_name = models.CharField(max_length=100, blank=True)
     course_code = models.CharField(max_length=50, blank=True, null=True)
     style = models.CharField(max_length=1, choices=STYLE_CHOICES, default="C")
     language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="EN")
@@ -173,9 +173,9 @@ class Exam(models.Model):
     problems = models.ManyToManyField(to=Problem, through="ExamProblemChoice")
 
     # A lot of times and dates
-    due_date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    due_date = models.DateField(blank=True)
+    start_time = models.TimeField(blank=True)
+    end_time = models.TimeField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -189,7 +189,11 @@ class Exam(models.Model):
     tex_file = models.FileField(upload_to=exam_tex_path, storage=OverwriteStorage())
 
     class Meta:
-        unique_together = ("name", "owner")  # Owner cant have exams with the same name
+        unique_together = (
+            "name",
+            "owner",
+            "created_at",
+        )  # Owner cant have exams created at the same time with the same name
 
     @property
     def duration(self) -> Tuple[int, int]:
