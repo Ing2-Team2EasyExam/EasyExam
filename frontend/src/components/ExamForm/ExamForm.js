@@ -75,11 +75,17 @@ class ExamForm extends React.Component {
         Authorization: `Token ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status == 401) throw 401;
+        return res.json();
+      })
       .then(
         (result) => this.setState({ available_problems: result }),
         (error) => {
-          this.setState({ error: error });
+          if (error == 401) {
+            localStorage.removeItem("token");
+            window.location.href = "/home";
+          }
         }
       );
   }
