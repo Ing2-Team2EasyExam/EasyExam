@@ -18,6 +18,8 @@ import CreateProblem from "./ProblemCreation/CreateProblem";
 import ChangePass from "./Profile/ChangePass";
 import EditProblem from "./ProblemEdit/EditProblem";
 import ResetPasswordForm from "./ResetPasswordForm/ResetPasswordForm";
+import AlertMessage from "./EEComponents/AlertMessage";
+import { Container } from "react-bootstrap";
 
 class App extends React.Component {
   constructor(props) {
@@ -29,6 +31,13 @@ class App extends React.Component {
     this.doLogin = this.doLogin.bind(this);
     this.doLogout = this.doLogout.bind(this);
     this.doPrint = this.doPrint.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
+  }
+
+  closeAlert() {
+    this.setState({
+      showAlert: false,
+    });
   }
 
   componentDidMount() {
@@ -62,19 +71,28 @@ class App extends React.Component {
         }
         return response.json();
       })
-      .then((data) => {
-        localStorage.setItem("token", data["token"]);
-        this.setState((state, props) => {
-          return {
-            isLoggedIn: this.isLoggedIn(),
-          };
-        });
-        window.location.href = "/home";
-      })
-      .catch((error) => {
-        alert(error.message);
-        localStorage.removeItem("token");
-      });
+      .then(
+        (data) => {
+          localStorage.setItem("token", data["token"]);
+          this.setState((state, props) => {
+            return {
+              isLoggedIn: this.isLoggedIn(),
+            };
+          });
+          window.location.href = "/home";
+        },
+        (error) => {
+          this.setState({
+            showAlert: true,
+            infoAlert: [
+              "Combinación 'Correo electrónico' y 'Contraseña' es incorrecto.",
+            ],
+            variantAlert: "danger",
+            titleAlert: "Algo ha salido mal",
+          });
+          localStorage.removeItem("token");
+        }
+      );
   }
 
   doLogout() {
@@ -109,7 +127,19 @@ class App extends React.Component {
               {this.isLoggedIn() ? (
                 <Redirect to="/home" />
               ) : (
-                <LoginForm doLogin={this.doLogin} />
+                <>
+                  {this.state.showAlert && (
+                    <Container style={{ marginTop: "10px" }}>
+                      <AlertMessage
+                        variant={this.state.variantAlert}
+                        title={this.state.titleAlert}
+                        message={this.state.infoAlert}
+                        closeAlert={this.closeAlert}
+                      />
+                    </Container>
+                  )}
+                  <LoginForm doLogin={this.doLogin} />
+                </>
               )}
             </Route>
             <Route exact path="/reset_password">
