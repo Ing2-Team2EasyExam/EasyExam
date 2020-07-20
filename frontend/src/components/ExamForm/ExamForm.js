@@ -112,30 +112,6 @@ class ExamForm extends React.Component {
     let end_time = data.end_time;
     if (end_time.length == 0) errors.push("'Hora de término' inválida.");
 
-    let teacher = data.teacher;
-    if (teacher.trim().length == 0)
-      errors.push("'Nombre profesor/a' inválido.");
-
-    let course_name = data.course_name;
-    if (course_name.trim().length == 0)
-      errors.push("'Nombre del Curso' inválido.");
-
-    let course_code = data.course_code;
-    if (course_code.trim().length == 0)
-      errors.push("'Código del Curso' inválido.");
-
-    let university = data.university;
-    if (university.trim().length == 0) errors.push("'Universidad' inválido.");
-
-    let problem_choices = data.problem_choices;
-    if (
-      problem_choices.some(
-        (item) =>
-          item.problem.name === "DEFAULT" && item.problem.author === "DEFAULT"
-      )
-    )
-      errors.push("'Problemas' inválido.");
-
     return errors;
   }
 
@@ -148,6 +124,11 @@ class ExamForm extends React.Component {
     const url = this.props.url;
     const method = this.props.method;
     let token = localStorage.getItem("token");
+    let problem_choices = this.state.problem_choices;
+    let problems = problem_choices.filter(
+      (item) =>
+        item.problem.name !== "DEFAULT" && item.problem.author !== "DEFAULT"
+    );
     let data = {
       name: this.state.name,
       due_date: this.state.dueDate,
@@ -158,7 +139,7 @@ class ExamForm extends React.Component {
       course_code: this.state.courseCode,
       university: this.state.university,
       language: this.state.language,
-      problem_choices: this.state.problem_choices,
+      problem_choices: problems,
     };
     let form_invalid = this.validate(data);
     if (form_invalid.length > 0) {
@@ -189,7 +170,6 @@ class ExamForm extends React.Component {
       )
       .then(
         (data) => {
-          console.log(Object.values(data));
           this.setState({
             isLoading: false,
             showAlert: true,
@@ -201,8 +181,6 @@ class ExamForm extends React.Component {
           //window.location.href = "/home/"; //TODO: Change redirection link!
         },
         (error) => {
-          console.log(error);
-          alert(this.props.errorMessage);
           this.setState({
             isLoading: false,
           });
