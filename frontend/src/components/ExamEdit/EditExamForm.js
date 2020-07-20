@@ -34,7 +34,6 @@ class EditExamForm extends React.Component {
       },
     })
       .then((res) => {
-        console.log(res);
         if (res.status == 401) throw 401;
         return res.json();
       })
