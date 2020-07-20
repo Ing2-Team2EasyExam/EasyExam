@@ -60,7 +60,7 @@ class Problem extends React.Component {
           <Col sm={1}>
             <ButtonGroup>
               <ModalPDFExam
-                uuid={this.props.uuid}
+                author={this.props.author}
                 problemName={this.props.name}
               />
               <DeleteProblemButton onClick={this.removeProblem} />
