@@ -32,6 +32,19 @@ class ModalPDFRender extends React.Component {
       });
   }
   render() {
+    let pdf_view;
+    if (this.state.url) {
+      pdf_view = (
+        <embed
+          src={this.state.url + "#toolbar=0"}
+          frameBorder="0"
+          width="100%"
+          height="400px"
+        ></embed>
+      );
+    } else {
+      pdf_view = <p>Cargando PDF...</p>;
+    }
     return (
       <>
         <a href="modal" onClick={this.getPreview}>
@@ -41,18 +54,11 @@ class ModalPDFRender extends React.Component {
         <Modal show={this.state.show} onHide={this.handleClose} size="lg">
           <Modal.Header closeButton>
             <Modal.Title>
-              Previsualización :{this.props.problemName}{" "}
+              Previsualización: {this.props.problemName}{" "}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
-              <embed
-                src={this.state.url + "#toolbar=0"}
-                frameBorder="0"
-                width="100%"
-                height="400px"
-              ></embed>
-            </div>
+            <div>{pdf_view}</div>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
