@@ -72,6 +72,8 @@ jobs:
           POSTGRES_DB: github_actions
           POSTGRES_HOST: "127.0.0.1"
         run: |
-          docker build -t registry.heroku.com/easyexam-qa/web .
+          docker build -f Dockerfile -t registry.heroku.com/easyexam-qa/web .
+          docker build -f Dockerfile.worker -t registry.heroku.com/easyexam-qa/worker .
           docker push registry.heroku.com/easyexam-qa/web
-          heroku container:release -a easyexam-qa web
+          docker push registry.heroku.com/easyexam-qa/worker
+          heroku container:release -a easyexam-qa web worker
