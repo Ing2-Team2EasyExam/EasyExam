@@ -42,7 +42,8 @@ class CreateExamForm extends React.Component {
         data={this.state}
         url="/api/exams/create/"
         method="POST"
-        successMessage="Examen Creado"
+        titleSuccess="Examen Creado"
+        successMessage="Su examen se ha creado exitosamente"
         errorMessage="Ha ocurrido un error"
       />
     );
