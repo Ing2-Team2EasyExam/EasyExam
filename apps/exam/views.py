@@ -173,7 +173,9 @@ class ProblemPDFExamView(RetrieveFileMixin, APIView):
     file_attribute_name = "pdf"
     as_attachment = True
 
-    def get_object(self, request, name, author, *args, **kwargs):
+    def get_object(self, *args, **kwargs):
+        name = self.kwargs["name"]
+        author = self.kwargs["author"]
         model = self.get_object_class(*args, **kwargs)
         problem = get_object_or_404(model, name=name, author=author)
         recompile_problem(problem)
