@@ -167,6 +167,28 @@ class ProblemPDFView(RetrieveFileMixin, APIView):
         return super().retrieve(request, uuid, *args, **kwargs)
 
 
+class ProblemPDFExamView(RetrieveFileMixin, APIView):
+    permission_classes = (IsAuthenticated,)
+    model = Problem
+    file_attribute_name = "pdf"
+    as_attachment = True
+
+    def get_object(self, *args, **kwargs):
+        model = self.get_object_class(*args, **kwargs)
+        problem_name = self.request.query_params["name"]
+        problem_author = self.request.query_params["author"]
+        problem = get_object_or_404(model, name=problem_name, author=problem_author)
+        recompile_problem(problem)
+        return problem
+
+    def get_filename(self, *args, **kwargs):
+        problem = self.get_object(*args, **kwargs)
+        return f"{problem.name}_{problem.author}.pdf"
+
+    def get(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+
 class ProblemCloneView(APIView):
     permission_classes = (IsAuthenticated,)
 
