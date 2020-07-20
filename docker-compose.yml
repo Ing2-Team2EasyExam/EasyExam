@@ -37,8 +37,9 @@ services:
     links:
       - redis
   celery:
-    build: .
-    command: celery -A EasyExamAPI worker -l info
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
     volumes:
       - .:/easyexam
     depends_on:
