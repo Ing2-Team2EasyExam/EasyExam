@@ -3,10 +3,39 @@ import CardForm from "../EEComponents/CardForm";
 import ProfileForm from "./ProfileForm";
 import { PersonCircle } from "react-bootstrap-icons";
 import { Row, Col, Button } from "react-bootstrap";
+import AdminForward from "./AdminForward";
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      is_admin: null,
+    };
+  }
+
+  componentDidMount() {
+    const url = "/api/users/account/";
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then(
+        (data) => {
+          this.setState({
+            is_admin: data.is_admin,
+          });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
   }
 
   render() {
@@ -29,6 +58,12 @@ class Profile extends React.Component {
           >
             Cambiar Contraseña
           </Button>
+        </Row>
+        <Row>
+          <p></p>
+        </Row>
+        <Row>
+          <AdminForward isAdmin={this.state.is_admin} />
         </Row>
       </CardForm>
     );

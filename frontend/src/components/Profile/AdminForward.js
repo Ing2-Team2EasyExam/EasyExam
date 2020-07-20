@@ -9,14 +9,13 @@ class AdminForward extends React.Component {
   }
   componentDidMount() {
     this.setState({ loaded: this.props.isAdmin });
-    console.log(this.state);
   }
 
   render() {
     const button = (
       <>
         <Button href="/admin" variant="primary" size="lg" block>
-          <u>Administración</u>
+          Administración
         </Button>
       </>
     );
