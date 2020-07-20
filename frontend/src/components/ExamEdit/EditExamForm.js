@@ -71,7 +71,7 @@ class EditExamForm extends React.Component {
             url={url}
             method="PUT"
             titleSuccess="Examen editado"
-            successMessage="Su examen se ha editado exitósamente"
+            successMessage="Su examen se ha editado exitosamente"
             errorMessage="Ha ocurrido un error"
           />
         )}

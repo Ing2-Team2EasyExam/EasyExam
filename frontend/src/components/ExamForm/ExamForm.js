@@ -95,7 +95,7 @@ class ExamForm extends React.Component {
     let errors = [];
 
     let name = data.name;
-    if (name.trim().length == 0) errors.push("'Nombre del Exámen' inválido.");
+    if (name.trim().length == 0) errors.push("'Nombre del Examen' inválido.");
 
     let due_date = data.due_date;
     if (due_date.length == 0) errors.push("'Fecha de realización' inválida.");

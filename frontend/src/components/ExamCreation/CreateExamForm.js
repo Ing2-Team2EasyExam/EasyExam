@@ -43,7 +43,7 @@ class CreateExamForm extends React.Component {
         url="/api/exams/create/"
         method="POST"
         titleSuccess="Examen Creado"
-        successMessage="Su examen se ha creado exitósamente"
+        successMessage="Su examen se ha creado exitosamente"
         errorMessage="Ha ocurrido un error"
       />
     );
