@@ -105,7 +105,6 @@ class ExamProblems extends React.Component {
               author={problem.problem.author}
               name={problem.problem.name}
               points={problem.points}
-              uuid={problem.uuid}
             />
           );
         })}
