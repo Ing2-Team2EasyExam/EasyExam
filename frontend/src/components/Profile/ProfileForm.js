@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import FormInput from "../EEComponents/FormInput";
 import FormSubmitButton from "../EEComponents/FormSubmitButton";
+import AdminForward from "./AdminForward";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class ProfileForm extends React.Component {
       first_name: "",
       last_name: "",
       email: "",
+      is_admin: null,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -103,6 +105,7 @@ class ProfileForm extends React.Component {
             first_name: data.first_name,
             last_name: data.last_name,
             email: data.email,
+            is_admin: data.is_admin,
           });
         },
         (error) => {
@@ -136,6 +139,7 @@ class ProfileForm extends React.Component {
           handleChange={this.handleInputChange}
         />
         <FormSubmitButton isLoading={this.state.isLoading} />
+        <AdminForward isAdmin={this.state.is_admin} />
       </Form>
     );
   }
