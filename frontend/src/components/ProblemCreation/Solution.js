@@ -19,7 +19,6 @@ class Solution extends React.Component {
             placeholder="Escribe aquí la solución de la pregunta. Puedes usar latex."
           />
         </Form.Group>
-        <AddImage />
       </>
     );
   }

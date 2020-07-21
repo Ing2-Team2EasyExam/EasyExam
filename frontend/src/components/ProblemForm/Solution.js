@@ -1,5 +1,5 @@
 import React from "react";
-import ContentInput from "./ContentInput";
+import { Form } from "react-bootstrap";
 class Solution extends React.Component {
   constructor(props) {
     super(props);
@@ -7,14 +7,18 @@ class Solution extends React.Component {
   render() {
     return (
       <>
-        <ContentInput
-          controlId="solution"
-          label="Solución:"
-          handleChange={this.props.handleChange}
-          name="solution_content"
-          placeholder="Escribe aquí la solución de la pregunta. Puedes usar latex."
-          value={this.props.value}
-        />
+        <Form.Group controlId="solution">
+          <Form.Label>Solución:</Form.Label>
+          <Form.Control
+            onChange={this.props.handleChange}
+            name="solution_content"
+            type="text"
+            as="textarea"
+            placeholder="Escribe aquí la solución de la pregunta. Puedes usar latex."
+            rows="5"
+            value={this.props.value}
+          />
+        </Form.Group>
       </>
     );
   }

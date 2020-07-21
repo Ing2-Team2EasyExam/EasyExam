@@ -1,8 +1,23 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import AddImage from "./AddImage";
+
 class ContentInput extends React.Component {
   constructor(props) {
     super(props);
+    this.textInput = React.createRef();
+    this.addToTextInput = this.addToTextInput.bind(this);
+  }
+  addToTextInput(image) {
+    console.log(this.textInput);
+    console.log(image);
+    this.textInput.current.value +=
+      "\\begin{figure}[h]\n" +
+      "\\includegraphics[scale=0.5]{" +
+      image.name +
+      "}\n" +
+      "\\end{figure}";
+    console.log(this.textInput.current.value);
   }
   render() {
     return (
@@ -16,9 +31,13 @@ class ContentInput extends React.Component {
             as="textarea"
             placeholder={this.props.placeholder}
             rows="5"
-            value={this.props.value}
+            ref={this.textInput}
           />
         </Form.Group>
+        <AddImage
+          handleImage={this.props.handleImageChange}
+          addToTextInput={this.addToTextInput}
+        />
       </>
     );
   }
