@@ -5,6 +5,19 @@ import AddImage from "./AddImage";
 class Statement extends React.Component {
   constructor(props) {
     super(props);
+    this.textInput = React.createRef();
+    this.addToTextInput = this.addToTextInput.bind(this);
+  }
+  addToTextInput(image) {
+    console.log(this.textInput);
+    console.log(image);
+    this.textInput.current.value +=
+      "\\begin{figure}[h]\n" +
+      "\\includegraphics[scale=0.5]{" +
+      image.name +
+      "}\n" +
+      "\\end{figure}";
+    console.log(this.textInput.current.value);
   }
   render() {
     return (
@@ -17,10 +30,14 @@ class Statement extends React.Component {
             type="text"
             as="textarea"
             placeholder="Escribe aquí el enunciado de la pregunta. Puedes usar latex."
-            rows="3"
+            rows="5"
+            ref={this.textInput}
           />
         </Form.Group>
-        <AddImage handleImage={this.props.handleImageChange} />
+        <AddImage
+          handleImage={this.props.handleImageChange}
+          addToTextInput={this.addToTextInput}
+        />
       </>
     );
   }

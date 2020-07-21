@@ -42,11 +42,20 @@ class ProblemForm extends React.Component {
   }
 
   transformDict(array) {
-    if (array !== "" && array.length && array[0].hasOwnProperty("label")) {
+    if (array !== "" && array.length && array[0].hasOwnProperty("name")) {
+      return array.map((topic) => {
+        return topic.name;
+      });
+    } else if (
+      array !== "" &&
+      array.length &&
+      array[0].hasOwnProperty("label")
+    ) {
       return array.map((topic) => {
         return topic.label;
       });
     }
+    return array;
   }
 
   handleSubmit(event) {

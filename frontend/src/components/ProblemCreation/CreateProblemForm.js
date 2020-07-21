@@ -6,8 +6,6 @@ import Statement from "./Statement";
 import Solution from "./Solution";
 import SelectTopics from "./SelectTopics";
 
-//Falta la previsualización de las preguntas ingresadas.
-
 class CreateProblemForm extends React.Component {
   /**
    * Component that represents the form for creating a problem.
@@ -67,12 +65,15 @@ class CreateProblemForm extends React.Component {
     const topics = this.transformDict(this.state.chosen_topics);
     console.log(Object.values(topics));
     let form_data = new FormData();
+    console.log("Array images:");
     form_data.append("name", this.state.name);
     form_data.append("author", this.state.author);
     form_data.append("statement_content", this.state.statement_content);
     form_data.append("solution_content", this.state.solution_content);
     form_data.append("topics_data", topics);
-    form_data.append("figures", this.state.image, this.state.image.name);
+    if (this.state.image !== null) {
+      form_data.append("figures", this.state.image, this.state.image.name);
+    }
 
     console.log(form_data);
 

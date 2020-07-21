@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Form, Button, Image, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 class AddImage extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class AddImage extends React.Component {
     });
     console.log(this.state);
     this.props.handleImage(newImage);
+    this.props.addToTextInput(newImage);
   }
   render() {
     return (
