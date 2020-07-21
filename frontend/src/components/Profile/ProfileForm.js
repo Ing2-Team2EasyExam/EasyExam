@@ -1,7 +1,8 @@
 import React from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import FormInput from "../EEComponents/FormInput";
 import FormSubmitButton from "../EEComponents/FormSubmitButton";
+import AlertMessage from "../EEComponents/AlertMessage";
 
 class ProfileForm extends React.Component {
   constructor(props) {
@@ -14,18 +15,23 @@ class ProfileForm extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validate = this.validate.bind(this);
+    this.closeAlert = this.closeAlert.bind(this);
+  }
+
+  closeAlert() {
+    this.setState({
+      showAlert: false,
+    });
   }
 
   validate(data) {
-    let errors = "";
+    let errors = [];
 
     let first_name = data.first_name;
-    if (first_name.trim().length == 0)
-      errors = errors.concat("- 'Nombre' inválido.\n");
+    if (first_name.trim().length == 0) errors.push("'Nombre' inválido.");
 
     let last_name = data.last_name;
-    if (last_name.length == 0)
-      errors = errors.concat("- 'Apellido' inválido.\n");
+    if (last_name.length == 0) errors.push("'Apellido' inválido.");
 
     return errors;
   }
@@ -83,7 +89,13 @@ class ProfileForm extends React.Component {
     };
     let form_invalid = this.validate(data);
     if (form_invalid.length > 0) {
-      alert(form_invalid);
+      this.setState({
+        showAlert: true,
+        infoAlert: form_invalid,
+        variantAlert: "danger",
+        titleAlert: "Algo ha salido mal",
+      });
+      window.scrollTo(0, 0);
       return false;
     }
 
@@ -101,11 +113,14 @@ class ProfileForm extends React.Component {
       .then((response) => response.json())
       .then(
         (data) => {
-          console.log(Object.values(data));
           this.setState({
             isLoading: false,
+            showAlert: true,
+            infoAlert: ["Se ha guardado su información satisfactoriamente."],
+            variantAlert: "success",
+            titleAlert: "Cambio de Nombre y Apellido",
           });
-          alert("Se ha guardado exitósamente");
+          window.scrollTo(0, 0);
         },
         (error) => {
           console.log(error);
@@ -119,27 +134,37 @@ class ProfileForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <FormInput
-          controlId="myFirstName"
-          name="first_name"
-          label="Nombre: "
-          input_type="text"
-          placeholder="Ingresa tu nombre"
-          value={this.state.first_name}
-          handleChange={this.handleInputChange}
-        />
-        <FormInput
-          controlId="myLastName"
-          name="last_name"
-          label="Apellido: "
-          input_type="text"
-          placeholder="Ingresa tu apellido"
-          value={this.state.last_name}
-          handleChange={this.handleInputChange}
-        />
-        <FormSubmitButton isLoading={this.state.isLoading} />
-      </Form>
+      <>
+        {this.state.showAlert && (
+          <AlertMessage
+            variant={this.state.variantAlert}
+            title={this.state.titleAlert}
+            message={this.state.infoAlert}
+            closeAlert={this.closeAlert}
+          />
+        )}
+        <Form onSubmit={this.handleSubmit}>
+          <FormInput
+            controlId="myFirstName"
+            name="first_name"
+            label="Nombre: "
+            input_type="text"
+            placeholder="Ingresa tu nombre"
+            value={this.state.first_name}
+            handleChange={this.handleInputChange}
+          />
+          <FormInput
+            controlId="myLastName"
+            name="last_name"
+            label="Apellido: "
+            input_type="text"
+            placeholder="Ingresa tu apellido"
+            value={this.state.last_name}
+            handleChange={this.handleInputChange}
+          />
+          <FormSubmitButton isLoading={this.state.isLoading} />
+        </Form>
+      </>
     );
   }
 }

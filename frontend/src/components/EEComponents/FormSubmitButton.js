@@ -9,13 +9,13 @@ class FormSubmitButton extends React.Component {
   }
   render() {
     const normal_button = (
-      <Button variant="success" type="submit">
+      <Button variant="success" type="submit" block>
         {" "}
         Guardar{" "}
       </Button>
     );
     const loading_button = (
-      <Button variant="success" disabled>
+      <Button variant="success" disabled block>
         {" "}
         <Spinner
           as="span"
