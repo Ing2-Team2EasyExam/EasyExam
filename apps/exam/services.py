@@ -1,10 +1,14 @@
-from django.shortcuts import get_object_or_404
-from .models import Problem, Exam, Topic, Image
-from apps.user.models import User
-from typing import Set, Tuple, List
-from .generate_exam.exceptions import CompilationErrorException
-from django.forms import ValidationError
+import datetime
+from typing import List, Set, Tuple
+
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms import ValidationError
+from django.shortcuts import get_object_or_404
+
+from apps.user.models import User
+
+from .generate_exam.exceptions import CompilationErrorException
+from .models import Exam, Image, Problem, Topic
 
 
 def get_problem(problem_id: str) -> Problem:
@@ -206,7 +210,10 @@ def get_problem_points(problem: Problem, exam: Exam) -> Tuple[int, int]:
 
 
 def clone_problem(problem: Problem, uploader: User) -> Problem:
-    clone_name = f"{problem.name} clone for user {uploader.full_name}"
+    clone_creation_time = datetime.datetime.now().isoformat()
+    clone_name = (
+        f"{problem.name} clone for {uploader.full_name} at time {clone_creation_time}"
+    )
     clone_author = problem.author
     clone_uploader = uploader
     clone_statement = problem.statement_content
