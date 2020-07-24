@@ -2,7 +2,7 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
-import FormSubmitButton from "./FormSubmitButton";
+import FormSubmitButton from "../EEComponents/FormSubmitButton";
 import AlertMessage from "../EEComponents/AlertMessage";
 import CreateProblemModal from "./CreateProblemModal";
 
