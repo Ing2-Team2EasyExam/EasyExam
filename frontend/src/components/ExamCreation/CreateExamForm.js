@@ -21,9 +21,9 @@ class CreateExamForm extends React.Component {
     this.state = {
       isLoading: false,
       name: "",
-      dueDate: "",
-      startTime: "",
-      endTime: "",
+      dueDate: "2021-01-01",
+      startTime: "00:00",
+      endTime: "00:00",
       teacher: "",
       courseName: "",
       courseCode: "",
