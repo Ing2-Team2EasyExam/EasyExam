@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 from apps.exam.admin import ProblemAdmin, ExamAdmin
 from apps.exam.models import Problem, Topic, Exam
 from apps.user.models import User, Transaction
+from apps.user.forms import UserAdminForm
 
 # Site Header
 
@@ -21,6 +22,7 @@ admin.site.site_header = "EasyExam Admin"
 
 
 class UserAdmin(admin.ModelAdmin):
+    form = UserAdminForm
     fieldsets = [
         ("Correo Electrónico ", {"fields": ["email"]}),
         ("Contraseña", {"fields": ["password"]}),
