@@ -19,7 +19,7 @@ class EditProblemForm extends React.Component {
       },
     })
       .then((res) => {
-        if (res.status == 401) throw 401;
+        if (res.status === 401) throw 401;
         return res.json();
       })
       .then(
@@ -34,7 +34,7 @@ class EditProblemForm extends React.Component {
           });
         },
         (error) => {
-          if (error == 401) {
+          if (error === 401) {
             localStorage.removeItem("token");
             window.location.href = "/home";
           }

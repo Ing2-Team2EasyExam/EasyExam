@@ -3,7 +3,7 @@ import { Form, Col, Row } from "react-bootstrap";
 
 class FormInput extends React.Component {
   /**
-   * Component of the inputs of the exam form
+   * Component of the inputs of the problem form
    */
   constructor(props) {
     super(props);
