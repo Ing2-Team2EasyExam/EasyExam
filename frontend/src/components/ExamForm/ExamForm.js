@@ -2,9 +2,9 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import ExamDataInputs from "./ExamDataInputs";
 import ExamProblems from "./ExamProblems";
-import FormSubmitButton from "./FormSubmitButton";
-import CreateProblemButton from "./CreateProblemButton";
+import FormSubmitButton from "../EEComponents/FormSubmitButton";
 import AlertMessage from "../EEComponents/AlertMessage";
+import CreateProblemModal from "./CreateProblemModal";
 
 class ExamForm extends React.Component {
   /**
@@ -28,13 +28,22 @@ class ExamForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleProblemSelection = this.handleProblemSelection.bind(this);
     this.validate = this.validate.bind(this);
-    this.refreshProblems = this.refreshProblems.bind(this);
     this.getProblems = this.getProblems.bind(this);
     this.closeAlert = this.closeAlert.bind(this);
+    this.handleShowModal = this.handleShowModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-  refreshProblems() {
-    console.log("Refrescando listado de problemas");
+  handleShowModal() {
+    this.setState({
+      showModal: true,
+    });
+  }
+
+  handleCloseModal() {
+    this.setState({
+      showModal: false,
+    });
     this.getProblems();
   }
 
@@ -208,10 +217,14 @@ class ExamForm extends React.Component {
             handleSelect={this.handleProblemSelection}
             selected_problems={this.state.problem_choices}
             available_problems={this.state.available_problems}
+            handleShowModal={this.handleShowModal}
           />
           <FormSubmitButton isLoading={this.state.isLoading} />
         </Form>
-        <CreateProblemButton refreshProblems={this.refreshProblems} />
+        <CreateProblemModal
+          showModal={this.state.showModal}
+          handleCloseModal={this.handleCloseModal}
+        />
       </>
     );
   }

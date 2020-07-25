@@ -47,7 +47,7 @@ class Profile extends React.Component {
       <CardForm title="Perfil de Usuario">
         <Row>
           <Col sm={4}>
-            <PersonCircle size={200} color={"gray"} />
+            <PersonCircle size="100%" color={"gray"} />
           </Col>
           <Col sm={8}>
             <ProfileForm />

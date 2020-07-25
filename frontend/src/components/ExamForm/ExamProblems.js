@@ -1,6 +1,7 @@
 import React from "react";
 import Problem from "./Problem";
-import AddProblemButton from "./AddProblemButton";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { Plus } from "react-bootstrap-icons";
 
 class ExamProblems extends React.Component {
   /**
@@ -85,6 +86,25 @@ class ExamProblems extends React.Component {
 
   render() {
     const problems = this.state.problems;
+    const new_problem = (
+      <Form.Group as={Row}>
+        <Col>
+          <Button variant="primary" onClick={this.addProblem} block>
+            <Plus /> Añadir pregunta
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            variant="secondary"
+            type="button"
+            onClick={this.props.handleShowModal}
+            block
+          >
+            <Plus /> Crear pregunta
+          </Button>
+        </Col>
+      </Form.Group>
+    );
     return (
       <>
         <h5 style={{ textAlign: "center" }}>Problemas</h5>
@@ -104,7 +124,7 @@ class ExamProblems extends React.Component {
             />
           );
         })}
-        <AddProblemButton addProblem={this.addProblem} />
+        {new_problem}
       </>
     );
   }
