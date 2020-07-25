@@ -1,7 +1,9 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import AddImage from "./AddImage";
 class ContentInput extends React.Component {
+  /*
+   * Component for Statement and Solution inputs
+   */
   constructor(props) {
     super(props);
   }
@@ -16,11 +18,10 @@ class ContentInput extends React.Component {
             type="text"
             as="textarea"
             placeholder={this.props.placeholder}
-            rows="3"
+            rows="5"
             value={this.props.value}
           />
         </Form.Group>
-        <AddImage />
       </>
     );
   }

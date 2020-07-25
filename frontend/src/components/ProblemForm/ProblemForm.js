@@ -2,10 +2,10 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import FormSubmitButton from "../EEComponents/FormSubmitButton";
 import FormInput from "./FormInput";
-import Statement from "./Statement";
-import Solution from "./Solution";
 import SelectTopics from "./SelectTopics";
+import ContentInput from "./ContentInput";
 //TODO: preview of the problem
+//TODO: input validation
 
 class ProblemForm extends React.Component {
   /**
@@ -42,11 +42,20 @@ class ProblemForm extends React.Component {
   }
 
   transformDict(array) {
-    if (array !== "" && array.length && array[0].hasOwnProperty("label")) {
+    if (array !== "" && array.length && array[0].hasOwnProperty("name")) {
+      return array.map((topic) => {
+        return topic.name;
+      });
+    } else if (
+      array !== "" &&
+      array.length &&
+      array[0].hasOwnProperty("label")
+    ) {
       return array.map((topic) => {
         return topic.label;
       });
     }
+    return array;
   }
 
   handleSubmit(event) {
@@ -116,11 +125,19 @@ class ProblemForm extends React.Component {
           handleSelect={this.handleTopicSelection}
           value={this.state.chosen_topics}
         />
-        <Statement
+        <ContentInput
+          label="Enunciado:"
+          controlId="statement"
           handleChange={this.handleChange}
+          name="statement_content"
+          placeholder="Escribe aquí el enunciado de la pregunta. Puedes usar latex."
           value={this.state.statement_content}
         />
-        <Solution
+        <ContentInput
+          controlId="solution"
+          label="Solución:"
+          name="solution_content"
+          placeholder="Escribe aquí la solución de la pregunta. Puedes usar latex."
           handleChange={this.handleChange}
           value={this.state.solution_content}
         />
