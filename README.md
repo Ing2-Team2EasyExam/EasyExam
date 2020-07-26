@@ -334,6 +334,25 @@ $ yarn build
 
 Then copy it to the repositorium/www Folder
 
+## Unimplemented features
+
+* It is not possible to attach images to the problems in the current platform. 
+* When there is a problem with the LaTeX inside the statement or the solution of a problem, the log with the information of the error is not shown.
+* There are no new interfaces for the admin to manage the data of the application, instead of that, the django admin’s interfaces are used.
+* There is neither a button nor a feature to import .tex files as problems.
+* Cloned problems do not store a reference to the original problem from where they were cloned.
+* There is not a way to preview the exam in the different versions on the platform, instead of that, it is possible to see them through the download.
+* There is not a way to ban users using the platform interfaces.
+
+## Known issues
+
+* There is no cloning button in the “my questions” interface.
+* There is no validation data in Problem form.
+* There is no a Page Error for handle 404 Errors.
+* Default value for date and time input in Exam Form may not work in all browsers.
+
+
+
 ## Some learning
 
 - [celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/#celery-tasks)
