@@ -22,7 +22,6 @@ class ResetPasswordForm extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    console.log(Object.values(this.state));
     let url = "/api/users/reset-password/";
     let data = this.state;
     fetch(url, {

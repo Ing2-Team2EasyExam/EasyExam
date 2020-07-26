@@ -13,7 +13,6 @@ class Problem extends React.Component {
 
   duplicateProblem(event) {
     const uuid = this.props.problem.uuid;
-    console.log(uuid);
     const url = "/api/problems/clone/";
     let token = localStorage.getItem("token");
     let data = { uuid: uuid };
