@@ -52,6 +52,13 @@ class ProblemErrorHandlerMixin(object):
             data = {"error": err.latex_logs}
             return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def put(self, request, *args, **kwargs):
+        try:
+            return super().put(request, *args, **kwargs)
+        except CompilationErrorException as err:
+            data = {"error": err.latex_logs}
+            return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class NoSerializerInformationMixin(object):
     lookup_field = None
