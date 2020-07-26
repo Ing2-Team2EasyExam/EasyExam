@@ -41,6 +41,16 @@ from apps.user.models import Transaction
 from apps.exam.generate_exam.exceptions import CompilationErrorException
 from django.conf import settings
 from .services import recompile_exam, recompile_problem, get_problem, clone_problem
+from .generate_exam.exceptions import CompilationErrorException
+
+
+class ProblemErrorHandlerMixin(object):
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().post(request, *args, **kwargs)
+        except CompilationErrorException as err:
+            data = {"error": err.latex_logs}
+            return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class NoSerializerInformationMixin(object):
@@ -122,7 +132,7 @@ class UserProblemListView(ListAPIView):
         return Problem.objects.filter(uploader=self.request.user)
 
 
-class ProblemCreateView(CreateAPIView):
+class ProblemCreateView(ProblemErrorHandlerMixin, CreateAPIView):
     """
     Creates a new Problem instance.
     """
@@ -132,7 +142,7 @@ class ProblemCreateView(CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class ProblemUpdateView(RetrieveUpdateAPIView):
+class ProblemUpdateView(ProblemErrorHandlerMixin, RetrieveUpdateAPIView):
     serializer_class = ProblemEditSerializer
     permission_classes = (IsAuthenticated,)
     lookup_field = "uuid"
