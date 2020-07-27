@@ -29,10 +29,7 @@ class SearchComponent extends React.Component {
         Authorization: `Token ${token}`,
       },
     })
-      .then(
-        (response) => response.json(),
-        (errors) => console.log(errors)
-      )
+      .then((response) => response.json())
       .then((data) => {
         this.setState({ available_topics: data });
       });

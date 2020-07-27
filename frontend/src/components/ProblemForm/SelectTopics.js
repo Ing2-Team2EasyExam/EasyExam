@@ -61,8 +61,6 @@ class SelectTopics extends React.Component {
   render() {
     const available_topics = this.transformDict(this.state.available_topics);
     const chosen_topics = this.transformDict(this.state.chosen_topics);
-    console.log(this.state);
-    console.log(chosen_topics);
     return (
       <>
         <Form.Group controlId="topics">

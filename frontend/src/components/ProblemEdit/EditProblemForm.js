@@ -6,6 +6,8 @@ class EditProblemForm extends React.Component {
     this.state = {
       isLoaded: false,
       isLoading: false,
+      errors: null,
+      enabled_errors: false,
     };
   }
 

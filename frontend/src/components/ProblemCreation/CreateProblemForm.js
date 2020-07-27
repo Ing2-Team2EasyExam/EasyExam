@@ -13,6 +13,8 @@ class CreateProblemForm extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
+      errors: null,
+      enabled_errors: false,
       name: "",
       author: "",
       statement_content: "",
@@ -29,7 +31,7 @@ class CreateProblemForm extends React.Component {
         url={url}
         method="POST"
         successMessage="Pregunta Creada"
-        errorMessage="ALgo ha salido mal"
+        errorMessage="Algo ha salido mal, revise los errores de latex"
       />
     );
   }
