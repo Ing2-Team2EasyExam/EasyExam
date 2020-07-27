@@ -17,7 +17,6 @@ class ModalPDFExam extends React.Component {
   }
 
   getPreview(event) {
-    console.log(this.props);
     event.preventDefault();
     this.setState({ show: true });
     const url = `/api/problems/${this.props.problemName}/${this.props.author}/pdf/`;

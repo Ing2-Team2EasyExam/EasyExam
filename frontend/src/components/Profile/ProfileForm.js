@@ -123,7 +123,6 @@ class ProfileForm extends React.Component {
           window.scrollTo(0, 0);
         },
         (error) => {
-          console.log(error);
           alert("Ha ocurrido un error");
           this.setState({
             isLoading: false,

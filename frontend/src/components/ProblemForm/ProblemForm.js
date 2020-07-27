@@ -4,6 +4,7 @@ import FormSubmitButton from "../EEComponents/FormSubmitButton";
 import FormInput from "./FormInput";
 import SelectTopics from "./SelectTopics";
 import ContentInput from "./ContentInput";
+import ErrorButton from "./ErrorButton";
 //TODO: preview of the problem
 //TODO: input validation
 
@@ -60,8 +61,6 @@ class ProblemForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("State in handleSubmit of Problem Form");
-    console.log(Object.values(this.state));
     let topics = this.transformDict(this.state.chosen_topics);
     const url = this.props.url;
     const method = this.props.method;
@@ -85,21 +84,42 @@ class ProblemForm extends React.Component {
       },
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        this.setState({
+          errors: res.json(),
+        });
+        throw new Error("Compilation error");
+      })
       .then(
         (response_data) => {
-          console.log(response_data);
           this.setState({
             isLoading: false,
           });
           alert(this.props.successMessage);
         },
         (error) => {
-          console.log(error);
-          alert(this.props.errorMessage);
-          this.setState({
-            isLoading: false,
-          });
+          if (error.message === "Compilation error") {
+            this.state.errors.then((error_data) => {
+              this.setState({
+                errors: error_data,
+                enabled_errors: true,
+              });
+            });
+            this.setState({
+              isLoading: false,
+            });
+            alert(
+              "Algo a salido mal, mire los errores de latex para mas información."
+            );
+          } else {
+            this.setState({
+              isLoading: false,
+            });
+            alert("Algo a salido mal.");
+          }
         }
       );
   }
@@ -142,6 +162,10 @@ class ProblemForm extends React.Component {
           value={this.state.solution_content}
         />
         <FormSubmitButton isLoading={this.state.isLoading} />
+        <ErrorButton
+          enabled_errors={this.state.enabled_errors}
+          errors={this.state.errors}
+        />
       </Form>
     );
   }
