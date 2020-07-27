@@ -30,6 +30,7 @@ class UserAdmin(admin.ModelAdmin):
         ("Foto De Perfil", {"fields": ["image"]}),
         ("Grupos", {"fields": ["groups"]}),
         ("Usuario Activo", {"fields": ["is_active"]}),
+        ("Superusuario", {"fields": ["is_superuser"]}),
     ]
 
 

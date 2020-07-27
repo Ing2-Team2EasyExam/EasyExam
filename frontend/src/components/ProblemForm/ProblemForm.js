@@ -112,13 +112,13 @@ class ProblemForm extends React.Component {
               isLoading: false,
             });
             alert(
-              "Algo a salido mal, mire los errores de latex para mas información."
+              "Algo ha salido mal, mire los errores de latex para mas información."
             );
           } else {
             this.setState({
               isLoading: false,
             });
-            alert("Algo a salido mal.");
+            alert("Algo ha salido mal.");
           }
         }
       );
