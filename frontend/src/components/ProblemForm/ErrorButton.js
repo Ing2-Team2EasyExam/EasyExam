@@ -35,7 +35,7 @@ function EnabledErrorButton(props) {
       <Button variant="warning" block onClick={handleShow}>
         Errores Latex
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Latex error logs</Modal.Title>
         </Modal.Header>
