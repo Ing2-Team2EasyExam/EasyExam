@@ -351,6 +351,7 @@ Then copy it to the repositorium/www Folder
 * Default value for date and time input in Exam Form may not work in all browsers.
 * If the script fails to compile the LaTeX code, the temporal files generated are not deleted from the platform. 
 
+
 ## Some learning
 
 - [celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/#celery-tasks)
