@@ -142,7 +142,7 @@ Because the first method is limited to only certain version of windows (Pro and 
 
 So this first method will be installing Windows tools to make docker work and works for all versions of Windows (Home, Educational or Pro). This is faster to set up, but have very limitations (It doesn't give you a Linux kernel for example).
 
-First things first, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
+First, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
 
 If you can't see it there, you go to your BIOS and check that Virtualization is enabled.
 
@@ -291,14 +291,6 @@ If you want to reset your docker image of the project and re mounted, run:
 $ make docker-reset
 ```
 
-#### Adding pre recorded data
-
-On `fixtures` there are jsons with pre recorded data, to add them onto your database you can run on the container terminal:
-
-```bash
-$ easyexam fixtures
-```
-
 This will add all pre recorded data, if a model change pls change the pre recorded data also.
 
 ### Pull Request
@@ -307,7 +299,7 @@ The common developing branch is `development`. On this branch all the newest cha
 
 Finally, to merge into the `development` branch, you need to create a pull request and it needs to be approved by, at least, one other teammate and pass the CI github action.
 
-At the end of every sprint (there will be two sprints), a merge to master will be done or if a common developing feature is added to develop is going to be cherry-picked to master as well.
+At the end of every sprint, a merge to master will be done or if a common developing feature is added to develop is going to be cherry-picked to master as well.
 
 ## Deployment instructions
 
