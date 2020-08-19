@@ -303,28 +303,56 @@ At the end of every sprint, a merge to master will be done or if a common develo
 
 ## Deployment instructions
 
-The backend runs with NGINX and UWSGI
+The deployment process into the `buho` server is a little bit trickier than `heroku` because it's not automatic by just merging into one branch and done.
 
-You can run the current configuration with
-
-```bash
-$ uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
-```
-
-Or
+First of all make a merge with no fast forward into the master branch on your local machine. To do this do the following:
 
 ```bash
-$ HOME/easyexam/venv/bin/uwsgi --ini $HOME/easyexam-uwsgi/easyexam-uwsgi.ini
+(development) git pull
+(development) git checkout master
+(master) git pull
+(master) git merge development --no-ff
+(master) git push
 ```
 
-To build the frontend bundle
+Then connect to the buho server and navigate to the easyexamv2 folder:
 
 ```bash
-$ yarn
-$ yarn build
+cd easyexamv2/EasyExam/
 ```
 
-Then copy it to the repositorium/www Folder
+Here stash the changes because there are some configurations changes made on the Dockerfile and the worker for the security purpose.
+
+```bash
+git stash
+```
+
+Then pull the latest master commit
+
+```bash
+git pull origin master
+```
+
+Pop the latest changes on the stash:
+
+```bash
+git stash pop
+```
+
+Resolve the conflicts if there is any, but prefer the stashes ones.
+
+And finally reset the docker image:
+
+```bash
+source venv/bin/activate
+make docker-production-reset
+```
+
+Now the buho server have the latest changes of the master branch.
+Notice that on production the application runs on the port natively on the port `8888` so make the changes necessary on the `Dockerfile` or the `docker-compose.yml` in order to achieve the run on that port.
+
+**Important**:
+NEVER delete the gunicorn command of the `Dockerfile` and NEVER delete the celery command of the `Dockerfile.worker`. They are crucial to production.
 
 ## Unimplemented features
 
