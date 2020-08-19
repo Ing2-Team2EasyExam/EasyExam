@@ -16,8 +16,11 @@ build-django:
 docker-build:
 	@docker-compose build web
 
-docker-up:
+docker-run:
 	@docker-compose up -d
+docker-celery:
+	@docker-compose build celery
+docker-up: docker-run
 	@docker exec -it easyexam_web_1 /bin/bash
 
 docker-stop:
@@ -29,4 +32,5 @@ docker-down:
 docker-prune:
 	@docker system prune -a
 
+docker-production-reset: docker-down docker-build docker-celery docker-run
 docker-reset: docker-down docker-prune docker-build

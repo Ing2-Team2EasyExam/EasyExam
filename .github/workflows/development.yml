@@ -1,9 +1,8 @@
-name: Development checks
+name: Master branch checks
 
 on:
   push:
     branches:
-      - development
       - master
 
 jobs:

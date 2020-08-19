@@ -1,9 +1,9 @@
-name: Deploy Production
+name: Deploy Heroku
 
 on:
   push:
     branches:
-      - master
+      - development
 jobs:
   test-build-deploy:
     runs-on: ubuntu-latest
