@@ -351,6 +351,12 @@ make docker-production-reset
 Now the buho server have the latest changes of the master branch.
 Notice that on production the application runs on the port natively on the port `8888` so make the changes necessary on the `Dockerfile` or the `docker-compose.yml` in order to achieve the run on that port.
 
+If you want to see the logs of the processes, there is the makefile command:
+
+```bash
+make docker-logs
+```
+
 **Important**:
 NEVER delete the gunicorn command of the `Dockerfile` and NEVER delete the celery command of the `Dockerfile.worker`. They are crucial to production.
 

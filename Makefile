@@ -32,5 +32,7 @@ docker-down:
 docker-prune:
 	@docker system prune -a
 
+docker-logs:
+	@docker-compose logs
 docker-production-reset: docker-down docker-build docker-celery docker-run
 docker-reset: docker-down docker-prune docker-build
