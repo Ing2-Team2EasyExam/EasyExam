@@ -19,3 +19,4 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "examensencillo@gmail.com"
 EMAIL_HOST_PASSWORD = "EasyExamMail"
 EMAIL_USE_TLS = True
+SERVER_URL = "https://easyexam.repositorium.cl/"
