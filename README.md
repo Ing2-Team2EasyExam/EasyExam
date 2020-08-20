@@ -142,7 +142,7 @@ Because the first method is limited to only certain version of windows (Pro and 
 
 So this first method will be installing Windows tools to make docker work and works for all versions of Windows (Home, Educational or Pro). This is faster to set up, but have very limitations (It doesn't give you a Linux kernel for example).
 
-First things first, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
+First, check if you have virtualization enabled. Open the task manager and see if virtualization is enabled (or on).
 
 If you can't see it there, you go to your BIOS and check that Virtualization is enabled.
 
@@ -291,14 +291,6 @@ If you want to reset your docker image of the project and re mounted, run:
 $ make docker-reset
 ```
 
-#### Adding pre recorded data
-
-On `fixtures` there are jsons with pre recorded data, to add them onto your database you can run on the container terminal:
-
-```bash
-$ easyexam fixtures
-```
-
 This will add all pre recorded data, if a model change pls change the pre recorded data also.
 
 ### Pull Request
@@ -307,32 +299,83 @@ The common developing branch is `development`. On this branch all the newest cha
 
 Finally, to merge into the `development` branch, you need to create a pull request and it needs to be approved by, at least, one other teammate and pass the CI github action.
 
-At the end of every sprint (there will be two sprints), a merge to master will be done or if a common developing feature is added to develop is going to be cherry-picked to master as well.
+At the end of every sprint, a merge to master will be done or if a common developing feature is added to develop is going to be cherry-picked to master as well.
 
 ## Deployment instructions
 
-The backend runs with NGINX and UWSGI
+The deployment process into the `buho` server is a little bit trickier than `heroku` because it's not automatic by just merging into one branch and done.
 
-You can run the current configuration with
-
-```bash
-$ uwsgi --http localhost:8000 --wsgi-file EasyExamAPI/wsgi.py --static-map /static=./static &
-```
-
-Or
+First of all make a merge with no fast forward into the master branch on your local machine. To do this do the following:
 
 ```bash
-$ HOME/easyexam/venv/bin/uwsgi --ini $HOME/easyexam-uwsgi/easyexam-uwsgi.ini
+(development) git pull
+(development) git checkout master
+(master) git pull
+(master) git merge development --no-ff
+(master) git push
 ```
 
-To build the frontend bundle
+Then connect to the buho server and navigate to the easyexamv2 folder:
 
 ```bash
-$ yarn
-$ yarn build
+cd easyexamv2/EasyExam/
 ```
 
-Then copy it to the repositorium/www Folder
+Here stash the changes because there are some configurations changes made on the Dockerfile and the worker for the security purpose.
+
+```bash
+git stash
+```
+
+Then pull the latest master commit
+
+```bash
+git pull origin master
+```
+
+Pop the latest changes on the stash:
+
+```bash
+git stash pop
+```
+
+Resolve the conflicts if there is any, but prefer the stashes ones.
+
+And finally reset the docker image:
+
+```bash
+source venv/bin/activate
+make docker-production-reset
+```
+
+Now the buho server have the latest changes of the master branch.
+Notice that on production the application runs on the port natively on the port `8888` so make the changes necessary on the `Dockerfile` or the `docker-compose.yml` in order to achieve the run on that port.
+
+If you want to see the logs of the processes, there is the makefile command:
+
+```bash
+make docker-logs
+```
+
+**Important**:
+NEVER delete the gunicorn command of the `Dockerfile` and NEVER delete the celery command of the `Dockerfile.worker`. They are crucial to production.
+
+## Unimplemented features
+
+- It is not possible to attach images to the problems in the current platform.
+- There are no new interfaces for the admin to manage the data of the application, instead of that, the django admin’s interfaces are used.
+- There is neither a button nor a feature to import .tex files as problems.
+- Cloned problems do not store a reference to the original problem from where they were cloned.
+- There is not a way to preview the exam in the different versions on the platform, instead of that, it is possible to see them through the download.
+- There is not a way to ban users using the platform interfaces.
+
+## Known issues
+
+- There is no cloning button in the “my questions” interface.
+- There is no validation data in Problem form.
+- There is no a Page Error for handle 404 Errors.
+- Default value for date and time input in Exam Form may not work in all browsers.
+- If the script fails to compile the LaTeX code, the temporal files generated are not deleted from the platform.
 
 ## Some learning
 

@@ -7,8 +7,8 @@ DATABASES = {
         "NAME": get_env_variable("DATABASE_NAME"),
         "USER": get_env_variable("DATABASE_USER"),
         "PASSWORD": get_env_variable("DATABASE_PASSWORD"),
-        "HOST": "",
-        "PORT": "",  # TODO: Complete with the data on production
+        "HOST": "db",
+        "PORT": 5432,
     }
 }
 # rest framework stuff
@@ -19,3 +19,4 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = "examensencillo@gmail.com"
 EMAIL_HOST_PASSWORD = "EasyExamMail"
 EMAIL_USE_TLS = True
+SERVER_URL = "https://easyexam.repositorium.cl"
